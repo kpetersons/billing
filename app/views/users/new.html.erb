@@ -1,0 +1,10 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Create user</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
+	<%= render :partial => "shared/error", :locals => {:obj => @party}%>	
+	<div class="panel-content">
+		<%= render :partial => "form", :locals => {:user => @party} %>
+	</div>
+</div>

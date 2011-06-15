@@ -1,0 +1,27 @@
+<table style="width: 100%;">
+	<caption class="panel-header">
+		<strong><%= (table_title.nil?)? "Tag list" : table_title %></strong>
+	</caption>
+	<thead class="panel-content">
+		<tr>
+			<th></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th class="list-paginate"></th>
+		</tr>
+	</tfoot>
+	<tbody class="panel-content">
+		<tr>
+			<td class="col-text">	
+				<% tags.each do |tag| %>
+					<%= tag.name%><%if tags.index(tag)+1 != tags.size()%>,<% end %>					 
+				<% end %>
+				<% if tags.empty? %>
+					&nbsp;
+				<% end %>				
+			</td>
+		</tr>		
+	</tbody>
+</table>

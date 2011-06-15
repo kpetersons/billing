@@ -1,0 +1,11 @@
+<div class="panel">
+	<%=form_for @relationship, :url => add_customer_contact_persons_path(@customer) do |rel_f|%>
+	<%= rel_f.hidden_field :relationship_type_id%>
+	<%= rel_f.hidden_field :source_party_id%>
+	<%= render :partial => "index", :locals => {:contact_persons => @contact_persons, :table_title => "Existing contact persons", :choose => true, :fields => rel_f} %>
+	<div class="buttons">
+		<span class="button"><%= rel_f.submit "Add" %></span>
+		<%= link_to 'Create contact person', new_customer_contact_person_path(@customer)%>
+	</div>	
+	<%end%>
+</div>

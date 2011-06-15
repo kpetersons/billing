@@ -1,0 +1,50 @@
+<table style="width:100%">
+	<caption class="panel-header">
+		<strong><%= (table_title.nil?)? "Address list" : table_title %></strong>
+	</caption>
+	<thead>
+		<tr>
+			<th class="col-radio"></th>
+			<th class="col-text">Type</th>
+			<th class="col-text">Country</th>
+			<th class="col-text">City</th>
+			<th class="col-text">Street</th>
+			<th class="col-text">House number</th>
+			<th class="col-text">Room number</th>
+			<th class="col-text">Post code</th>
+			<th class="col-text">PO BOX</th>
+			<th class="col-number"></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th colspan="10"></th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<% addresses.each do |address|%>
+			<tr>
+				<td class="col-radio">
+				</td>
+				<td class="col-text"><%=address.address_type.name%></td>
+				<td class="col-text"><%=address.country%></td>
+				<td class="col-text"><%=address.city%></td>
+				<td class="col-text"><%=address.street%></td>
+				<td class="col-text"><%=address.house_number%></td>
+				<td class="col-text"><%=address.room_number%></td>
+				<td class="col-text"><%=address.post_code%></td>
+				<td class="col-text"><%=address.po_box%></td>				
+				<td class="col-number">
+				<%=link_to 'Show', party_address_path(address.party, address) %> |
+				<%=link_to 'Edit', edit_party_address_path(address.party, address) %> | 
+				Remove				
+				</td>
+			</tr>
+		<%end%>
+		<% if addresses.empty? %>
+			<tr>
+				<td colspan="10">&nbsp;</td>
+			</tr>
+		<%end%>
+	</tbody>
+</table>

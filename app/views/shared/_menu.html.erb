@@ -1,0 +1,25 @@
+<div class="header row h-menu">
+	<ul class="menu">	
+		<li>
+			<%= link_to "Dashboard", dashboard_index_path %>	
+		</li>
+		<li>
+			<%= link_to "Matters", matters_path %>	
+		</li>
+		<li>
+			<%= link_to "Invoices", customers_path %>	
+		</li>
+		<li>
+			<%= link_to "Customers", customers_path %>	
+		</li>
+		<li>
+			<%= link_to "Settings", customers_path %>	
+		</li>
+		<li>
+			<%= link_to "Administration", users_path %>	
+		</li>
+	</ul>
+	<span style="float:right; margin-right:5em">
+	<%= link_to "logout", signout_sessions_path, {:method => :delete, :style => 'color:white; text-decoration:none'} %>
+	</span>	
+</div>

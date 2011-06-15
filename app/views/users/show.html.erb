@@ -1,0 +1,92 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>User information</strong>
+	</div>
+	<dl class="panel-content">
+		<dt>
+			<label>
+				Identifier
+			</label>
+		</dt>
+		<dd>
+			<%=@user.individual.party.identifier%>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				First name
+			</label>
+		</dt>
+		<dd>
+			<%=@user.individual.first_name%>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Middle name
+			</label>
+		</dt>
+		<dd>
+			<%=@user.individual.middle_name%>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Last name
+			</label>
+		</dt>
+		<dd>
+			<%=@user.individual.last_name%>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Gender
+			</label>
+		</dt>
+		<dd>
+			<%=@user.individual.gender_name%>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				Birth date
+			</label>
+		</dt>
+		<dd>
+			<%=@user.individual.birth_date%>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Active
+			</label>
+		</dt>
+		<dd>
+			<%=@user.active%>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Blocked
+			</label>
+		</dt>
+		<dd>
+			<%=@user.blocked%>&nbsp;
+		</dd>		
+	</dl>
+	<div class="panel-content">
+	<%=link_to 'Edit', edit_user_path(@user)%>
+	</div>	
+	<div class="nested-panel">
+		<%= render :partial => "/addresses/index", :locals => {:addresses => @user.individual.party.addresses, :table_title => "Addresses", :choose => false} %>
+		<div class="panel-content">	 
+			<%=link_to 'Add new address', new_party_address_path(@user.individual.party) %>
+		</div>
+	</div>		
+	<div class="nested-panel">
+		<%= render :partial => "/contacts/index", :locals => {:contacts => @user.individual.party.contacts.paginate(:page => params[:contacts_page]), :table_title => "Contacts", :choose => false, :param_name => 'contacts_page'} %>
+		<div class="panel-content">	 
+			<%=link_to 'Add new contact', new_party_contact_path(@user.individual.party) %>
+		</div>
+	</div>	
+	<div class="nested-panel">
+		<%= render :partial => "/roles/index", :locals => {:roles => @user.roles.paginate(:page => params[:role_page]), :table_title => "Roles", :choose => false, :param_name => 'role_page'} %>
+		<div class="panel-content">	 
+			<%=link_to 'Add role', choose_user_roles_path(@user) %>
+		</div>
+	</div>	
+</div>

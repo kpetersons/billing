@@ -1,0 +1,12 @@
+<%= render :partial => "/tags/index", :locals => {:tags => @matter.tags, :table_title => table_title} %>
+<%=form_for [:documents, Tag.new], :url => add_document_tags_path(document) do |t_f| %>
+<div class="dialog">
+	<ul>
+		<li>
+			<%= t_f.label :name, :style => 'width:auto; margin-right:5px; min-width:1em' %>
+			<%= t_f.text_field :name %>
+			<span class="button" style="width:auto;"><%= t_f.submit "Add", :style => 'padding: 2px 3px;' %><div></div></span>			
+		</li>		
+	</ul>
+</div>
+<%end%>

@@ -1,0 +1,32 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Role information</strong>
+	</div>
+	<dl class="panel-content">
+		<dt>
+			<label>
+				Name
+			</label>
+		</dt>
+		<dd>
+			<%=@role.name%>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				Description
+			</label>
+		</dt>
+		<dd>
+			<%=@role.description%>&nbsp;
+		</dd>		
+	</dl>
+	<div class="panel-content">
+		<%=link_to 'Edit', edit_role_path(@role)%>
+	</div>	
+	<div class="nested-panel">
+		<%= render :partial => "/functions/index", :locals => {:functions => @role.functions.paginate(:page => params[:page], :per_page => 10), :table_title => "Roles", :choose => false, :param_name => 'function_page'} %>
+		<div class="panel-content">	 
+			<%=link_to 'Add function', choose_role_functions_path(@role) %>
+		</div>
+	</div>	
+</div>

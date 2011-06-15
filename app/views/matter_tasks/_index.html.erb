@@ -1,0 +1,37 @@
+<table style="width:100%">
+	<caption class="panel-header">
+		<strong><%= (table_title.nil?)? "Matter list" : table_title %></strong>
+	</caption>
+	<thead class="panel-content">
+		<tr>
+			<th class="col-text">Description</th>
+			<th class="col-text">Status</th>
+			<th class="col-date">Proposed deadline</th>
+			<th class="col-number"></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th colspan="4"></th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<% matter_tasks.each do |matter_task|%>
+			<tr>
+				<td class="col-text"><%=matter_task.description%></td>
+				<td class="col-text"><%=matter_task.status%></td>
+				<td class="col-date"><%=matter_task.proposed_deadline%></td>
+				<td class="col-number">
+				<%=link_to 'Show', matter_matter_task_path(@matter, matter_task) %> |
+				<%=link_to 'Edit', edit_matter_matter_task_path(@matter, matter_task) %> | 
+				Remove				
+				</td>
+			</tr>
+		<%end%>
+		<% if matter_tasks.empty? %>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+		<%end%>
+	</tbody>
+</table>

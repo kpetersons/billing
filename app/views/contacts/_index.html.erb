@@ -1,0 +1,38 @@
+<table style="width:100%">
+	<caption class="panel-header">
+		<strong><%= (table_title.nil?)? "Address list" : table_title %></strong>
+	</caption>
+	<thead>
+		<tr>
+			<th class="col-radio"></th>
+			<th class="col-text">Type</th>
+			<th class="col-text">Value</th>
+			<th class="col-number"></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th colspan="4"></th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<% contacts.each do |contact|%>
+			<tr>
+				<td class="col-radio">
+				</td>
+				<td class="col-text"><%=contact.contact_type.name%></td>
+				<td class="col-text"><%=contact.contact_value%></td>			
+				<td class="col-number">
+				<%=link_to 'Show', party_contact_path(contact.party, contact) %> |
+				<%=link_to 'Edit', edit_party_contact_path(contact.party, contact) %> | 
+				Remove				
+				</td>
+			</tr>
+		<%end%>
+		<% if contacts.empty? %>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+		<%end%>
+	</tbody>
+</table>

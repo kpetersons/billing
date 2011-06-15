@@ -1,0 +1,129 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Matter</strong>
+	</div>
+	<dl class="panel-content">
+		<dt>
+			<label>
+				Registration number
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.document.registration_number %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Mark name
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.mark_name%>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Description
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.document.description %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Agent name
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.agent_name %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Applicant name
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.applicant_name %>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				Appl date
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.appl_date%>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Appl number
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.appl_number %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Priority date
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.priority_date %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				CTM number
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.ctm_number %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				WIPO number
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.wipo_number %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				IR number
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.ir_number %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Notes
+			</label>
+		</dt>
+		<dd>
+			<%= @matter.comment %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Parent matter
+			</label>
+		</dt>
+		<dd>
+			<%=link_to @matter.document.parent_document_registration_number, matter_path(@matter.document.parent_document)%>&nbsp;
+			<%=link_to_unless @matter.has_parent, 'Add as child', choose_matter_matters_path(@matter)%> |
+			<%=link_to_if @matter.has_parent, 'Remove from parent', remove_matter_matter_path(@matter, (@matter.parent_matter)? @matter.parent_matter : -1) %>
+		</dd>
+	</dl>
+	<div class="panel-content">
+		<%= link_to 'Edit', edit_matter_path(@matter)%>
+	</div>
+	<div class="nested-panel">
+		<%= render :partial => "/matters/index", :locals => {:matters => @matter.sub_matters, :table_title => "Sub matter list", :choose => false} %>
+		<div class="panel-content">
+			<%= link_to 'Create sub matter', new_matter_matter_path(@matter) %>
+		</div>
+		<%= render :partial => "/matter_tasks/index", :locals => {:matter_tasks => @matter.matter_tasks, :table_title => "Deadlines"} %>
+		<div class="panel-content">
+			<%= link_to 'Add deadline', new_matter_matter_task_path(@matter) %>
+		</div>
+	</div>
+	<div class="nested-panel">
+		<%= render :partial => "/tags/form", :locals => {:tags => @matter.tags, :table_title => "Tags", :document => @matter.document} %>
+	</div>
+</div>

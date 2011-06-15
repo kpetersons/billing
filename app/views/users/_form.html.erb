@@ -1,0 +1,30 @@
+<%=form_for [@party], :url => (@party.persisted?) ? {:controller => 'users', :action => 'update'} : {:controller => 'users', :action => 'create'} do |p_f| %>
+	<div class="dialog">
+		<ul>
+			<%= render :partial => "/shared/party/fields", :locals => {:fields => p_f} %>
+			<%= p_f.fields_for :individual do |pi_f| %>
+				<%= render :partial => "/shared/party/individual/fields", :locals => {:fields => pi_f} %>
+				<%= pi_f.fields_for :user do |piu_f| %>
+					<li>
+						<%= piu_f.hidden_field :id %>
+						<%= piu_f.label :email %>
+						<%= piu_f.text_field :email %>					
+					</li>
+					<% unless @party.persisted?%>
+						<li>
+							<%= piu_f.label :password %>
+							<%= piu_f.password_field :password %>
+						</li>
+						<li>
+							<%= piu_f.label :password_confirmation, "Confirmation" %>
+	          				<%= piu_f.password_field :password_confirmation %>
+						</li>
+					<%end%>
+				<%end%>
+			<%end%>
+		</ul>
+	</div>
+	<div class="buttons">
+		<span class="button"><%= p_f.submit "Save" %></span>
+	</div>
+<%end%>

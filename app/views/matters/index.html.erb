@@ -1,0 +1,4 @@
+<div class="panel">
+	<%= render :partial => "/matters/index", :locals => {:matters => @matters, :table_title => "Matter list", :choose => false} %>	
+	<%= link_to "New matter", new_matter_path %>
+</div>

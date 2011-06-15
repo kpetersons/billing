@@ -1,0 +1,10 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Create contact person</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
+	<%= render :partial => "shared/error", :locals => {:obj => @contact_person}%>	
+	<div class="panel-content">
+		<%= render :partial => "form" %>
+	</div>
+</div>

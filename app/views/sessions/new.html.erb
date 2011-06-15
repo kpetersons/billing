@@ -1,0 +1,23 @@
+<div class="panel" style="width:29em; margin:20% auto">
+	<div class="panel-header">
+		<strong>Login</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<div class="panel-content">		
+		<%= form_for(:session, :url => signin_sessions_path) do |f| %>
+			<ul>
+				<li>
+					<%= f.label :email %>
+					<%= f.text_field :email %>
+				</li>
+				<li>
+					<%= f.label :password %>
+					<%= f.password_field :password %>
+				</li>
+			</ul>
+			<div class="buttons">
+				<span class="button"><%= f.submit "Sign in" %></span>
+			</div>			
+		<% end %>
+	</div>
+</div>

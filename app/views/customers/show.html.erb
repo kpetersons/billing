@@ -1,0 +1,51 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Customer information</strong>
+	</div>
+	<dl class="panel-content">
+		<dt>
+			<label>
+				Name
+			</label>
+		</dt>
+		<dd>
+			<%=@customer.name%>
+		</dd>
+		<dt>
+			<label>
+				Identifier
+			</label>
+		</dt>
+		<dd>
+			<%=@customer.identifier%>
+		</dd>
+	</dl>
+	<div class="panel-content">
+	<%=link_to 'Edit', edit_customer_path(@customer)%>
+	</div>	
+	<div class="nested-panel">
+		<%= render :partial => "/addresses/index", :locals => {:addresses => @customer.party.addresses, :table_title => "Addresses", :choose => false} %>
+		<div class="panel-content">	 
+			<%=link_to 'Add new address', new_party_address_path(@customer.party) %>
+		</div>
+	</div>	
+	<div class="nested-panel">
+		<%= render :partial => "/contact_persons/index", :locals => {:contact_persons => @customer.contact_persons, :table_title => "Customer contact persons", :choose => false} %>
+		<div class="panel-content">	
+			<%=link_to 'Add existing contact person', choose_customer_contact_persons_path(@customer) %> | 
+			<%=link_to 'Add new contact person', new_customer_contact_person_path(@customer) %>
+		</div>
+	</div>
+	<div class="nested-panel">
+		<%= render :partial => "/matters/index", :locals => {:matters => @customer.matters_as_agent, :table_title => "Matters where customer participates as Agent", :choose => false} %>
+		<div class="panel-content">	
+			<%=link_to 'Create matter', '#' %> 
+		</div>
+	</div>	
+	<div class="nested-panel">
+		<%= render :partial => "/matters/index", :locals => {:matters => @customer.matters_as_applicant, :table_title => "Matters where customer participates as Applicant", :choose => false} %>
+		<div class="panel-content">	
+			<%=link_to 'Create matter', '#' %> 
+		</div>
+	</div>	
+</div>

@@ -1,0 +1,8 @@
+<%=form_for [@party, @contact], :url => (@contact.persisted?) ? {:controller => 'contacts', :action => 'update'} : {:controller => 'contacts', :action => 'create'} do |c_f| %>
+<div class="dialog">
+	<%= render :partial => "fields", :locals => {:address => @contact, :fields => c_f} %>
+</div>
+<div class="buttons">
+	<span class="button"><%= c_f.submit "Save" %></span>
+</div>
+<%end%>

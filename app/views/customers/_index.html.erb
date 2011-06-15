@@ -1,0 +1,39 @@
+<table style="width: 100%;">
+	<caption class="panel-header">
+		<strong><%=table_title%></strong>
+	</caption>
+	<thead class="panel-content">
+		<tr>
+			<th class="col-radio"></th>
+			<th class="col-text">Name</th>
+			<th class="col-text">Identifier</th>
+			<th class="col-text">Type</th>
+			<th class="col-date">Customer since</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th class="list-paginate" colspan="6">
+				<%= will_paginate customers, :param_name => param_name %>
+			</th>
+		</tr>
+	</tfoot>
+	<tbody class="panel-content">
+		<% customers.each do |customer| %>
+		<tr>
+			<td></td>
+			<td class="col-text"><%= customer.name %></td>
+			<td class="col-text"><%= customer.identifier %></td>
+			<td class="col-text"><%= customer.type%></td>
+			<td class="col-date"><%= customer.customer_since %></td>
+			<td class="col-number"><%= link_to "Show", customer_path(customer)%> | <%= link_to "Edit", edit_customer_path(customer)%></td>
+		</tr>
+		<% end %>
+		<% if customers.empty? %>
+		<tr>
+			<td colspan="6">&nbsp;</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

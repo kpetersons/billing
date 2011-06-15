@@ -1,0 +1,41 @@
+<table style="width:100%">
+	<caption class="panel-header">
+		<strong><%= (table_title.nil?)? "Contact persons" : table_title %></strong>
+	</caption>
+	<thead>
+		<tr>
+			<th class="col-radio"></th>
+			<th class="col-text">First name</th>
+			<th class="col-text">Last name</th>
+			<th class="col-number"></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th colspan="4"></th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<% contact_persons.each do |contact_person|%>
+			<tr>
+				<td class="col-radio">
+					<%if choose%>
+						<%= fields.radio_button :target_party_id, contact_person.party_id%>						
+					<%end%>
+				</td>
+				<td class="col-text"><%=contact_person.first_name%></td>
+				<td class="col-text"><%=contact_person.last_name%></td>
+				<td class="col-number">
+				<%=link_to 'Show', customer_contact_person_path(@customer, contact_person) %> |
+				<%=link_to 'Edit', edit_customer_contact_person_path(@customer, contact_person) %> | 
+				Remove				
+				</td>
+			</tr>
+		<%end%>
+		<% if contact_persons.empty? %>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+		<%end%>
+	</tbody>
+</table>

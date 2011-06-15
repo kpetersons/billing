@@ -1,0 +1,4 @@
+<div class="panel">
+	<%= render :partial => "/roles/index", :locals => {:roles => @roles, :table_title => "Role list", :choose => false, :param_name => "page"} %>	
+	<%= link_to "New role", new_role_path %>
+</div>

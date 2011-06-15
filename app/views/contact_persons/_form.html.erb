@@ -1,0 +1,33 @@
+<%=form_for [@party, @contact_person], :url => (@contact_person.persisted?) ? {:controller => 'contact_persons', :action => 'update'} : {:controller => 'contact_persons', :action => 'create'} do |cp_f| %>
+<div class="dialog">
+	<ul>
+		<li>
+			<%= cp_f.hidden_field :id %>
+			<%= cp_f.label :identifier %>
+			<%= cp_f.text_field :identifier %>
+		</li>
+		<%= cp_f.fields_for :individual do |ind_f| %>
+		<li>
+			<%= ind_f.hidden_field :id %>
+			<%= cp_f.label :first_name %>
+			<%= ind_f.text_field :first_name %>
+		</li>
+		<li>
+			<%= cp_f.label :middle_name %>
+			<%= ind_f.text_field :middle_name %>
+		</li>
+		<li>
+			<%= cp_f.label :last_name %>
+			<%= ind_f.text_field :last_name %>
+		</li>
+		<li>
+			<%= cp_f.label :birth_date %>
+			<%= ind_f.date_select :birth_date %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<div class="buttons">
+	<span class="button"><%= cp_f.submit "Save" %></span>
+</div>
+<%end%>

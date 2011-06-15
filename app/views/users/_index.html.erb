@@ -1,0 +1,47 @@
+<table style="width: 100%;">
+	<caption class="panel-header">
+		<strong><%=table_title%></strong>
+	</caption>
+	<thead class="panel-content">
+		<tr>
+			<th class="col-radio"></th>
+			<th class="col-text">First name</th>
+			<th class="col-text">Middle name</th>
+			<th class="col-text">Last name</th>
+			<th class="col-check">Active</th>
+			<th class="col-check">Blocked</th>
+			<th class="col-date">Registration date</th>			
+			<th></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th class="list-paginate" colspan="8">
+				<%= will_paginate users, :param_name => param_name %>
+			</th>
+		</tr>
+	</tfoot>
+	<tbody class="panel-content">
+		<% users.each do |user| %>
+		<tr>
+				<td class="col-radio"></td>
+				<td class="col-text"><%=user.individual.first_name%></td>
+				<td class="col-text"><%=user.individual.middle_name%></td>				
+				<td class="col-text"><%=user.individual.last_name%></td>
+				<td class="col-check"><%=user.active%></td>
+				<td class="col-check"><%=user.blocked%></td>
+				<td class="col-date"><%=user.registration_date%></td>				
+				<td class="col-number">
+				<%=link_to 'Show', user_path(user) %> |
+				<%=link_to 'Edit', edit_user_path(user) %> | 
+				Remove				
+				</td>
+		</tr>
+		<% end %>
+		<% if users.empty? %>
+		<tr>
+			<td colspan="8">&nbsp;</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

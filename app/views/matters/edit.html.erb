@@ -1,0 +1,10 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Edit matter</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
+	<%= render :partial => "shared/error", :locals => {:obj => @document}%>	
+	<div class="panel-content">
+		<%= render :partial => "form", :locals => {:matter => @matter} %>
+	</div>
+</div>
