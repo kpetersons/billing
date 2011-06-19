@@ -30,6 +30,12 @@
 		</div>
 	</div>	
 	<div class="nested-panel">
+		<%= render :partial => "/contacts/index", :locals => {:contacts => @customer.party.contacts.paginate(:page => params[:contacts_page]), :table_title => "Contacts", :choose => false, :param_name => 'contacts_page'} %>
+		<div class="panel-content">	 
+			<%=link_to 'Add new contact', new_party_contact_path(@customer.party) %>
+		</div>
+	</div>	
+	<div class="nested-panel">
 		<%= render :partial => "/contact_persons/index", :locals => {:contact_persons => @customer.contact_persons, :table_title => "Customer contact persons", :choose => false} %>
 		<div class="panel-content">	
 			<%=link_to 'Add existing contact person', choose_customer_contact_persons_path(@customer) %> | 

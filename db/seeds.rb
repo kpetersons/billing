@@ -31,8 +31,22 @@ AddressType.transaction do
 end
 
 Function.transaction do
-  admin_functions = ["FUNCT_LOGIN", "FUNCT_ADMIN_LINK", "FUNCT_CREATE_USER"] 
-  functions = admin_functions 
+  functions = [
+    "FUNCT_LOGIN", 
+    "FUNCT_DASHBOARD_LINK", 
+    "FUNCT_MATTERS_LINK", 
+    "FUNCT_INVOICES_LINK", 
+    "FUNCT_CUSTOMERS_LINK",
+    "FUNCT_SETTINGS_LINK",
+    "FUNCT_ADMIN_LINK", 
+    "FUNCT_CREATE_USER", 
+    "FUNCT_CREATE_ROLE", 
+    "FUNCT_ADD_ROLE",
+    "FUNCT_ADD_FUNCTION",
+    "FUNCT_CREATE_MATTER",
+    "FUNCT_CREATE_INVOICE",    
+    "FUNCT_CREATE_CUSTOMER"
+  ]  
   functions.each do |function_name|
     unless Function.find_by_name(function_name)
       Function.create(:name => function_name, :description => "#{function_name}_DESCR")
@@ -44,17 +58,50 @@ Role.transaction do
   unless Role.find_by_name("ROLE_ADMIN")
     Role.create(:name => "ROLE_ADMIN", :description => "ROLE_ADMIN_DESCR")
   end  
+  unless Role.find_by_name("ROLE_MIMINAL")
+    Role.create(:name => "ROLE_MIMINAL", :description => "ROLE_MIMINAL_DESCR")
+  end
+  unless Role.find_by_name("ROLE_MATTER_MANAGER")
+    Role.create(:name => "ROLE_MATTER_MANAGER", :description => "ROLE_MATTER_MANAGER_DESCR")
+  end
+  unless Role.find_by_name("ROLE_CUSTOMER_MANAGER")
+    Role.create(:name => "ROLE_CUSTOMER_MANAGER", :description => "ROLE_MATTER_MANAGER_DESCR")
+  end  
 end
 
 RoleFunction.transaction do
+  admin_functions = ["FUNCT_ADMIN_LINK", "FUNCT_CREATE_USER", "FUNCT_CREATE_ROLE", "FUNCT_ADD_ROLE", "FUNCT_ADD_FUNCTION"]
   
-  admin_functions = ["FUNCT_LOGIN", "FUNCT_ADMIN_LINK", "FUNCT_CREATE_USER"]
   role = Role.find_by_name("ROLE_ADMIN")  
   admin_functions.each do |function_name|
     unless role.functions.where(:name => function_name).first
       role.functions<<Function.find_by_name(function_name)
-    end       
+    end         
   end 
+  
+  minimal_functions = ["FUNCT_LOGIN", "FUNCT_DASHBOARD_LINK"]
+  role = Role.find_by_name("ROLE_MIMINAL")  
+  minimal_functions.each do |function_name|
+    unless role.functions.where(:name => function_name).first
+      role.functions<<Function.find_by_name(function_name)
+    end         
+  end
+
+  matter_functions = ["FUNCT_MATTERS_LINK"]
+  role = Role.find_by_name("ROLE_MATTER_MANAGER")  
+  matter_functions.each do |function_name|
+    unless role.functions.where(:name => function_name).first
+      role.functions<<Function.find_by_name(function_name)
+    end         
+  end
+  
+  matter_functions = ["FUNCT_CUSTOMERS_LINK"]
+  role = Role.find_by_name("ROLE_CUSTOMER_MANAGER")  
+  matter_functions.each do |function_name|
+    unless role.functions.where(:name => function_name).first
+      role.functions<<Function.find_by_name(function_name)
+    end         
+  end  
 end
 
 ContactType.transaction do  
@@ -80,9 +127,18 @@ User.transaction do
               :password => 'administrator'
           }
       }
-    }).individual.user.roles<<Role.find_by_name("ROLE_ADMIN")    
+    }).individual.user.roles<<Role.find_all_by_name(["ROLE_ADMIN", "ROLE_MIMINAL"])
+    
   end
   unless User.find_by_email("admin@petpat.lv").individual.party.contacts.where(:contact_value => "admin@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("admin@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "admin@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end
+end
+
+Clazz.transaction do
+  (1..45).each do |i|
+    if Clazz.find_by_code(i).nil?
+      Clazz.create(:code => i, :name => "#{i}_DESCR")
+    end
   end
 end

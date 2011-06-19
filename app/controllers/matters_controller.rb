@@ -3,7 +3,11 @@ class MattersController < ApplicationController
   layout "matters"
   
   def index
-    @matters = Matter.all
+    @matters = Matter.joins(:document).where(:documents => {:user_id => current_user.id}).all
+    @other_matters = Matter.joins(:document).where("user_id != #{current_user.id}").all
+    puts "**********************************"
+    puts @other_matters
+    puts "**********************************"
   end
 
   def new
@@ -13,9 +17,9 @@ class MattersController < ApplicationController
 
   def create
     Document.transaction do
-      @document = Document.new(params[:document])
+      @document = Document.new(params[:document].merge(:user_id => current_user.id))
       if @document.save
-        @matter = @document.matter      
+        @matter = @document.matter        
         redirect_to matter_path(@matter)
       else
         render 'new'
@@ -32,6 +36,15 @@ class MattersController < ApplicationController
     Document.transaction do
       if @document.update_attributes(params[:document])
         @matter = @document.matter
+        matter_clazzs = params[:document][:matter_attributes][:classes]      
+        matter_clazzs.split(',').each do |name|
+          clazz = Clazz.find_by_code(name)
+          unless clazz.nil?
+            if MatterClazz.where(:matter_id => @matter.id, :clazz_id => clazz.id).first.nil?
+              @matter.matter_clazzs<<MatterClazz.new(:clazz_id => clazz.id, :matter_id => @matter.id)
+            end
+          end
+        end        
         redirect_to matter_path(@matter)
       else
         render 'edit'

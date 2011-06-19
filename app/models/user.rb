@@ -41,8 +41,9 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email, submitted_password)
-    user = find_by_email(email)
+    user = find_by_email(email)    
     return nil if user.nil?
+    return nil unless user.has_function(:name => 'FUNCT_LOGIN')
     return user if user.has_password?(submitted_password)
   end
 
@@ -50,7 +51,11 @@ class User < ActiveRecord::Base
     user = find_by_id(id)
     (user && user.salt == cookie_salt) ? user : nil
   end
-
+  
+  def has_function name   
+    !User.where(:id => self.id).joins(:roles => [:functions]).where(:functions => {:name => name[:name]}).first.nil?
+  end
+  
   private
 
   def encrypt_password

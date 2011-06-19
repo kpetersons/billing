@@ -45,7 +45,7 @@ ul.menu {
 	margin: 5px;
 }
 	
-.h-menu ul.menu li a {
+.h-menu ul.menu li>a, .h-menu ul.menu li>span.a {
 	padding: 5px;
 	color: #fff;
 	text-decoration: none;

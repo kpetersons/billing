@@ -25,20 +25,22 @@ class Matter < ActiveRecord::Base
   belongs_to  :applicant, :class_name => "Customer", :foreign_key => :applicant_id
   belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id  
   has_many    :matter_tasks
+  has_many    :matter_clazzs
+  has_many    :clazzs, :through => :matter_clazzs
   
   validates :agent_id, :presence => true
   validates :applicant_id, :presence => true
   
   after_validation :prepare_ajax_fields  
 
-  attr_protected :applicant_name, :agent_name
+  attr_protected :applicant_name, :agent_name, :classes
   
   def number
     document.registration_number
   end
   
   def classes
-    "1, 2, 4"
+    clazzs.collect {|clazz| clazz.code}.join(',')
   end
   
   def agent_name

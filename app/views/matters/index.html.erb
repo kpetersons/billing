@@ -1,4 +1,10 @@
 <div class="panel">
-	<%= render :partial => "/matters/index", :locals => {:matters => @matters, :table_title => "Matter list", :choose => false} %>	
+	<%= render :partial => "/matters/index", :locals => {:matters => @matters, :table_title => "My matters", :choose => false} %>	
 	<%= link_to "New matter", new_matter_path %>
 </div>
+<%unless @other_matters.empty?%>
+<div class="nested-panel">
+	<%= render :partial => "/matters/index", :locals => {:matters => @other_matters, :table_title => "Other user matters", :choose => false} %>	
+	<%= link_to "New matter", new_matter_path %>
+</div>
+<%end%>

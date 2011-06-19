@@ -23,10 +23,11 @@ class Document < ActiveRecord::Base
   #
   has_one :matter
   #
-  attr_accessible :registration_number, :description, :matter_attributes, :parent_id
+  attr_accessible :registration_number, :description, :matter_attributes, :parent_id, :user_id
   accepts_nested_attributes_for :matter
 
   validates :registration_number, :presence=>true
+  validates :user_id, :presence => true  
 
   def parent_document_registration_number
     (parent_document.nil?)? '' : parent_document.registration_number
