@@ -5,6 +5,5 @@
 <%unless @other_matters.empty?%>
 <div class="nested-panel">
 	<%= render :partial => "/matters/index", :locals => {:matters => @other_matters, :table_title => "Other user matters", :choose => false} %>	
-	<%= link_to "New matter", new_matter_path %>
 </div>
 <%end%>

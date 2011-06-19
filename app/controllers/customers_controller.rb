@@ -3,10 +3,7 @@ class CustomersController < ApplicationController
   layout "customers"
   
   def index
-    @agents = Customer.where(:customer_type => 'AGENT')
-                      .paginate(:page =>  params[:agents_page], :per_page => 10)
-    @applicants = Customer.where(:customer_type => 'APPLICANT')
-                      .paginate(:page => params[:applicants_page], :per_page => 10)
+    @customers = Customer.paginate(:page =>  params[:customers_page], :per_page => 10)
   end
 
   def new
@@ -52,7 +49,7 @@ class CustomersController < ApplicationController
     @result[:suggestions] = Array.new
     @result[:data] = Array.new
     index = 0
-    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ? and customer_type = ?', "%#{params[:query]}%", 'AGENT'])
+    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ?', "%#{params[:query]}%"])
     @customers.each do |customer|
       @result[:suggestions][index] = customer.name
       @result[:data][index] = customer.id
@@ -67,7 +64,7 @@ class CustomersController < ApplicationController
     @result[:suggestions] = Array.new
     @result[:data] = Array.new
     index = 0
-    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ? and customer_type = ?', "%#{params[:query]}%",  'APPLICANT'])
+    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ?', "%#{params[:query]}%"])
     @customers.each do |customer|
       @result[:suggestions][index] = customer.name
       @result[:data][index] = customer.id

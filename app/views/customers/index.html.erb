@@ -1,7 +1,4 @@
 <div class="panel">
-	<%= render :partial => "index", :locals => {:customers => @agents, :table_title => "Agents", :param_name => "agents_page"} %>
+	<%= render :partial => "index", :locals => {:customers => @customers, :table_title => "Customers", :param_name => "customers_page"} %>
 	<%= link_to "New agent", new_customer_path(:customer_type => 'AGENT') %>
-	<p/>
-	<%= render :partial => "index", :locals => {:customers => @applicants, :table_title => "Applicants", :param_name => "applicants_page"} %>
-	<%= link_to "New applicant", new_customer_path(:customer_type => 'APPLICANT') %>
 </div>
