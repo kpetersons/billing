@@ -1,0 +1,22 @@
+<%=form_for @currency do |c_f| %>
+<%= c_f.hidden_field :id %>
+<div class="dialog">
+	<ul>
+		<li>
+			<%= c_f.label :code %>
+			<%= c_f.text_field :code %>			
+		</li>
+		<li>
+			<%= c_f.label :name %>
+			<%= c_f.text_field :name %>			
+		</li>
+		<li>
+			<%= c_f.label :rate %>
+			<%= c_f.text_field :rate %>			
+		</li>
+	</ul>
+</div>
+<div class="buttons">
+	<span class="button"><%= c_f.submit "Save" %></span>
+</div>
+<%end%>

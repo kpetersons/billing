@@ -1,7 +1,7 @@
 <%= fields.hidden_field :id %>
 <ul>
 	<li>
-		<%= fields.label :type %>
+		<%= fields.label :address_type_id, "Type" %>
 		<%= fields.select :address_type_id, AddressType.all.collect { |tt| [tt.name, tt.id] } %>
 	</li>	
 	<li>

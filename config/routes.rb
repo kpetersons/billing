@@ -2,6 +2,15 @@ Billing::Application.routes.draw do
 
   root :to => 'sessions#new'
 
+  resources :invoices
+
+  resources :currencies do
+    resources :exchange_rates, :only => [:edit, :update]
+    member do
+      post :add_rate
+    end
+  end
+
   resources :dashboard, :only => [:show] do
     collection do
       get :show

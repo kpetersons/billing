@@ -1,0 +1,38 @@
+<table style="width:100%">
+	<caption class="panel-header">
+		<strong><%= (table_title.nil?)? "Currencies list" : table_title %></strong>
+	</caption>
+	<thead>
+		<tr>
+			<th class="col-radio"></th>
+			<th class="col-text">Code</th>
+			<th class="col-text">Name</th>
+			<th class="col-number">Actual rate</th>			
+			<th class="col-number"></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th colspan="5"></th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<% currencies.each do |currency|%>
+			<tr>
+				<td class="col-radio">
+				</td>
+				<td class="col-text"><%=currency.code%></td>
+				<td class="col-text"><%=currency.name%></td>			
+				<td class="col-number"><%=currency.actual_rate.rate%></td>				
+				<td class="col-number">
+					<%=link_to 'Show', currency_path(currency) %> 
+				</td>
+			</tr>
+		<%end%>
+		<% if currencies.empty? %>
+			<tr>
+				<td colspan="5">&nbsp;</td>
+			</tr>
+		<%end%>
+	</tbody>
+</table>

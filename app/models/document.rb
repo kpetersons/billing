@@ -22,9 +22,10 @@ class Document < ActiveRecord::Base
   has_many :tags, :through => :document_tags
   #
   has_one :matter
+  has_one :invoice
   #
-  attr_accessible :registration_number, :description, :matter_attributes, :parent_id, :user_id
-  accepts_nested_attributes_for :matter
+  attr_accessible :registration_number, :description, :matter_attributes, :invoice_attributes, :parent_id, :user_id
+  accepts_nested_attributes_for :matter, :invoice
 
   validates :registration_number, :presence=>true
   validates :user_id, :presence => true  

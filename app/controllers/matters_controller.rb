@@ -5,9 +5,6 @@ class MattersController < ApplicationController
   def index
     @matters = Matter.joins(:document).where(:documents => {:user_id => current_user.id}).all
     @other_matters = Matter.joins(:document).where("user_id != #{current_user.id}").all
-    puts "**********************************"
-    puts @other_matters
-    puts "**********************************"
   end
 
   def new

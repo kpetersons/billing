@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110619083917) do
+ActiveRecord::Schema.define(:version => 20110619113951) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -62,6 +62,13 @@ ActiveRecord::Schema.define(:version => 20110619083917) do
     t.datetime "updated_at"
   end
 
+  create_table "currencies", :force => true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "customers", :force => true do |t|
     t.integer  "party_id"
     t.date     "customer_since"
@@ -86,6 +93,14 @@ ActiveRecord::Schema.define(:version => 20110619083917) do
     t.integer  "parent_id"
   end
 
+  create_table "exchange_rates", :force => true do |t|
+    t.integer  "currency_id"
+    t.decimal  "rate",        :precision => 8, :scale => 3
+    t.date     "from_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "functions", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -106,6 +121,24 @@ ActiveRecord::Schema.define(:version => 20110619083917) do
     t.string   "middle_name"
     t.string   "last_name"
     t.date     "birth_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invoices", :force => true do |t|
+    t.integer  "document_id"
+    t.integer  "customer_id"
+    t.integer  "address_id"
+    t.integer  "individual_id"
+    t.integer  "currency_id"
+    t.integer  "exchange_rate_id"
+    t.integer  "discount"
+    t.string   "our_ref"
+    t.string   "your_ref"
+    t.date     "your_date"
+    t.string   "po_billing"
+    t.string   "finishing_details"
+    t.date     "invoice_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

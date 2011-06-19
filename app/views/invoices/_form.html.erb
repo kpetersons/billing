@@ -1,0 +1,76 @@
+<%=form_for @document, :url => (@document.persisted?) ? {:controller => 'invoices', :action => 'update'} : {:controller => 'invoices', :action => 'create'} do |d_f| %>
+<%= d_f.hidden_field :id %>
+<%= d_f.hidden_field :parent_id %>
+<div class="dialog">
+	<ul>
+		<li>
+			<%= d_f.label :registration_number, "Invoice number" %>
+			<%= d_f.text_field :registration_number %>
+		</li>
+		<%= d_f.fields_for :invoice do |i_f| %>
+		<li>
+			<%= i_f.hidden_field :id %>
+			<%= i_f.label :customer_id, "Customer" %>
+			<%= i_f.text_field :customer_id %>
+		</li>		
+		<li>			
+			<%= i_f.label :address_id, "Address" %>
+			<%= i_f.text_field :address_id %>
+		</li>		
+		<li>			
+			<%= i_f.label :individual_id, "Person" %>
+			<%= i_f.text_field :individual_id %>
+		</li>		
+		<li>			
+			<%= i_f.label :currency_id %>
+			<%= i_f.select :currency_id, Currency.all.collect { |tt| [tt.name, tt.id] } %>
+		</li>
+		<li>			
+			<%= i_f.label :discount %>
+			<%= i_f.text_field :discount %>
+		</li>		
+		<li>			
+			<%= i_f.label :our_ref %>
+			<%= i_f.text_field :our_ref %>
+		</li>		
+		<li>			
+			<%= i_f.label :your_ref %>
+			<%= i_f.text_field :your_ref %>
+		</li>		
+		<li>			
+			<%= i_f.label :your_date %>
+			<%= i_f.text_field :your_date %>
+		</li>		
+		<li>			
+			<%= i_f.label :po_billing %>
+			<%= i_f.text_field :po_billing %>
+		</li>		
+		<li>			
+			<%= i_f.label :invoice_date %>
+			<%= i_f.text_field :invoice_date %>
+		</li>		
+		<% end %>
+	</ul>
+</div>
+<div class="buttons">
+	<span class="button"><%= d_f.submit "Save" %></span>
+</div>
+<%end%>
+<script>
+	new Autocomplete('document_matter_attributes_applicant_name', 
+	{
+		serviceUrl:'/customers/applicant_find_ajax'
+		,minChars:2
+		,onSelect: function(value, data){
+        	$('document_matter_attributes_applicant_id').setValue(data)
+      	}
+	});
+	new Autocomplete('document_matter_attributes_agent_name', 
+	{
+		serviceUrl:'/customers/agent_find_ajax'
+		,minChars:2
+		,onSelect: function(value, data){
+        	$('document_matter_attributes_agent_id').setValue(data)
+      	}
+	});	
+</script>

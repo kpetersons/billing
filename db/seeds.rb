@@ -45,7 +45,8 @@ Function.transaction do
     "FUNCT_ADD_FUNCTION",
     "FUNCT_CREATE_MATTER",
     "FUNCT_CREATE_INVOICE",    
-    "FUNCT_CREATE_CUSTOMER"
+    "FUNCT_CREATE_CUSTOMER",
+    "FUNCT_CREATE_EXCHANGE_RATE",    
   ]  
   functions.each do |function_name|
     unless Function.find_by_name(function_name)
@@ -70,7 +71,7 @@ Role.transaction do
 end
 
 RoleFunction.transaction do
-  admin_functions = ["FUNCT_ADMIN_LINK", "FUNCT_CREATE_USER", "FUNCT_CREATE_ROLE", "FUNCT_ADD_ROLE", "FUNCT_ADD_FUNCTION"]
+  admin_functions = ["FUNCT_ADMIN_LINK", "FUNCT_CREATE_USER", "FUNCT_CREATE_ROLE", "FUNCT_ADD_ROLE", "FUNCT_ADD_FUNCTION", "FUNCT_CREATE_EXCHANGE_RATE"]
   
   role = Role.find_by_name("ROLE_ADMIN")  
   admin_functions.each do |function_name|
@@ -140,5 +141,21 @@ Clazz.transaction do
     if Clazz.find_by_code(i).nil?
       Clazz.create(:code => i, :name => "#{i}_DESCR")
     end
+  end
+end
+
+Currency.transaction do
+  ["EUR", "LVL", "USD"].each do |i|
+    if Currency.find_by_code(i).nil?
+      Currency.create(:code => i, :name => i)
+    end
+  end
+end
+
+ExchangeRate.transaction do
+  Currency.all.each do |currency|
+    if ExchangeRate.find_by_currency_id(currency.id).nil?
+      ExchangeRate.create(:currency_id => currency.id, :rate => 1.0, :from_date => Date.today-365)      
+    end    
   end
 end

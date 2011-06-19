@@ -1,0 +1,47 @@
+<table style="width: 100%;">
+	<caption class="panel-header">
+		<strong><%= (table_title.nil?)? "Matter list" : table_title %></strong>
+	</caption>
+	<thead class="panel-content">
+		<tr>
+			<th class="col-radio"></th>	
+			<th class="col-text">Invoice number</th>
+			<th class="col-text">Customer name</th>
+			<th class="col-text">Our ref</th>
+			<th class="col-text">Your ref</th>
+			<th class="col-date">Your date</th>
+			<th class="col-text">PO billing</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th class="list-paginate" colspan="8">
+			
+			</th>
+		</tr>
+	</tfoot>
+	<tbody class="panel-content">
+		<% invoices.each do |invoice| %>
+		<tr>
+			<td>
+				<%if choose %>
+					<%= fields.radio_button :id, invoice.document_id%>								
+				<%end%>
+			</td>
+			<td class="col-text"><%= invoice.number%></td>
+			<td class="col-text"><%= invoice.customer_name %></td>
+			<td class="col-text"><%= invoice.our_ref%></td>
+			<td class="col-text"><%= invoice.your_ref %></td>
+			<td class="col-date"><%= invoice.your_date%></td>
+			<td class="col-text"><%= invoice.po_billing %></td>
+			<td class="col-number"><%= link_to "Show", invoice_path(invoice)%> | <%= link_to "Edit", edit_invoice_path(invoice)%> | Remove</td>
+		</tr>
+		<% end %>
+		<% if invoices.empty? %>
+		<tr>
+			<td colspan="9">&nbsp;</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
