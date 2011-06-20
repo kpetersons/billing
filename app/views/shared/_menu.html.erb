@@ -1,5 +1,6 @@
 <div class="header row h-menu">
-	<ul class="menu">	
+	<ul class="menu">
+		<li><%= t('hello')%></li>	
 		<li>
 			<%= link_to_if has_function(:name => 'FUNCT_DASHBOARD_LINK'), "Dashboard", dashboard_index_path do 
 				escape_a_item("Dashboard") 
