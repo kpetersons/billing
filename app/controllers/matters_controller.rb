@@ -3,8 +3,8 @@ class MattersController < ApplicationController
   layout "matters"
   
   def index
-    @matters = Matter.joins(:document).where(:documents => {:user_id => current_user.id}).all
-    @other_matters = Matter.joins(:document).where("user_id != #{current_user.id}").all
+    @matters = Matter.joins(:document).where(:documents => {:user_id => current_user.id}).paginate(:page => params[:param_name])
+    @other_matters = Matter.joins(:document).where("user_id != #{current_user.id}").paginate(:page => params[:param_name])
   end
 
   def new
@@ -55,7 +55,7 @@ class MattersController < ApplicationController
 
   def choose
     @document = Document.new
-    @matters = Matter.all
+    @matters = Matter.paginate(:page => params[:param_name])
   end
 
   def add

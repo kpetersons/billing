@@ -1,6 +1,6 @@
 <div class="panel">
 	<%=form_for @document, :url => add_matter_matters_path(@customer) do |m_f|%>
-	<%= render :partial => "/matters/index", :locals => {:matters => @matters, :table_title => "Matter list", :choose => true, :fields => m_f} %>
+	<%= render :partial => "/matters/index", :locals => {:matters => @matters, :table_title => "Matter list", :choose => true, :fields => m_f, :param_name => 'choose_matters_page'} %>
 	<div class="buttons">
 		<span class="button"><%= m_f.submit "Add" %></span>
 	</div>	

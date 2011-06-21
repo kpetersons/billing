@@ -2,7 +2,7 @@ class CurrenciesController < ApplicationController
 
   layout "invoices"
   def index
-    @currencies = Currency.all
+    @currencies = Currency.paginate(:page => params[:param_name])
   end
 
   def show
@@ -33,10 +33,14 @@ class CurrenciesController < ApplicationController
     @currency = Currency.find_by_id(params[:id])
     if @currency.update_attributes(params[:currency])
       exchange_rate = params[:currency][:rate]
+      prev_rate = @currency.exchange_rates.first      
+      if exchange_rate.empty? || prev_rate.rate.to_s == exchange_rate.to_s
+        flash.now[:error] = "Currency is either empty or the same as previously!"                
+        render 'show' and return
+      end
       if @currency.exchange_rates<<ExchangeRate.new(:from_date => Date.today, :rate => exchange_rate)
-        redirect_to @currency
-      else
-        render 'show'
+        prev_rate.update_attributes(:through_date => Date.today)
+        redirect_to @currency and return        
       end
     else
       render 'show'

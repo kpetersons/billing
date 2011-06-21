@@ -18,7 +18,7 @@
 	<tfoot>
 		<tr>
 			<th class="list-paginate" colspan="9">
-			<g:paginate controller="customer" action="list" total="${Customer.count()}" />
+				<%= will_paginate matters, :param_name => param_name %>
 			</th>
 		</tr>
 	</tfoot>

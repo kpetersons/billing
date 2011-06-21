@@ -1,7 +1,9 @@
+
 <div class="panel">
 	<div class="panel-header">
 		<strong>User information</strong>
 	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
 	<dl class="panel-content">
 		<dt>
 			<label>
@@ -57,7 +59,8 @@
 			</label>
 		</dt>
 		<dd>
-			<%=@user.active%>&nbsp;
+			<%=(@user.active)? 'Yes' : 'No' %>&nbsp;
+			<%=link_to "#{(@user.active)? 'de' : ''}activate".capitalize, activate_user_path(@user), :method => :post %>
 		</dd>
 		<dt>
 			<label>
@@ -65,14 +68,15 @@
 			</label>
 		</dt>
 		<dd>
-			<%=@user.blocked%>&nbsp;
+			<%=(@user.blocked)? 'Yes' : 'No' %>&nbsp;
+			<%=link_to "#{(@user.blocked)? 'un' : ''}block".capitalize, block_user_path(@user), :method => :post %>
 		</dd>		
 	</dl>
 	<div class="panel-content">
 	<%=link_to 'Edit', edit_user_path(@user)%>
 	</div>	
 	<div class="nested-panel">
-		<%= render :partial => "/addresses/index", :locals => {:addresses => @user.individual.party.addresses, :table_title => "Addresses", :choose => false} %>
+		<%= render :partial => "/addresses/index", :locals => {:addresses => @user.individual.party.addresses.paginate(:per_page=> 10, :page => params[:address_page]), :table_title => "Addresses", :choose => false, :param_name => 'address_page'} %>
 		<div class="panel-content">	 
 			<%=link_to 'Add new address', new_party_address_path(@user.individual.party) %>
 		</div>

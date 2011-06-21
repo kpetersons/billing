@@ -3,7 +3,7 @@ class CustomersController < ApplicationController
   layout "customers"
   
   def index
-    @customers = Customer.paginate(:page =>  params[:customers_page], :per_page => 10)
+    @customers = Customer.paginate(:page =>  params[:customers_page])
   end
 
   def new

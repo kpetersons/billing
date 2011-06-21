@@ -3,8 +3,8 @@ class InvoicesController < ApplicationController
   layout "invoices"
 
   def index
-    @invoices = Invoice.joins(:document).where(:documents => {:user_id => current_user.id})
-    @other_invoices = Invoice.joins(:document).where("user_id != #{current_user.id}").all
+    @invoices = Invoice.joins(:document).where(:documents => {:user_id => current_user.id}).paginate(:page => params[:param_name])
+    @other_invoices = Invoice.joins(:document).where("user_id != #{current_user.id}").paginate(:page => params[:param_name])
   end
 
   def new

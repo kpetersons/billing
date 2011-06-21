@@ -1,6 +1,6 @@
 class AddressesController < ApplicationController
 
-  layout "customers"
+  layout "customers"  
 
   def index
     @addresses = Address.all()

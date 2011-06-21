@@ -8,9 +8,6 @@
 		<%= render :partial => "form", :locals => {:contact => @currency} %>
 	</div>
 	<div class="nested-panel">
-		<%= render :partial => "/exchange_rates/index", :locals => {:exchange_rates => @currency.exchange_rates, :table_title => "Rates", :choose => false} %>
-		<div class="panel-content">	 
-			<%=link_to 'Add rate', '#' %>
-		</div
+		<%= render :partial => "/exchange_rates/index", :locals => {:exchange_rates => @currency.exchange_rates.paginate(:page => params[:page], :per_page => 10), :table_title => "Rates", :choose => false} %>
 	</div>
 </div>

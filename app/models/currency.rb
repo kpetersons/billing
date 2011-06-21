@@ -11,7 +11,8 @@
 #
 
 class Currency < ActiveRecord::Base
-  has_many :exchange_rates
+  
+  has_many :exchange_rates, :order => "id desc"
   
   validates :code, :presence => true
   validates :name, :presence => true
@@ -19,11 +20,11 @@ class Currency < ActiveRecord::Base
   attr_protected :rate
   
   def actual_rate
-    exchange_rates.last
+    exchange_rates.first
   end
 
   def rate
-    exchange_rates.last.rate
+    exchange_rates.first.rate
   end
   
 end

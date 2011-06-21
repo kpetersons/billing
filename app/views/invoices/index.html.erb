@@ -1,9 +1,9 @@
 <div class="panel">
-	<%= render :partial => "/invoices/index", :locals => {:invoices => @invoices, :table_title => "My invoices", :choose => false} %>
+	<%= render :partial => "/invoices/index", :locals => {:invoices => @invoices, :table_title => "My invoices", :choose => false, :param_name => :my_invoices_page} %>
 	<%= link_to "New invoice", new_invoice_path %>
 </div>
 <%unless @other_invoices.empty?%>
 <div class="nested-panel">
-	<%= render :partial => "/invoices/index", :locals => {:invoices => @other_invoices, :table_title => "Other user invoices", :choose => false} %>
+	<%= render :partial => "/invoices/index", :locals => {:invoices => @other_invoices, :table_title => "Other user invoices", :choose => false, :param_name => :other_invoices_page} %>
 </div>
 <%end%>

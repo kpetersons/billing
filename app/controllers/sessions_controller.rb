@@ -1,10 +1,9 @@
 class SessionsController < ApplicationController
 
   before_filter :authenticate, :only => [:destroy]
-  
   def new
     unless current_user.nil?
-      redirect_to customers_path
+      redirect_to dashboard_index_path
     end
   end
 
@@ -14,11 +13,14 @@ class SessionsController < ApplicationController
     params[:session][:password])
     if user.nil?
       flash.now[:error] = "Invalid email/password combination."
-      render 'new'
-    else
-      sign_in user
-      redirect_back_or customers_path
+      render 'new' and return
     end
+    if !user.active || user.blocked
+      flash.now[:error] = "User is either blocked or deactivated!"
+      render 'new' and return
+    end
+    sign_in user
+    redirect_back_or dashboard_index_path
   end
 
   def signout

@@ -3,12 +3,12 @@ class RolesController < ApplicationController
   layout "administration"  
   
   def index
-    @roles = Role.paginate(:page =>  params[:page], :per_page => 10)
+    @roles = Role.paginate(:page =>  params[:page])
   end
 
   def choose
     @user = User.find(params[:user_id])
-    @roles = Role.paginate(:page =>  params[:page], :per_page => 10)
+    @roles = Role.paginate(:page =>  params[:page])
     @user_role = UserRole.new(:user_id => @user.id)
   end
   
@@ -19,7 +19,7 @@ class RolesController < ApplicationController
       if @user.user_roles<<@user_role
         redirect_to @user
       else
-        @roles = Role.paginate(:page =>  params[:page], :per_page => 10)
+        @roles = Role.paginate(:page =>  params[:page])
         render 'choose' 
       end
     end    

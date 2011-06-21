@@ -1,38 +1,25 @@
 <div class="header row h-menu">
 	<ul class="menu">
-		<li><%= t('hello')%></li>	
 		<li>
-			<%= link_to_if has_function(:name => 'FUNCT_DASHBOARD_LINK'), "Dashboard", dashboard_index_path do 
-				escape_a_item("Dashboard") 
-			end %>							
+			<%=link_to_if_function dashboard_index_path, 'menu.dashboard', 'FUNCT_DASHBOARD_LINK'%>
 		</li>
 		<li>
-			<%= link_to_if has_function(:name => 'FUNCT_MATTERS_LINK'), "Matters", matters_path do 
-				escape_a_item("Matters") 
-			end %>
+			<%=link_to_if_function matters_path, 'menu.matters', 'FUNCT_MATTERS_LINK'%>
 		</li>
 		<li>
-			<%= link_to_if has_function(:name => 'FUNCT_INVOICES_LINK'), "Invoices", invoices_path do 
-				escape_a_item("Invoieces") 
-			end %>
+			<%=link_to_if_function invoices_path, 'menu.invoices', 'FUNCT_INVOICES_LINK'%>
 		</li>
 		<li>
-			<%= link_to_if has_function(:name => 'FUNCT_CUSTOMERS_LINK'), "Customers", customers_path do 
-				escape_a_item("Customers") 
-			end %>
+			<%=link_to_if_function customers_path, 'menu.customers', 'FUNCT_CUSTOMERS_LINK'%>
 		</li>
 		<li>
-			<%= link_to_if has_function(:name => 'FUNCT_SETTINGS_LINK'), "Settings", customers_path do 
-				escape_a_item("Settings") 
-			end %>	
+			<%=link_to_if_function customers_path, 'menu.settings', 'FUNCT_SETTINGS_LINK'%>
 		</li>
 		<li>
-			<%= link_to_if has_function(:name => 'FUNCT_ADMIN_LINK'), "Administration", users_path do 
-				escape_a_item("Administration") 
-			end %>			
+			<%=link_to_if_function users_path, 'menu.administration', 'FUNCT_ADMIN_LINK'%>			
 		</li>
 	</ul>
 	<span style="float:right; margin-right:5em">
-	<%= link_to "logout", signout_sessions_path, {:method => :delete, :style => 'color:white; text-decoration:none'} %>
-	</span>	
+		<%= link_to "logout", signout_sessions_path, {:method => :delete, :style => 'color:white; text-decoration:none'} %>
+	</span>
 </div>

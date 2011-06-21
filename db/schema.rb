@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110619113951) do
+ActiveRecord::Schema.define(:version => 20110620121133) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -95,10 +95,11 @@ ActiveRecord::Schema.define(:version => 20110619113951) do
 
   create_table "exchange_rates", :force => true do |t|
     t.integer  "currency_id"
-    t.decimal  "rate",        :precision => 8, :scale => 3
+    t.decimal  "rate",         :precision => 8, :scale => 3
     t.date     "from_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "through_date"
   end
 
   create_table "functions", :force => true do |t|

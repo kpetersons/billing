@@ -1,2 +1,10 @@
-<h1>ExchangeRates#edit</h1>
-<p>Find me in app/views/exchange_rates/edit.html.erb</p>
+<div class="panel">
+	<div class="panel-header">
+		<strong>Edit exchange rate</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
+	<%= render :partial => "shared/error", :locals => {:obj => @exchange_rate}%>	
+	<div class="panel-content">
+		<%= render :partial => "form", :locals => {:exchange_rate => @exchange_rate} %>
+	</div>
+</div>

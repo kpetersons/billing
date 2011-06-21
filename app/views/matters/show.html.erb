@@ -122,11 +122,11 @@
 		<%= link_to 'Edit', edit_matter_path(@matter)%>
 	</div>
 	<div class="nested-panel">
-		<%= render :partial => "/matters/index", :locals => {:matters => @matter.sub_matters, :table_title => "Sub matter list", :choose => false} %>
+		<%= render :partial => "/matters/index", :locals => {:matters => @matter.sub_matters.paginate(:page => params[:sub_matters_page]), :table_title => "Sub matter list", :choose => false, :param_name => :sub_matters_page} %>
 		<div class="panel-content">
 			<%= link_to 'Create sub matter', new_matter_matter_path(@matter) %>
 		</div>
-		<%= render :partial => "/matter_tasks/index", :locals => {:matter_tasks => @matter.matter_tasks, :table_title => "Deadlines"} %>
+		<%= render :partial => "/matter_tasks/index", :locals => {:matter_tasks => @matter.matter_tasks.paginate(:page => params[:deadlines_page]), :table_title => "Deadlines", :param_name => :deadlines_page} %>
 		<div class="panel-content">
 			<%= link_to 'Add deadline', new_matter_matter_task_path(@matter) %>
 		</div>

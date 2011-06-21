@@ -170,7 +170,8 @@ font-family: "Tahoma", Georgia, Serif;font-size:1em
 
 table {font-size:1em;}
 
-.col-radio, .col-checkbox {width:1em;}
+.col-radio, .col-checkbox, .col-check {width:1em;}
+.col-check {text-align:right;}
 
 form label {color:black;}
 
@@ -182,3 +183,14 @@ li.error{padding:0 2em; font-size:1.1em;}
 
 form li span.error>label {color:red;}
 form li span.error+span.error>* {border-color:red;border-style:solid;border-width: 1px;}
+
+tfoot div.pagination, tfoot div.pagination em {
+	font-size:1em;
+	font-weight:normal;
+	text-decoration: none;
+	font-style: normal;
+}
+tfoot div.pagination em {
+	font-size:1.1em;
+	font-weight:bold;
+}

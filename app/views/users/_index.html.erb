@@ -28,8 +28,8 @@
 				<td class="col-text"><%=user.individual.first_name%></td>
 				<td class="col-text"><%=user.individual.middle_name%></td>				
 				<td class="col-text"><%=user.individual.last_name%></td>
-				<td class="col-check"><%=user.active%></td>
-				<td class="col-check"><%=user.blocked%></td>
+				<td class="col-check"><%= col_check user.id, user.active%></td>
+				<td class="col-check"><%= col_check user.id, user.blocked%></td>
 				<td class="col-date"><%=user.registration_date%></td>				
 				<td class="col-number">
 				<%=link_to 'Show', user_path(user) %> |

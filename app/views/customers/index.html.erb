@@ -1,4 +1,4 @@
 <div class="panel">
 	<%= render :partial => "index", :locals => {:customers => @customers, :table_title => "Customers", :param_name => "customers_page"} %>
-	<%= link_to "New agent", new_customer_path(:customer_type => 'AGENT') %>
+	<%= link_to "New customer", new_customer_path(:customer_type => 'AGENT') %>
 </div>

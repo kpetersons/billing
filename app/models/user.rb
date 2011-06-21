@@ -15,8 +15,7 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #
-
-class User < ActiveRecord::Base
+class User < ActiveRecord::Base   
   belongs_to :individual
   has_many :user_roles
   has_many :roles, :through => :user_roles
@@ -24,7 +23,7 @@ class User < ActiveRecord::Base
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   #
   attr_accessor :password
-  attr_accessible :email, :password, :password_confirmation, :active, :blocked, :individual_id
+  attr_accessible :email, :password, :password_confirmation, :active, :blocked, :individual_id, :registration_date, :activation_key
   #
   validates :email, :presence => true,
             :format           => {:with => email_regex},
@@ -36,14 +35,13 @@ class User < ActiveRecord::Base
   #
   before_save :encrypt_password
   #
-  def has_password?(submitted_password)
+  def has_password?(submitted_password)  
     encrypted_password == encrypt(submitted_password)
   end
 
   def self.authenticate(email, submitted_password)
     user = find_by_email(email)    
     return nil if user.nil?
-    return nil unless user.has_function(:name => 'FUNCT_LOGIN')
     return user if user.has_password?(submitted_password)
   end
 
@@ -52,15 +50,27 @@ class User < ActiveRecord::Base
     (user && user.salt == cookie_salt) ? user : nil
   end
   
-  def has_function name   
+  def has_function name
     !User.where(:id => self.id).joins(:roles => [:functions]).where(:functions => {:name => name[:name]}).first.nil?
   end
   
+  def activate
+    self.active = !active 
+    return true
+  end
+  
+  def block 
+    self.block = !block 
+    return true
+  end
+      
   private
 
   def encrypt_password
-    self.salt = make_salt if new_record?
-    self.encrypted_password = encrypt(password)
+    unless password.nil?
+      self.salt = make_salt if new_record?
+      self.encrypted_password = encrypt(password)
+    end
   end
 
   def encrypt(string)
@@ -74,4 +84,5 @@ class User < ActiveRecord::Base
   def secure_hash(string)
     Digest::SHA2.hexdigest(string)
   end
+  
 end

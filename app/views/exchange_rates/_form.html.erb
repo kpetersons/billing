@@ -1,18 +1,22 @@
-<%=form_for @exchange_rate do |er_f| %>
+<%=form_for exchange_rate do |er_f| %>
 <%= er_f.hidden_field :id %>
 <div class="dialog">
 	<ul>
 		<li>
 			<%= er_f.label :rate %>
-			<%= c_f.text_field :rate %>			
+			<%= er_f.text_field :rate %>			
 		</li>
 		<li>
-			<%= c_f.label :from_date %>
-			<%= c_f.text_field :from_date %>			
+			<%= er_f.label :from_date %>
+			<%= er_f.text_field :from_date, :disabled => true %>			
 		</li>
+		<li>
+			<%= er_f.label :through_date %>
+			<%= er_f.text_field :through_date, :disabled => true %>			
+		</li>		
 	</ul>
 </div>
 <div class="buttons">
-	<span class="button"><%= c_f.submit "Save" %></span>
+	<span class="button"><%= er_f.submit "Save" %></span>
 </div>
 <%end%>

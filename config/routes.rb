@@ -3,9 +3,9 @@ Billing::Application.routes.draw do
   root :to => 'sessions#new'
 
   resources :invoices
+  resources :exchange_rates, :only => [:edit, :update]
 
   resources :currencies do
-    resources :exchange_rates, :only => [:edit, :update]
     member do
       post :add_rate
     end
@@ -24,6 +24,10 @@ Billing::Application.routes.draw do
   end
 
   resources :users do
+    member do
+      post :activate
+      post :block
+    end
     resources :roles, :only => [:choose, :add, :remove] do
       collection do
         get :choose

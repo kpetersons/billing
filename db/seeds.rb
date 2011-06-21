@@ -46,7 +46,9 @@ Function.transaction do
     "FUNCT_CREATE_MATTER",
     "FUNCT_CREATE_INVOICE",    
     "FUNCT_CREATE_CUSTOMER",
-    "FUNCT_CREATE_EXCHANGE_RATE",    
+    "FUNCT_CREATE_EXCHANGE_RATE",
+    "FUNCT_ACTIVATE_USER",
+    "FUNCT_BLOCK_USER"
   ]  
   functions.each do |function_name|
     unless Function.find_by_name(function_name)
@@ -71,7 +73,7 @@ Role.transaction do
 end
 
 RoleFunction.transaction do
-  admin_functions = ["FUNCT_ADMIN_LINK", "FUNCT_CREATE_USER", "FUNCT_CREATE_ROLE", "FUNCT_ADD_ROLE", "FUNCT_ADD_FUNCTION", "FUNCT_CREATE_EXCHANGE_RATE"]
+  admin_functions = ["FUNCT_ADMIN_LINK", "FUNCT_CREATE_USER", "FUNCT_CREATE_ROLE", "FUNCT_ADD_ROLE", "FUNCT_ADD_FUNCTION", "FUNCT_CREATE_EXCHANGE_RATE", "FUNCT_ACTIVATE_USER", "FUNCT_BLOCK_USER"]
   
   role = Role.find_by_name("ROLE_ADMIN")  
   admin_functions.each do |function_name|
@@ -121,11 +123,14 @@ User.transaction do
       :individual_attributes => {
           :first_name => 'System', 
           :last_name => 'Admin', 
-          :birth_date => Time.now, 
+          :birth_date => Date.today, 
           :user_attributes => {
               :email => 'admin@petpat.lv', 
               :password_confirmation => 'administrator', 
-              :password => 'administrator'
+              :password => 'administrator',
+              :registration_date => Date.today,
+              :active => true,
+              :blocked => false
           }
       }
     }).individual.user.roles<<Role.find_all_by_name(["ROLE_ADMIN", "ROLE_MIMINAL"])

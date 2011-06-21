@@ -18,10 +18,10 @@
 	</dl>
 	
 	<div class="nested-panel">
-		<%= render :partial => "/matters/index", :locals => {:matters => @recent_activity_matters, :table_title => "Recently updated matters", :choose => false} %>
+		<%= render :partial => "/matters/index", :locals => {:matters => @recent_activity_matters, :table_title => "Recently updated matters", :choose => false, :param_name => "recent_activity_page"} %>
 	</div>
 
 	<div class="nested-panel">
-		<%= render :partial => "/matters/index", :locals => {:matters => @upcoming_deadlines_matters, :table_title => "Matters with upcoming deadlines", :choose => false} %>
+		<%= render :partial => "/matters/index", :locals => {:matters => @upcoming_deadlines_matters, :table_title => "Matters with upcoming deadlines", :choose => false, :param_name => "upcoming_deadlines_page"} %>
 	</div>	
 </div>		
