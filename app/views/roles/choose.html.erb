@@ -1,9 +1,14 @@
 <div class="panel">
 	<%=form_for @user_role, :url => add_user_roles_path(@user) do |ur_f|%>
-	<%=ur_f.hidden_field :user_id%>
-	<%= render :partial => "/roles/index", :locals => {:roles => @roles, :table_title => "Choose a role", :choose => true, :fields => ur_f, :param_name => 'page'} %>
-	<div class="buttons">
-		<span class="button"><%= ur_f.submit "Add" %></span>
-	</div>	
+	<%= ur_f.hidden_field :user_id%>
+	<div class="panel-header">
+		<strong>Choose a role</strong>
+	</div>
+	<div id="roles">
+		<%= render :partial => "/roles/index", :locals => {:roles => @roles, :choose => true, :fields => ur_f, :param_name => 'page'} %>
+		<div class="buttons">
+			<span class="button"><%= ur_f.submit "Add" %></span>
+		</div>
+	</div>
 	<%end%>
 </div>

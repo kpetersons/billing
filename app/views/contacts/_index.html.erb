@@ -1,7 +1,4 @@
 <table style="width:100%">
-	<caption class="panel-header">
-		<strong><%= (table_title.nil?)? "Address list" : table_title %></strong>
-	</caption>
 	<thead>
 		<tr>
 			<th class="col-radio"></th>
@@ -13,11 +10,11 @@
 	<tfoot>
 		<tr>
 			<th colspan="4">
-				<%= will_paginate contacts, :param_name => param_name %>
+				<%= will_paginate contacts, :param_name => param_name, :params => {:anchor => param_name} %>
 			</th>
 		</tr>
 	</tfoot>
-	<tbody>
+	<tbody id="#<%="contact_#{current_user.id}"%>">
 		<% contacts.each do |contact|%>
 			<tr>
 				<td class="col-radio">

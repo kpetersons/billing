@@ -1,7 +1,4 @@
 <table style="width: 100%;">
-	<caption class="panel-header">
-		<strong><%= (table_title.nil?)? "Matter list" : table_title %></strong>
-	</caption>
 	<thead class="panel-content">
 		<tr>
 			<th class="col-radio"></th>	
@@ -13,7 +10,7 @@
 	<tfoot>
 		<tr>
 			<th class="list-paginate" colspan="4">
-				<%= will_paginate roles, :param_name => param_name %>
+				<%= will_paginate roles, :param_name => param_name, :params => {:anchor => param_name} %>
 			</th>
 		</tr>
 	</tfoot>
@@ -28,7 +25,8 @@
 			<td class="col-text"><%= role.name %></td>
 			<td class="col-text"><%= role.description %></td>
 			<td class="col-number">
-				<%= link_to "Show", role_path(role)%> | <%= link_to "Edit", edit_role_path(role)%> | Remove
+				<%= link_to "Show", role_path(role, :anchor => "functions")%> | 
+				<%= link_to "Edit", edit_role_path(role)%> | Remove
 			</td>
 		</tr>
 		<% end %>

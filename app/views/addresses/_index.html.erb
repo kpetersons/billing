@@ -1,7 +1,4 @@
 <table style="width:100%">
-	<caption class="panel-header">
-		<strong><%= (table_title.nil?)? "Address list" : table_title %></strong>
-	</caption>
 	<thead>
 		<tr>
 			<th class="col-radio"></th>
@@ -19,11 +16,11 @@
 	<tfoot>
 		<tr>
 			<th colspan="10">
-				<%= will_paginate addresses, :param_name => param_name %>
+				<%= will_paginate addresses, :param_name => param_name, :params => {:anchor => param_name} %>
 			</th>
 		</tr>
 	</tfoot>
-	<tbody>
+	<tbody id="#<%="address_#{current_user.id}"%>">
 		<% addresses.each do |address|%>
 			<tr>
 				<td class="col-radio">

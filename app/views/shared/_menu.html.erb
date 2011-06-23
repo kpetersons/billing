@@ -1,7 +1,7 @@
 <div class="header row h-menu">
 	<ul class="menu">
 		<li>
-			<%=link_to_if_function dashboard_index_path, 'menu.dashboard', 'FUNCT_DASHBOARD_LINK'%>
+			<%=link_to_if_function dashboard_index_path(:anchor => "recent_activity"), 'menu.dashboard', 'FUNCT_DASHBOARD_LINK'%>
 		</li>
 		<li>
 			<%=link_to_if_function matters_path, 'menu.matters', 'FUNCT_MATTERS_LINK'%>

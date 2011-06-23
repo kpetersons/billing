@@ -121,17 +121,25 @@
 	<div class="panel-content">
 		<%= link_to 'Edit', edit_matter_path(@matter)%>
 	</div>
-	<div class="nested-panel">
-		<%= render :partial => "/matters/index", :locals => {:matters => @matter.sub_matters.paginate(:page => params[:sub_matters_page]), :table_title => "Sub matter list", :choose => false, :param_name => :sub_matters_page} %>
-		<div class="panel-content">
-			<%= link_to 'Create sub matter', new_matter_matter_path(@matter) %>
-		</div>
-		<%= render :partial => "/matter_tasks/index", :locals => {:matter_tasks => @matter.matter_tasks.paginate(:page => params[:deadlines_page]), :table_title => "Deadlines", :param_name => :deadlines_page} %>
-		<div class="panel-content">
-			<%= link_to 'Add deadline', new_matter_matter_task_path(@matter) %>
-		</div>
-	</div>
-	<div class="nested-panel">
-		<%= render :partial => "/tags/form", :locals => {:tags => @matter.tags, :table_title => "Tags", :document => @matter.document} %>
-	</div>
+	<dl class="nested-panel accordion">
+		<dt class="panel-header">
+			<strong><a href="#sub_matters">Sub matters</a></strong>
+		</dt>
+		<dd id="sub_matters">
+			<%= render :partial => "/matters/index", :locals => {:matters => @matter.sub_matters.paginate(:page => params[:sub_matters]), :choose => false, :param_name => :sub_matters} %>
+			<div class="panel-footer">	 
+				<%= link_to 'Create sub matter', new_matter_matter_path(@matter) %>
+			</div>								
+		</dd>
+		<dt class="panel-header">
+			<strong><a href="#deadlines">Deadlines</a></strong>			
+		</dt>
+		<dd id="deadlines">
+			<%= render :partial => "/matter_tasks/index", :locals => {:matter_tasks => @matter.matter_tasks.paginate(:page => params[:deadlines]), :param_name => :deadlines} %>
+			<div class="panel-footer">
+				<%= link_to 'Add deadline', new_matter_matter_task_path(@matter) %>
+			</div>			
+		</dd>		
+
+	</dl>
 </div>

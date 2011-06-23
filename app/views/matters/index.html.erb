@@ -1,9 +1,17 @@
 <div class="panel">
-	<%= render :partial => "/matters/index", :locals => {:matters => @matters, :table_title => "My matters", :choose => false, :param_name => 'my_matters_page'} %>	
-	<%= link_to "New matter", new_matter_path %>
+	<div class="panel-header">
+		<strong>My matters</strong>
+	</div>	
+	<%= render :partial => "/matters/index", :locals => {:matters => @matters, :table_title => "My matters", :choose => false, :param_name => 'my_matters_page'} %>
+	<div class="panel-footer">
+		<strong><%= link_to "New matter", new_matter_path %></strong>
+	</div>		
 </div>
 <%unless @other_matters.empty?%>
 <div class="nested-panel">
+	<div class="panel-header">
+		<strong>Other matters</strong>
+	</div>		
 	<%= render :partial => "/matters/index", :locals => {:matters => @other_matters, :table_title => "Other user matters", :choose => false, :param_name => 'other_matters_page'} %>	
 </div>
 <%end%>

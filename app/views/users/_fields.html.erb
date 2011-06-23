@@ -1,0 +1,25 @@
+<div class="panel-content">
+	<ul>
+		<%= render :partial => "/shared/party/fields", :locals => {:fields => fields} %>
+		<%= fields.fields_for :individual do |pi_f| %>
+			<%= render :partial => "/shared/party/individual/fields", :locals => {:fields => pi_f} %>
+			<%= pi_f.fields_for :user do |piu_f| %>
+			<li>
+				<%= piu_f.hidden_field :id %>
+				<%= piu_f.label :email %>
+				<%= piu_f.text_field :email %>
+			</li>
+				<% unless @party.persisted?%>
+				<li>
+					<%= piu_f.label :password %>
+					<%= piu_f.password_field :password %>
+				</li>
+				<li>
+					<%= piu_f.label :password_confirmation, "Confirmation" %>
+					<%= piu_f.password_field :password_confirmation %>
+				</li>
+				<%end%>
+			<%end%>
+		<%end%>
+	</ul>
+</div>

@@ -1,0 +1,30 @@
+table {font-size:1em;}
+
+tfoot div.pagination, tfoot div.pagination em {
+	font-size:1em;
+	font-weight:normal;
+	text-decoration: none;
+	font-style: normal;
+}
+tfoot div.pagination em {
+	font-size:1.1em;
+	font-weight:bold;
+}
+
+table {height:340px;}
+table tbody tr, table tbody tr td {height:1.5em; max-height: 1.4em; vertical-align: text-top;}
+table tbody tr:last-child, table tbody tr:last-child td{height:auto;}
+
+.col-radio, .col-checkbox, .col-check {width:1em;}
+.col-check {text-align:right;}
+.col-text {text-align:left;}
+.col-date, .col-bool {text-align:center;}
+.col-bool>input[type=checkbox]{color:black;border:2px solid;}
+.col-number {text-align:right;}
+
+table th:first-child, table td:first-child{padding-left:2em;}
+table th:last-child, table td:last-child{padding-right:2em;}
+table th, table td { padding: 5px}
+table {border-spacing: 0px;}
+table thead th {border-bottom:1px black solid;}
+table tfoot th {border-top:1px black solid;}

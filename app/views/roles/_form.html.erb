@@ -1,16 +1,14 @@
 <%=form_for @role do |r_f| %>
-<div class="dialog">
-	<ul>
-		<li>
-			<%= r_f.label :name %>
-			<%= r_f.text_field :name %>			
-		</li>
-		<li>
-			<%= r_f.label :description %>
-			<%= r_f.text_field :description %>			
-		</li>		
-	</ul>
-</div>
+<ul>
+	<li>
+		<%= r_f.label :name %>
+		<%= r_f.text_field :name %>			
+	</li>
+	<li>
+		<%= r_f.label :description %>
+		<%= r_f.text_field :description %>			
+	</li>		
+</ul>
 <div class="buttons">
 	<span class="button"><%= r_f.submit "Save" %></span>
 </div>

@@ -118,6 +118,10 @@ ul.menu {
 	border-radius:0px 0px 0px 0px;
 }
 
+.column.elastic .nested-panel .panel-header .choose {
+	border-radius:10px 10px 0px 0px;
+}
+
 .v-menu.panel-content {
 	background-color:rgb(255,255,255); 
 	color:black; 
@@ -138,42 +142,12 @@ dt label {font-weight:bold;}
 dt label:after{content:":"; padding-right:1em;}
 dt {float:left; clear:both}
 
-.col-text {text-align:left;}
-.col-date, .col-bool {text-align:center;}
-.col-bool>input[type=checkbox]{color:black;border:2px solid;}
-.col-number {text-align:right;}
-
-table th:first-child, table td:first-child{padding-left:2em;}
-table th:last-child, table td:last-child{padding-right:2em;}
-table th, table td { padding: 5px}
-table {border-spacing: 0px;}
-table thead th {border-bottom:1px black solid;}
-table tfoot th {border-top:1px black solid;}
-
 .list-paginate, .list-paginate a {color:black;text-decoration:none;font-weight:normal}
 .list-paginate a {font-size:1em;}
 .list-paginate span.currentStep {font-size:1.2em;}
 
-a {color:black; text-decoration:underline;}
-form ul {list-style:none;}
-form ul li, form ul li *:not(.error), {line-height:1.4em; font-size:1em; margin:1px; padding:1px;}
-form ul li label {float:left;min-width:8em; padding-top:4px;}
-form ul li label:after{content:": "}
-/*form ul li>span.error>*:not(label) *:last-child:not(select), form ul li>*:last-child:not(select) {width:15em;}*/
-form ul li>*:not(label):not(select), form ul li>span.error>*:not(label):not(select) {width:15em;}
-form ul li textarea[cols="40"] {height:5em; resize:none;
-font-family: "Tahoma", Georgia, Serif;font-size:1em
-}
-
-
 .flash-message {color:black;}
 
-table {font-size:1em;}
-
-.col-radio, .col-checkbox, .col-check {width:1em;}
-.col-check {text-align:right;}
-
-form label {color:black;}
 
 .errors, .flash.error {background-color:rgb(186,55,0); color:#FFFFFF; margin:0px; line-height:2em; padding:0 5px; font-size:1.1em; list-style: none;}
 .flash.success {background-color:rgb(0,126,76); color:#FFFFFF; margin:0px; line-height:2em; padding:0 5px; font-size:1.1em;}
@@ -181,16 +155,19 @@ form label {color:black;}
 ul.errors{padding:0px}
 li.error{padding:0 2em; font-size:1.1em;}
 
-form li span.error>label {color:red;}
-form li span.error+span.error>* {border-color:red;border-style:solid;border-width: 1px;}
+dl.nested-panel dt, dl.nested-panel dd {margin:0px;float:none}
 
-tfoot div.pagination, tfoot div.pagination em {
-	font-size:1em;
-	font-weight:normal;
-	text-decoration: none;
-	font-style: normal;
+.column.elastic .nested-panel .panel-footer {
+	border-radius:0px;
+	background:none;
+	margin:0px;	
 }
-tfoot div.pagination em {
-	font-size:1.1em;
-	font-weight:bold;
+
+.panel .panel-footer {font-size:.85em;}
+
+input[type="submit"], button, .panel-footer a {
+	font-weight: bold; 	
+	text-decoration:none;
+	color:#FFF;
+	color:rgb(115,19,16);	
 }

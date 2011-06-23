@@ -2,18 +2,16 @@
 <%= mt_f.hidden_field :id %>
 <%= mt_f.hidden_field :matter_id %>
 <%= mt_f.hidden_field :matter_task_status_id %>
-<div class="dialog">
-	<ul>
-		<li>
-			<%= mt_f.label :description %>
-			<%= mt_f.text_field :description %>
-		</li>
-		<li>
-			<%= mt_f.label :proposed_deadline %>
-			<%= mt_f.text_field :proposed_deadline %>
-		</li>
-	</ul>
-</div>
+<ul>
+	<li>
+		<%= mt_f.label :description %>
+		<%= mt_f.text_field :description %>
+	</li>
+	<li>
+		<%= mt_f.label :proposed_deadline %>
+		<%= mt_f.text_field :proposed_deadline %>
+	</li>
+</ul>
 <div class="buttons">
 	<span class="button"><%= mt_f.submit "Save" %></span>
 </div>

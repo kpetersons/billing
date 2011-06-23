@@ -1,0 +1,35 @@
+.controls a, .panel-header a {text-decoration:none;}
+
+.column.elastic form .panel-footer {background:none;}
+.column.elastic .show.controls a,
+.column.elastic form .panel-footer.controls a, 
+.column.elastic form .panel-footer.controls input[type="submit"], 
+.column.elastic form .panel-footer.controls button {
+	text-decoration:none;
+	padding:5px 10px;
+	border-radius:5px;	
+	background: -webkit-gradient(linear, left top, left bottom, 
+		color-stop(0.50, rgb(255,202,81)),
+		color-stop(0.60, rgb(255,178,0))
+	);	
+	color:#000;
+	font-weight:bold;
+}
+
+.column.elastic 	 .controls a:hover,
+.column.elastic form .controls a:hover, 
+.column.elastic form .controls input[type="submit"]:hover, 
+.column.elastic form .controls button:hover {
+	color:#fff;
+}
+
+.column.elastic .controls {
+	margin:0px 0px 10px 20px;
+}
+
+.controls input[type="submit"]:hover, 
+.controls button:hover, 
+.controls a:hover {
+	color: rgb(253,246,246);
+	text-shadow: 0px -1px gray;
+}

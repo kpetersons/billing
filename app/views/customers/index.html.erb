@@ -1,4 +1,9 @@
 <div class="panel">
+	<div class="panel-header">
+		<strong>Customer list</strong>
+	</div>		
 	<%= render :partial => "index", :locals => {:customers => @customers, :table_title => "Customers", :param_name => "customers_page"} %>
-	<%= link_to "New customer", new_customer_path(:customer_type => 'AGENT') %>
+	<div class="panel-footer">
+		<strong><%= link_to "New customer", new_customer_path(:customer_type => 'AGENT') %></strong>
+	</div>
 </div>

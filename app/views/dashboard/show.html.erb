@@ -16,12 +16,19 @@
 			12
 		</dd>
 	</dl>
-	
-	<div class="nested-panel">
-		<%= render :partial => "/matters/index", :locals => {:matters => @recent_activity_matters, :table_title => "Recently updated matters", :choose => false, :param_name => "recent_activity_page"} %>
-	</div>
+	<dl class="nested-panel accordion">
+		<dt class="panel-header">
+			<strong><a href="#recent_activity">Recently updated/created matters</a></strong>
+		</dt>
+		<dd id="recent_activity">
+			<%= render :partial => "/matters/index", :locals => {:matters => @recent_activity_matters, :table_title => "Recently updated matters", :choose => false, :param_name => "recent_activity_page"} %>		
+		</dd>
+		<dt class="panel-header">
+			<strong><a href="#deadlines">Matters with approaching deadlines</a></strong>			
+		</dt>
+		<dd id="deadlines">
+			<%= render :partial => "/matters/index", :locals => {:matters => @upcoming_deadlines_matters, :table_title => "Matters with upcoming deadlines", :choose => false, :param_name => "upcoming_deadlines_page"} %>
+		</dd>		
 
-	<div class="nested-panel">
-		<%= render :partial => "/matters/index", :locals => {:matters => @upcoming_deadlines_matters, :table_title => "Matters with upcoming deadlines", :choose => false, :param_name => "upcoming_deadlines_page"} %>
-	</div>	
+	</dl>		
 </div>		
