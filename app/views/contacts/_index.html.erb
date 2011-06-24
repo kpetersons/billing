@@ -1,4 +1,4 @@
-<table style="width:100%">
+<table style="width: 100%;">
 	<thead>
 		<tr>
 			<th class="col-radio"></th>
@@ -9,12 +9,12 @@
 	</thead>
 	<tfoot>
 		<tr>
-			<th colspan="4">
+			<th class="list-paginate" colspan="4">
 				<%= will_paginate contacts, :param_name => param_name, :params => {:anchor => param_name} %>
 			</th>
 		</tr>
 	</tfoot>
-	<tbody id="#<%="contact_#{current_user.id}"%>">
+	<tbody>
 		<% contacts.each do |contact|%>
 			<tr>
 				<td class="col-radio">

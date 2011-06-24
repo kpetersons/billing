@@ -1,2 +1,97 @@
-<h1>Invoices#show</h1>
-<p>Find me in app/views/invoices/show.html.erb</p>
+<div class="panel">
+	<div class="panel-header">
+		<strong>Invoice information</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<dl class="panel-content">
+		<dt>
+			<label>
+				Registration number
+			</label>
+		</dt>
+		<dd>
+			<%=@document.registration_number%>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				Customer
+			</label>
+		</dt>
+		<dd>
+			<%=@document.invoice.customer.name unless @document.invoice.customer.nil? %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Address
+			</label>
+		</dt>
+		<dd>
+			<%=@document.invoice.address.name unless @document.invoice.address.nil? %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Contact person
+			</label>
+		</dt>
+		<dd>
+			<%=@document.invoice.individual.name unless @document.invoice.individual.nil? %>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Currency
+			</label>
+		</dt>
+		<dd>
+			<%=@document.invoice.currency.name%>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				Discount
+			</label>
+		</dt>
+		<dd>
+			<%=@document.invoice.discount%>&nbsp;
+		</dd>
+		<dt>
+			<label>
+				Our ref
+			</label>
+		</dt>
+		<dd>
+			<%=@document.invoice.our_ref%>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				Your ref
+			</label>
+		</dt>
+		<dd>
+			<%=@document.invoice.your_ref%>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				Your date
+			</label>
+		</dt>
+		<dd>
+			<%=@document.invoice.your_date%>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				PO Billing
+			</label>
+		</dt>
+		<dd>
+			<%=@document.invoice.po_billing%>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				Invoice date
+			</label>
+		</dt>
+		<dd>
+			<%=@document.invoice.invoice_date%>&nbsp;
+		</dd>		
+	</dl>
+	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>		
+</div>

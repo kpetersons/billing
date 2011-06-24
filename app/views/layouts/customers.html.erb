@@ -16,7 +16,11 @@
 							<strong>Context Menu</strong>
 						</div>
 						<div class="v-menu panel-content">
-							<g:render template="/templates/shared/menuTemplate" var="menu" bean="${Menu.config['customers'].context}"/>
+							<ul class="menu">
+								<li>
+									<%=link_to 'Create customer', new_customer_path%>
+								</li>								
+							</ul>
 						</div>
 					</div>
 					<div class="panel">

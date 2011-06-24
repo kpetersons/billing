@@ -1,0 +1,61 @@
+<%= fields.hidden_field :id %>
+<%= fields.hidden_field :parent_id %>
+<ul>
+	<li>
+		<%= fields.label :registration_number, "Matter number" %>
+		<%= fields.text_field :registration_number %>
+	</li>
+	<%= fields.fields_for :matter do |m_f| %>
+	<li>
+		<%= m_f.hidden_field :id %>			
+		<%= m_f.label :mark_name %>
+		<%= m_f.text_field :mark_name %>
+	</li>
+	<li>
+		<%= fields.label :description %>
+		<%= fields.text_area :description %>
+	</li>
+	<li>
+		<%= m_f.label :classes, "Matter classes" %>
+		<%= m_f.text_field :classes %>
+	</li>				
+	<li>
+		<%= m_f.hidden_field :applicant_id %>			
+		<%= m_f.label :applicant_name %>
+		<%= m_f.text_field :applicant_name %>
+	</li>
+	<li>
+		<%= m_f.hidden_field :agent_id %>			
+		<%= m_f.label :agent_name %>
+		<%= m_f.text_field :agent_name %>
+	</li>		
+	<li>
+		<%= m_f.label :appl_date %>
+		<%= m_f.text_field :appl_date %>
+	</li>
+	<li>
+		<%= m_f.label :appl_number %>
+		<%= m_f.text_field :appl_number %>
+	</li>
+	<li>
+		<%= m_f.label :priority_date %>
+		<%= m_f.text_field :priority_date %>
+	</li>
+	<li>
+		<%= m_f.label :CTM_number %>
+		<%= m_f.text_field :ctm_number %>
+	</li>
+	<li>
+		<%= m_f.label :WIPO_number %>
+		<%= m_f.text_field :wipo_number %>
+	</li>
+	<li>
+		<%= m_f.label :IR_number %>
+		<%= m_f.text_field :ir_number %>
+	</li>
+	<li>
+		<%= m_f.label :notes %>
+		<%= m_f.text_area :comment %>
+	</li>
+	<% end %>
+</ul>

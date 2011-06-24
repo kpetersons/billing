@@ -39,6 +39,16 @@ class Party < ActiveRecord::Base
               .joins(:target_relationships => :relationship_type)
               .where(:relationships => {:source_party_id => id})    
   end
+  
+  def source_parties (relationship_type) 
+    return source_parties_query(:relationship_type => relationship_type).all
+  end
+  
+  def source_parties_query(relationship_type)
+    return Party
+              .joins(:source_relationships => :relationship_type)
+              .where(:relationships => {:target_party_id => id})    
+  end  
 
   def outer_object
     unless customer.nil?

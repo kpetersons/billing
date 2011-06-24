@@ -40,7 +40,7 @@ class CurrenciesController < ApplicationController
       end
       if @currency.exchange_rates<<ExchangeRate.new(:from_date => Date.today, :rate => exchange_rate)
         prev_rate.update_attributes(:through_date => Date.today)
-        redirect_to @currency and return        
+        redirect_to @currency and return
       end
     else
       render 'show'

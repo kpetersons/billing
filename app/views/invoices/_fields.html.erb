@@ -1,0 +1,51 @@
+<%= fields.hidden_field :id %>
+<%= fields.hidden_field :parent_id %>
+<ul>
+	<li>
+		<%= fields.label :registration_number, "Invoice number" %>
+		<%= fields.text_field :registration_number %>
+	</li>
+	<%= fields.fields_for :invoice do |i_f| %>
+	<li>
+		<%= i_f.hidden_field :id %>
+		<%= i_f.label :customer_id, "Customer" %>
+		<%= i_f.text_field :customer_id %>
+	</li>		
+	<li>			
+		<%= i_f.label :address_id, "Address" %>
+		<%= i_f.text_field :address_id %>
+	</li>		
+	<li>			
+		<%= i_f.label :individual_id, "Person" %>
+		<%= i_f.text_field :individual_id %>
+	</li>		
+	<li>			
+		<%= i_f.label :currency_id %>
+		<%= i_f.select :currency_id, Currency.all.collect { |tt| [tt.name, tt.id] } %>
+	</li>
+	<li>			
+		<%= i_f.label :discount %>
+		<%= i_f.text_field :discount %>
+	</li>		
+	<li>			
+		<%= i_f.label :our_ref %>
+		<%= i_f.text_field :our_ref %>
+	</li>		
+	<li>			
+		<%= i_f.label :your_ref %>
+		<%= i_f.text_field :your_ref %>
+	</li>		
+	<li>			
+		<%= i_f.label :your_date %>
+		<%= i_f.text_field :your_date %>
+	</li>		
+	<li>			
+		<%= i_f.label :po_billing %>
+		<%= i_f.text_field :po_billing %>
+	</li>		
+	<li>			
+		<%= i_f.label :invoice_date %>
+		<%= i_f.text_field :invoice_date %>
+	</li>		
+	<% end %>
+</ul>

@@ -1,0 +1,18 @@
+<ul>
+	<%= render :partial => "/shared/party/fields", :locals => {:fields => fields} %>
+	<%= fields.fields_for :company do |comp_f| %>
+	<%= comp_f.hidden_field :id %>
+	<li>
+		<%= comp_f.label :name %>
+		<%= comp_f.text_field :name %>
+	</li>
+	<% end %>
+	<%= fields.fields_for :customer do |cust_f| %>
+	<%= cust_f.hidden_field :id %>
+	<%= cust_f.hidden_field :customer_type %>
+	<li>
+		<%= cust_f.label :customer_since %>
+		<%= cust_f.date_select :customer_since %>
+	</li>
+	<% end %>
+</ul>

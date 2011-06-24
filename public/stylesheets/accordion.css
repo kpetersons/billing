@@ -19,17 +19,6 @@ dl.accordion dd {
 	height: 0;
 	overflow: hidden;
 	-webkit-transition: height 1s ease;
-	background: -webkit-gradient(
-	linear,
-	left bottom,
-	left top,
-	color-stop(0.90, rgb(255,248,234)),
-	color-stop(0.16, rgb(254,236,193)),
-	color-stop(0.10, rgb(255,224,153)),
-	color-stop(0.05, rgb(255,181,10)),
-	color-stop(0.02, rgb(255,224,153)),
-	color-stop(0.01, rgb(255, 255, 255))
-	);
 }
 dl.accordion dd:target {
 	height: auto;

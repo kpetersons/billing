@@ -1,2 +1,25 @@
-<h1>Addresses#show</h1>
-<p>Find me in app/views/addresses/show.html.erb</p>
+<div class="panel">
+	<div class="panel-header">
+		<strong>Contact information</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<dl class="panel-content">
+		<dt>
+			<label>
+				Type
+			</label>
+		</dt>
+		<dd>
+			<%=@contact.contact_type.name%>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				Contact value
+			</label>
+		</dt>
+		<dd>
+			<%=@contact.contact_value%>&nbsp;
+		</dd>		
+	</dl>
+	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_party_contact_path(@party, @contact)} %>	
+</div>

@@ -20,7 +20,7 @@ Billing::Application.routes.draw do
   resources :functions, :only => [:show] do
     member do
       get :show
-    end    
+    end
   end
 
   resources :users do
@@ -38,17 +38,17 @@ Billing::Application.routes.draw do
       end
     end
   end
-  
+
   resources :roles do
     resources :functions, :only => [:index, :choose, :add, :show] do
       collection do
-        get :index        
+        get :index
         get :choose
         post :add
       end
       member do
         get :show
-      end      
+      end
     end
   end
 
@@ -87,7 +87,11 @@ Billing::Application.routes.draw do
   end
 
   resources :customers, :except => [:destroy] do
-    resources :contact_persons do
+    resources :addresses
+    resources :contacts
+    resources :individuals do
+      resources :addresses
+      resources :contacts
       collection do
         get   :choose
         post  :add

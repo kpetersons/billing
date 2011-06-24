@@ -7,15 +7,17 @@ class AddressesController < ApplicationController
   end
 
   def new
+    party_id = params[:party_id] || params[:contact_person_id]    
     @address = Address.new
-    @party  = Party.find(params[:party_id])
+    @party  = Party.find(party_id)
   end
 
   def create
-    @party = Party.find(params[:party_id])
+    party_id = params[:party_id] || params[:contact_person_id]
+    @party = Party.find(party_id)
     @address = Address.new(params[:address])    
     Address.transaction do
-      if @party.addresses<<@address
+      if @party.addresses<<@address 
         redirect_to @party.outer_object
       else
         render 'new'
@@ -24,15 +26,17 @@ class AddressesController < ApplicationController
   end
 
   def edit
+    party_id = params[:party_id] || params[:contact_person_id]    
     @address = Address.find(params[:id])
-    @party = Party.find(params[:party_id])
+    @party = Party.find(party_id)
   end
   
   def update
-    @party = Party.find(params[:party_id])    
+    party_id = params[:party_id] || params[:contact_person_id]    
+    @party = Party.find(party_id)    
     @address = Address.find(params[:address][:id])
     Address.transaction do
-      if @address.update_attributes(params[:address])
+      if @address.update_attributes(params[:address])        
         redirect_to @party.outer_object
       else
         render 'edit'
@@ -41,8 +45,9 @@ class AddressesController < ApplicationController
   end
 
   def show
+    party_id = params[:party_id] || params[:contact_person_id]    
     @address = Address.find(params[:id])
-    @party = Party.find(params[:party_id])    
+    @party = Party.find(party_id)    
   end
 
 end

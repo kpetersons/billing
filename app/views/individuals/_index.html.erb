@@ -1,4 +1,4 @@
-<table style="width:100%">
+<table style="width: 100%;">
 	<thead>
 		<tr>
 			<th class="col-radio"></th>
@@ -9,7 +9,7 @@
 	</thead>
 	<tfoot>
 		<tr>
-			<th colspan="4">
+			<th class="list-paginate" colspan="4">
 				<%= will_paginate contact_persons, :param_name => param_name %>
 			</th>
 		</tr>
@@ -25,9 +25,9 @@
 				<td class="col-text"><%=contact_person.first_name%></td>
 				<td class="col-text"><%=contact_person.last_name%></td>
 				<td class="col-number">
-				<%=link_to 'Show', customer_contact_person_path(@customer, contact_person) %> |
-				<%=link_to 'Edit', edit_customer_contact_person_path(@customer, contact_person) %> | 
-				Remove				
+				<%=link_to 'Show', customer_individual_path(@customer, contact_person, :anchor => 'addresses') %> |
+				<%=link_to 'Edit', edit_customer_individual_path(@customer, contact_person) %> | 
+				Remove
 				</td>
 			</tr>
 		<%end%>

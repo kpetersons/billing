@@ -41,7 +41,7 @@ class InvoicesController < ApplicationController
   end
 
   def show
-    @invoice = Invoice.find(params[:id])    
+    @document = Invoice.find(params[:id]).document
   end
 
 end

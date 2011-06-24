@@ -33,5 +33,9 @@ class Individual < ActiveRecord::Base
     end
     ''
   end
+
+  def is_contact
+    party.source_parties( :relationship_type => RelationshipType.find_by_name('CONTACT_PERSON')).first
+  end
   
 end

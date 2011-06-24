@@ -1,27 +1,5 @@
 <%=form_for @party, :url => (@party.persisted?) ? customer_path : {:controller => 'customers', :action => 'create'} do |p_f| %>
-<%= p_f.hidden_field :id %>
-<ul>
-	<li>
-		<%= p_f.label :identifier %>
-		<%= p_f.text_field :identifier %>
-	</li>
-	<%= p_f.fields_for :company do |comp_f| %>
-	<%= comp_f.hidden_field :id %>
-	<li>
-		<%= comp_f.label :name %>
-		<%= comp_f.text_field :name %>
-	</li>
-	<% end %>
-	<%= p_f.fields_for :customer do |cust_f| %>
-	<%= cust_f.hidden_field :id %>
-	<%= cust_f.hidden_field :customer_type %>
-	<li>
-		<%= cust_f.label :customer_since %>
-		<%= cust_f.date_select :customer_since %>
-	</li>
-	<% end %>
-</ul>
-<div class="buttons">
-	<span class="button"><%= p_f.submit "Save" %></span>
-</div>
+	<%= p_f.hidden_field :id %>
+	<%= render :partial => "fields", 							:locals => {:fields 	=> p_f}%>
+	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> p_f}%>
 <%end%>

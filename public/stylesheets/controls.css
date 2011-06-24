@@ -7,29 +7,34 @@
 .column.elastic form .panel-footer.controls button {
 	text-decoration:none;
 	padding:5px 10px;
+	min-width: 5em;
 	border-radius:5px;	
-	background: -webkit-gradient(linear, left top, left bottom, 
-		color-stop(0.50, rgb(255,202,81)),
-		color-stop(0.60, rgb(255,178,0))
-	);	
+	border: #fff 1px solid;	
 	color:#000;
-	font-weight:bold;
+	font-weight:normal;
+	display:block;
+	float:left;
+	text-align: center;
 }
 
 .column.elastic 	 .controls a:hover,
 .column.elastic form .controls a:hover, 
 .column.elastic form .controls input[type="submit"]:hover, 
 .column.elastic form .controls button:hover {
-	color:#fff;
+	background: rgb(229,229,229);
+	border: rgb(219,219,219) 1px inset;	
+}
+
+.column.elastic 	 .controls a:active,
+.column.elastic form .controls a:active, 
+.column.elastic form .controls input[type="submit"]:active, 
+.column.elastic form .controls button:active {
+	background: rgb(198,198,198);
+	border: rgb(188,188,188) 1px inset;
+	color: #fff;	
 }
 
 .column.elastic .controls {
 	margin:0px 0px 10px 20px;
-}
-
-.controls input[type="submit"]:hover, 
-.controls button:hover, 
-.controls a:hover {
-	color: rgb(253,246,246);
-	text-shadow: 0px -1px gray;
+	float:left;
 }

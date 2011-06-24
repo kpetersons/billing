@@ -1,5 +1,5 @@
 <table style="width: 100%;">
-	<thead class="panel-content">
+	<thead>
 		<tr>
 			<th class="col-radio"></th>
 			<th class="col-text">Name</th>
@@ -16,7 +16,7 @@
 			</th>
 		</tr>
 	</tfoot>
-	<tbody class="panel-content">
+	<tbody>
 		<% customers.each do |customer| %>
 		<tr>
 			<td></td>
@@ -24,7 +24,7 @@
 			<td class="col-text"><%= customer.identifier %></td>
 			<td class="col-text"><%= customer.type%></td>
 			<td class="col-date"><%= customer.customer_since %></td>
-			<td class="col-number"><%= link_to "Show", customer_path(customer)%> | <%= link_to "Edit", edit_customer_path(customer)%></td>
+			<td class="col-number"><%= link_to "Show", customer_path(customer, :anchor => 'addresses')%> | <%= link_to "Edit", edit_customer_path(customer)%></td>
 		</tr>
 		<% end %>
 		<% if customers.empty? %>

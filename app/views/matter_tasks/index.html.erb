@@ -1,3 +1,6 @@
 <div class="panel">
-	<%= render :partial => "/matters/index", :locals => {:matter_tasks => @matter_tasks, :table_title => "Matter task list"} %>	
+	<div class="panel-header">
+		<strong>Matter deadline list</strong>
+	</div>	
+	<%= render :partial => "/matter_tasks/index", :locals => {:matter_tasks => @matter_tasks} %>	
 </div>

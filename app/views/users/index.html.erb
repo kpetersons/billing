@@ -1,4 +1,6 @@
 <div class="panel">
-	<%= render :partial => "index", :locals => {:users => @users, :table_title => "Users", :param_name => "page"} %>
-	<%= link_to "New user", new_user_path %>
+	<div class="panel-header">
+		<strong>User list</strong>
+	</div>
+	<%= render :partial => "index", :locals => {:users => @users, :param_name => "page"} %>
 </div>

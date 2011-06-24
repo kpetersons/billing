@@ -2,9 +2,7 @@
 	<div class="panel-header">
 		<strong>Create currency</strong>
 	</div>
-	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
-	<%= render :partial => "shared/error", :locals => {:obj => @currency}%>	
-	<div class="panel-content">
-		<%= render :partial => "form", :locals => {:contact => @currency} %>
-	</div>
+	<%= render :partial => "shared/flash", 	:locals => {:flash 		=> flash}%>
+	<%= render :partial => "shared/error", 	:locals => {:obj 		=> @currency}%>	
+	<%= render :partial => "form", 			:locals => {:contact 	=> @currency} %>
 </div>

@@ -7,5 +7,5 @@ class ApplicationController < ActionController::Base
   def per_page
     @per_page ||= 5
   end
-   
+     
 end

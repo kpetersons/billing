@@ -2,9 +2,7 @@
 	<div class="panel-header">
 		<strong>Edit role</strong>
 	</div>
-	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
-	<%= render :partial => "shared/error", :locals => {:obj => @role}%>	
-	<div class="panel-content">
-		<%= render :partial => "form", :locals => {:role => @role} %>
-	</div>
+	<%= render :partial => "shared/flash", 	:locals => {:flash 	=> flash}%>
+	<%= render :partial => "shared/error", 	:locals => {:obj 	=> @role}%>	
+	<%= render :partial => "form", 			:locals => {:role 	=> @role} %>
 </div>

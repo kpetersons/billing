@@ -1,5 +1,5 @@
 <table style="width: 100%;">
-	<thead class="panel-content">
+	<thead>
 		<tr>
 			<th class="col-radio"></th>	
 			<th class="col-text">Matter number</th>
@@ -19,7 +19,7 @@
 			</th>
 		</tr>
 	</tfoot>
-	<tbody class="panel-content">
+	<tbody>
 		<% matters.each do |matter| %>
 		<tr>
 			<td>
@@ -34,7 +34,7 @@
 			<td class="col-date"><%= matter.agent_name %></td>
 			<td class="col-date"><%= matter.appl_date %></td>
 			<td class="col-date"><%= matter.appl_number %></td>
-			<td class="col-number"><%= link_to "Show", matter_path(matter)%> | <%= link_to "Edit", edit_matter_path(matter)%> | Remove</td>
+			<td class="col-number"><%= link_to "Show", matter_path(matter, :anchor => :deadlines)%> | <%= link_to "Edit", edit_matter_path(matter)%> | Remove</td>
 		</tr>
 		<% end %>
 		<% if matters.empty? %>

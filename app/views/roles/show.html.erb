@@ -2,6 +2,7 @@
 	<div class="panel-header">
 		<strong>Role information</strong>
 	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
 	<dl class="panel-content">
 		<dt>
 			<label>
@@ -20,18 +21,14 @@
 			<%=@role.description%>&nbsp;
 		</dd>		
 	</dl>
-	<div class="panel-content">
-		<%=link_to 'Edit', edit_role_path(@role)%>
-	</div>	
-	<dl class="nested-panel accordion">
-		<dt class="panel-header">
-			<a href="#functions"><strong>Functions</strong></a>
-		</dt>
-		<dd id="functions">
+	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_role_path(@role)} %>	
+	<div class="nested-panel">
+		<div class="panel-header">
+			<strong>Functions</strong>
+		</div>
+		<div>
 			<%= render :partial => "/functions/index", :locals => {:functions => @role.functions.paginate(:page => params[:page], :per_page => 10), :choose => false, :param_name => 'function_page'} %>	 
-			<div class="panel-footer">
-				<%=link_to 'Add function', choose_role_functions_path(@role) %>
-			</div>
-		</dd>
-	</dl>	
+			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Add function', :path => choose_role_functions_path(@role)} %>
+		</div>
+	</div>	
 </div>

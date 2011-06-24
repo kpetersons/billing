@@ -1,2 +1,25 @@
-<h1>MatterTasks#show</h1>
-<p>Find me in app/views/matter_tasks/show.html.erb</p>
+<div class="panel">
+	<div class="panel-header">
+		<strong>User information</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<dl class="panel-content">
+		<dt>
+			<label>
+				Description
+			</label>
+		</dt>
+		<dd>
+			<%=@matter_task.description%>&nbsp;
+		</dd>		
+		<dt>
+			<label>
+				Proposed deadline
+			</label>
+		</dt>
+		<dd>
+			<%=@matter_task.proposed_deadline%>&nbsp;
+		</dd>
+	</dl>
+	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_matter_matter_task_path(@matter_task.matter, @matter_task)} %>		
+</div>

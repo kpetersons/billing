@@ -1,3 +1,6 @@
 <div class="panel">
-	<%= render :partial => "index", :locals => {:addresses => @addresses, :table_title => "Addresses", :param_name => "addresses_page"} %>
+	<div class="panel-header">
+		<strong>Address list</strong>
+	</div>	
+	<%= render :partial => "index", :locals => {:addresses => @addresses, :table_title => "Addresses", :param_name => "addresseses"} %>
 </div>

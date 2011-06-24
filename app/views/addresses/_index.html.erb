@@ -15,12 +15,12 @@
 	</thead>
 	<tfoot>
 		<tr>
-			<th colspan="10">
+			<th class="list-paginate" colspan="10">
 				<%= will_paginate addresses, :param_name => param_name, :params => {:anchor => param_name} %>
 			</th>
 		</tr>
 	</tfoot>
-	<tbody id="#<%="address_#{current_user.id}"%>">
+	<tbody>
 		<% addresses.each do |address|%>
 			<tr>
 				<td class="col-radio">

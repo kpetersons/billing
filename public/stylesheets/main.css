@@ -114,7 +114,7 @@ ul.menu {
 	color:rgb(0,0,0);		
 }
 
-.column.elastic .nested-panel .panel-header {
+.column.elastic .nested-panel .panel-header {		
 	border-radius:0px 0px 0px 0px;
 }
 
@@ -171,3 +171,5 @@ input[type="submit"], button, .panel-footer a {
 	color:#FFF;
 	color:rgb(115,19,16);	
 }
+
+.nested-panel {clear:left;}

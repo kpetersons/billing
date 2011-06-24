@@ -2,9 +2,7 @@
 	<div class="panel-header">
 		<strong>Create contact</strong>
 	</div>
-	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
-	<%= render :partial => "shared/error", :locals => {:obj => @contact}%>	
-	<div class="panel-content">
-		<%= render :partial => "form", :locals => {:contact => @contact} %>
-	</div>
+	<%= render :partial => "shared/flash", 	:locals => {:flash 		=> flash}%>
+	<%= render :partial => "shared/error", 	:locals => {:obj 		=> @contact}%>	
+	<%= render :partial => "form", 			:locals => {:contact 	=> @contact} %>
 </div>

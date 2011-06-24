@@ -1,4 +1,4 @@
-class ContactPersonsController < ApplicationController
+class IndividualsController < ApplicationController
 
   layout "customers"
   def index
@@ -36,8 +36,7 @@ class ContactPersonsController < ApplicationController
       if @contact_person.persisted?
         Relationship.create(:relationship_type_id => RelationshipType.find_by_name('CONTACT_PERSON').id, :source_party_id => @party.id, :target_party_id => @contact_person.id)
         redirect_to customer_path(@party.customer)
-      else
-        @contact_person = Party.new(params[:party])
+      else        
         render 'new'
       end
     end    
@@ -61,6 +60,8 @@ class ContactPersonsController < ApplicationController
   end
 
   def show
+    @customer = Customer.find(params[:customer_id])
+    @contact_person = Individual.find(params[:id])
   end
 
 end
