@@ -1,5 +1,5 @@
 <%=form_for @document, :url => (@document.persisted?) ? {:controller => 'invoices', :action => 'update'} : {:controller => 'invoices', :action => 'create'} do |d_f| %>
-	<%= render :partial => "fields", 							:locals => {:fields 	=> d_f}%>
+	<%= render :partial => "fields", 							:locals => {:fields 	=> d_f}%>	
 	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> d_f}%>
 <%end%>
 <script>

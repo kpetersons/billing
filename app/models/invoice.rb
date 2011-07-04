@@ -29,6 +29,8 @@ class Invoice < ActiveRecord::Base
   belongs_to :individual
   belongs_to :currency
   belongs_to :exchange_rate
+  has_many   :invoice_lines
+
 
   def number
     document.registration_number

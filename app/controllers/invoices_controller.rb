@@ -10,6 +10,7 @@ class InvoicesController < ApplicationController
   def new
     @document = Document.new(:parent_id => params[:invoice_id])
     @document.invoice = Invoice.new
+    @document.invoice<<InvoiceLine.new
   end
   
   def create

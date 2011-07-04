@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110704211205
+# Schema version: 20110704213116
 #
 # Table name: invoice_line_presets
 #
@@ -8,8 +8,8 @@
 #  official_fee_type_id :integer(4)
 #  attorney_fee_type_id :integer(4)
 #  name                 :string(255)
-#  off_fee              :string(255)
-#  attorneys_fee        :string(255)
+#  official_fee         :string(255)
+#  attorney_fee         :string(255)
 #  created_at           :datetime
 #  updated_at           :datetime
 #
