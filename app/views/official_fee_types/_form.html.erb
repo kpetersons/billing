@@ -1,0 +1,4 @@
+<%=form_for @official_fee_type do |aft_f| %>
+	<%= render :partial => "fields", 							:locals => {:fields 	=> aft_f} %>
+	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> aft_f}%>
+<%end%>

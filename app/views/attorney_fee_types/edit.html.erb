@@ -1,0 +1,8 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Edit attorney fee type</strong>
+	</div>
+	<%= render :partial => "shared/flash", 	:locals => {:flash => 	flash}%>
+	<%= render :partial => "shared/error", 	:locals => {:obj => 	@attorney_fee_type}%>	
+	<%= render :partial => "form", 			:locals => {:attorney_fee_type => @attorney_fee_type} %>
+</div>

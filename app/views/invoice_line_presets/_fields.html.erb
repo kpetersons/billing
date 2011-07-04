@@ -1,0 +1,30 @@
+<%= fields.hidden_field :id %>
+<ul>
+	<li>
+		<%= fields.label :name %>
+		<%= fields.text_field :name %>
+	</li>
+	<li>
+		<%= fields.label :operating_party_id %>
+		<%= fields.select :operating_party_id, OperatingParty.all.collect { |tt| [tt.name, tt.id] }, 
+			 {:include_blank => true},{:class => 'wide'} %>
+	</li>
+	<li>
+		<%= fields.label :official_fee_type_id %>
+		<%= fields.select :official_fee_type_id, OfficialFeeType.all.collect { |tt| [tt.name, tt.id] }, 
+			 {:include_blank => true},{:class => 'wide'} %>
+	</li>
+	<li>
+		<%= fields.label :official_fee %>
+		<%= fields.text_field :official_fee %>
+	</li>
+	<li>
+		<%= fields.label :attorney_fee_type_id %>
+		<%= fields.select :attorney_fee_type_id, AttorneyFeeType.all.collect { |tt| [tt.name, tt.id] }, 
+			 {:include_blank => true},{:class => 'wide'} %>
+	</li>
+	<li>
+		<%= fields.label :attorney_fee %>
+		<%= fields.text_field :attorney_fee %>
+	</li>	
+</ul>

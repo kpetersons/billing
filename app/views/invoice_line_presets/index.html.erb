@@ -1,0 +1,9 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Invoice presets</strong>
+	</div>		
+	<%= render :partial => "index", :locals => {:invoice_line_presets => @invoice_line_presets, :param_name => "invoice_line_presets"} %>
+	<div class="panel-footer controls">
+		<%= link_to "New preset", new_invoice_line_preset_path %>
+	</div>		
+</div>

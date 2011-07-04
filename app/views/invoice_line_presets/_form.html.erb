@@ -1,0 +1,4 @@
+<%=form_for @invoice_line_preset do |ilp_f| %>
+	<%= render :partial => "fields", 							:locals => {:fields 	=> ilp_f} %>
+	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> ilp_f}%>
+<%end%>

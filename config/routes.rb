@@ -1,5 +1,9 @@
 Billing::Application.routes.draw do
 
+  resources :invoice_line_presets
+  resources :official_fee_types
+  resources :attorney_fee_types
+
   resources :operating_parties, :except => [:destroy] do    
     resources :addresses 
     resources :contacts    

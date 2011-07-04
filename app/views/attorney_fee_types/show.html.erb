@@ -1,0 +1,10 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Attorney fee type information</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<%= render :partial => "show" %>	
+	<div class="show controls">
+		<%= link_to 'Edit', {:action => 'edit'} %>
+	</div>	
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110704185444) do
+ActiveRecord::Schema.define(:version => 20110704213116) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20110704185444) do
     t.datetime "updated_at"
   end
 
-  create_table "attorneys_fee_types", :force => true do |t|
+  create_table "attorney_fee_types", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "created_at"
@@ -137,10 +137,10 @@ ActiveRecord::Schema.define(:version => 20110704185444) do
   create_table "invoice_line_presets", :force => true do |t|
     t.integer  "operating_party_id"
     t.integer  "official_fee_type_id"
-    t.integer  "attorneys_fee_type_id"
+    t.integer  "attorney_fee_type_id"
     t.string   "name"
-    t.string   "off_fee"
-    t.string   "attorneys_fee"
+    t.string   "official_fee"
+    t.string   "attorney_fee"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

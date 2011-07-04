@@ -1,7 +1,7 @@
 # == Schema Information
-# Schema version: 20110704185444
+# Schema version: 20110704211205
 #
-# Table name: attorneys_fee_types
+# Table name: attorney_fee_types
 #
 #  id          :integer(4)      not null, primary key
 #  name        :string(255)
@@ -10,5 +10,5 @@
 #  updated_at  :datetime
 #
 
-class AttorneysFeeType < ActiveRecord::Base
+class AttorneyFeeType < ActiveRecord::Base
 end

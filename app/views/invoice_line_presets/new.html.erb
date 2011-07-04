@@ -1,0 +1,8 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Create invoice preset</strong>
+	</div>
+	<%= render :partial => "shared/flash", 	:locals => {:flash => 	flash}%>
+	<%= render :partial => "shared/error", 	:locals => {:obj => 	@invoice_line_preset}%>	
+	<%= render :partial => "form", 			:locals => {:invoice_line_preset => @invoice_line_preset} %>
+</div>

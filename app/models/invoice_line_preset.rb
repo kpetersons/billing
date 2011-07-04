@@ -1,18 +1,35 @@
 # == Schema Information
-# Schema version: 20110704185444
+# Schema version: 20110704211205
 #
 # Table name: invoice_line_presets
 #
-#  id                    :integer(4)      not null, primary key
-#  operating_party_id    :integer(4)
-#  official_fee_type_id  :integer(4)
-#  attorneys_fee_type_id :integer(4)
-#  name                  :string(255)
-#  off_fee               :string(255)
-#  attorneys_fee         :string(255)
-#  created_at            :datetime
-#  updated_at            :datetime
+#  id                   :integer(4)      not null, primary key
+#  operating_party_id   :integer(4)
+#  official_fee_type_id :integer(4)
+#  attorney_fee_type_id :integer(4)
+#  name                 :string(255)
+#  off_fee              :string(255)
+#  attorneys_fee        :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
 #
 
 class InvoiceLinePreset < ActiveRecord::Base
+  
+  belongs_to :operating_party
+  belongs_to :official_fee_type
+  belongs_to :attorney_fee_type
+
+  def operating_party_name
+    operating_party.name
+  end
+
+  def official_fee_name
+    official_fee_type.name
+  end
+
+  def attorney_fee_name
+    attorney_fee_type.name
+  end
+
 end

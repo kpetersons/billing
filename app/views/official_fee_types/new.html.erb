@@ -1,0 +1,8 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Create official fee type</strong>
+	</div>
+	<%= render :partial => "shared/flash", 	:locals => {:flash 		=> flash}%>
+	<%= render :partial => "shared/error", 	:locals => {:obj 		=> @official_fee_type}%>	
+	<%= render :partial => "form", 			:locals => {:official_fee_type 	=> @official_fee_type} %>
+</div>
