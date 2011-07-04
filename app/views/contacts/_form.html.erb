@@ -1,4 +1,4 @@
-<%=form_for [@party, @contact], :url => (@contact.persisted?) ? {:controller => 'contacts', :action => 'update'} : {:controller => 'contacts', :action => 'create'} do |c_f| %>
+<%=form_for path_elements do |c_f| %>
 	<%= render :partial => "fields", 							:locals => {:fields 	=> c_f} %>
 	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> c_f}%>
 <%end%>

@@ -1,0 +1,67 @@
+<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+<dl class="panel-content">
+	<dt>
+		<label>
+			Type
+		</label>
+	</dt>
+	<dd>
+		<%=@address.address_type.name%>&nbsp;
+	</dd>		
+	<dt>
+		<label>
+			Country
+		</label>
+	</dt>
+	<dd>
+		<%=@address.country%>&nbsp;
+	</dd>
+	<dt>
+		<label>
+			City
+		</label>
+	</dt>
+	<dd>
+		<%=@address.city%>&nbsp;
+	</dd>
+	<dt>
+		<label>
+			Street
+		</label>
+	</dt>
+	<dd>
+		<%=@address.street%>&nbsp;
+	</dd>
+	<dt>
+		<label>
+			House number
+		</label>
+	</dt>
+	<dd>
+		<%=@address.house_number%>&nbsp;
+	</dd>		
+	<dt>
+		<label>
+			Room number
+		</label>
+	</dt>
+	<dd>
+		<%=@address.room_number%>&nbsp;
+	</dd>
+	<dt>
+		<label>
+			Post code
+		</label>
+	</dt>
+	<dd>
+		<%=@address.post_code%>&nbsp;
+	</dd>
+	<dt>
+		<label>
+			PO Box
+		</label>
+	</dt>
+	<dd>
+		<%=@address.po_box%>&nbsp;
+	</dd>		
+</dl>

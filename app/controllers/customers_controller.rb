@@ -71,6 +71,6 @@ class CustomersController < ApplicationController
       index += 1
     end
     render :json => @result
-  end
+  end  
 
 end

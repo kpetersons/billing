@@ -1,0 +1,52 @@
+<dl class="panel-content">
+	<dt>
+		<label> Identifier </label>
+	</dt>
+	<dd>
+		<%= @user.individual.party.identifier%>&nbsp;
+	</dd>
+	<dt>
+		<label> First name </label>
+	</dt>
+	<dd>
+		<%= @user.individual.first_name%>&nbsp;
+	</dd>
+	<dt>
+		<label> Middle name </label>
+	</dt>
+	<dd>
+		<%= @user.individual.middle_name%>&nbsp;
+	</dd>
+	<dt>
+		<label> Last name </label>
+	</dt>
+	<dd>
+		<%= @user.individual.last_name%>&nbsp;
+	</dd>
+	<dt>
+		<label> Gender </label>
+	</dt>
+	<dd>
+		<%= @user.individual.gender_name%>&nbsp;
+	</dd>
+	<dt>
+		<label> Birth date </label>
+	</dt>
+	<dd>
+		<%= @user.individual.birth_date%>&nbsp;
+	</dd>
+	<dt>
+		<label> Active </label>
+	</dt>
+	<dd>
+		<%= (@user.active)? 'Yes' : 'No' %>&nbsp;
+		<%= link_to "#{(@user.active)? 'de' : ''}activate".capitalize, activate_user_path(@user), :method => :post %>
+	</dd>
+	<dt>
+		<label> Blocked </label>
+	</dt>
+	<dd>
+		<%= (@user.blocked)? 'Yes' : 'No' %>&nbsp;
+		<%= link_to "#{(@user.blocked)? 'un' : ''}block".capitalize, block_user_path(@user), :method => :post %>
+	</dd>
+</dl>

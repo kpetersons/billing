@@ -1,4 +1,4 @@
-<table style="width: 100%;">
+<table style="width:100%">
 	<thead>
 		<tr>
 			<th class="col-radio"></th>
@@ -9,29 +9,24 @@
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="4">
-				<%= will_paginate contacts, :param_name => param_name, :params => {:anchor => param_name} %>
-			</th>
+			<th class="list-paginate" colspan="4"> <%= will_paginate contacts, :param_name => param_name, :params => {:anchor => param_name} %> </th>
 		</tr>
 	</tfoot>
 	<tbody>
 		<% contacts.each do |contact|%>
-			<tr>
-				<td class="col-radio">
-				</td>
-				<td class="col-text"><%=contact.contact_type.name%></td>
-				<td class="col-text"><%=contact.contact_value%></td>			
-				<td class="col-number">
-				<%=link_to 'Show', party_contact_path(contact.party, contact) %> |
-				<%=link_to 'Edit', edit_party_contact_path(contact.party, contact) %> | 
-				Remove				
-				</td>
-			</tr>
+		<tr>
+			<td class="col-radio"></td>
+			<td class="col-text"><%= contact.contact_type.name%></td>
+			<td class="col-text"><%= contact.contact_value%></td>
+			<td class="col-number"> 
+				<%=link_to 'Show', path_elements+[contact] %> 
+			</td>
+		</tr>
 		<%end%>
 		<% if contacts.empty? %>
-			<tr>
-				<td colspan="4">&nbsp;</td>
-			</tr>
+		<tr>
+			<td colspan="4">&nbsp;</td>
+		</tr>
 		<%end%>
 	</tbody>
 </table>

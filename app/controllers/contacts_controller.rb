@@ -7,16 +7,42 @@ class ContactsController < ApplicationController
   end
 
   def new
+    customer_id = params[:customer_id]
+    individual_id = params[:contact_person_id]
+    user_id = params[:user_id]
     @contact = Contact.new
-    @party  = Party.find(params[:party_id])
+    @customer = Customer.find(customer_id) unless customer_id.nil?
+    @individual = ContactPerson.find(individual_id) unless individual_id.nil?
+    @user = User.find(user_id) unless user_id.nil?    
+    @path_elements = [@customer, @individual, @user]
   end
 
   def create
+    customer_id = params[:customer_id]
+    individual_id = params[:contact_person_id]
+    user_id = params[:user_id]
+    @contact = Contact.new(params[:contact])
+    @customer = Customer.find(customer_id) unless customer_id.nil?
+    @individual = ContactPerson.find(individual_id) unless individual_id.nil?
+    @user = User.find(user_id) unless user_id.nil?    
+    @path_elements = [@customer, @individual, @user]
+    #
+    @party = @customer.party unless customer_id.nil?
+    @party = @individual.party unless individual_id.nil?    
+    @party = @user.individual.party unless user_id.nil?    
+    Contact.transaction do
+      if @party.contacts<<@contact
+        redirect_to @path_elements  and return
+      end
+      render 'new' and return
+    end    
+    
     @party = Party.find(params[:party_id])
     @contact = Contact.new(params[:contact])    
     Contact.transaction do
       if @party.contacts<<@contact
-        redirect_to @party.outer_object
+        outer_obj = @party.outer_object        
+        redirect_to [@party, outer_obj]
       else
         render 'new'
       end
@@ -24,25 +50,45 @@ class ContactsController < ApplicationController
   end
 
   def edit
+    customer_id = params[:customer_id]
+    individual_id = params[:contact_person_id]
+    user_id = params[:user_id]
     @contact = Contact.find(params[:id])
-    @party = Party.find(params[:party_id])
+    @customer = Customer.find(customer_id) unless customer_id.nil?
+    @individual = ContactPerson.find(individual_id) unless individual_id.nil?
+    @user = User.find(user_id) unless user_id.nil?    
+    @path_elements = [@customer, @individual, @user]    
+    
   end
   
   def update
-    @party = Party.find(params[:party_id])    
+    customer_id = params[:customer_id]
+    individual_id = params[:contact_person_id]
+    user_id = params[:user_id]
+    @customer = Customer.find(customer_id) unless customer_id.nil?
+    @individual = ContactPerson.find(individual_id) unless individual_id.nil?
+    @user = User.find(user_id) unless user_id.nil?
     @contact = Contact.find(params[:contact][:id])
+    #
+    @path_elements = [@customer, @individual, @user]
     Contact.transaction do
       if @contact.update_attributes(params[:contact])
-        redirect_to @party.outer_object
-      else
-        render 'edit'
+        redirect_to @path_elements and return
       end
+      render 'edit'
     end    
   end
 
   def show
+    customer_id = params[:customer_id]
+    individual_id = params[:contact_person_id]
+    user_id = params[:user_id]
     @contact = Contact.find(params[:id])
-    @party = Party.find(params[:party_id])    
+    @customer = Customer.find(customer_id) unless customer_id.nil?
+    @individual = ContactPerson.find(individual_id) unless individual_id.nil?
+    @user = User.find(user_id) unless user_id.nil?    
+    @path_elements = [@customer, @individual, @user]
+    render "show" and return    
   end
 
 end

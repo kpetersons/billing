@@ -1,5 +1,18 @@
 Billing::Application.routes.draw do
 
+  resources :customers, :except => [:destroy] do
+    resources :contact_persons do
+      resources :addresses
+      resources :contacts
+    end    
+    resources :addresses 
+    resources :contacts
+    collection do
+      get :applicant_find_ajax
+      get :agent_find_ajax
+    end
+  end
+
   root :to => 'sessions#new'
 
   resources :invoices
@@ -24,6 +37,8 @@ Billing::Application.routes.draw do
   end
 
   resources :users do
+    resources :addresses 
+    resources :contacts    
     member do
       post :activate
       post :block
@@ -60,11 +75,6 @@ Billing::Application.routes.draw do
     end
   end
 
-  resources :parties, :only => [] do
-    resources :addresses, :only => [:new, :create, :show, :edit, :update]
-    resources :contacts, :only => [:new, :create, :show, :edit, :update]
-  end
-
   resources :documents, :only =>[] do
     resources :tags, :only => [:add] do
       collection do
@@ -83,23 +93,6 @@ Billing::Application.routes.draw do
       member do
         get   :remove
       end
-    end
-  end
-
-  resources :customers, :except => [:destroy] do
-    resources :addresses
-    resources :contacts
-    resources :individuals do
-      resources :addresses
-      resources :contacts
-      collection do
-        get   :choose
-        post  :add
-      end
-    end
-    collection do
-      get :applicant_find_ajax
-      get :agent_find_ajax
     end
   end
 end

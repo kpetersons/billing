@@ -1,53 +1,81 @@
 class AddressesController < ApplicationController
 
-  layout "customers"  
-
+  layout "customers"
   def index
     @addresses = Address.all()
   end
 
   def new
-    party_id = params[:party_id] || params[:contact_person_id]    
+    customer_id = params[:customer_id]
+    individual_id = params[:contact_person_id]
+    user_id = params[:user_id]
     @address = Address.new
-    @party  = Party.find(party_id)
+    @customer = Customer.find(customer_id) unless customer_id.nil?
+    @individual = ContactPerson.find(individual_id) unless individual_id.nil?
+    @user = User.find(user_id) unless user_id.nil?    
+    @path_elements = [@customer, @individual, @user]
   end
 
   def create
-    party_id = params[:party_id] || params[:contact_person_id]
-    @party = Party.find(party_id)
-    @address = Address.new(params[:address])    
+    customer_id = params[:customer_id]
+    individual_id = params[:contact_person_id]
+    user_id = params[:user_id]
+    @address = Address.new(params[:address])
+    @customer = Customer.find(customer_id) unless customer_id.nil?
+    @individual = ContactPerson.find(individual_id) unless individual_id.nil?
+    @user = User.find(user_id) unless user_id.nil?    
+    @path_elements = [@customer, @individual, @user]
+    #
+    @party = @customer.party unless customer_id.nil?
+    @party = @individual.party unless individual_id.nil?    
+    @party = @user.individual.party unless user_id.nil?    
     Address.transaction do
-      if @party.addresses<<@address 
-        redirect_to @party.outer_object
-      else
-        render 'new'
+      if @party.addresses<<@address
+        redirect_to @path_elements  and return
       end
+      render 'new' and return
     end
   end
 
   def edit
-    party_id = params[:party_id] || params[:contact_person_id]    
+    customer_id = params[:customer_id]
+    individual_id = params[:contact_person_id]
+    user_id = params[:user_id]
     @address = Address.find(params[:id])
-    @party = Party.find(party_id)
+    @customer = Customer.find(customer_id) unless customer_id.nil?
+    @individual = ContactPerson.find(individual_id) unless individual_id.nil?
+    @user = User.find(user_id) unless user_id.nil?    
+    @path_elements = [@customer, @individual, @user]
   end
-  
+
   def update
-    party_id = params[:party_id] || params[:contact_person_id]    
-    @party = Party.find(party_id)    
+    customer_id = params[:customer_id]
+    individual_id = params[:contact_person_id]
+    user_id = params[:user_id]
+    @customer = Customer.find(customer_id) unless customer_id.nil?
+    @individual = ContactPerson.find(individual_id) unless individual_id.nil?
+    @user = User.find(user_id) unless user_id.nil?
     @address = Address.find(params[:address][:id])
+    #
+    @path_elements = [@customer, @individual, @user]
     Address.transaction do
-      if @address.update_attributes(params[:address])        
-        redirect_to @party.outer_object
-      else
-        render 'edit'
+      if @address.update_attributes(params[:address])
+        redirect_to @path_elements and return
       end
-    end    
+      render 'edit'
+    end
   end
 
   def show
-    party_id = params[:party_id] || params[:contact_person_id]    
+    customer_id = params[:customer_id]
+    individual_id = params[:contact_person_id]
+    user_id = params[:user_id]
     @address = Address.find(params[:id])
-    @party = Party.find(party_id)    
+    @customer = Customer.find(customer_id) unless customer_id.nil?
+    @individual = ContactPerson.find(individual_id) unless individual_id.nil?
+    @user = User.find(user_id) unless user_id.nil?    
+    @path_elements = [@customer, @individual, @user]
+    render "show" and return
   end
 
 end

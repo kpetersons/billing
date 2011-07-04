@@ -15,6 +15,7 @@ class Party < ActiveRecord::Base
   has_one :company, :foreign_key => :party_id, :autosave => true
   has_one :customer, :foreign_key => :party_id, :autosave => true
   has_one :individual, :foreign_key => :party_id, :autosave => true
+  has_one :contact_person, :foreign_key => :party_id, :autosave => true  
     
   has_many :source_relationships, :class_name => 'Relationship', :foreign_key => :source_party_id
   has_many :target_relationships, :class_name => 'Relationship', :foreign_key => :target_party_id
@@ -25,8 +26,8 @@ class Party < ActiveRecord::Base
   has_many :addresses
   has_many :contacts
   
-  attr_accessible :identifier, :party_type, :individual_attributes, :company_attributes, :customer_attributes, :address_attributes, :user_attributes
-  accepts_nested_attributes_for :individual, :company, :customer, :addresses
+  attr_accessible :identifier, :party_type, :individual_attributes, :contact_person_attributes, :company_attributes, :customer_attributes, :address_attributes, :user_attributes
+  accepts_nested_attributes_for :individual, :company, :customer, :addresses, :contact_person
   
   validates :identifier, :uniqueness       => {:case_sensitive => false}, :presence => true 
   

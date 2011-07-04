@@ -14,14 +14,14 @@
 #  updated_at  :datetime
 #
 
-class Individual < ActiveRecord::Base
+class ContactPerson < ActiveRecord::Base
+  
+  set_table_name "individuals"
   
   belongs_to :party
   belongs_to :gender
-  has_one :user
 
   attr_accessible :first_name, :middle_name, :last_name, :gender_id, :birth_date, :user_attributes
-  accepts_nested_attributes_for :user
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true

@@ -25,9 +25,7 @@
 				<td class="col-text"><%=contact_person.first_name%></td>
 				<td class="col-text"><%=contact_person.last_name%></td>
 				<td class="col-number">
-				<%=link_to 'Show', customer_individual_path(@customer, contact_person, :anchor => 'addresses') %> |
-				<%=link_to 'Edit', edit_customer_individual_path(@customer, contact_person) %> | 
-				Remove
+				<%=link_to 'Show', customer_contact_person_path(@customer, contact_person, :anchor => 'addresses') %>
 				</td>
 			</tr>
 		<%end%>

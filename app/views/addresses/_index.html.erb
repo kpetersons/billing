@@ -15,35 +15,30 @@
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="10">
-				<%= will_paginate addresses, :param_name => param_name, :params => {:anchor => param_name} %>
-			</th>
+			<th class="list-paginate" colspan="10"> <%= will_paginate addresses, :param_name => param_name, :params => {:anchor => param_name} %> </th>
 		</tr>
 	</tfoot>
 	<tbody>
 		<% addresses.each do |address|%>
-			<tr>
-				<td class="col-radio">
-				</td>
-				<td class="col-text"><%=address.address_type.name%></td>
-				<td class="col-text"><%=address.country%></td>
-				<td class="col-text"><%=address.city%></td>
-				<td class="col-text"><%=address.street%></td>
-				<td class="col-text"><%=address.house_number%></td>
-				<td class="col-text"><%=address.room_number%></td>
-				<td class="col-text"><%=address.post_code%></td>
-				<td class="col-text"><%=address.po_box%></td>				
-				<td class="col-number">
-				<%=link_to 'Show', party_address_path(address.party, address) %> |
-				<%=link_to 'Edit', edit_party_address_path(address.party, address) %> | 
-				Remove				
-				</td>
-			</tr>
+		<tr>
+			<td class="col-radio"></td>
+			<td class="col-text"><%= address.address_type.name%></td>
+			<td class="col-text"><%= address.country%></td>
+			<td class="col-text"><%= address.city%></td>
+			<td class="col-text"><%= address.street%></td>
+			<td class="col-text"><%= address.house_number%></td>
+			<td class="col-text"><%= address.room_number%></td>
+			<td class="col-text"><%= address.post_code%></td>
+			<td class="col-text"><%= address.po_box%></td>
+			<td class="col-number"> 
+				<%=link_to 'Show', path_elements+[address] %> 
+			</td>
+		</tr>
 		<%end%>
 		<% if addresses.empty? %>
-			<tr>
-				<td colspan="10">&nbsp;</td>
-			</tr>
+		<tr>
+			<td colspan="10">&nbsp;</td>
+		</tr>
 		<%end%>
 	</tbody>
 </table>

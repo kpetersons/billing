@@ -1,6 +1,6 @@
 <ul>
 	<%= render :partial => "/shared/party/fields", :locals => {:fields => fields} %>
-	<%= fields.fields_for :individual do |pi_f| %>
+	<%= fields.fields_for :contact_person do |pi_f| %>
 		<%= render :partial => "/shared/party/individual/fields", :locals => {:fields => pi_f} %>
 	<%end%>	
 </ul>
