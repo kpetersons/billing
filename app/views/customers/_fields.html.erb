@@ -1,11 +1,7 @@
 <ul>
 	<%= render :partial => "/shared/party/fields", :locals => {:fields => fields} %>
 	<%= fields.fields_for :company do |comp_f| %>
-	<%= comp_f.hidden_field :id %>
-	<li>
-		<%= comp_f.label :name %>
-		<%= comp_f.text_field :name %>
-	</li>
+		<%= render :partial => "/shared/party/company/fields", :locals => {:fields => comp_f} %>
 	<% end %>
 	<%= fields.fields_for :customer do |cust_f| %>
 	<%= cust_f.hidden_field :id %>

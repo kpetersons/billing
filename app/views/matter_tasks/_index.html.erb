@@ -21,9 +21,7 @@
 				<td class="col-text"><%=matter_task.status%></td>
 				<td class="col-date"><%=matter_task.proposed_deadline%></td>
 				<td class="col-number">
-				<%=link_to 'Show', matter_matter_task_path(@matter, matter_task) %> |
-				<%=link_to 'Edit', edit_matter_matter_task_path(@matter, matter_task) %> | 
-				Remove				
+				<%=link_to 'Show', matter_matter_task_path(@matter, matter_task) %>				
 				</td>
 			</tr>
 		<%end%>

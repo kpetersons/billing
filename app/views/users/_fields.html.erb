@@ -8,6 +8,10 @@
 			<%= piu_f.label :email %>
 			<%= piu_f.text_field :email %>
 		</li>
+		<li>
+			<%= piu_f.label :operating_party_id %>
+			<%= piu_f.select :operating_party_id, OperatingParty.all.collect { |tt| [tt.name, tt.id] } %>
+		</li>		
 			<% unless @party.persisted?%>
 			<li>
 				<%= piu_f.label :password %>

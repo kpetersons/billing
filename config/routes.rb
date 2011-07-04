@@ -1,5 +1,10 @@
 Billing::Application.routes.draw do
 
+  resources :operating_parties, :except => [:destroy] do    
+    resources :addresses 
+    resources :contacts    
+  end
+
   resources :customers, :except => [:destroy] do
     resources :contact_persons do
       resources :addresses

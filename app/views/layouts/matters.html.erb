@@ -18,11 +18,20 @@
 					<div class="v-menu panel-content">
 						<ul class="menu">
 							<li>
-								<%=link_to 'List matters', matters_path%>
+								<%= link_to 'List matters', matters_path%>
 							</li>
 							<li>
-								<%=link_to 'Create matter', new_matter_path%>
-							</li>								
+								<%= link_to 'New trademark matter', new_matter_path%>
+							</li>
+							<li>
+								<%= link_to 'New design matter', new_matter_path%>
+							</li>
+							<li>
+								<%= link_to 'New patent matter', new_matter_path%>
+							</li>
+							<li>
+								<%= link_to 'New other matter', new_matter_path%>
+							</li>
 						</ul>
 					</div>
 				</div>

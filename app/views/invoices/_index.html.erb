@@ -32,7 +32,7 @@
 			<td class="col-text"><%= invoice.your_ref %></td>
 			<td class="col-date"><%= invoice.your_date%></td>
 			<td class="col-text"><%= invoice.po_billing %></td>
-			<td class="col-number"><%= link_to "Show", invoice_path(invoice)%> | <%= link_to "Edit", edit_invoice_path(invoice)%> | Remove</td>
+			<td class="col-number"><%= link_to "Show", invoice_path(invoice)%></td>
 		</tr>
 		<% end %>
 		<% if invoices.empty? %>

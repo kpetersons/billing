@@ -95,15 +95,7 @@ ul.menu {
 	border-radius:5px 5px 0px 0px;
 }
 
-.panel-footer {
-	background-color:rgb(186,130,0);
-	background: -webkit-gradient(linear, left top, left bottom, from(rgba(224,156,0, .5)), to(rgba(224,156,0,1)));
-	padding:5px; 
-	border-radius:0px 0px 5px 5px ;
-}
-
 .column.elastic .panel-header {border-radius:10px 10px 0px 0px; padding-left:1em;text-align:left;}
-.column.elastic .panel-footer {border-radius:0px 0px 10px 10px ; padding-left:1em; margin-bottom:-5px;}
 
 .column.elastic .panel-header strong{
 	color:white; line-height:1.2em; font-size:1em;

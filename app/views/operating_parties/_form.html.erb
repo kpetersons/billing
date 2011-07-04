@@ -1,0 +1,5 @@
+<%=form_for @party, :url => (@party.persisted?) ? {:controller => 'operating_parties', :action => 'update'} : {:controller => 'operating_parties', :action => 'create'} do |p_f| %>
+<%= p_f.hidden_field :id %>
+<%= render :partial => "fields", 							:locals => {:fields 	=> p_f}%>
+<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> p_f}%>
+<%end%>

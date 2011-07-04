@@ -1,0 +1,9 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Your company setup</strong>
+	</div>
+	<%= render :partial => "index", :locals => {:operating_parties => @operating_parties, :param_name => "operating_parties_page"} %>
+	<div class="panel-footer controls">
+		<%= link_to "New company unit", new_operating_party_path %>
+	</div>	
+</div>

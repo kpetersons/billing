@@ -1,7 +1,7 @@
 form label {color:black;}
 form ul {list-style:none;}
 form ul li, form ul li *:not(.error), {line-height:1.4em; font-size:1em; margin:1px; padding:1px;}
-form ul li label {float:left;min-width:8em; padding-top:4px;}
+form ul li label {float:left;min-width:10em; padding-top:4px;}
 form ul li label:after{content:": "}
 form ul li>*:not(label):not(select), form ul li>span.error>*:not(label):not(select) {
 	width:15em;
@@ -18,4 +18,8 @@ form input[type="submit"], button {
 	border:none;
 	background:none;
 	cursor:pointer;
+}
+
+form select.wide {
+	width: 15em;
 }

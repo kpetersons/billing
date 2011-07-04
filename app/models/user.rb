@@ -1,4 +1,23 @@
 # == Schema Information
+# Schema version: 20110704183314
+#
+# Table name: users
+#
+#  id                 :integer(4)      not null, primary key
+#  individual_id      :integer(4)
+#  email              :string(255)
+#  encrypted_password :string(255)
+#  salt               :string(255)
+#  active             :boolean(1)
+#  blocked            :boolean(1)
+#  registration_date  :date
+#  activation_key     :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  operating_party_id :integer(4)
+#
+
+# == Schema Information
 # Schema version: 20110609074500
 #
 # Table name: users
@@ -19,6 +38,7 @@ class User < ActiveRecord::Base
   belongs_to :individual
   has_many :user_roles
   has_many :roles, :through => :user_roles
+  belongs_to :operating_party
   #
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   #

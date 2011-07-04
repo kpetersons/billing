@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110620121133) do
+ActiveRecord::Schema.define(:version => 20110704185444) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(:version => 20110620121133) do
     t.datetime "updated_at"
   end
 
+  create_table "attorneys_fee_types", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "clazzs", :force => true do |t|
     t.integer  "code"
     t.string   "name"
@@ -45,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20110620121133) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "registration_number"
   end
 
   create_table "contact_types", :force => true do |t|
@@ -126,6 +134,27 @@ ActiveRecord::Schema.define(:version => 20110620121133) do
     t.datetime "updated_at"
   end
 
+  create_table "invoice_line_presets", :force => true do |t|
+    t.integer  "operating_party_id"
+    t.integer  "official_fee_type_id"
+    t.integer  "attorneys_fee_type_id"
+    t.string   "name"
+    t.string   "off_fee"
+    t.string   "attorneys_fee"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invoice_lines", :force => true do |t|
+    t.integer  "invoice_id"
+    t.integer  "official_fee_type_id"
+    t.string   "off_fee"
+    t.string   "attorneys_fee"
+    t.string   "details"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invoices", :force => true do |t|
     t.integer  "document_id"
     t.integer  "customer_id"
@@ -180,6 +209,20 @@ ActiveRecord::Schema.define(:version => 20110620121133) do
     t.date     "appl_date"
     t.string   "appl_number"
     t.integer  "agent_id"
+  end
+
+  create_table "official_fee_types", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "operating_parties", :force => true do |t|
+    t.integer  "company_id"
+    t.integer  "operating_party_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "parties", :force => true do |t|
@@ -242,6 +285,7 @@ ActiveRecord::Schema.define(:version => 20110620121133) do
     t.string   "activation_key"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "operating_party_id"
   end
 
 end

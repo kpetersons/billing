@@ -1,7 +1,8 @@
 .controls a, .panel-header a {text-decoration:none;}
 
 .column.elastic form .panel-footer {background:none;}
-.column.elastic .show.controls a,
+.column.elastic 	 .show.controls a,
+.column.elastic 	 .panel-footer.controls a,
 .column.elastic form .panel-footer.controls a, 
 .column.elastic form .panel-footer.controls input[type="submit"], 
 .column.elastic form .panel-footer.controls button {
@@ -15,6 +16,7 @@
 	display:block;
 	float:left;
 	text-align: center;
+	font-size:1.2em;
 }
 
 .column.elastic 	 .controls a:hover,
@@ -35,6 +37,7 @@
 }
 
 .column.elastic .controls {
-	margin:0px 0px 10px 20px;
+	margin: 0px 0px 10px 20px;
 	float:left;
+	clear:left;
 }

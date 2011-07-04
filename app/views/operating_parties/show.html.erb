@@ -1,0 +1,49 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Company information</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
+	<dl class="panel-content">
+		<dt>
+			<label> Name </label>
+		</dt>
+		<dd>
+			<%= @operating_party.name%>
+		</dd>
+		<dt>
+			<label> Identifier </label>
+		</dt>
+		<dd>
+			<%= @operating_party.identifier%>
+		</dd>
+		<dt>
+			<label> Parent unit </label>
+		</dt>
+		<dd>
+			<%= link_to "#{@operating_party.parent_name}", @operating_party.parent_operating_party %>
+		</dd>
+	</dl>
+	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_operating_party_path(@operating_party)} %>
+	<dl class="nested-panel accordion">
+		<dt class="panel-header">
+			<a href="#addresses"><strong>Addresses</strong></a>
+		</dt>
+		<dd id="addresses">
+			<%= render :partial => "addresses/index", :locals => {:addresses => @operating_party.company.party.addresses.paginate(:per_page=> 10, :page => params[:addresses]), :param_name => 'addresses', :path_elements => [@operating_party]} %>
+			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Add new address', :path => new_operating_party_address_path(@operating_party)} %>
+		</dd>
+		<dt class="panel-header">
+			<a href="#contacts"><strong>Contact list</strong></a>
+		</dt>
+		<dd id="contacts">
+			<%= render :partial => "contacts/index", :locals => {:contacts => @operating_party.company.party.contacts.paginate(:per_page=>10, :page => params[:contacts]), :param_name => 'contacts', :path_elements => [@operating_party]} %>
+			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Add new contact', :path => new_operating_party_contact_path(@operating_party)} %>
+		</dd>
+		<dt class="panel-header">
+			<a href="#employees"><strong>Employees</strong></a>
+		</dt>
+		<dd id="employees">
+			<%= render :partial => "users/index", :locals => {:users => @operating_party.users.paginate(:per_page=>10, :page => params[:users]), :param_name => 'users', :path_elements => [@operating_party]} %>
+		</dd>		
+	</dl>
+</div>

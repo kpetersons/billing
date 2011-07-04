@@ -24,7 +24,7 @@
 			<td class="col-text"><%= customer.identifier %></td>
 			<td class="col-text"><%= customer.type%></td>
 			<td class="col-date"><%= customer.customer_since %></td>
-			<td class="col-number"><%= link_to "Show", customer_path(customer, :anchor => 'addresses')%> | <%= link_to "Edit", edit_customer_path(customer)%></td>
+			<td class="col-number"><%= link_to "Show", customer_path(customer, :anchor => 'addresses')%></td>
 		</tr>
 		<% end %>
 		<% if customers.empty? %>
