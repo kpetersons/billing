@@ -20,16 +20,18 @@ class InvoiceLinePreset < ActiveRecord::Base
   belongs_to :official_fee_type
   belongs_to :attorney_fee_type
 
+  validates :operating_party_id, :presence => true  
+
   def operating_party_name
-    operating_party.name
+    operating_party.name unless operating_party.nil? 
   end
 
   def official_fee_name
-    official_fee_type.name
+    official_fee_type.name unless official_fee_type.nil? 
   end
 
   def attorney_fee_name
-    attorney_fee_type.name
+    attorney_fee_type.name unless attorney_fee_type.nil?
   end
 
 end
