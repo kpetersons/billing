@@ -2,96 +2,110 @@
 	<div class="panel-header">
 		<strong>Invoice information</strong>
 	</div>
-	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
 	<dl class="panel-content">
 		<dt>
-			<label>
-				Registration number
-			</label>
+			<label> Registration number </label>
 		</dt>
 		<dd>
-			<%=@document.registration_number%>&nbsp;
-		</dd>		
-		<dt>
-			<label>
-				Customer
-			</label>
-		</dt>
-		<dd>
-			<%=@document.invoice.customer.name unless @document.invoice.customer.nil? %>&nbsp;
+			<%= @document.registration_number%>&nbsp;
 		</dd>
 		<dt>
-			<label>
-				Address
-			</label>
+			<label> Customer </label>
 		</dt>
 		<dd>
-			<%=@document.invoice.address.name unless @document.invoice.address.nil? %>&nbsp;
+			<%= @document.invoice.customer.name unless @document.invoice.customer.nil? %>&nbsp;
 		</dd>
 		<dt>
-			<label>
-				Contact person
-			</label>
+			<label> Address </label>
 		</dt>
 		<dd>
-			<%=@document.invoice.individual.name unless @document.invoice.individual.nil? %>&nbsp;
+			<%= @document.invoice.address.name unless @document.invoice.address.nil? %>&nbsp;
 		</dd>
 		<dt>
-			<label>
-				Currency
-			</label>
+			<label> Contact person </label>
 		</dt>
 		<dd>
-			<%=@document.invoice.currency.name%>&nbsp;
-		</dd>		
-		<dt>
-			<label>
-				Discount
-			</label>
-		</dt>
-		<dd>
-			<%=@document.invoice.discount%>&nbsp;
+			<%= @document.invoice.individual.name unless @document.invoice.individual.nil? %>&nbsp;
 		</dd>
 		<dt>
-			<label>
-				Our ref
-			</label>
+			<label> Currency </label>
 		</dt>
 		<dd>
-			<%=@document.invoice.our_ref%>&nbsp;
-		</dd>		
+			<%= @document.invoice.currency.name%>&nbsp;
+		</dd>
 		<dt>
-			<label>
-				Your ref
-			</label>
+			<label> Discount </label>
 		</dt>
 		<dd>
-			<%=@document.invoice.your_ref%>&nbsp;
-		</dd>		
+			<%= @document.invoice.discount%>&nbsp;
+		</dd>
 		<dt>
-			<label>
-				Your date
-			</label>
+			<label> Our ref </label>
 		</dt>
 		<dd>
-			<%=@document.invoice.your_date%>&nbsp;
-		</dd>		
+			<%= @document.invoice.our_ref%>&nbsp;
+		</dd>
 		<dt>
-			<label>
-				PO Billing
-			</label>
+			<label> Your ref </label>
 		</dt>
 		<dd>
-			<%=@document.invoice.po_billing%>&nbsp;
-		</dd>		
+			<%= @document.invoice.your_ref%>&nbsp;
+		</dd>
 		<dt>
-			<label>
-				Invoice date
-			</label>
+			<label> Your date </label>
 		</dt>
 		<dd>
-			<%=@document.invoice.invoice_date%>&nbsp;
-		</dd>		
+			<%= @document.invoice.your_date%>&nbsp;
+		</dd>
+		<dt>
+			<label> PO Billing </label>
+		</dt>
+		<dd>
+			<%= @document.invoice.po_billing%>&nbsp;
+		</dd>
+		<dt>
+			<label> Invoice date </label>
+		</dt>
+		<dd>
+			<%= @document.invoice.invoice_date%>&nbsp;
+		</dd>
 	</dl>
-	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>		
+	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
+	<%=form_for @document.invoice, :url => {:action => 'save_lines'}  do |i_f| %>
+	<table style="clear:left; height:auto; width: 100%;">
+		<thead>
+			<tr>
+				<th class="col-text" style="width:1em">Official fee type</th>
+				<th class="col-number" style="width:1em">Fee</th>
+				<th class="col-text" style="width:1em">Attorneys fee type</th>
+				<th class="col-number" style="width:1em">Fee</th>
+				<th class="col-number" style="width:1em">Details</th>				
+				<th class="col-text" style="width:1em"></th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th colspan="6">
+				<div class="panel-footer controls">
+					<%= i_f.submit 'Save lines'%>
+				</div>
+				</th>
+			</tr>
+		</tfoot>
+		<tbody>
+			<%= i_f.fields_for :invoice_lines do |il_f|%>
+			<tr>
+				<%= render :partial => "invoices/invoice_lines/fields", :locals => {:fields 	=> il_f}%>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>	
+	<%end%>
+	<%=form_for @document.invoice, :url => {:action => 'add_line'}  do |i_f| %>	
+	<div class="panel-footer controls">
+		<%= i_f.select :preset_id, InvoiceLinePreset.all.collect { |tt| [tt.name, tt.id]}, {:include_blank => true}, {:style => 'float:left; margin-right:15px;' } %>
+		<%= i_f.submit 'Add line' %>		
+	</div>
+	<% end %>	
 </div>

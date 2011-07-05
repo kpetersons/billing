@@ -1,5 +1,20 @@
 Billing::Application.routes.draw do
 
+  resources :invoices   do
+     member do
+      put :save_lines
+      put :add_line
+      delete :remove_line
+    end
+  end
+  resources :exchange_rates, :only => [:edit, :update]
+
+  resources :currencies do
+    member do
+      post :add_rate
+    end
+  end
+
   resources :invoice_line_presets
   resources :official_fee_types
   resources :attorney_fee_types
@@ -23,15 +38,6 @@ Billing::Application.routes.draw do
   end
 
   root :to => 'sessions#new'
-
-  resources :invoices
-  resources :exchange_rates, :only => [:edit, :update]
-
-  resources :currencies do
-    member do
-      post :add_rate
-    end
-  end
 
   resources :dashboard, :only => [:show] do
     collection do

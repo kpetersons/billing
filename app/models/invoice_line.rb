@@ -7,11 +7,11 @@
 #  invoice_id           :integer(4)
 #  official_fee_type_id :integer(4)
 #  official_fee         :string(255)
+#  attorney_fee_type_id :integer(4)
 #  attorney_fee         :string(255)
 #  details              :string(255)
 #  created_at           :datetime
 #  updated_at           :datetime
-#  attorney_fee_type_id :integer(4)
 #
 
 class InvoiceLine < ActiveRecord::Base

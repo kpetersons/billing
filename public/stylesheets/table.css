@@ -14,6 +14,7 @@ tfoot div.pagination em {
 table {height:340px;}
 table tbody tr, table tbody tr td {height:1.5em; max-height: 1.4em; vertical-align: text-top;}
 table tbody tr:last-child, table tbody tr:last-child td{height:auto;}
+table tbody tr td>* {:height:inherit; padding: 2px 0; vertical-align: middle;}
 
 .col-radio, .col-checkbox, .col-check {width:1em;}
 .col-check {text-align:right;}
@@ -21,6 +22,8 @@ table tbody tr:last-child, table tbody tr:last-child td{height:auto;}
 .col-date, .col-bool {text-align:center;}
 .col-bool>input[type=checkbox]{color:black;border:2px solid;}
 .col-number {text-align:right;}
+.col-number>input[type="text"] {width: 8em;text-align: right;}
+
 
 table th:first-child, table td:first-child{padding-left:2em;}
 table th:last-child, table td:last-child{padding-right:2em;}

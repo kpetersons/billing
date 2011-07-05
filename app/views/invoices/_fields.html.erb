@@ -47,8 +47,5 @@
 		<%= i_f.label :invoice_date %>
 		<%= i_f.text_field :invoice_date %>
 	</li>
-		<%= i_f.fields_for :invoice_lines do |il_f|%>
-			<%= render :partial => "invoices/invoice_lines/fields", :locals => {:fields 	=> il_f}%>
-		<% end %>
 	<% end %>	
 </ul>

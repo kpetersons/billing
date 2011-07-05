@@ -1,23 +1,19 @@
-<li>
-	<%= fields.label :official_fee %>
-	<%= fields.text_field :official_fee %>
-</li>
-<li>
-	<%= fields.label :official_fee_type_id %>
+<td class="col-text" style="width:1em">
+	<%= fields.hidden_field :id %>	
 	<%= fields.select :official_fee_type_id, OfficialFeeType.all.collect { |tt| [tt.name, tt.id] },
     {:include_blank => true},{:class => 'wide'} %>
-</li>
-<li>
-	<%= fields.label :attorney_fee %>
-	<%= fields.text_field :attorney_fee %>
-</li>
-<li>
-	<%= fields.label :attorney_fee_type_id %>
+</td>
+<td class="col-number" style="width:1em">	
+	<%= fields.text_field :official_fee %>
+</td>
+<td class="col-text" style="width:1em">
 	<%= fields.select :attorney_fee_type_id, AttorneyFeeType.all.collect { |tt| [tt.name, tt.id] },
     {:include_blank => true},{:class => 'wide'} %>
-</li>
-<li>
-	<div class="panel-footer control">
-		<a href="#add">Add line</a>
-	</div>
-</li>
+</td>
+<td class="col-number" style="width:1em">
+	<%= fields.text_field :attorney_fee %>
+</td>
+<td class="col-text" style="width:1em">
+	<%= fields.text_area :details, {:rows => 1, :cols => 20} %>
+</td>
+<td class="col-text"><%=link_to 'Remove', remove_line_invoice_path(@invoice, :invoice_line_id => fields.object), :method => :delete %></td>

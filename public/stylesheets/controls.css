@@ -17,6 +17,8 @@
 	float:left;
 	text-align: center;
 	font-size:1.2em;
+	vertical-align: middle;
+	margin:0;
 }
 
 .column.elastic 	 .controls a:hover,

@@ -31,17 +31,40 @@ class Invoice < ActiveRecord::Base
   belongs_to :exchange_rate
   has_many   :invoice_lines
 
-
+  attr_accessible :document_id, 
+                  :customer_id, 
+                  :address_id, 
+                  :individual_id, 
+                  :currency_id, 
+                  :exchange_rate_id,
+                  :discount,
+                  :our_ref,
+                  :your_ref,
+                  :po_billing,
+                  :finishing_details,
+                  :invoice_date,
+                  :invoice_lines_attributes
+  accepts_nested_attributes_for  :invoice_lines
+  attr_protected :preset_id  
+  
   def number
     document.registration_number
   end
-  
+
   def classes
     clazzs.collect {|clazz| clazz.code}.join(',')
   end
-  
+
   def customer_name
     (customer.nil?)? '' : customer.name
+  end
+
+  def preset_id
+    @preset_id
+  end
+  
+  def preset_id= preset_id
+    @preset_id = preset_id
   end
 
 end
