@@ -8,7 +8,7 @@ gem 'uuidtools'
 
 group :development do
   gem 'rspec-rails', '2.5.0'
-  gem 'annotate-models'
+  gem 'annotate', '2.4.0'
   gem 'faker', '0.3.1'
   gem 'mysql2'  
 end
