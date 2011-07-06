@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110706071025) do
+ActiveRecord::Schema.define(:version => 20110706220808) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -148,8 +148,8 @@ ActiveRecord::Schema.define(:version => 20110706071025) do
   create_table "invoice_lines", :force => true do |t|
     t.integer  "invoice_id"
     t.integer  "official_fee_type_id"
-    t.string   "official_fee"
-    t.string   "attorney_fee"
+    t.decimal  "official_fee",         :precision => 8, :scale => 2
+    t.decimal  "attorney_fee",         :precision => 8, :scale => 2
     t.string   "details"
     t.datetime "created_at"
     t.datetime "updated_at"
