@@ -21,5 +21,5 @@
 			<%=@matter_task.proposed_deadline%>&nbsp;
 		</dd>
 	</dl>
-	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_matter_matter_task_path(@matter_task.matter, @matter_task)} %>		
+	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_matter_task_path(@matter_task.matter, @matter_task)} %>		
 </div>

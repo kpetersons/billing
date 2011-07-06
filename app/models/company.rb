@@ -19,7 +19,6 @@ class Company < ActiveRecord::Base
     accepts_nested_attributes_for :operating_party    
         
     validates :name, :presence => true
-    validates :registration_number, 
-      :uniqueness       => {:case_sensitive => false},
-      :allow_nil        => true 
+    validates :registration_number, :presence => true
+
 end

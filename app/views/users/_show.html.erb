@@ -1,10 +1,10 @@
 <dl class="panel-content">
-	<dt>
+<!-- 	<dt>
 		<label> Identifier </label>
 	</dt>
 	<dd>
 		<%= @user.individual.party.identifier%>&nbsp;
-	</dd>
+	</dd> -->
 	<dt>
 		<label> First name </label>
 	</dt>
@@ -49,4 +49,10 @@
 		<%= (@user.blocked)? 'Yes' : 'No' %>&nbsp;
 		<%= link_to "#{(@user.blocked)? 'un' : ''}block".capitalize, block_user_path(@user), :method => :post %>
 	</dd>
+	<dt>
+		<label> Belongs to </label>
+	</dt>
+	<dd>
+		<%= @user.try(:operating_party).try(:name) %>&nbsp;
+	</dd>	
 </dl>

@@ -10,15 +10,15 @@
 			</label>
 		</dt>
 		<dd>
-			<%=@customer.name%>
+			<%=@customer.name%>&nbsp;
 		</dd>
 		<dt>
 			<label>
-				Identifier
+				Registration number
 			</label>
 		</dt>
 		<dd>
-			<%=@customer.identifier%>
+			<%=@customer.registration_number%>&nbsp;
 		</dd>
 	</dl>
 	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_customer_path(@customer)} %>	

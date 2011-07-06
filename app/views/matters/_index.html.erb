@@ -34,7 +34,7 @@
 			<td class="col-date"><%= matter.agent_name %></td>
 			<td class="col-date"><%= matter.appl_date %></td>
 			<td class="col-date"><%= matter.appl_number %></td>
-			<td class="col-number"><%= link_to "Show", matter_path(matter, :anchor => :deadlines)%></td>
+			<td class="col-number"><%= link_to "Show", matter_path(matter, :anchor => :tasks)%></td>
 		</tr>
 		<% end %>
 		<% if matters.empty? %>

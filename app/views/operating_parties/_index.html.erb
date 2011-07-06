@@ -3,7 +3,7 @@
 		<tr>
 			<th class="col-radio"></th>
 			<th class="col-text">Name</th>
-			<th class="col-text">Identifier</th>
+			<th class="col-text">Registration number</th>
 			<th class="col-text">Included in</th>			
 			<th></th>
 		</tr>
@@ -20,7 +20,7 @@
 		<tr>
 			<td></td>
 			<td class="col-text"><%= oparating_party.name %></td>
-			<td class="col-text"><%= oparating_party.identifier %></td>
+			<td class="col-text"><%= oparating_party.registration_number%></td>
 			<td class="col-text"><%= oparating_party.parent_name%></td>
 			<td class="col-number"><%= link_to "Show", operating_party_path(oparating_party, :anchor => 'addresses')%></td>
 		</tr>

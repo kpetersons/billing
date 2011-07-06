@@ -1,4 +1,4 @@
-<%=form_for @matter_task, :url => (@matter_task.persisted?) ? matter_matter_task_path : {:controller => 'matter_tasks', :action => 'create'} do |mt_f| %>
+<%=form_for @matter_task do |mt_f| %>
 	<%= render :partial => "fields", 							:locals => {:fields 	=> mt_f}%>
 	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> mt_f}%>
 <%end%>

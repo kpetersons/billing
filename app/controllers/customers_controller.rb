@@ -1,7 +1,6 @@
 class CustomersController < ApplicationController
 
   layout "customers"
-  
   def index
     @customers = Customer.paginate(:page =>  params[:customers_page])
   end
@@ -71,6 +70,16 @@ class CustomersController < ApplicationController
       index += 1
     end
     render :json => @result
-  end  
+  end
+
+  def list_addresses
+    @result = Customer.find(params[:customer]).addresses.collect { |tt| [tt.id, tt.name] }
+    render :json => @result
+  end
+
+  def list_contact_persons
+    @result = Customer.find(params[:customer]).contact_persons.collect { |tt| [tt.id, tt.name] }
+    render :json => @result
+  end
 
 end

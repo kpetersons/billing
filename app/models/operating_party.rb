@@ -29,8 +29,8 @@ class OperatingParty < ActiveRecord::Base
     parent_operating_party.company.name unless parent_operating_party.nil? 
   end
   
-  def identifier 
-    company.party.identifier
+  def registration_number 
+    company.registration_number
   end
   
 end

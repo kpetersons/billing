@@ -29,6 +29,17 @@ class UsersController < ApplicationController
     @party = User.find(params[:id]).individual.party
   end
 
+  def update
+    Party.transaction do
+      @party = Party.find(params[:id])
+      if @party.update_attributes(params[:party])
+        redirect_to user_path(@user)
+      else
+        render 'new'
+      end
+    end    
+  end
+
   def show
     @user = User.find(params[:id])
   end

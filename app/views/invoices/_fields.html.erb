@@ -7,45 +7,69 @@
 	</li>
 	<%= fields.fields_for :invoice do |i_f| %>
 	<li>
-		<%= i_f.hidden_field :id %>
-		<%= i_f.label :customer_id, "Customer" %>
-		<%= i_f.text_field :customer_id %>
-	</li>		
-	<li>			
-		<%= i_f.label :address_id, "Address" %>
-		<%= i_f.text_field :address_id %>
-	</li>		
-	<li>			
-		<%= i_f.label :individual_id, "Person" %>
-		<%= i_f.text_field :individual_id %>
-	</li>		
-	<li>			
-		<%= i_f.label :currency_id %>
-		<%= i_f.select :currency_id, Currency.all.collect { |tt| [tt.name, tt.id] } %>
-	</li>
-	<li>			
-		<%= i_f.label :discount %>
-		<%= i_f.text_field :discount %>
-	</li>		
-	<li>			
-		<%= i_f.label :our_ref %>
-		<%= i_f.text_field :our_ref %>
-	</li>		
-	<li>			
-		<%= i_f.label :your_ref %>
-		<%= i_f.text_field :your_ref %>
-	</li>		
-	<li>			
-		<%= i_f.label :your_date %>
-		<%= i_f.text_field :your_date %>
-	</li>		
-	<li>			
-		<%= i_f.label :po_billing %>
-		<%= i_f.text_field :po_billing %>
-	</li>		
-	<li>			
 		<%= i_f.label :invoice_date %>
 		<%= i_f.text_field :invoice_date %>
 	</li>
-	<% end %>	
+	<li>
+		<ul>
+			<li>
+				<h3>Customer</h3>
+			</li>
+			<li>
+				<%= i_f.fields_for :invoice_matters do |im_f| %>
+				<%= im_f.hidden_field :matter_id%>
+				<%= im_f.hidden_field :matter_task_id%>
+				<% end %>
+				<%= i_f.hidden_field :id %>
+				<%= i_f.hidden_field :customer_id %>				
+				<%= i_f.label :customer_name, "Name" %>
+				<%= i_f.text_field :customer_name %>
+			</li>
+			<li>
+				<%= i_f.label :address_id %>
+				<%= i_f.select :address_id, i_f.object.customer_addresses,
+					{}, 
+					{:class => 'wide', :disabled => false || i_f.object.customer.nil?} %>				
+			</li>
+			<li>
+				<%= i_f.label :individual_id, "Person" %>
+				<%= i_f.select :individual_id, i_f.object.customer_contact_persons,
+					{}, 
+					{:class => 'wide', :disabled => false || i_f.object.customer.nil?} %>
+			</li>
+		</ul>
+		<div id="invoice_address"></div>
+	</li>
+	<li>
+		<ul>
+			<li>
+				<h3>Referencs</h3>
+			</li>
+			<li>
+				<%= i_f.label :our_ref %>
+				<%= i_f.text_field :our_ref %>
+			</li>
+			<li>
+				<%= i_f.label :your_ref %>
+				<%= i_f.text_field :your_ref %>
+			</li>
+			<li>
+				<%= i_f.label :your_date %>
+				<%= i_f.text_field :your_date %>
+			</li>
+			<li>
+				<%= i_f.label :po_billing %>
+				<%= i_f.text_field :po_billing %>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<%= i_f.label :currency_id %>
+		<%= i_f.select :currency_id, Currency.all.collect { |tt| [tt.name, tt.id] } %>
+	</li>
+	<li>
+		<%= i_f.label :discount %>
+		<%= i_f.text_field :discount, {:class => 'field-num percent'} %><span class="post-field"> %</span>
+	</li>
+	<% end %>
 </ul>

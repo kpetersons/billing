@@ -11,7 +11,7 @@ tfoot div.pagination em {
 	font-weight:bold;
 }
 
-table {height:340px;}
+table {height:240px;}
 table tbody tr, table tbody tr td {height:1.5em; max-height: 1.4em; vertical-align: text-top;}
 table tbody tr:last-child, table tbody tr:last-child td{height:auto;}
 table tbody tr td>* {:height:inherit; padding: 2px 0; vertical-align: middle;}

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: relationships
+#
+#  id                   :integer(4)      not null, primary key
+#  source_party_id      :integer(4)
+#  target_party_id      :integer(4)
+#  relationship_type_id :integer(4)
+#  created_at           :datetime
+#  updated_at           :datetime
+#
+
 require 'spec_helper'
 
 describe Relationship do

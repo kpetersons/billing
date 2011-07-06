@@ -37,8 +37,15 @@ class Customer < ActiveRecord::Base
     Individual.where(:party_id => party.target_parties_query(:relationship_type => RelationshipType.find_by_name('CONTACT_PERSON').id)).all
   end
 
-  def matters
-        
+  def registration_number
+    return party.company.registration_number unless party.company.nil?
+  end
+
+  def matters        
+  end
+
+  def addresses
+    party.addresses
   end
   
 end

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: companies
+#
+#  id                  :integer(4)      not null, primary key
+#  party_id            :integer(4)
+#  name                :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  registration_number :string(255)
+#
+
 require 'spec_helper'
 
 describe Company do

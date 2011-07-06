@@ -23,7 +23,7 @@ class OperatingPartiesController < ApplicationController
   end
 
   def edit
-    @party = Customer.find(params[:id]).party
+    @party = OperatingParty.find(params[:id]).company.party
   end
 
   def update

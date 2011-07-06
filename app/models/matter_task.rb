@@ -16,6 +16,9 @@ class MatterTask < ActiveRecord::Base
   
   belongs_to :matter
   belongs_to :matter_task_status
+  has_many   :invoice_matters
+  has_many   :invoices, :through => :invoice_matters
+  
   
   attr_accessible :matter_id, :matter_task_status_id, :description, :proposed_deadline
   

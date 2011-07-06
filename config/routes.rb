@@ -1,7 +1,7 @@
 Billing::Application.routes.draw do
 
   resources :invoices   do
-     member do
+    member do
       put :save_lines
       put :add_line
       delete :remove_line
@@ -19,21 +19,39 @@ Billing::Application.routes.draw do
   resources :official_fee_types
   resources :attorney_fee_types
 
-  resources :operating_parties, :except => [:destroy] do    
-    resources :addresses 
-    resources :contacts    
+  resources :matters do
+    resources :invoices, :only => [:new]
+    resources :tasks, :controller => "MatterTasks" do
+      resources :invoices, :only => [:new]
+    end
+    resources :matters, :only => [:new, :create, :add, :choose] do
+      collection do
+        get   :choose
+        post  :add
+      end
+      member do
+        get   :remove
+      end
+    end
   end
 
-  resources :customers, :except => [:destroy] do
+  resources :operating_parties, :except => [:destroy] do
+    resources :addresses
+    resources :contacts
+  end
+
+  resources :customers, :except => [:destroy] do    
     resources :contact_persons do
       resources :addresses
       resources :contacts
-    end    
-    resources :addresses 
+    end
+    resources :addresses
     resources :contacts
     collection do
       get :applicant_find_ajax
       get :agent_find_ajax
+      get :list_addresses
+      get :list_contact_persons
     end
   end
 
@@ -52,8 +70,8 @@ Billing::Application.routes.draw do
   end
 
   resources :users do
-    resources :addresses 
-    resources :contacts    
+    resources :addresses
+    resources :contacts
     member do
       post :activate
       post :block
@@ -98,16 +116,4 @@ Billing::Application.routes.draw do
     end
   end
 
-  resources :matters do
-    resources :matter_tasks
-    resources :matters, :only => [:new, :create, :add, :choose] do
-      collection do
-        get   :choose
-        post  :add
-      end
-      member do
-        get   :remove
-      end
-    end
-  end
 end

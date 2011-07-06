@@ -1,22 +1,42 @@
 <%=form_for @document, :url => (@document.persisted?) ? {:controller => 'invoices', :action => 'update'} : {:controller => 'invoices', :action => 'create'} do |d_f| %>
-	<%= render :partial => "fields", 							:locals => {:fields 	=> d_f}%>	
-	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> d_f}%>
+<%= render :partial => "fields", 							:locals => {:fields 	=> d_f}%>
+<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> d_f}%>
 <%end%>
 <script>
-	new Autocomplete('document_matter_attributes_applicant_name', 
-	{
-		serviceUrl:'/customers/applicant_find_ajax'
-		,minChars:2
-		,onSelect: function(value, data){
-        	$('document_matter_attributes_applicant_id').setValue(data)
-      	}
+	new Autocomplete('document_invoice_attributes_customer_name', {
+		serviceUrl : '/customers/applicant_find_ajax',
+		minChars : 2,
+		onSelect : function(value, data) {
+			$('document_invoice_attributes_customer_id').setValue(data) 			
+			new Ajax.Request('/customers/list_addresses?customer='+data, {
+				method:'get',
+				onSuccess : function(response) {				
+					$select = $('document_invoice_attributes_address_id')
+					$select.options.length = 0															
+					var json = response.responseText.evalJSON();
+					for (var i=0; i < json.length; i++) {
+					  	$select.options.add(
+							new Option(json[i][1], json[i][0])
+						)
+					}
+					$select.removeAttribute("disabled")					
+				}
+			});
+			new Ajax.Request('/customers/list_contact_persons?customer='+data, {
+				method:'get',
+				onSuccess : function(response) {
+					$select = $('document_invoice_attributes_individual_id')
+					$select.options.length = 0
+					var json = response.responseText.evalJSON();
+					for (var i=0; i < json.length; i++) {
+					  	$select.options.add(
+							new Option(json[i][1], json[i][0])
+						)
+					}
+					$select.removeAttribute("disabled")					
+				}
+			});			
+		}
 	});
-	new Autocomplete('document_matter_attributes_agent_name', 
-	{
-		serviceUrl:'/customers/agent_find_ajax'
-		,minChars:2
-		,onSelect: function(value, data){
-        	$('document_matter_attributes_agent_id').setValue(data)
-      	}
-	});	
+
 </script>

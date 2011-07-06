@@ -24,5 +24,9 @@ class Address < ActiveRecord::Base
   validates :country, :presence => true
   validates :city, :presence => true
   validates :street, :presence => true
+
+  def name
+    "#{country}, #{city}, #{street}, #{house_number}, #{post_code}"    
+  end
   
 end

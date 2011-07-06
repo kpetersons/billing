@@ -29,7 +29,9 @@ class Party < ActiveRecord::Base
   attr_accessible :identifier, :party_type, :individual_attributes, :contact_person_attributes, :company_attributes, :customer_attributes, :address_attributes, :user_attributes
   accepts_nested_attributes_for :individual, :company, :customer, :addresses, :contact_person
   
-  validates :identifier, :uniqueness       => {:case_sensitive => false}, :presence => true 
+  validates :identifier, :uniqueness       => {:case_sensitive => false}, :presence => true
+  
+  before_validation :generate_identifier, :on => :create 
   
   def target_parties (relationship_type) 
     return target_parties_query(:relationship_type => relationship_type).all
@@ -62,5 +64,10 @@ class Party < ActiveRecord::Base
       return individual
     end
   end
-   
+
+  private
+  def generate_identifier
+    puts "self.identifier = UUIDTools::UUID.random_create.to_s = #{UUIDTools::UUID.random_create.to_s}"
+    self.identifier = UUIDTools::UUID.random_create.to_s
+  end   
 end

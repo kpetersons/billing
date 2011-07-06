@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   #
   attr_accessor :password
-  attr_accessible :email, :password, :password_confirmation, :active, :blocked, :individual_id, :registration_date, :activation_key
+  attr_accessible :email, :password, :password_confirmation, :active, :blocked, :individual_id, :registration_date, :activation_key, :operating_party_id
   #
   validates :email, :presence => true,
             :format           => {:with => email_regex},
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
             :length       => {:maximum => 255}
   validates :password, :presence => true,
             :confirmation        => true,
-            :length              => {:within => 6..40}
+            :length              => {:within => 6..40}, :on => :create
   #
   before_save :encrypt_password
   #

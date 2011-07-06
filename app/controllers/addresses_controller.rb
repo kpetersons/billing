@@ -77,5 +77,5 @@ class AddressesController < ApplicationController
     @path_elements = [@customer, @individual, @user]
     render "show" and return
   end
-
+  
 end

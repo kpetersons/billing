@@ -27,6 +27,8 @@ class Matter < ActiveRecord::Base
   has_many    :matter_tasks
   has_many    :matter_clazzs
   has_many    :clazzs, :through => :matter_clazzs
+  has_many    :invoice_matters
+  has_many    :invoices, :through => :invoice_matters
   
   validates :agent_id, :presence => true
   validates :applicant_id, :presence => true

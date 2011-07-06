@@ -11,16 +11,16 @@
 			<%= @operating_party.name%>
 		</dd>
 		<dt>
-			<label> Identifier </label>
+			<label> Registration number </label>
 		</dt>
 		<dd>
-			<%= @operating_party.identifier%>
+			<%= @operating_party.registration_number%>&nbsp;
 		</dd>
 		<dt>
 			<label> Parent unit </label>
 		</dt>
-		<dd>
-			<%= link_to "#{@operating_party.parent_name}", @operating_party.parent_operating_party %>
+		<dd>			
+			<%= link_to @operating_party.parent_name, @operating_party.parent_operating_party unless @operating_party.parent_operating_party.nil?%>
 		</dd>
 	</dl>
 	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_operating_party_path(@operating_party)} %>
