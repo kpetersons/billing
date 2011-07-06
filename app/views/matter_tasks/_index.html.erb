@@ -22,8 +22,8 @@
 				<td class="col-text"><%=matter_task.status%></td>
 				<td class="col-date"><%=matter_task.proposed_deadline%></td>
 				<td class="col-text">
-					<%= render :partial => "/invoices/number_index", :as => :invoice, :collection => (matter_task.invoices unless matter_task.invoices.empty?), :spacer_template => "shared/ui/comma_spacer" %></br>
-					<%= link_to 'New invoice', new_matter_task_invoice_path(matter_task.matter, matter_task)%>
+					<%= render :partial => "/invoices/number_index", :as => :invoice, :collection => (matter_task.invoices unless matter_task.invoices.empty?), :spacer_template => "shared/ui/comma_spacer" %>
+					<%= link_to 'Create invoice', new_matter_task_invoice_path(matter_task.matter, matter_task)%>
 				</td>				
 				<td class="col-number">
 				<%=link_to 'Show', matter_task_path(@matter, matter_task) %>				
