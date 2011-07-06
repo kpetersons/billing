@@ -166,5 +166,5 @@ ExchangeRate.transaction do
 end
 
 InvoiceLine.transaction do
-  InvoiceLine.all.delete
+  InvoiceLine.delete_all
 end
