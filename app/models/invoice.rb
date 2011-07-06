@@ -91,5 +91,17 @@ class Invoice < ActiveRecord::Base
     return customer.contact_persons.collect { |tt| [tt.name, tt.id] } unless customer.nil?
     return {'' => ''}    
   end
+
+  def sum_official_fees
+    invoice_lines.sum('official_fee')    
+  end
+
+  def sum_attorney_fees
+    invoice_lines.sum('attorney_fee')    
+  end  
+  
+  def sum_total_fees
+    sum_official_fees + sum_attorney_fees
+  end
   
 end
