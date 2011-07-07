@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110707162211) do
+ActiveRecord::Schema.define(:version => 20110707191305) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -198,6 +198,8 @@ ActiveRecord::Schema.define(:version => 20110707162211) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "revert_to_name"
+    t.string   "pass_to_name"
   end
 
   create_table "matter_tasks", :force => true do |t|
@@ -208,6 +210,14 @@ ActiveRecord::Schema.define(:version => 20110707162211) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "author_id"
+  end
+
+  create_table "matter_type_statuss_flows", :force => true do |t|
+    t.integer  "revert_to_step_id"
+    t.integer  "current_step_id"
+    t.integer  "pass_to_step_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "matter_types", :force => true do |t|
