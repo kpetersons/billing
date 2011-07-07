@@ -202,10 +202,53 @@ ExchangeRate.transaction do
 end
 
 MatterType.transaction do
-  matter_types = ["TRADEMARK_MATTER", "PATENT_MATTER", "DESIGN_MATTER"]
+  matter_types = ["matter.trademark", "matter.patent", "matter.legal", "matter.design"]
   matter_types.each  do |matter_type|
     MatterType.create(:name => matter_type, :description => "#{matter_type}_DESC") unless !MatterType.find_by_name(matter_type).nil?
   end
+end
+
+
+OperatingPartyMatterType.transaction do
+  operating_parties = ["party.operating.administration", "party.operating.trademark", "party.operating.patent", "party.operating.legal"]
+  #
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.trademark").id,
+  :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.patent").id,
+  :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.design").id,
+  :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.legal").id,
+  :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)  
+  #
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.trademark").id,
+  :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.patent").id,
+  :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.design").id,
+  :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.legal").id,
+  :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)  
+  #
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.trademark").id,
+  :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id)
+  #
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.patent").id,
+  :operating_party_id => Company.find_by_name("party.operating.patent").operating_party.id)
+  #
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.legal").id,
+  :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id)
 end
 
 User.transaction do
@@ -232,8 +275,8 @@ User.transaction do
   end
   unless User.find_by_email("armins.petersons@petpat.lv").individual.party.contacts.where(:contact_value => "armins.petersons@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("armins.petersons@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "armins.petersons@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
-  end  
-  
+  end
+
   unless User.find_by_email("brigita.petersone@petpat.lv")
     Party.create({
       :identifier => UUIDTools::UUID.random_create.to_s,
@@ -256,8 +299,8 @@ User.transaction do
   end
   unless User.find_by_email("brigita.petersone@petpat.lv").individual.party.contacts.where(:contact_value => "brigita.petersone@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("brigita.petersone@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "brigita.petersone@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
-  end  
-  
+  end
+
   unless User.find_by_email("andrejs.petersons@petpat.lv")
     Party.create({
       :identifier => UUIDTools::UUID.random_create.to_s,
@@ -280,8 +323,8 @@ User.transaction do
   end
   unless User.find_by_email("andrejs.petersons@petpat.lv").individual.party.contacts.where(:contact_value => "andrejs.petersons@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("andrejs.petersons@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "andrejs.petersons@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
-  end  
-  
+  end
+
   unless User.find_by_email("ieva.stala@petpat.lv")
     Party.create({
       :identifier => UUIDTools::UUID.random_create.to_s,
@@ -304,8 +347,8 @@ User.transaction do
   end
   unless User.find_by_email("ieva.stala@petpat.lv").individual.party.contacts.where(:contact_value => "ieva.stala@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("ieva.stala@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "ieva.stala@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
-  end  
-  
+  end
+
   unless User.find_by_email("katrina.sole@petpat.lv")
     Party.create({
       :identifier => UUIDTools::UUID.random_create.to_s,
@@ -328,8 +371,8 @@ User.transaction do
   end
   unless User.find_by_email("katrina.sole@petpat.lv").individual.party.contacts.where(:contact_value => "katrina.sole@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("katrina.sole@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "katrina.sole@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
-  end  
-  
+  end
+
   unless User.find_by_email("lucija.kuzjukevica@petpat.lv")
     Party.create({
       :identifier => UUIDTools::UUID.random_create.to_s,
@@ -352,8 +395,8 @@ User.transaction do
   end
   unless User.find_by_email("lucija.kuzjukevica@petpat.lv").individual.party.contacts.where(:contact_value => "lucija.kuzjukevica@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("lucija.kuzjukevica@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "lucija.kuzjukevica@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
-  end  
-  
+  end
+
   unless User.find_by_email("sandra.kumaceva@petpat.lv")
     Party.create({
       :identifier => UUIDTools::UUID.random_create.to_s,
@@ -376,8 +419,8 @@ User.transaction do
   end
   unless User.find_by_email("sandra.kumaceva@petpat.lv").individual.party.contacts.where(:contact_value => "sandra.kumaceva@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("sandra.kumaceva@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "sandra.kumaceva@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
-  end  
-  
+  end
+
   unless User.find_by_email("artis.kromanis@petpat.lv")
     Party.create({
       :identifier => UUIDTools::UUID.random_create.to_s,
@@ -400,8 +443,8 @@ User.transaction do
   end
   unless User.find_by_email("artis.kromanis@petpat.lv").individual.party.contacts.where(:contact_value => "artis.kromanis@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("artis.kromanis@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "artis.kromanis@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
-  end  
-  
+  end
+
   unless User.find_by_email("gatis.merzvinskis@petpat.lv")
     Party.create({
       :identifier => UUIDTools::UUID.random_create.to_s,
@@ -424,8 +467,8 @@ User.transaction do
   end
   unless User.find_by_email("gatis.merzvinskis@petpat.lv").individual.party.contacts.where(:contact_value => "gatis.merzvinskis@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("gatis.merzvinskis@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "gatis.merzvinskis@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
-  end  
-  
+  end
+
   unless User.find_by_email("anna.denina@petpat.lv")
     Party.create({
       :identifier => UUIDTools::UUID.random_create.to_s,
@@ -448,8 +491,8 @@ User.transaction do
   end
   unless User.find_by_email("anna.denina@petpat.lv").individual.party.contacts.where(:contact_value => "anna.denina@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("anna.denina@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "anna.denina@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
-  end  
-  
+  end
+
   unless User.find_by_email("janis.berzs@petpat.lv")
     Party.create({
       :identifier => UUIDTools::UUID.random_create.to_s,
@@ -472,5 +515,5 @@ User.transaction do
   end
   unless User.find_by_email("janis.berzs@petpat.lv").individual.party.contacts.where(:contact_value => "janis.berzs@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("janis.berzs@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "janis.berzs@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
-  end  
+  end
 end

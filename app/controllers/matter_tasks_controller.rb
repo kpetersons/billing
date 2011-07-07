@@ -5,7 +5,7 @@ class MatterTasksController < ApplicationController
   end
 
   def new
-    @matter_task = MatterTask.new(:matter_id => params[:matter_id], :matter_task_status_id => MatterTaskStatus.find_by_name('MTS_NEW').id)
+    @matter_task = MatterTask.new(:matter_id => params[:matter_id], :matter_task_status_id => MatterTaskStatus.find_by_name('matter.task.status.open').id)
   end
 
   def create
