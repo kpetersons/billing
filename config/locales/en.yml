@@ -1,1 +1,16 @@
-en: 
+en:   
+  NEW_TRADEMARK_MATTER: "New trademark matter"
+  NEW_PATENT_MATTER:    "New patent matter"
+  TRADEMARK_MATTER: "trademark matter"
+  PATENT_MATTER:    "patent matter"  
+  list:
+    matters: "List matters"
+  error:
+    invalid:
+      matter:
+        type: "Invalid matter type"
+  success:
+    invalid:
+      matter:
+        type: "Creating %{matter_type}"
+   

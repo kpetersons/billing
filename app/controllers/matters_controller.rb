@@ -2,17 +2,27 @@ class MattersController < ApplicationController
 
   layout "matters"
   
-  def index
+  def index    
     @matters = Matter.joins(:document).where(:documents => {:user_id => current_user.id}).paginate(:page => params[:param_name])
     @other_matters = Matter.joins(:document).where("user_id != #{current_user.id}").paginate(:page => params[:param_name])
   end
 
   def new
+    flash.clear
     @document = Document.new(:parent_id => params[:matter_id])
-    @document.matter = Matter.new
+    if params[:type].nil? || !MatterType.exists?(params[:type])
+      flash[:error] = t("error.invalid.matter.type")
+      redirect_to matters_path and return
+    end
+    @matter_type = MatterType.find(params[:type])    
+    flash.now[:success] = t("success.invalid.matter.type", {:matter_type => t(@matter_type.name)})     
+    @document.matter = Matter.new(
+      :matter_type_id => @matter_type.id, 
+      :operating_party_id => current_user.operating_party_id,
+      :author_id => current_user.id) 
   end
 
-  def create
+  def create    
     Document.transaction do
       @document = Document.new(params[:document].merge(:user_id => current_user.id))
       if @document.save

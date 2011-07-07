@@ -1,0 +1,13 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Matter types</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<%=form_for @operating_party_matter_type, :url => add_matter_type_operating_party_path(@operating_party) do |ur_f|%>
+	<%= ur_f.hidden_field :operating_party_id%>
+	<%= render :partial => "/matters/types/index", :locals => {:matter_types => @matter_types, :fields => ur_f, :choose => true, :param_name => :matter_types} %>
+	<div class="buttons">
+		<span class="button"><%= ur_f.submit "Add" %></span>
+	</div>
+	<%end%>
+</div>

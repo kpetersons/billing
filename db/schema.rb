@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110706220808) do
+ActiveRecord::Schema.define(:version => 20110707155010) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20110706220808) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "operating_party_id"
   end
 
   create_table "clazzs", :force => true do |t|
@@ -143,17 +144,20 @@ ActiveRecord::Schema.define(:version => 20110706220808) do
     t.string   "attorney_fee"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "author_id"
+    t.boolean  "private_preset"
   end
 
   create_table "invoice_lines", :force => true do |t|
     t.integer  "invoice_id"
     t.integer  "official_fee_type_id"
-    t.decimal  "official_fee",         :precision => 8, :scale => 2
-    t.decimal  "attorney_fee",         :precision => 8, :scale => 2
     t.string   "details"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "attorney_fee_type_id"
+    t.decimal  "official_fee",         :precision => 8, :scale => 2
+    t.decimal  "attorney_fee",         :precision => 8, :scale => 2
+    t.integer  "author_id"
   end
 
   create_table "invoice_matters", :force => true do |t|
@@ -180,6 +184,7 @@ ActiveRecord::Schema.define(:version => 20110706220808) do
     t.date     "invoice_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "author_id"
   end
 
   create_table "matter_clazzs", :force => true do |t|
@@ -202,6 +207,14 @@ ActiveRecord::Schema.define(:version => 20110706220808) do
     t.date     "proposed_deadline"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "author_id"
+  end
+
+  create_table "matter_types", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "matters", :force => true do |t|
@@ -218,6 +231,9 @@ ActiveRecord::Schema.define(:version => 20110706220808) do
     t.date     "appl_date"
     t.string   "appl_number"
     t.integer  "agent_id"
+    t.integer  "author_id"
+    t.integer  "matter_type_id"
+    t.integer  "operating_party_id"
   end
 
   create_table "official_fee_types", :force => true do |t|
@@ -225,11 +241,19 @@ ActiveRecord::Schema.define(:version => 20110706220808) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "operating_party_id"
   end
 
   create_table "operating_parties", :force => true do |t|
     t.integer  "company_id"
     t.integer  "operating_party_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "operating_party_matter_types", :force => true do |t|
+    t.integer  "operating_party_id"
+    t.integer  "matter_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -38,6 +38,10 @@ Billing::Application.routes.draw do
   resources :operating_parties, :except => [:destroy] do
     resources :addresses
     resources :contacts
+    member do
+      get  :choose_matter_type      
+      post :add_matter_type 
+    end
   end
 
   resources :customers, :except => [:destroy] do    

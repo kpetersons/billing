@@ -1,37 +1,45 @@
 # == Schema Information
-# Schema version: 20110613110722
 #
 # Table name: matters
 #
-#  id            :integer(4)      not null, primary key
-#  document_id   :integer(4)
-#  comment       :string(255)
-#  created_at    :datetime
-#  updated_at    :datetime
-#  applicant_id  :integer(4)
-#  priority_date :date
-#  ctm_number    :string(255)
-#  wipo_number   :string(255)
-#  ir_number     :string(255)
-#  mark_name     :string(255)
-#  appl_date     :date
-#  appl_number   :string(255)
-#  agent_id      :integer(4)
+#  id                 :integer(4)      not null, primary key
+#  document_id        :integer(4)
+#  comment            :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  applicant_id       :integer(4)
+#  priority_date      :date
+#  ctm_number         :string(255)
+#  wipo_number        :string(255)
+#  ir_number          :string(255)
+#  mark_name          :string(255)
+#  appl_date          :date
+#  appl_number        :string(255)
+#  agent_id           :integer(4)
+#  author_id          :integer(4)
+#  matter_type_id     :integer(4)
+#  operating_party_id :integer(4)
 #
 
 class Matter < ActiveRecord::Base
   
   belongs_to  :document
   belongs_to  :applicant, :class_name => "Customer", :foreign_key => :applicant_id
-  belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id  
+  belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
+  belongs_to  :author, :class_name => "User", :foreign_key => :author_id
+  belongs_to  :matter_type
+  belongs_to  :operating_party
   has_many    :matter_tasks
   has_many    :matter_clazzs
   has_many    :clazzs, :through => :matter_clazzs
   has_many    :invoice_matters
-  has_many    :invoices, :through => :invoice_matters
+  has_many    :invoices, :through => :invoice_matters 
   
-  validates :agent_id, :presence => true
-  validates :applicant_id, :presence => true
+  validates :agent_id,            :presence => true
+  validates :applicant_id,        :presence => true
+  validates :matter_type_id,      :presence => true
+  validates :operating_party_id,  :presence => true
+  validates :author_id,  :presence => true  
   
   after_validation :prepare_ajax_fields  
 

@@ -35,9 +35,16 @@
 #  updated_at         :datetime
 #
 class User < ActiveRecord::Base   
+  
   belongs_to :individual
   has_many :user_roles
   has_many :roles, :through => :user_roles
+  has_many :matters, :foreign_key => :author_id
+  has_many :matter_tasks, :foreign_key => :author_id
+  has_many :invoices, :foreign_key => :author_id
+  has_many :invoice_lines, :foreign_key => :author_id
+  has_many :invoice_line_presets, :foreign_key => :author_id
+  #  
   belongs_to :operating_party
   #
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -52,6 +59,7 @@ class User < ActiveRecord::Base
   validates :password, :presence => true,
             :confirmation        => true,
             :length              => {:within => 6..40}, :on => :create
+  validates :operating_party_id, :presence => true
   #
   before_save :encrypt_password
   #
@@ -83,7 +91,11 @@ class User < ActiveRecord::Base
     self.block = !block 
     return true
   end
-      
+  
+  def matter_types
+    operating_party.matter_types unless operating_party.matter_types.nil?
+  end    
+  
   private
 
   def encrypt_password
@@ -103,6 +115,6 @@ class User < ActiveRecord::Base
 
   def secure_hash(string)
     Digest::SHA2.hexdigest(string)
-  end
+  end  
   
 end

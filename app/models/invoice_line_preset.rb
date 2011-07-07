@@ -1,5 +1,4 @@
 # == Schema Information
-# Schema version: 20110704213116
 #
 # Table name: invoice_line_presets
 #
@@ -12,6 +11,8 @@
 #  attorney_fee         :string(255)
 #  created_at           :datetime
 #  updated_at           :datetime
+#  author_id            :integer(4)
+#  private_preset       :boolean(1)
 #
 
 class InvoiceLinePreset < ActiveRecord::Base
@@ -19,6 +20,7 @@ class InvoiceLinePreset < ActiveRecord::Base
   belongs_to :operating_party
   belongs_to :official_fee_type
   belongs_to :attorney_fee_type
+  belongs_to :author, :class_name => 'User', :foreign_key => :author_id
 
   validates :operating_party_id, :presence => true  
 

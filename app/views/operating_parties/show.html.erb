@@ -40,6 +40,13 @@
 			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Add new contact', :path => new_operating_party_contact_path(@operating_party)} %>
 		</dd>
 		<dt class="panel-header">
+			<a href="#matter_types"><strong>Matter types</strong></a>
+		</dt>
+		<dd id="matter_types">
+			<%= render :partial => "matters/types/index", :locals => {:matter_types => @operating_party.matter_types.paginate(:per_page=>10, :page => params[:matter_types]), :param_name => 'matter_types', :path_elements => [@operating_party], :choose => false} %>
+			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Choose matter type', :path => choose_matter_type_operating_party_path(@operating_party)} %>					
+		</dd>		
+		<dt class="panel-header">
 			<a href="#employees"><strong>Employees</strong></a>
 		</dt>
 		<dd id="employees">

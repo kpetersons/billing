@@ -1,5 +1,4 @@
 # == Schema Information
-# Schema version: 20110619113951
 #
 # Table name: invoices
 #
@@ -19,6 +18,7 @@
 #  invoice_date      :date
 #  created_at        :datetime
 #  updated_at        :datetime
+#  author_id         :integer(4)
 #
 
 class Invoice < ActiveRecord::Base
@@ -29,6 +29,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :individual
   belongs_to :currency
   belongs_to :exchange_rate
+  belongs_to  :author, :class_name => "User", :foreign_key => :author_id  
   has_many   :invoice_lines
   has_many   :invoice_matters
   has_many   :matters, :through => :invoice_matters

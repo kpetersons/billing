@@ -6,7 +6,10 @@
 		<%= fields.text_field :registration_number %>
 	</li>
 	<%= fields.fields_for :matter do |m_f| %>
-	<li>
+	<li>		
+		<%= m_f.hidden_field :matter_type_id %>		
+		<%= m_f.hidden_field :operating_party_id %>		
+		<%= m_f.hidden_field :author_id %>		
 		<%= m_f.hidden_field :id %>			
 		<%= m_f.label :mark_name %>
 		<%= m_f.text_field :mark_name %>
@@ -31,7 +34,7 @@
 	</li>		
 	<li>
 		<%= m_f.label :appl_date %>
-		<%= m_f.text_field :appl_date %>
+		<%= m_f.text_field :appl_date, :class => 'field-date' %>
 	</li>
 	<li>
 		<%= m_f.label :appl_number %>

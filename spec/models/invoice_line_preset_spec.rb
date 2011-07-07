@@ -11,6 +11,8 @@
 #  attorney_fee         :string(255)
 #  created_at           :datetime
 #  updated_at           :datetime
+#  author_id            :integer(4)
+#  private_preset       :boolean(1)
 #
 
 require 'spec_helper'

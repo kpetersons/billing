@@ -6,7 +6,7 @@ class OfficialFeeTypesController < ApplicationController
   end
 
   def new
-    @official_fee_type = OfficialFeeType.new
+    @official_fee_type = OfficialFeeType.new(:operating_party_id => current_user.operating_party_id)
   end
 
   def create

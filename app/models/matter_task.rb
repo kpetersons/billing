@@ -1,5 +1,4 @@
 # == Schema Information
-# Schema version: 20110610074236
 #
 # Table name: matter_tasks
 #
@@ -10,12 +9,14 @@
 #  proposed_deadline     :date
 #  created_at            :datetime
 #  updated_at            :datetime
+#  author_id             :integer(4)
 #
 
 class MatterTask < ActiveRecord::Base
   
   belongs_to :matter
   belongs_to :matter_task_status
+  belongs_to :author, :class_name => "User", :foreign_key => :author_id
   has_many   :invoice_matters
   has_many   :invoices, :through => :invoice_matters
   

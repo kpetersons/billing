@@ -7,7 +7,7 @@ class AttorneyFeeTypesController < ApplicationController
   end
 
   def new
-    @attorney_fee_type = AttorneyFeeType.new
+    @attorney_fee_type = AttorneyFeeType.new(:operating_party_id => current_user.operating_party_id)
   end
 
   def create

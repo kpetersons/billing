@@ -14,7 +14,6 @@
 
 class Document < ActiveRecord::Base
 
-  belongs_to :user
   belongs_to :parent_document, :class_name => "Document", :foreign_key => "parent_id"
   #
   has_many :child_documents, :class_name => "Document", :foreign_key => "parent_id"
@@ -27,8 +26,7 @@ class Document < ActiveRecord::Base
   attr_accessible :registration_number, :description, :matter_attributes, :invoice_attributes, :parent_id, :user_id
   accepts_nested_attributes_for :matter, :invoice
 
-  validates :registration_number, :presence=>true
-  validates :user_id, :presence => true  
+  validates :registration_number, :presence=>true  
 
   def parent_document_registration_number
     (parent_document.nil?)? '' : parent_document.registration_number

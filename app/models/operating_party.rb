@@ -15,7 +15,10 @@ class OperatingParty < ActiveRecord::Base
   belongs_to :company;
   belongs_to :parent_operating_party, :class_name => "OperatingParty", :foreign_key => "operating_party_id"
   has_many :operating_parties, :class_name => "OperatingParty", :foreign_key => "operating_party_id"
-  has_many :users, :foreign_key => "operating_party_id"
+  has_many :users, :foreign_key => "operating_party_id"            
+  has_many :operating_party_matter_types
+  has_many :matter_types, :through => :operating_party_matter_types
+  has_many :matters
 
   def party
     company.party

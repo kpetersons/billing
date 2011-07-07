@@ -18,6 +18,7 @@
 #  invoice_date      :date
 #  created_at        :datetime
 #  updated_at        :datetime
+#  author_id         :integer(4)
 #
 
 require 'spec_helper'
