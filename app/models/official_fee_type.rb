@@ -11,5 +11,8 @@
 #
 
 class OfficialFeeType < ActiveRecord::Base
+  
   belongs_to :operating_party
+  
+  validates :operating_party_id, :presence => true
 end

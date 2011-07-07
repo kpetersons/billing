@@ -19,6 +19,8 @@ class OperatingParty < ActiveRecord::Base
   has_many :operating_party_matter_types
   has_many :matter_types, :through => :operating_party_matter_types
   has_many :matters
+  has_many :official_fee_types
+  has_many :attorney_fee_types
 
   def party
     company.party

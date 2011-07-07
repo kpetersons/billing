@@ -13,7 +13,7 @@ RelationshipType.transaction do
 end
 
 MatterTaskStatus.transaction do
-  matter_task_statuses = ["MTS_NEW", "MTS_SETTLED", "MTS_HOT"]
+  matter_task_statuses = ["matter.task.status.open","matter.task.status.awaiting_response","matter.task.status.done", "matter.task.status.canceled"]
   matter_task_statuses.each do |matter_task_statuss_name|
     unless MatterTaskStatus.find_by_name(matter_task_statuss_name)
       MatterTaskStatus.create(:name => matter_task_statuss_name)
@@ -58,17 +58,11 @@ Function.transaction do
 end
 
 Role.transaction do
-  unless Role.find_by_name("ROLE_ADMIN")
-    Role.create(:name => "ROLE_ADMIN", :description => "ROLE_ADMIN_DESCR")
-  end
-  unless Role.find_by_name("ROLE_MIMINAL")
-    Role.create(:name => "ROLE_MIMINAL", :description => "ROLE_MIMINAL_DESCR")
-  end
-  unless Role.find_by_name("ROLE_MATTER_MANAGER")
-    Role.create(:name => "ROLE_MATTER_MANAGER", :description => "ROLE_MATTER_MANAGER_DESCR")
-  end
-  unless Role.find_by_name("ROLE_CUSTOMER_MANAGER")
-    Role.create(:name => "ROLE_CUSTOMER_MANAGER", :description => "ROLE_MATTER_MANAGER_DESCR")
+  roles = ["ROLE_MIMINAL", "ROLE_ADMIN", "ROLE_MATTER_MANAGER", "ROLE_INVOICES_MANAGER", "ROLE_CUSTOMER_MANAGER"]
+  roles.each do |role|
+    unless Role.find_by_name(role)
+      Role.create(:name => role, :description => "#{role}_DESCR")
+    end
   end
 end
 
@@ -105,6 +99,14 @@ RoleFunction.transaction do
       role.functions<<Function.find_by_name(function_name)
     end
   end
+
+  matter_functions = ["FUNCT_INVOICES_LINK"]
+  role = Role.find_by_name("ROLE_INVOICES_MANAGER")
+  matter_functions.each do |function_name|
+    unless role.functions.where(:name => function_name).first
+      role.functions<<Function.find_by_name(function_name)
+    end
+  end
 end
 
 ContactType.transaction do
@@ -116,10 +118,43 @@ ContactType.transaction do
   end
 end
 
+@main_party
+OperatingParty.transaction do
+
+  operating_parties = ["party.operating.petpat"]
+  operating_parties.each do |operating_party|
+    @main_party = Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :party_type => 'party company operating',
+      :company_attributes => {
+        :name => operating_party,
+        :registration_number => 'N/A',
+        :operating_party_attributes => {
+          :operating_party_id => nil
+        }
+      }
+    })
+  end
+  operating_parties = ["party.operating.administration", "party.operating.trademark", "party.operating.patent", "party.operating.legal"]
+  operating_parties.each do |operating_party_name|
+    @party = Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :party_type => 'party company operating',
+      :company_attributes => {
+        :name => operating_party_name,
+        :registration_number => 'N/A',
+        :operating_party_attributes => {
+          :operating_party_id => @main_party.company.operating_party.id
+        }
+      }
+    })
+  end
+end
+
 User.transaction do
   unless User.find_by_email("admin@petpat.lv")
     Party.create({
-      :identifier => '-',
+      :identifier => UUIDTools::UUID.random_create.to_s,
       :individual_attributes => {
         :first_name => 'System',
         :last_name => 'Admin',
@@ -130,10 +165,11 @@ User.transaction do
           :password => 'administrator',
           :registration_date => Date.today,
           :active => true,
-          :blocked => false
+          :blocked => false,
+          :operating_party_id => @main_party.company.operating_party.id
         }
       }
-    }).individual.user.roles<<Role.find_all_by_name(["ROLE_ADMIN", "ROLE_MIMINAL"])
+    }).individual.user.roles<<Role.all
 
   end
   unless User.find_by_email("admin@petpat.lv").individual.party.contacts.where(:contact_value => "admin@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
@@ -168,6 +204,273 @@ end
 MatterType.transaction do
   matter_types = ["TRADEMARK_MATTER", "PATENT_MATTER", "DESIGN_MATTER"]
   matter_types.each  do |matter_type|
-    MatterType.create(:name => matter_type, :description => "#{matter_type}_DESC") unless !MatterType.find_by_name(matter_type).nil? 
+    MatterType.create(:name => matter_type, :description => "#{matter_type}_DESC") unless !MatterType.find_by_name(matter_type).nil?
   end
+end
+
+User.transaction do
+
+  unless User.find_by_email("armins.petersons@petpat.lv")
+    Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :individual_attributes => {
+        :first_name => 'Armins',
+        :last_name => 'Petersons',
+        :birth_date => Date.today,
+        :user_attributes => {
+          :email => 'armins.petersons@petpat.lv',
+          :password_confirmation => 'password',
+          :password => 'password',
+          :registration_date => Date.today,
+          :active => false,
+          :blocked => false,
+          :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id
+        }
+      }
+    }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("armins.petersons@petpat.lv").individual.party.contacts.where(:contact_value => "armins.petersons@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("armins.petersons@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "armins.petersons@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end  
+  
+  unless User.find_by_email("brigita.petersone@petpat.lv")
+    Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :individual_attributes => {
+        :first_name => 'Brigita',
+        :last_name => 'Petersone',
+        :birth_date => Date.today,
+        :user_attributes => {
+          :email => 'brigita.petersone@petpat.lv',
+          :password_confirmation => 'password',
+          :password => 'password',
+          :registration_date => Date.today,
+          :active => false,
+          :blocked => false,
+          :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id
+        }
+      }
+    }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("brigita.petersone@petpat.lv").individual.party.contacts.where(:contact_value => "brigita.petersone@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("brigita.petersone@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "brigita.petersone@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end  
+  
+  unless User.find_by_email("andrejs.petersons@petpat.lv")
+    Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :individual_attributes => {
+        :first_name => 'Andrejs',
+        :last_name => 'Petersons',
+        :birth_date => Date.today,
+        :user_attributes => {
+          :email => 'andrejs.petersons@petpat.lv',
+          :password_confirmation => 'password',
+          :password => 'password',
+          :registration_date => Date.today,
+          :active => false,
+          :blocked => false,
+          :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id
+        }
+      }
+    }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("andrejs.petersons@petpat.lv").individual.party.contacts.where(:contact_value => "andrejs.petersons@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("andrejs.petersons@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "andrejs.petersons@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end  
+  
+  unless User.find_by_email("ieva.stala@petpat.lv")
+    Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :individual_attributes => {
+        :first_name => 'Ieva',
+        :last_name => 'Stala',
+        :birth_date => Date.today,
+        :user_attributes => {
+          :email => 'ieva.stala@petpat.lv',
+          :password_confirmation => 'password',
+          :password => 'password',
+          :registration_date => Date.today,
+          :active => false,
+          :blocked => false,
+          :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id
+        }
+      }
+    }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("ieva.stala@petpat.lv").individual.party.contacts.where(:contact_value => "ieva.stala@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("ieva.stala@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "ieva.stala@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end  
+  
+  unless User.find_by_email("katrina.sole@petpat.lv")
+    Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :individual_attributes => {
+        :first_name => 'Katrina',
+        :last_name => 'Sole',
+        :birth_date => Date.today,
+        :user_attributes => {
+          :email => 'katrina.sole@petpat.lv',
+          :password_confirmation => 'password',
+          :password => 'password',
+          :registration_date => Date.today,
+          :active => false,
+          :blocked => false,
+          :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id
+        }
+      }
+    }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("katrina.sole@petpat.lv").individual.party.contacts.where(:contact_value => "katrina.sole@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("katrina.sole@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "katrina.sole@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end  
+  
+  unless User.find_by_email("lucija.kuzjukevica@petpat.lv")
+    Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :individual_attributes => {
+        :first_name => 'Lucija',
+        :last_name => 'Kuzjukevica',
+        :birth_date => Date.today,
+        :user_attributes => {
+          :email => 'lucija.kuzjukevica@petpat.lv',
+          :password_confirmation => 'password',
+          :password => 'password',
+          :registration_date => Date.today,
+          :active => false,
+          :blocked => false,
+          :operating_party_id => Company.find_by_name("party.operating.patent").operating_party.id
+        }
+      }
+    }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("lucija.kuzjukevica@petpat.lv").individual.party.contacts.where(:contact_value => "lucija.kuzjukevica@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("lucija.kuzjukevica@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "lucija.kuzjukevica@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end  
+  
+  unless User.find_by_email("sandra.kumaceva@petpat.lv")
+    Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :individual_attributes => {
+        :first_name => 'Sandra',
+        :last_name => 'Kumaceva',
+        :birth_date => Date.today,
+        :user_attributes => {
+          :email => 'sandra.kumaceva@petpat.lv',
+          :password_confirmation => 'password',
+          :password => 'password',
+          :registration_date => Date.today,
+          :active => false,
+          :blocked => false,
+          :operating_party_id => Company.find_by_name("party.operating.patent").operating_party.id
+        }
+      }
+    }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("sandra.kumaceva@petpat.lv").individual.party.contacts.where(:contact_value => "sandra.kumaceva@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("sandra.kumaceva@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "sandra.kumaceva@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end  
+  
+  unless User.find_by_email("artis.kromanis@petpat.lv")
+    Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :individual_attributes => {
+        :first_name => 'Artis',
+        :last_name => 'Kromanis',
+        :birth_date => Date.today,
+        :user_attributes => {
+          :email => 'artis.kromanis@petpat.lv',
+          :password_confirmation => 'password',
+          :password => 'password',
+          :registration_date => Date.today,
+          :active => false,
+          :blocked => false,
+          :operating_party_id => Company.find_by_name("party.operating.patent").operating_party.id
+        }
+      }
+    }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("artis.kromanis@petpat.lv").individual.party.contacts.where(:contact_value => "artis.kromanis@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("artis.kromanis@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "artis.kromanis@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end  
+  
+  unless User.find_by_email("gatis.merzvinskis@petpat.lv")
+    Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :individual_attributes => {
+        :first_name => 'Gatis',
+        :last_name => 'Merzvinskis',
+        :birth_date => Date.today,
+        :user_attributes => {
+          :email => 'gatis.merzvinskis@petpat.lv',
+          :password_confirmation => 'password',
+          :password => 'password',
+          :registration_date => Date.today,
+          :active => false,
+          :blocked => false,
+          :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id
+        }
+      }
+    }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("gatis.merzvinskis@petpat.lv").individual.party.contacts.where(:contact_value => "gatis.merzvinskis@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("gatis.merzvinskis@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "gatis.merzvinskis@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end  
+  
+  unless User.find_by_email("anna.denina@petpat.lv")
+    Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :individual_attributes => {
+        :first_name => 'Anna',
+        :last_name => 'Denina',
+        :birth_date => Date.today,
+        :user_attributes => {
+          :email => 'anna.denina@petpat.lv',
+          :password_confirmation => 'password',
+          :password => 'password',
+          :registration_date => Date.today,
+          :active => false,
+          :blocked => false,
+          :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id
+        }
+      }
+    }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("anna.denina@petpat.lv").individual.party.contacts.where(:contact_value => "anna.denina@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("anna.denina@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "anna.denina@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end  
+  
+  unless User.find_by_email("janis.berzs@petpat.lv")
+    Party.create({
+      :identifier => UUIDTools::UUID.random_create.to_s,
+      :individual_attributes => {
+        :first_name => 'Janis',
+        :last_name => 'Berzs',
+        :birth_date => Date.today,
+        :user_attributes => {
+          :email => 'janis.berzs@petpat.lv',
+          :password_confirmation => 'password',
+          :password => 'password',
+          :registration_date => Date.today,
+          :active => false,
+          :blocked => false,
+          :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id
+        }
+      }
+    }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("janis.berzs@petpat.lv").individual.party.contacts.where(:contact_value => "janis.berzs@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("janis.berzs@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "janis.berzs@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end  
 end

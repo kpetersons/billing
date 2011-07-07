@@ -117,7 +117,7 @@
 	<%end%>
 	<%=form_for @document.invoice, :url => {:action => 'add_line'}  do |i_f| %>	
 	<div class="panel-footer controls">
-		<%= i_f.select :preset_id, InvoiceLinePreset.all.collect { |tt| [tt.name, tt.id]}, {:include_blank => true}, {:style => 'float:left; margin-right:15px;' } %>
+		<%= i_f.select :preset_id, InvoiceLinePreset.find_all_by_operating_party_id(current_user.operating_party_id).collect { |tt| [tt.name, tt.id]}, {:include_blank => true}, {:style => 'float:left; margin-right:15px;' } %>
 		<%= i_f.submit 'Add line' %>		
 	</div>
 	<% end %>	
