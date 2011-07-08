@@ -22,6 +22,9 @@ Billing::Application.routes.draw do
   resources :matters do
     resources :invoices, :only => [:new]
     resources :tasks, :controller => "MatterTasks" do
+      member do
+        get :flow
+      end
       resources :invoices, :only => [:new]
     end
     resources :matters, :only => [:new, :create, :add, :choose] do

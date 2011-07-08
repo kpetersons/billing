@@ -12,8 +12,10 @@
 
 class MatterTaskStatus < ActiveRecord::Base
 
-  attr_accessible :name
-
   has_many :matter_tasks
-
+    
+  validates :name, :presence => true
+  validates :revert_to_name, :presence => true  
+  validates :pass_to_name, :presence => true  
+  
 end

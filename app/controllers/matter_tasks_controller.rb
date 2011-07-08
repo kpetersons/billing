@@ -5,11 +5,16 @@ class MatterTasksController < ApplicationController
   end
 
   def new
-    @matter_task = MatterTask.new(:matter_id => params[:matter_id], :matter_task_status_id => MatterTaskStatus.find_by_name('matter.task.status.open').id)
+    @matter_task = MatterTask.new(
+    :matter_id => params[:matter_id],
+    :matter_task_status_id => MatterTaskStatusFlow.where(:start_state => true).first.current_step.id,
+    :matter_task_status_flow_id => MatterTaskStatusFlow.where(:start_state => true).first.id,
+    :author_id => current_user.id
+    )
   end
 
   def create
-    MatterTask.transaction do      
+    MatterTask.transaction do
       @matter_task = MatterTask.new(params[:matter_task])
       if @matter_task.save
         redirect_to matter_path(@matter_task.matter)
@@ -39,4 +44,23 @@ class MatterTasksController < ApplicationController
     @matter_task = MatterTask.find(params[:id])
   end
 
+  def flow
+    @matter_task = MatterTask.find(params[:id])
+    @matter_task_status = MatterTaskStatus.find(params[:status])
+    MatterTask.transaction do
+      if @matter_task.update_attribute(:matter_task_status_id, @matter_task_status.id)
+        puts "MatterTaskStatusFlow.where(:current_step_id => @matter_task_status.id).first #{MatterTaskStatusFlow.where(:current_step_id => @matter_task_status.id).first.id}"
+        if @matter_task.update_attribute(:matter_task_status_flow_id, MatterTaskStatusFlow.where(:current_step_id => @matter_task_status.id).first.id)
+          flash[:success] = t("matter.task.status.change.success")
+          redirect_to matter_path(@matter_task.matter, :anchor => :tasks)
+        else
+          flash[:error] = t("matter.task.status.change.failed")
+          redirect_to matter_path(@matter_task.matter)
+        end
+      else
+        flash[:error] = t("matter.task.status.change.failed")
+        redirect_to matter_path(@matter_task.matter)
+      end
+    end
+  end
 end

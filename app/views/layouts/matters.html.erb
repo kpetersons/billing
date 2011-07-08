@@ -22,7 +22,7 @@
 							</li>
 							<% current_user.matter_types.each do |matter_type| %>
 							<li>
-								<%= link_to t("NEW_#{matter_type.name}"), new_matter_path(:type=>matter_type.id)%>
+								<%= link_to t("new.#{matter_type.name}"), new_matter_path(:type=>matter_type.id)%>
 							</li>
 							<%end%>
 						</ul>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110707191305) do
+ActiveRecord::Schema.define(:version => 20110707211555) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -194,6 +194,15 @@ ActiveRecord::Schema.define(:version => 20110707191305) do
     t.datetime "updated_at"
   end
 
+  create_table "matter_task_status_flows", :force => true do |t|
+    t.integer  "revert_to_step_id"
+    t.integer  "current_step_id"
+    t.integer  "pass_to_step_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "start_state",       :default => false
+  end
+
   create_table "matter_task_statuses", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -210,14 +219,7 @@ ActiveRecord::Schema.define(:version => 20110707191305) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "author_id"
-  end
-
-  create_table "matter_type_statuss_flows", :force => true do |t|
-    t.integer  "revert_to_step_id"
-    t.integer  "current_step_id"
-    t.integer  "pass_to_step_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "matter_task_status_flow_id"
   end
 
   create_table "matter_types", :force => true do |t|

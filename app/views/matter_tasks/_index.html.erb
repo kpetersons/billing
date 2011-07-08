@@ -4,13 +4,15 @@
 			<th class="col-text">Description</th>
 			<th class="col-text">Status</th>
 			<th class="col-date">Proposed deadline</th>
-			<th class="col-text">Invoices</th>			
+			<th class="col-text">Invoices</th>
+			<th class="col-number">Revert to state</th>
+			<th class="col-text">Pass to state</th>			
 			<th class="col-number"></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="5">
+			<th class="list-paginate" colspan="7">
 				<%= will_paginate matter_tasks, :param_name => param_name %>				
 			</th>
 		</tr>
@@ -19,12 +21,18 @@
 		<% matter_tasks.each do |matter_task|%>
 			<tr>
 				<td class="col-text"><%=matter_task.description%></td>
-				<td class="col-text"><%=matter_task.status%></td>
+				<td class="col-text"><%=t(matter_task.status)%></td>
 				<td class="col-date"><%=matter_task.proposed_deadline%></td>
 				<td class="col-text">
 					<%= render :partial => "/invoices/number_index", :as => :invoice, :collection => (matter_task.invoices unless matter_task.invoices.empty?), :spacer_template => "shared/ui/comma_spacer" %>
 					<%=", " if matter_task.invoices.nil?%>					
 					<%= link_to 'Create invoice', new_matter_task_invoice_path(matter_task.matter, matter_task)%>
+				</td>				
+				<td class="col-number">
+					<%= render :partial => "/matter_tasks/states/table", :locals =>{:direction => :revert_to_step, :task => matter_task} %>										
+				</td>
+				<td class="col-text">					
+					<%= render :partial => "/matter_tasks/states/table", :locals =>{:direction => :pass_to_step, :task => matter_task} %>					
 				</td>				
 				<td class="col-number">
 				<%=link_to 'Show', matter_task_path(@matter, matter_task) %>				
@@ -33,7 +41,7 @@
 		<%end%>
 		<% if matter_tasks.empty? %>
 			<tr>
-				<td colspan="5">&nbsp;</td>
+				<td colspan="7">&nbsp;</td>
 			</tr>
 		<%end%>
 	</tbody>

@@ -13,13 +13,73 @@ RelationshipType.transaction do
 end
 
 MatterTaskStatus.transaction do
-  matter_task_statuses = ["matter.task.status.open","matter.task.status.awaiting_response","matter.task.status.done", "matter.task.status.canceled"]
-  matter_task_statuses.each do |matter_task_statuss_name|
-    unless MatterTaskStatus.find_by_name(matter_task_statuss_name)
-      MatterTaskStatus.create(:name => matter_task_statuss_name)
+  prefix = "matter.task.status."
+  matter_task_statuses = [
+    ["re_open",              "open",              "pass_open"],
+    ["re_awaiting_response", "awaiting_response", "pass_awaiting_response"],
+    ["re_done",              "done",              "pass_done"],
+    ["re_canceled",          "canceled",          "pass_canceled"]]
+  matter_task_statuses.each do |name|
+    unless MatterTaskStatus.find_by_name(name[0])
+      MatterTaskStatus.create(:revert_to_name => "#{prefix}#{name[0]}", :name => "#{prefix}#{name[1]}", :pass_to_name => "#{prefix}#{name[2]}")
     end
   end
 end
+
+MatterTaskStatusFlow.transaction do
+  prefix = "matter.task.status."
+  open = MatterTaskStatus.find_by_name("#{prefix}open")
+  awaiting_response = MatterTaskStatus.find_by_name("#{prefix}awaiting_response")
+  done = MatterTaskStatus.find_by_name("#{prefix}done")
+  canceled = MatterTaskStatus.find_by_name("#{prefix}canceled")
+
+  MatterTaskStatusFlow.delete_all
+
+  # 1 * <->                 Open <->              Awaiting response  start state
+  # 2 * <->                 Open <->              Canceled
+  # 3 Open <->              Awaiting response <-> Done
+  # 4 Open <->              Canceled <->          *
+  # 5 Open <->              Awaiting response <-> Canceled
+  # 6 Awaiting response <-> Done <->              *
+  # 7 Awaiting response <-> Canceled <->          *
+
+  #1
+  i = MatterTaskStatusFlow.create(
+  :revert_to_step_id => nil,
+  :current_step_id   => open.id,
+  :pass_to_step_id   => awaiting_response.id, :start_state => true)
+  #2
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => nil,   
+  :current_step_id   => open.id,
+  :pass_to_step_id   => canceled.id)
+  #3
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => open.id,  
+  :current_step_id   => awaiting_response.id,
+  :pass_to_step_id   => done.id)
+  #4
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => open.id,  
+  :current_step_id   => canceled.id,
+  :pass_to_step_id   => nil)
+  #5
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => open.id,  
+  :current_step_id   => awaiting_response.id,
+  :pass_to_step_id   => canceled.id)
+  #6   
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => awaiting_response.id,  
+  :current_step_id   => done.id,
+  :pass_to_step_id   => nil)
+  #7
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => awaiting_response.id,  
+  :current_step_id   => canceled.id,
+  :pass_to_step_id   => nil) 
+end
+
 
 AddressType.transaction do
   address_types = ["BILL_TO", "SHIP_TO", "CONTACT_TO"]
@@ -223,7 +283,7 @@ OperatingPartyMatterType.transaction do
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.legal").id,
-  :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)  
+  :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   #
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.trademark").id,
@@ -236,7 +296,7 @@ OperatingPartyMatterType.transaction do
   :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.legal").id,
-  :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)  
+  :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
   #
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.trademark").id,

@@ -1,0 +1,3 @@
+<% task.flow_state.possible_change_states(direction).each do |state|%>
+	<%=link_to t(state.try(direction).try(direction.to_s.sub('_step','_name'))), flow_matter_task_path( task.matter, task, :status => state.try(direction).id) unless state.try(direction).nil?%>
+<%end%>
