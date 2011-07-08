@@ -165,3 +165,9 @@ input[type="submit"], button, .panel-footer a {
 }
 
 .nested-panel {clear:left;}
+
+.header .locales {margin-right:20px; float:right;}
+.header .locales a {
+	color:#FFFFFF;
+	text-decoration: none;
+}

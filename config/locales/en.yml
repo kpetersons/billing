@@ -1,4 +1,11 @@
-en:   
+en:
+  menu:
+    dashboard: "Dashboard"
+    matters: "Matters"
+    invoices: "Invoices"    
+    customers: "Customers"    
+    settings: "Settings"
+    administration: "Administration"    
   new:
     matter:
       trademark: "New trademark matter"

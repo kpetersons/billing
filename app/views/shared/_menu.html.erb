@@ -1,4 +1,13 @@
+<div class="header row title">
+	<div>
+		<span>"Pētersona Patents" billing app</span>
+	</div>
+</div>
 <div class="header row h-menu">
+	<div class="locales">
+		<%=link_to "LAT", "?locale=lv"%>
+		<%=link_to "ENG", "?locale=en"%>
+	</div>
 	<ul class="menu">
 		<li>
 			<%=link_to_if_function dashboard_index_path(:anchor => "recent_activity"), 'menu.dashboard', 'FUNCT_DASHBOARD_LINK'%>
