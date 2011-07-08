@@ -1,0 +1,45 @@
+lv:
+  menu:
+    dashboard: "Panelis"
+    matters: "Lietas"
+    invoices: "Rēķini"    
+    customers: "Klienti"    
+    settings: "Iestatījumi"
+    administration: "Administrēšana"    
+  new:
+    matter:
+      trademark: "New trademark matter"
+      patent:    "New patent matter"
+      legal:    "New legal matter"    
+      design:    "New design matter"
+  matter:
+    trademark: "trademark matter"
+    patent:    "patent matter"
+    task:
+      status:
+        change:
+          success: "Status changed!"
+          failure: "Status change failed!"          
+        re_open: "Reopen"
+        open: "Opened"
+        pass_open: "Open"
+        re_awaiting_response: "Await response"
+        awaiting_response: "Awaiting response"
+        pass_awaiting_response: "Await response"
+        re_done: "Done"
+        done: "Done"
+        pass_done: "Done"
+        re_canceled: "Cancel"
+        canceled: "Canceled"
+        pass_canceled: "Cancel"  
+  list:
+    matters: "List matters"
+  error:
+    invalid:
+      matter:
+        type: "Invalid matter type"
+  success:
+    invalid:
+      matter:
+        type: "Creating %{matter_type}"
+   

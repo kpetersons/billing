@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110707211555) do
+ActiveRecord::Schema.define(:version => 20110708194815) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -80,10 +80,10 @@ ActiveRecord::Schema.define(:version => 20110707211555) do
 
   create_table "customers", :force => true do |t|
     t.integer  "party_id"
-    t.date     "customer_since"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "customer_type"
+    t.string   "vat_registration_number"
   end
 
   create_table "document_tags", :force => true do |t|
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20110707211555) do
     t.decimal  "official_fee",         :precision => 8, :scale => 2
     t.decimal  "attorney_fee",         :precision => 8, :scale => 2
     t.integer  "author_id"
+    t.string   "offering"
   end
 
   create_table "invoice_matters", :force => true do |t|

@@ -20,6 +20,14 @@
 		<dd>
 			<%=@customer.registration_number%>&nbsp;
 		</dd>
+		<dt>
+			<label>
+				VAT Registration number
+			</label>
+		</dt>
+		<dd>
+			<%=@customer.vat_registration_number%>&nbsp;
+		</dd>		
 	</dl>
 	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_customer_path(@customer)} %>	
 

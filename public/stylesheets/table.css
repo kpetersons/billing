@@ -22,7 +22,7 @@ table tbody tr td>* {:height:inherit; padding: 2px 0; vertical-align: middle;}
 .col-date, .col-bool {text-align:center;}
 .col-bool>input[type=checkbox]{color:black;border:2px solid;}
 .col-number {text-align:right;}
-.col-number>input[type="text"] {width: 8em;text-align: right;}
+.col-number>input[type="text"] {width: 5em;text-align: right;}
 
 
 table th:first-child, table td:first-child{padding-left:2em;}

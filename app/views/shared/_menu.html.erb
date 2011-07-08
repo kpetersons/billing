@@ -1,13 +1,18 @@
 <div class="header row title">
-	<div>
+	<div style="float:left;">
 		<span>"Pētersona Patents" billing app</span>
 	</div>
+	<div class="locales">
+		<%locales = [[:LAT, :lv], [:ENG, :en]]%>
+		<%locales.each do |locale|%>
+			<%=link_to_unless (I18n.locale.to_s.eql?(locale[1].to_s)), locale[0], "?locale=#{locale[1]}" do |name|%>
+			 <strong><%=locale[0]%></strong>
+			<%end%>
+			<%= "|" unless locales.index(locale) == locales.length - 1 %>
+		<%end%>				
+	</div>	
 </div>
 <div class="header row h-menu">
-	<div class="locales">
-		<%=link_to "LAT", "?locale=lv"%>
-		<%=link_to "ENG", "?locale=en"%>
-	</div>
 	<ul class="menu">
 		<li>
 			<%=link_to_if_function dashboard_index_path(:anchor => "recent_activity"), 'menu.dashboard', 'FUNCT_DASHBOARD_LINK'%>

@@ -17,9 +17,7 @@ class Customer < ActiveRecord::Base
   has_many :matters_as_agent,     :class_name=> 'Matter',  :foreign_key =>     :agent_id
   has_many :matters_as_applicant, :class_name=> 'Matter',  :foreign_key => :applicant_id  
  
-  attr_accessible :party_id, :customer_since, :customer_type
-  
-  validates :customer_since, :presence => true
+  attr_accessible :party_id, :vat_registration_number, :customer_type  
   
   def name
     return party.try(:company).try(:name)
