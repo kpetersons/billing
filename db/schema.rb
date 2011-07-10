@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110708194815) do
+ActiveRecord::Schema.define(:version => 20110708214700) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -84,6 +84,18 @@ ActiveRecord::Schema.define(:version => 20110708194815) do
     t.datetime "updated_at"
     t.string   "customer_type"
     t.string   "vat_registration_number"
+  end
+
+  create_table "customs", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "matter_id"
+  end
+
+  create_table "designs", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "matter_id"
   end
 
   create_table "document_tags", :force => true do |t|
@@ -186,6 +198,13 @@ ActiveRecord::Schema.define(:version => 20110708194815) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "author_id"
+    t.decimal  "exchange_rate",     :precision => 7, :scale => 4
+  end
+
+  create_table "legals", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "matter_id"
   end
 
   create_table "matter_clazzs", :force => true do |t|
@@ -285,6 +304,12 @@ ActiveRecord::Schema.define(:version => 20110708194815) do
     t.datetime "updated_at"
   end
 
+  create_table "patents", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "matter_id"
+  end
+
   create_table "relationship_types", :force => true do |t|
     t.string   "name"
     t.boolean  "built_in"
@@ -320,6 +345,12 @@ ActiveRecord::Schema.define(:version => 20110708194815) do
     t.datetime "updated_at"
   end
 
+  create_table "trademarks", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "matter_id"
+  end
+
   create_table "user_roles", :force => true do |t|
     t.integer  "user_id"
     t.integer  "role_id"
@@ -339,6 +370,7 @@ ActiveRecord::Schema.define(:version => 20110708194815) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "operating_party_id"
+    t.string   "initials"
   end
 
 end

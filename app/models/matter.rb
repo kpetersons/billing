@@ -35,6 +35,12 @@ class Matter < ActiveRecord::Base
   has_many    :invoice_matters
   has_many    :invoices, :through => :invoice_matters 
   
+  has_one :trademark
+  has_one :patent
+  has_one :design
+  has_one :legal
+  has_one :custom
+  
   validates :agent_id,            :presence => true
   validates :applicant_id,        :presence => true
   validates :matter_type_id,      :presence => true
@@ -44,6 +50,8 @@ class Matter < ActiveRecord::Base
   after_validation :prepare_ajax_fields  
 
   attr_protected :applicant_name, :agent_name, :classes
+  
+  after_create :generate_registration_number
   
   def number
     document.registration_number

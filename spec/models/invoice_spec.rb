@@ -19,6 +19,7 @@
 #  created_at        :datetime
 #  updated_at        :datetime
 #  author_id         :integer(4)
+#  exchange_rate     :decimal(7, 4)
 #
 
 require 'spec_helper'

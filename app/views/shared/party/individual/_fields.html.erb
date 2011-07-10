@@ -15,3 +15,7 @@
 	<%= fields.label :birth_date %>
 	<%= fields.date_select :birth_date %>
 </li>
+<li>
+	<%= fields.label :gender_id %>
+	<%= fields.select :gender_id, Gender.all.collect { |tt| [t(tt.name), tt.id] } %>
+</li>

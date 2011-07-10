@@ -1,14 +1,13 @@
 # == Schema Information
-# Schema version: 20110612110454
 #
 # Table name: customers
 #
-#  id             :integer(4)      not null, primary key
-#  party_id       :integer(4)
-#  customer_since :date
-#  created_at     :datetime
-#  updated_at     :datetime
-#  customer_type  :string(255)
+#  id                      :integer(4)      not null, primary key
+#  party_id                :integer(4)
+#  created_at              :datetime
+#  updated_at              :datetime
+#  customer_type           :string(255)
+#  vat_registration_number :string(255)
 #
 
 class Customer < ActiveRecord::Base
@@ -18,6 +17,9 @@ class Customer < ActiveRecord::Base
   has_many :matters_as_applicant, :class_name=> 'Matter',  :foreign_key => :applicant_id  
  
   attr_accessible :party_id, :vat_registration_number, :customer_type  
+  validates :vat_registration_number, :uniqueness => true
+  
+  before_validation :trim_strings
   
   def name
     return party.try(:company).try(:name)
@@ -44,6 +46,16 @@ class Customer < ActiveRecord::Base
 
   def addresses
     party.addresses
+  end
+
+  private
+  def trim_strings
+    unless vat_registration_number.nil?
+#      vat_registration_number.strip!      
+    end
+    if vat_registration_number.empty?
+      vat_registration_number = nil
+    end
   end
   
 end

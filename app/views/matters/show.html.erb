@@ -87,8 +87,6 @@
 		</dt>
 		<dd>
 			<%= link_to @matter.document.parent_document_registration_number, matter_path(@matter.document.parent_document)%>&nbsp;
-			<%= link_to_unless @matter.has_parent, 'Add as child', choose_matter_matters_path(@matter)%> |
-			<%= link_to_if @matter.has_parent, 'Remove from parent', remove_matter_matter_path(@matter, (@matter.parent_matter)? @matter.parent_matter : -1) %>
 		</dd>
 	</dl>
 	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_matter_path(@matter)} %>
@@ -112,7 +110,7 @@
 		</dt>
 		<dd id="sub_matters">
 			<%= render :partial => "/matters/index", :locals => {:matters => @matter.sub_matters.paginate(:page => params[:sub_matters]), :choose => false, :param_name => :sub_matters} %>
-			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Create sub matter', :path => new_matter_matter_path(@matter, :anchor => :sub_matters)} %>
+			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Create sub matter', :path => new_matter_matter_path(@matter, :anchor => :sub_matters, :type => @matter.matter_type_id)} %>
 		</dd>
 	</dl>
 </div>

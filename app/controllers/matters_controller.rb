@@ -15,11 +15,26 @@ class MattersController < ApplicationController
       redirect_to matters_path and return
     end
     @matter_type = MatterType.find(params[:type])    
-    flash.now[:success] = t("success.invalid.matter.type", {:matter_type => t(@matter_type.name)})     
+    flash.now[:success] = t("error.invalid.matter.type", {:matter_type => t(@matter_type.name)})     
     @document.matter = Matter.new(
       :matter_type_id => @matter_type.id, 
       :operating_party_id => current_user.operating_party_id,
       :author_id => current_user.id) 
+    if @matter_type.name.eql?("matter.trademark")
+      @document.matter.trademark = Trademark.new
+    end  
+    if @matter_type.name.eql?("matter.patent")
+      @document.matter.patent = Patent.new
+    end
+    if @matter_type.name.eql?("matter.legal")
+      @document.matter.legal = Legal.new
+    end        
+    if @matter_type.name.eql?("matter.design")
+      @document.matter.design = Design.new
+    end    
+    if @matter_type.name.eql?("matter.custom")
+      @document.matter.custom = Custom.new
+    end    
   end
 
   def create    

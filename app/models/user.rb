@@ -1,5 +1,4 @@
 # == Schema Information
-# Schema version: 20110704183314
 #
 # Table name: users
 #
@@ -15,6 +14,7 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #  operating_party_id :integer(4)
+#  initials           :string(255)
 #
 
 # == Schema Information
@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   #
   attr_accessor :password
-  attr_accessible :email, :password, :password_confirmation, :active, :blocked, :individual_id, :registration_date, :activation_key, :operating_party_id
+  attr_accessible :email, :password, :password_confirmation, :active, :blocked, :individual_id, :registration_date, :activation_key, :operating_party_id, :initials
   #
   validates :email, :presence => true,
             :format           => {:with => email_regex},
@@ -60,6 +60,7 @@ class User < ActiveRecord::Base
             :confirmation        => true,
             :length              => {:within => 6..40}, :on => :create
   validates :operating_party_id, :presence => true
+  validates :initials, :presence => true
   #
   before_save :encrypt_password
   #

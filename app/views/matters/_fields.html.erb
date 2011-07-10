@@ -3,7 +3,7 @@
 <ul>
 	<li>
 		<%= fields.label :registration_number, "Matter number" %>
-		<%= fields.text_field :registration_number %>
+		<%= fields.object.registration_number %>&nbsp;
 	</li>
 	<%= fields.fields_for :matter do |m_f| %>
 	<li>		

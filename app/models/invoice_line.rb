@@ -12,6 +12,7 @@
 #  official_fee         :decimal(8, 2)
 #  attorney_fee         :decimal(8, 2)
 #  author_id            :integer(4)
+#  offering             :string(255)
 #
 
 class InvoiceLine < ActiveRecord::Base

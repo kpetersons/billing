@@ -4,6 +4,10 @@
 		<%= render :partial => "/shared/party/individual/fields", :locals => {:fields => pi_f} %>
 		<%= pi_f.fields_for :user do |piu_f| %>
 		<li>
+			<%= piu_f.label :initials %>
+			<%= piu_f.text_field :initials, {:style => "width: 2em;"} %>
+		</li>		
+		<li>
 			<%= piu_f.hidden_field :id %>
 			<%= piu_f.label :email %>
 			<%= piu_f.text_field :email %>

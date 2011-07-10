@@ -2,7 +2,7 @@
 <ul>
 	<li>
 		<%= fields.label :address_type_id, "Type" %>
-		<%= fields.select :address_type_id, AddressType.all.collect { |tt| [tt.name, tt.id] } %>
+		<%= fields.select :address_type_id, AddressType.all.collect { |tt| [t(tt.name), tt.id] } %>
 	</li>	
 	<li>
 		<%= fields.label :country %>

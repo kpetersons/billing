@@ -19,6 +19,7 @@
 #  created_at        :datetime
 #  updated_at        :datetime
 #  author_id         :integer(4)
+#  exchange_rate     :decimal(7, 4)
 #
 
 class Invoice < ActiveRecord::Base
@@ -48,7 +49,8 @@ class Invoice < ActiveRecord::Base
                   :finishing_details,
                   :invoice_date,
                   :invoice_lines_attributes,
-                  :invoice_matters_attributes
+                  :invoice_matters_attributes,
+                  :exchange_rate
   accepts_nested_attributes_for  :invoice_lines, :invoice_matters
   attr_protected :preset_id, :customer_name
 

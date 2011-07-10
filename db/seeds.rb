@@ -6,6 +6,13 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
+Gender.transaction do
+  genders = ["gender.male", "gender.female", "gender.n_a"]
+  genders.each do |gender|
+    Gender.create(:name => gender) unless Gender.find_by_name(gender)
+  end
+end
+
 RelationshipType.transaction do
   unless RelationshipType.find_by_name('CONTACT_PERSON')
     RelationshipType.create(:name => 'CONTACT_PERSON', :built_in => true)
@@ -50,34 +57,34 @@ MatterTaskStatusFlow.transaction do
   :pass_to_step_id   => awaiting_response.id, :start_state => true)
   #2
   MatterTaskStatusFlow.create(
-  :revert_to_step_id => nil,   
+  :revert_to_step_id => nil,
   :current_step_id   => open.id,
   :pass_to_step_id   => canceled.id)
   #3
   MatterTaskStatusFlow.create(
-  :revert_to_step_id => open.id,  
+  :revert_to_step_id => open.id,
   :current_step_id   => awaiting_response.id,
   :pass_to_step_id   => done.id)
   #4
   MatterTaskStatusFlow.create(
-  :revert_to_step_id => open.id,  
+  :revert_to_step_id => open.id,
   :current_step_id   => canceled.id,
   :pass_to_step_id   => nil)
   #5
   MatterTaskStatusFlow.create(
-  :revert_to_step_id => open.id,  
+  :revert_to_step_id => open.id,
   :current_step_id   => awaiting_response.id,
   :pass_to_step_id   => canceled.id)
-  #6   
+  #6
   MatterTaskStatusFlow.create(
-  :revert_to_step_id => awaiting_response.id,  
+  :revert_to_step_id => awaiting_response.id,
   :current_step_id   => done.id,
   :pass_to_step_id   => nil)
   #7
   MatterTaskStatusFlow.create(
-  :revert_to_step_id => awaiting_response.id,  
+  :revert_to_step_id => awaiting_response.id,
   :current_step_id   => canceled.id,
-  :pass_to_step_id   => nil) 
+  :pass_to_step_id   => nil)
 end
 
 
@@ -178,36 +185,47 @@ ContactType.transaction do
   end
 end
 
-@main_party
-OperatingParty.transaction do
 
+OperatingParty.transaction do
   operating_parties = ["party.operating.petpat"]
   operating_parties.each do |operating_party|
-    @main_party = Party.create({
-      :identifier => UUIDTools::UUID.random_create.to_s,
-      :party_type => 'party company operating',
-      :company_attributes => {
-        :name => operating_party,
-        :registration_number => 'N/A',
-        :operating_party_attributes => {
-          :operating_party_id => nil
+    if Company.find_by_name(operating_party).nil?
+      @result = Party.new({
+        :identifier => UUIDTools::UUID.random_create.to_s,
+        :party_type => 'party company operating',
+        :company_attributes => {
+          :name => operating_party,
+          :operating_party_attributes => {
+            :operating_party_id => nil
+          }
         }
-      }
-    })
+      })
+      puts "@result.errors #{@result.errors}"
+    @result.save
+    end
   end
+end
+
+@main_party = Company.find_by_name("party.operating.petpat").party
+
+OperatingParty.transaction do
   operating_parties = ["party.operating.administration", "party.operating.trademark", "party.operating.patent", "party.operating.legal"]
   operating_parties.each do |operating_party_name|
-    @party = Party.create({
-      :identifier => UUIDTools::UUID.random_create.to_s,
-      :party_type => 'party company operating',
-      :company_attributes => {
-        :name => operating_party_name,
-        :registration_number => 'N/A',
-        :operating_party_attributes => {
-          :operating_party_id => @main_party.company.operating_party.id
+    if Company.find_by_name(operating_party_name).nil?
+      @party = Party.new({
+        :identifier => UUIDTools::UUID.random_create.to_s,
+        :party_type => 'party company operating',
+        :company_attributes => {
+          :name => operating_party_name,
+          #       :registration_number => 'N/A',
+          :operating_party_attributes => {
+            :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id
+          }
         }
-      }
-    })
+      })
+      puts @party.errors
+    @party.save
+    end
   end
 end
 
@@ -224,6 +242,7 @@ User.transaction do
           :password_confirmation => 'administrator',
           :password => 'administrator',
           :registration_date => Date.today,
+          :initials => "ADMIN",
           :active => true,
           :blocked => false,
           :operating_party_id => @main_party.company.operating_party.id
@@ -262,16 +281,16 @@ ExchangeRate.transaction do
 end
 
 MatterType.transaction do
-  matter_types = ["matter.trademark", "matter.patent", "matter.legal", "matter.design"]
+  matter_types = ["matter.trademark", "matter.patent", "matter.legal", "matter.design", "matter.custom"]
   matter_types.each  do |matter_type|
     MatterType.create(:name => matter_type, :description => "#{matter_type}_DESC") unless !MatterType.find_by_name(matter_type).nil?
   end
 end
 
-
 OperatingPartyMatterType.transaction do
   operating_parties = ["party.operating.administration", "party.operating.trademark", "party.operating.patent", "party.operating.legal"]
   #
+  OperatingPartyMatterType.delete_all
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.trademark").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
@@ -325,6 +344,7 @@ User.transaction do
           :password_confirmation => 'password',
           :password => 'password',
           :registration_date => Date.today,
+          :initials => "AP",
           :active => false,
           :blocked => false,
           :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id
@@ -349,6 +369,7 @@ User.transaction do
           :password_confirmation => 'password',
           :password => 'password',
           :registration_date => Date.today,
+          :initials => "BP",
           :active => false,
           :blocked => false,
           :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id
@@ -373,6 +394,7 @@ User.transaction do
           :password_confirmation => 'password',
           :password => 'password',
           :registration_date => Date.today,
+          :initials => "AnP",
           :active => false,
           :blocked => false,
           :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id
@@ -396,6 +418,7 @@ User.transaction do
           :email => 'ieva.stala@petpat.lv',
           :password_confirmation => 'password',
           :password => 'password',
+          :initials => "ID",
           :registration_date => Date.today,
           :active => false,
           :blocked => false,
@@ -421,6 +444,7 @@ User.transaction do
           :password_confirmation => 'password',
           :password => 'password',
           :registration_date => Date.today,
+          :initials => "KS",
           :active => false,
           :blocked => false,
           :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id
@@ -445,6 +469,7 @@ User.transaction do
           :password_confirmation => 'password',
           :password => 'password',
           :registration_date => Date.today,
+          :initials => "LK",
           :active => false,
           :blocked => false,
           :operating_party_id => Company.find_by_name("party.operating.patent").operating_party.id
@@ -469,6 +494,7 @@ User.transaction do
           :password_confirmation => 'password',
           :password => 'password',
           :registration_date => Date.today,
+          :initials => "SK",
           :active => false,
           :blocked => false,
           :operating_party_id => Company.find_by_name("party.operating.patent").operating_party.id
@@ -493,6 +519,7 @@ User.transaction do
           :password_confirmation => 'password',
           :password => 'password',
           :registration_date => Date.today,
+          :initials => "AK",
           :active => false,
           :blocked => false,
           :operating_party_id => Company.find_by_name("party.operating.patent").operating_party.id
@@ -517,6 +544,7 @@ User.transaction do
           :password_confirmation => 'password',
           :password => 'password',
           :registration_date => Date.today,
+          :initials => "GM",
           :active => false,
           :blocked => false,
           :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id
@@ -541,6 +569,7 @@ User.transaction do
           :password_confirmation => 'password',
           :password => 'password',
           :registration_date => Date.today,
+          :initials => "AD",
           :active => false,
           :blocked => false,
           :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id
@@ -565,6 +594,7 @@ User.transaction do
           :password_confirmation => 'password',
           :password => 'password',
           :registration_date => Date.today,
+          :initials => "JB",
           :active => false,
           :blocked => false,
           :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id

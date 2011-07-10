@@ -14,6 +14,7 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #  operating_party_id :integer(4)
+#  initials           :string(255)
 #
 
 require 'spec_helper'

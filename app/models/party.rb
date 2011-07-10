@@ -69,5 +69,6 @@ class Party < ActiveRecord::Base
   def generate_identifier
     puts "self.identifier = UUIDTools::UUID.random_create.to_s = #{UUIDTools::UUID.random_create.to_s}"
     self.identifier = UUIDTools::UUID.random_create.to_s
-  end   
+  end
+       
 end
