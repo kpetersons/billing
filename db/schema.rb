@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110708214700) do
+ActiveRecord::Schema.define(:version => 20110710103629) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -205,6 +205,13 @@ ActiveRecord::Schema.define(:version => 20110708214700) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "matter_id"
+  end
+
+  create_table "linked_matters", :force => true do |t|
+    t.integer  "matter_id"
+    t.integer  "linked_matter_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "matter_clazzs", :force => true do |t|

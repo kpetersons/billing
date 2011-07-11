@@ -2,15 +2,6 @@
 	<div style="float:left;">
 		<span>"Pētersona Patents" billing app</span>
 	</div>
-	<div class="locales">
-		<%locales = [[:LAT, :lv], [:ENG, :en]]%>
-		<%locales.each do |locale|%>
-			<%=link_to_unless (I18n.locale.to_s.eql?(locale[1].to_s)), locale[0], "?locale=#{locale[1]}" do |name|%>
-			 <strong><%=locale[0]%></strong>
-			<%end%>
-			<%= "|" unless locales.index(locale) == locales.length - 1 %>
-		<%end%>				
-	</div>	
 </div>
 <div class="header row h-menu">
 	<ul class="menu">

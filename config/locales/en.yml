@@ -12,9 +12,13 @@ en:
       patent:    "New patent matter"
       legal:    "New legal matter"    
       design:    "New design matter"
+      custom:    "New custom matter"
   matter:
     trademark: "trademark matter"
     patent:    "patent matter"
+    design:    "design matter"
+    legal:      "legal matter"
+    custom:     "custom matter"    
     task:
       status:
         change:
@@ -39,7 +43,7 @@ en:
       matter:
         type: "Invalid matter type"
   success:
-    invalid:
+    new:
       matter:
         type: "Creating %{matter_type}"
    

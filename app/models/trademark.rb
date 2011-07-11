@@ -11,7 +11,8 @@
 class Trademark < ActiveRecord::Base
   belongs_to :matter
   #
-  before_save :generate_registration_number
+  after_create :generate_registration_number
+  
 
   private
   def generate_registration_number

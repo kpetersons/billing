@@ -34,6 +34,10 @@ class Matter < ActiveRecord::Base
   has_many    :clazzs, :through => :matter_clazzs
   has_many    :invoice_matters
   has_many    :invoices, :through => :invoice_matters 
+  has_many    :linked_matters, :class_name => "LinkedMatter", :foreign_key => :matter_id
+  has_many    :matters, :through => :linked_matters
+  has_many    :linked, :class_name => "Matter", 
+  :finder_sql => 'select * from matters m join linked_matters lm on ((m.id = lm.matter_id and lm.linked_matter_id = #{id}) or (m.id = lm.linked_matter_id and lm.matter_id = #{id}))'
   
   has_one :trademark
   has_one :patent
@@ -48,10 +52,9 @@ class Matter < ActiveRecord::Base
   validates :author_id,  :presence => true  
   
   after_validation :prepare_ajax_fields  
-
-  attr_protected :applicant_name, :agent_name, :classes
   
-  after_create :generate_registration_number
+  accepts_nested_attributes_for :trademark, :patent, :design, :legal, :custom, :linked_matters
+  attr_protected :applicant_name, :agent_name, :classes
   
   def number
     document.registration_number

@@ -18,6 +18,7 @@ class InvoicesController < ApplicationController
       :matter_task_id => (@matter_task.id unless @matter_task.nil?))
     end
     @document.invoice.customer = @matter.agent unless @matter.nil?
+    @document.invoice.our_ref = @matter.document.registration_number unless @matter.nil? 
   end
 
   def create

@@ -303,6 +303,9 @@ OperatingPartyMatterType.transaction do
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.legal").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.custom").id,
+  :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   #
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.trademark").id,
@@ -316,10 +319,16 @@ OperatingPartyMatterType.transaction do
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.legal").id,
   :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.custom").id,
+  :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)  
   #
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.trademark").id,
   :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.design").id,
+  :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id)  
   #
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.patent").id,
@@ -328,6 +337,9 @@ OperatingPartyMatterType.transaction do
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.legal").id,
   :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.custom").id,
+  :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id)  
 end
 
 User.transaction do

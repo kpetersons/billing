@@ -20,6 +20,10 @@ Billing::Application.routes.draw do
   resources :attorney_fee_types
 
   resources :matters do
+    member do
+      get :find_ajax
+      post :link
+    end    
     resources :invoices, :only => [:new]
     resources :tasks, :controller => "MatterTasks" do
       member do

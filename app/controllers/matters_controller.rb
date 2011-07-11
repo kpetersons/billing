@@ -15,7 +15,7 @@ class MattersController < ApplicationController
       redirect_to matters_path and return
     end
     @matter_type = MatterType.find(params[:type])    
-    flash.now[:success] = t("error.invalid.matter.type", {:matter_type => t(@matter_type.name)})     
+    flash.now[:success] = t("success.new.matter.type", {:matter_type => t(@matter_type.name)})     
     @document.matter = Matter.new(
       :matter_type_id => @matter_type.id, 
       :operating_party_id => current_user.operating_party_id,
@@ -100,6 +100,35 @@ class MattersController < ApplicationController
         redirect_to @matter_child
       end
     end
+  end
+
+  def link
+    Matter.transaction do
+      @matter = Matter.find(params[:id])
+      
+      if @matter.linked_matters<<LinkedMatter.new(params[:linked_matter])
+        flash.now[:success] = "success.matter.link"
+        redirect_to @matter and return
+      end
+      flash.now[:success] = "error.matter.link"
+      redirect_to @matter and return
+    end
+  end
+  
+  def find_ajax
+    @matter = Matter.find(params[:id])
+    @result = Hash.new
+    @result[:query] =  params[:query]
+    @result[:suggestions] = Array.new
+    @result[:data] = Array.new
+    index = 0
+    @matters = Matter.joins(:document).where(:matter_type_id => @matter.matter_type_id).all(:conditions => ['registration_number like ?', "%#{params[:query]}%"])    
+    @matters.each do |matter|
+      @result[:suggestions][index] = matter.document.registration_number
+      @result[:data][index] = matter.id
+      index += 1
+    end
+    render :json => @result    
   end
   
 end
