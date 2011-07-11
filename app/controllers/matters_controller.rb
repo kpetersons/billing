@@ -103,6 +103,7 @@ class MattersController < ApplicationController
   end
 
   def link
+#    puts split_to_arry :value => params[:linked_matter][:linked_matter_registration_number]
     Matter.transaction do
       @matter = Matter.find(params[:id])
       if @matter.linked_matters.exists?(:linked_matter_id => params[:linked_matter][:linked_matter_id]) || @matter.linked_matters.exists?(:matter_id => params[:linked_matter][:linked_matter_id])

@@ -19,19 +19,17 @@ class Company < ActiveRecord::Base
     accepts_nested_attributes_for :operating_party    
         
     validates :name, :presence => true
-#    validates :registration_number, :uniqueness => true
+    validates :registration_number, :uniqueness => true, :allow_nil => true
     
-    before_save :trim_strings
+    before_validation :trim_strings
 
   private
 
   def trim_strings
-    unless registration_number.nil?
-#      registration_number = registration_number.strip      
-    end    
-    if !registration_number.nil? && registration_number.empty?
-      registration_number = nil
-    end    
+    self.registration_number = " #{self.registration_number} ".strip
+    if self.registration_number.empty? 
+      self.registration_number = nil      
+    end
   end  
 
 end

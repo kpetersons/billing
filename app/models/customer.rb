@@ -17,7 +17,7 @@ class Customer < ActiveRecord::Base
   has_many :matters_as_applicant, :class_name=> 'Matter',  :foreign_key => :applicant_id  
  
   attr_accessible :party_id, :vat_registration_number, :customer_type  
-  validates :vat_registration_number, :uniqueness => true
+  validates :vat_registration_number, :uniqueness => true, :allow_nil => true
   
   before_validation :trim_strings
   
@@ -49,13 +49,12 @@ class Customer < ActiveRecord::Base
   end
 
   private
+
   def trim_strings
-    unless vat_registration_number.nil?
-#      vat_registration_number.strip!      
+    self.vat_registration_number = " #{self.vat_registration_number} ".strip
+    if self.vat_registration_number.empty? 
+      self.vat_registration_number = nil      
     end
-    if vat_registration_number.empty?
-      vat_registration_number = nil
-    end
-  end
+  end  
   
 end
