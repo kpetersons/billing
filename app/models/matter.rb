@@ -37,7 +37,7 @@ class Matter < ActiveRecord::Base
   has_many    :linked_matters, :class_name => "LinkedMatter", :foreign_key => :matter_id
   has_many    :matters, :through => :linked_matters
   has_many    :linked, :class_name => "Matter", 
-  :finder_sql => 'select * from matters m join linked_matters lm on ((m.id = lm.matter_id and lm.linked_matter_id = #{id}) or (m.id = lm.linked_matter_id and lm.matter_id = #{id}))'
+  :finder_sql => 'select m.* from matters m join linked_matters lm on ((m.id = lm.matter_id and lm.linked_matter_id = #{id}) or (m.id = lm.linked_matter_id and lm.matter_id = #{id}))'
   
   has_one :trademark
   has_one :patent

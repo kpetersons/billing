@@ -1,0 +1,15 @@
+<%=form_for :linked_matter, :url => link_matter_path(@matter), :html => {:class=>"inline-form"} do |lm_f| %>
+	<%=lm_f.hidden_field :linked_matter_id %>
+	<%=lm_f.text_field :linked_matter_registration_number, :size=>"5" %>					
+	<%= render :partial => "shared/ui/form-submit-controls_name", 	:locals => {:fields 	=> lm_f, :name => "Link"}%>
+<%end%>			
+<script>
+	new Autocomplete('linked_matter_linked_matter_registration_number', 
+	{
+		serviceUrl:'<%=url_for find_ajax_matter_path(@matter) %>'
+		,minChars:1
+		,onSelect: function(value, data){
+        	$('linked_matter_linked_matter_id').setValue(data)
+      	}
+	});
+</script>

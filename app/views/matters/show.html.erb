@@ -92,26 +92,10 @@
 			<label> Linked matters </label>
 		</dt>
 		<dd>
-			<%@matter.linked.each do |matter|%>
-				<%= link_to matter.document.registration_number, matter%>
-			<%end%>
+			<%= render :partial => "/matters/linked/item", :as => :matter, :collection => @matter.linked, :spacer_template => "shared/ui/comma_spacer" %>			
 		</dd>
-		<dd>
-			<%=form_for :linked_matter, :url => link_matter_path(@matter), :html => {:style => "clear:left;"} do |lm_f| %>
-				<%=lm_f.hidden_field :linked_matter_id %>
-				<%=lm_f.text_field :linked_matter_registration_number %>					
-				<%= render :partial => "shared/ui/form-submit-controls_name", 	:locals => {:fields 	=> lm_f, :name => "Link"}%>
-			<%end%>			
-			<script>
-				new Autocomplete('linked_matter_linked_matter_registration_number', 
-				{
-					serviceUrl:'<%=url_for find_ajax_matter_path(@matter) %>'
-					,minChars:1
-					,onSelect: function(value, data){
-			        	$('linked_matter_linked_matter_id').setValue(data)
-			      	}
-				});
-			</script>
+		<dd class="show">
+			<%= render :partial => "/matters/linked/form" %>
 		</dd>
 	</dl>
 	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_matter_path(@matter)} %>

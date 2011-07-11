@@ -46,3 +46,12 @@ form input[type="submit"], button {
 form select.wide {
 	width: 15em;
 }
+
+.show {margin-left:0px;}
+.show .inline-form {
+	clear:left;
+}
+.show .inline-form input[type="text"], .show .inline-form .panel-footer.controls {
+	float:left;
+	clear:none;
+}

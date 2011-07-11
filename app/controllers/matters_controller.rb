@@ -105,12 +105,15 @@ class MattersController < ApplicationController
   def link
     Matter.transaction do
       @matter = Matter.find(params[:id])
-      
-      if @matter.linked_matters<<LinkedMatter.new(params[:linked_matter])
-        flash.now[:success] = "success.matter.link"
+      if @matter.linked_matters.exists?(:linked_matter_id => params[:linked_matter][:linked_matter_id]) || @matter.linked_matters.exists?(:matter_id => params[:linked_matter][:linked_matter_id])
+        flash[:warning] = "error.matter.link.exists"
         redirect_to @matter and return
       end
-      flash.now[:success] = "error.matter.link"
+      if @matter.linked_matters<<LinkedMatter.new(params[:linked_matter])
+        flash[:success] = "success.matter.link"
+        redirect_to @matter and return
+      end
+      flash[:error] = "error.matter.link"
       redirect_to @matter and return
     end
   end
@@ -122,7 +125,7 @@ class MattersController < ApplicationController
     @result[:suggestions] = Array.new
     @result[:data] = Array.new
     index = 0
-    @matters = Matter.joins(:document).where(:matter_type_id => @matter.matter_type_id).all(:conditions => ['registration_number like ?', "%#{params[:query]}%"])    
+    @matters = Matter.where(['matters.id != ?', "#{@matter.id}"]).joins(:document).where(:matter_type_id => @matter.matter_type_id).all(:conditions => ['registration_number like ?', "%#{params[:query]}%"])    
     @matters.each do |matter|
       @result[:suggestions][index] = matter.document.registration_number
       @result[:data][index] = matter.id

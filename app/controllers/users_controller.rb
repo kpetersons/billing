@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   def activate
     User.transaction do
       @user = User.find_by_id(params[:id])
-      if current_user.has_function(:name => 'FUNCT_ACTIVATE_USER') 
+      if current_user.has_function(:name => 'funct.activate.user') 
         if @user.update_attribute(:active, !@user.active)
           redirect_to (user_path @user) and return
         else
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   def block
     User.transaction do
       @user = User.find_by_id(params[:id])
-      if current_user.has_function(:name => 'FUNCT_BLOCK_USER') 
+      if current_user.has_function(:name => 'funct.block.user') 
         if @user.update_attribute(:blocked, !@user.blocked)
           redirect_to (user_path @user) and return
         else

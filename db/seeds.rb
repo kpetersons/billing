@@ -97,84 +97,88 @@ AddressType.transaction do
   end
 end
 
+@matter_functions =     [
+  ["funct.matters.link", true],
+  ["funct.create.matter", true],
+  ["funct.create.matter.task", true],
+  ["funct.set.to.open.matter.task", true],
+  ["funct.set.to.await.response.matter.task", true],
+  ["funct.set.to.cancel.matter.task", false],
+  ["funct.set.to.done.matter.task", false]
+]
+
+@invoice_functions = [
+  ["funct.invoices.link", true],
+  ["funct.create.invoice", true],
+  ["funct.create.exchange.rate", false]
+]
+
+@customer_functions = [
+  ["funct.customers.link", true],
+  ["funct.create.customer", true]
+]
+
+@admin_functions = [
+  ["funct.admin.link", true],
+  ["funct.create.user", true],
+  ["funct.activate.user", true],
+  ["funct.block.user", true],
+  ["funct.create.role", true],
+  ["funct.add.role", true],
+  ["funct.add.function", true]
+]
+
+@minimal_functions = [
+  ["funct.login", true],
+  ["funct.dashboard.link", true],
+  ["funct.settings.link", true]
+]
+
+@roles = ["role.minimal", "role.admin", "role.matters", "role.invoices", "role_customers"]
+
+@role_functions = {
+"role.minimal" => @minimal_functions,
+"role.admin" => @admin_functions,
+"role.matters" => @matter_functions,
+"role.invoices" => @invoice_functions,
+"role_customers" => @customer_functions
+}
+
+@functions = Array.new.concat(@minimal_functions)
+@functions.concat(@admin_functions)
+@functions.concat(@matter_functions)
+@functions.concat(@invoice_functions)
+@functions.concat(@customer_functions)
+
 Function.transaction do
-  functions = [
-    "FUNCT_LOGIN",
-    "FUNCT_DASHBOARD_LINK",
-    "FUNCT_MATTERS_LINK",
-    "FUNCT_INVOICES_LINK",
-    "FUNCT_CUSTOMERS_LINK",
-    "FUNCT_SETTINGS_LINK",
-    "FUNCT_ADMIN_LINK",
-    "FUNCT_CREATE_USER",
-    "FUNCT_CREATE_ROLE",
-    "FUNCT_ADD_ROLE",
-    "FUNCT_ADD_FUNCTION",
-    "FUNCT_CREATE_MATTER",
-    "FUNCT_CREATE_INVOICE",
-    "FUNCT_CREATE_CUSTOMER",
-    "FUNCT_CREATE_EXCHANGE_RATE",
-    "FUNCT_ACTIVATE_USER",
-    "FUNCT_BLOCK_USER"
-  ]
-  functions.each do |function_name|
-    unless Function.find_by_name(function_name)
-      Function.create(:name => function_name, :description => "#{function_name}_DESCR")
+
+  @functions.each do |function_name|
+    unless Function.find_by_name(function_name[0])
+      Function.create(:name => function_name[0], :description => "#{function_name[0]}.descr")
     end
   end
 end
 
 Role.transaction do
-  roles = ["ROLE_MIMINAL", "ROLE_ADMIN", "ROLE_MATTER_MANAGER", "ROLE_INVOICES_MANAGER", "ROLE_CUSTOMER_MANAGER"]
-  roles.each do |role|
-    unless Role.find_by_name(role)
-      Role.create(:name => role, :description => "#{role}_DESCR")
+
+  @roles.each do |role|
+    @r = Role.find_by_name(role)
+    if @r.nil?
+      @r = Role.create(:name => role, :description => "#{role}.descr")
+    end
+    @role_functions[role].each do |functions|
+#      puts "functions #{functions}"
+      @functions.each do |function|
+        if function[1]
+          unless @r.functions.exists?(:name => function[0])
+            @r.functions<<Function.find_by_name(function[0])
+          end
+        end
+      end
     end
   end
 end
 
-RoleFunction.transaction do
-  admin_functions = ["FUNCT_ADMIN_LINK", "FUNCT_CREATE_USER", "FUNCT_CREATE_ROLE", "FUNCT_ADD_ROLE", "FUNCT_ADD_FUNCTION", "FUNCT_CREATE_EXCHANGE_RATE", "FUNCT_ACTIVATE_USER", "FUNCT_BLOCK_USER"]
-
-  role = Role.find_by_name("ROLE_ADMIN")
-  admin_functions.each do |function_name|
-    unless role.functions.where(:name => function_name).first
-      role.functions<<Function.find_by_name(function_name)
-    end
-  end
-
-  minimal_functions = ["FUNCT_LOGIN", "FUNCT_DASHBOARD_LINK"]
-  role = Role.find_by_name("ROLE_MIMINAL")
-  minimal_functions.each do |function_name|
-    unless role.functions.where(:name => function_name).first
-      role.functions<<Function.find_by_name(function_name)
-    end
-  end
-
-  matter_functions = ["FUNCT_MATTERS_LINK"]
-  role = Role.find_by_name("ROLE_MATTER_MANAGER")
-  matter_functions.each do |function_name|
-    unless role.functions.where(:name => function_name).first
-      role.functions<<Function.find_by_name(function_name)
-    end
-  end
-
-  matter_functions = ["FUNCT_CUSTOMERS_LINK"]
-  role = Role.find_by_name("ROLE_CUSTOMER_MANAGER")
-  matter_functions.each do |function_name|
-    unless role.functions.where(:name => function_name).first
-      role.functions<<Function.find_by_name(function_name)
-    end
-  end
-
-  matter_functions = ["FUNCT_INVOICES_LINK"]
-  role = Role.find_by_name("ROLE_INVOICES_MANAGER")
-  matter_functions.each do |function_name|
-    unless role.functions.where(:name => function_name).first
-      role.functions<<Function.find_by_name(function_name)
-    end
-  end
-end
 
 ContactType.transaction do
   contact_types = ["CT_E-MAIL", "CT_PHONE", "CT_FAX"]
@@ -200,7 +204,7 @@ OperatingParty.transaction do
           }
         }
       })
-      puts "@result.errors #{@result.errors}"
+#      puts "@result.errors #{@result.errors}"
     @result.save
     end
   end
@@ -223,7 +227,7 @@ OperatingParty.transaction do
           }
         }
       })
-      puts @party.errors
+#      puts @party.errors
     @party.save
     end
   end
@@ -321,14 +325,14 @@ OperatingPartyMatterType.transaction do
   :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.custom").id,
-  :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)  
+  :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
   #
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.trademark").id,
   :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id)
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.design").id,
-  :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id)  
+  :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id)
   #
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.patent").id,
@@ -339,7 +343,7 @@ OperatingPartyMatterType.transaction do
   :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id)
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.custom").id,
-  :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id)  
+  :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id)
 end
 
 User.transaction do
