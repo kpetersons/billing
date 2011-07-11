@@ -52,10 +52,14 @@ class Invoice < ActiveRecord::Base
                   :invoice_matters_attributes,
                   :exchange_rate
   accepts_nested_attributes_for  :invoice_lines, :invoice_matters
-  attr_protected :preset_id, :customer_name
+  attr_protected :preset_id, :customer_name, :exchange_rate_str
 
 
   validates :discount, :numericality => true
+  
+  def exchange_rate_str
+     ExchangeRate.last.rate
+  end
   
   def number
     document.registration_number
