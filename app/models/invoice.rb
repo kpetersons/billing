@@ -29,7 +29,6 @@ class Invoice < ActiveRecord::Base
   belongs_to :address
   belongs_to :individual
   belongs_to :currency
-  belongs_to :exchange_rate
   belongs_to  :author, :class_name => "User", :foreign_key => :author_id  
   has_many   :invoice_lines
   has_many   :invoice_matters
@@ -41,8 +40,7 @@ class Invoice < ActiveRecord::Base
                   :address_id, 
                   :author_id,
                   :individual_id, 
-                  :currency_id, 
-                  :exchange_rate_id,
+                  :currency_id,
                   :discount,
                   :our_ref,
                   :your_ref,
@@ -50,19 +48,14 @@ class Invoice < ActiveRecord::Base
                   :finishing_details,
                   :invoice_date,
                   :invoice_lines_attributes,
-                  :invoice_matters_attributes,
-                  :exchange_rate
+                  :invoice_matters_attributes
   accepts_nested_attributes_for  :invoice_lines, :invoice_matters
-  attr_protected :preset_id, :customer_name, :exchange_rate_str
+  attr_protected :preset_id, :customer_name
 
 
   after_create :generate_registration_number  
   validates :discount, :numericality => true
-  
-  def exchange_rate_str
-     ExchangeRate.last.rate
-  end
-  
+    
   def number
     document.registration_number
   end

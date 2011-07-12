@@ -5,7 +5,4 @@
 	<%= render :partial => "shared/flash", 	:locals => {:flash 		=> flash}%>
 	<%= render :partial => "shared/error", 	:locals => {:obj 		=> @currency}%>	
 	<%= render :partial => "form", 			:locals => {:currency 	=> @currency} %>
-	<div class="nested-panel">
-		<%= render :partial => "/exchange_rates/index", :locals => {:exchange_rates => @currency.exchange_rates.paginate(:page => params[:page], :per_page => 10), :table_title => "Rates", :choose => false, :param_name => :page} %>
-	</div>
 </div>

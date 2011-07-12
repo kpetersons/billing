@@ -39,16 +39,15 @@ end
   ["funct.create.matter.task", true],
   ["funct.set.to.open.matter.task", true],
   ["funct.set.to.await.response.matter.task", true],
-  ["funct.set.to.cancel.matter.task", false],
-  ["funct.set.to.done.matter.task", false],
+  ["funct.set.to.cancel.matter.task", true],
+  ["funct.set.to.done.matter.task", true],
   ["funct.revert.to.open.matter.task", true],
   ["funct.revert.to.await.response.matter.task", true]
 ]
 
 @invoice_functions = [
   ["funct.invoices.link", true],
-  ["funct.create.invoice", true],
-  ["funct.create.exchange.rate", false]
+  ["funct.create.invoice", true]
 ]
 
 @customer_functions = [
@@ -582,10 +581,10 @@ end
 
 MatterTaskStatusFlow.transaction do
   prefix = "matter.task.status."
-  open = MatterTaskStatus.find_by_name("#{prefix}open")
+  open =              MatterTaskStatus.find_by_name("#{prefix}open")
   awaiting_response = MatterTaskStatus.find_by_name("#{prefix}awaiting_response")
-  done = MatterTaskStatus.find_by_name("#{prefix}done")
-  canceled = MatterTaskStatus.find_by_name("#{prefix}canceled")
+  done =              MatterTaskStatus.find_by_name("#{prefix}done")
+  canceled =          MatterTaskStatus.find_by_name("#{prefix}canceled")
 
   MatterTaskStatusFlow.delete_all
 
@@ -596,40 +595,60 @@ MatterTaskStatusFlow.transaction do
   # 5 Open <->              Awaiting response <-> Canceled
   # 6 Awaiting response <-> Done <->              *
   # 7 Awaiting response <-> Canceled <->          *
-
+  # ["funct.set.to.open.matter.task", true],
+  # ["funct.set.to.await.response.matter.task", true],
+  # ["funct.set.to.cancel.matter.task", false],
+  # ["funct.set.to.done.matter.task", false],
+  # ["funct.revert.to.open.matter.task", true],
+  # ["funct.revert.to.await.response.matter.task", true]
   #1
-  i = MatterTaskStatusFlow.create(
+  MatterTaskStatusFlow.create(
   :revert_to_step_id => nil,
   :current_step_id   => open.id,
-  :pass_to_step_id   => awaiting_response.id, :start_state => true)
+  :pass_to_step_id   => awaiting_response.id, 
+  :start_state => true,
+  :pass_to_function_id => Function.find_by_name("funct.set.to.await.response.matter.task").id,
+  :revert_to_function_id => nil) 
   #2
   MatterTaskStatusFlow.create(
   :revert_to_step_id => nil,
   :current_step_id   => open.id,
-  :pass_to_step_id   => canceled.id)
+  :pass_to_step_id   => canceled.id,
+  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matter.task").id,
+  :revert_to_function_id => nil)
   #3
   MatterTaskStatusFlow.create(
   :revert_to_step_id => open.id,
   :current_step_id   => awaiting_response.id,
-  :pass_to_step_id   => done.id)
+  :pass_to_step_id   => done.id,
+  :pass_to_function_id => Function.find_by_name("funct.set.to.done.matter.task").id,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id)
   #4
   MatterTaskStatusFlow.create(
   :revert_to_step_id => open.id,
   :current_step_id   => canceled.id,
-  :pass_to_step_id   => nil)
+  :pass_to_step_id   => nil,
+  :pass_to_function_id => nil,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id)
   #5
   MatterTaskStatusFlow.create(
   :revert_to_step_id => open.id,
   :current_step_id   => awaiting_response.id,
-  :pass_to_step_id   => canceled.id)
+  :pass_to_step_id   => canceled.id,
+  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matter.task").id,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id)
   #6
   MatterTaskStatusFlow.create(
   :revert_to_step_id => awaiting_response.id,
   :current_step_id   => done.id,
-  :pass_to_step_id   => nil)
+  :pass_to_step_id   => nil,
+  :pass_to_function_id => nil,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task"))
   #7
   MatterTaskStatusFlow.create(
   :revert_to_step_id => awaiting_response.id,
   :current_step_id   => canceled.id,
-  :pass_to_step_id   => nil)
+  :pass_to_step_id   => nil,
+  :pass_to_function_id => nil,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task"))
 end

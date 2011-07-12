@@ -11,20 +11,8 @@
 #
 
 class Currency < ActiveRecord::Base
-  
-  has_many :exchange_rates, :order => "id desc"
-  
-  validates :code, :presence => true
-  validates :name, :presence => true
     
-  attr_protected :rate
-  
-  def actual_rate
-    exchange_rates.first
-  end
-
-  def rate
-    exchange_rates.first.rate
-  end
-  
+  validates :code, :presence => true
+  validates :name, :presence => true    
+   
 end

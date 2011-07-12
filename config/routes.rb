@@ -13,13 +13,8 @@ Billing::Application.routes.draw do
       delete :remove_line
     end
   end
-  resources :exchange_rates, :only => [:edit, :update]
 
-  resources :currencies do
-    member do
-      post :add_rate
-    end
-  end
+  resources :currencies 
 
   resources :invoice_line_presets
   resources :official_fee_types

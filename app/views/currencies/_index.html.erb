@@ -3,14 +3,13 @@
 		<tr>
 			<th class="col-radio"></th>
 			<th class="col-text">Code</th>
-			<th class="col-text">Name</th>
-			<th class="col-number">Actual rate</th>			
+			<th class="col-text">Name</th>			
 			<th class="col-number"></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="5">
+			<th class="list-paginate" colspan="4">
 				<%= will_paginate currencies, :param_name => param_name %>				
 			</th>
 		</tr>
@@ -21,8 +20,7 @@
 				<td class="col-radio">
 				</td>
 				<td class="col-text"><%=currency.code%></td>
-				<td class="col-text"><%=currency.name%></td>			
-				<td class="col-number"><%=currency.actual_rate.rate%></td>				
+				<td class="col-text"><%=currency.name%></td>							
 				<td class="col-number">
 					<%=link_to 'Show', currency_path(currency) %> 
 				</td>
@@ -30,7 +28,7 @@
 		<%end%>
 		<% if currencies.empty? %>
 			<tr>
-				<td colspan="5">&nbsp;</td>
+				<td colspan="4">&nbsp;</td>
 			</tr>
 		<%end%>
 	</tbody>
