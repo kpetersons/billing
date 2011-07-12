@@ -25,7 +25,7 @@ class MatterTaskStatusFlow < ActiveRecord::Base
   validates :current_step_id, :presence => true
 
   def possible_change_states direction
-    MatterTaskStatusFlow.select("distinct #{direction}_id, #{direction.to_s.sub('_step', '_function_id')}").where(:current_step_id => current_step_id).group("revert_to_step_id, current_step_id, pass_to_step_id").all
+    MatterTaskStatusFlow.select("distinct #{direction}_id, #{direction.to_s.sub('_step', '_function_id')}").where(:current_step_id => current_step_id).group("#{direction}_id, #{direction.to_s.sub('_step', '_function_id')}").all
   end 
 
 end
