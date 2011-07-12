@@ -7,6 +7,7 @@
 #  description :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime
+#  function_id :integer(4)
 #
 
 require 'spec_helper'

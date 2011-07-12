@@ -17,7 +17,7 @@
 							</li>
 							<% current_user.matter_types.each do |matter_type| %>
 							<li>
-								<%= link_to t("new.#{matter_type.name}"), new_matter_path(:type=>matter_type.id)%>
+								<%= link_to_if_function new_matter_path(:type=>matter_type.id), "new.#{matter_type.name}", matter_type.function.name %>
 							</li>
 							<%end%>
 						</ul>

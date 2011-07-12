@@ -56,7 +56,7 @@ class Invoice < ActiveRecord::Base
   attr_protected :preset_id, :customer_name, :exchange_rate_str
 
 
-  before_validation :generate_registration_number  
+  after_create :generate_registration_number  
   validates :discount, :numericality => true
   
   def exchange_rate_str

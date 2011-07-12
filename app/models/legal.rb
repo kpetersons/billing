@@ -5,7 +5,7 @@
 #  id         :integer(4)      not null, primary key
 #  created_at :datetime
 #  updated_at :datetime
-#  matter_id  :string(255)
+#  matter_id  :integer(4)
 #
 
 class Legal < ActiveRecord::Base

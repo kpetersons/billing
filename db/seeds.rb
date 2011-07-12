@@ -19,75 +19,6 @@ RelationshipType.transaction do
   end
 end
 
-MatterTaskStatus.transaction do
-  prefix = "matter.task.status."
-  matter_task_statuses = [
-    ["re_open",              "open",              "pass_open"],
-    ["re_awaiting_response", "awaiting_response", "pass_awaiting_response"],
-    ["re_done",              "done",              "pass_done"],
-    ["re_canceled",          "canceled",          "pass_canceled"]]
-  matter_task_statuses.each do |name|
-    unless MatterTaskStatus.find_by_name(name[0])
-      MatterTaskStatus.create(:revert_to_name => "#{prefix}#{name[0]}", :name => "#{prefix}#{name[1]}", :pass_to_name => "#{prefix}#{name[2]}")
-    end
-  end
-end
-
-MatterTaskStatusFlow.transaction do
-  prefix = "matter.task.status."
-  open = MatterTaskStatus.find_by_name("#{prefix}open")
-  awaiting_response = MatterTaskStatus.find_by_name("#{prefix}awaiting_response")
-  done = MatterTaskStatus.find_by_name("#{prefix}done")
-  canceled = MatterTaskStatus.find_by_name("#{prefix}canceled")
-
-  MatterTaskStatusFlow.delete_all
-
-  # 1 * <->                 Open <->              Awaiting response  start state
-  # 2 * <->                 Open <->              Canceled
-  # 3 Open <->              Awaiting response <-> Done
-  # 4 Open <->              Canceled <->          *
-  # 5 Open <->              Awaiting response <-> Canceled
-  # 6 Awaiting response <-> Done <->              *
-  # 7 Awaiting response <-> Canceled <->          *
-
-  #1
-  i = MatterTaskStatusFlow.create(
-  :revert_to_step_id => nil,
-  :current_step_id   => open.id,
-  :pass_to_step_id   => awaiting_response.id, :start_state => true)
-  #2
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => nil,
-  :current_step_id   => open.id,
-  :pass_to_step_id   => canceled.id)
-  #3
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => open.id,
-  :current_step_id   => awaiting_response.id,
-  :pass_to_step_id   => done.id)
-  #4
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => open.id,
-  :current_step_id   => canceled.id,
-  :pass_to_step_id   => nil)
-  #5
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => open.id,
-  :current_step_id   => awaiting_response.id,
-  :pass_to_step_id   => canceled.id)
-  #6
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => awaiting_response.id,
-  :current_step_id   => done.id,
-  :pass_to_step_id   => nil)
-  #7
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => awaiting_response.id,
-  :current_step_id   => canceled.id,
-  :pass_to_step_id   => nil)
-end
-
-
 AddressType.transaction do
   address_types = ["BILL_TO", "SHIP_TO", "CONTACT_TO"]
   address_types.each do |address_type_name|
@@ -109,7 +40,7 @@ end
   ["funct.set.to.open.matter.task", true],
   ["funct.set.to.await.response.matter.task", true],
   ["funct.set.to.cancel.matter.task", false],
-  ["funct.set.to.done.matter.task", false]
+  ["funct.set.to.done.matter.task", false],
   ["funct.revert.to.open.matter.task", true],
   ["funct.revert.to.await.response.matter.task", true]
 ]
@@ -294,7 +225,10 @@ end
 MatterType.transaction do
   matter_types = ["matter.trademark", "matter.patent", "matter.legal", "matter.design", "matter.custom"]
   matter_types.each  do |matter_type|
-    MatterType.create(:name => matter_type, :description => "#{matter_type}_DESC") unless !MatterType.find_by_name(matter_type).nil?
+    MatterType.create(
+    :name => matter_type, 
+    :description => "#{matter_type}.desc") unless !MatterType.find_by_name(matter_type).nil?
+    MatterType.find_by_name(matter_type).update_attribute(:function_id, Function.find_by_name("funct.create.#{matter_type}").id)
   end
 end
 
@@ -629,4 +563,73 @@ User.transaction do
   unless User.find_by_email("janis.berzs@petpat.lv").individual.party.contacts.where(:contact_value => "janis.berzs@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
     User.find_by_email("janis.berzs@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "janis.berzs@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
   end
+end
+
+
+MatterTaskStatus.transaction do
+  prefix = "matter.task.status."  
+  matter_task_statuses = [
+    ["re_open",              "open",              "pass_open"],
+    ["re_awaiting_response", "awaiting_response", "pass_awaiting_response"],
+    ["re_done",              "done",              "pass_done"],
+    ["re_canceled",          "canceled",          "pass_canceled"]]
+  matter_task_statuses.each do |name|
+    unless MatterTaskStatus.find_by_name(name[0])
+      MatterTaskStatus.create(:revert_to_name => "#{prefix}#{name[0]}", :name => "#{prefix}#{name[1]}", :pass_to_name => "#{prefix}#{name[2]}")
+    end
+  end
+end
+
+MatterTaskStatusFlow.transaction do
+  prefix = "matter.task.status."
+  open = MatterTaskStatus.find_by_name("#{prefix}open")
+  awaiting_response = MatterTaskStatus.find_by_name("#{prefix}awaiting_response")
+  done = MatterTaskStatus.find_by_name("#{prefix}done")
+  canceled = MatterTaskStatus.find_by_name("#{prefix}canceled")
+
+  MatterTaskStatusFlow.delete_all
+
+  # 1 * <->                 Open <->              Awaiting response  start state
+  # 2 * <->                 Open <->              Canceled
+  # 3 Open <->              Awaiting response <-> Done
+  # 4 Open <->              Canceled <->          *
+  # 5 Open <->              Awaiting response <-> Canceled
+  # 6 Awaiting response <-> Done <->              *
+  # 7 Awaiting response <-> Canceled <->          *
+
+  #1
+  i = MatterTaskStatusFlow.create(
+  :revert_to_step_id => nil,
+  :current_step_id   => open.id,
+  :pass_to_step_id   => awaiting_response.id, :start_state => true)
+  #2
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => nil,
+  :current_step_id   => open.id,
+  :pass_to_step_id   => canceled.id)
+  #3
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => open.id,
+  :current_step_id   => awaiting_response.id,
+  :pass_to_step_id   => done.id)
+  #4
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => open.id,
+  :current_step_id   => canceled.id,
+  :pass_to_step_id   => nil)
+  #5
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => open.id,
+  :current_step_id   => awaiting_response.id,
+  :pass_to_step_id   => canceled.id)
+  #6
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => awaiting_response.id,
+  :current_step_id   => done.id,
+  :pass_to_step_id   => nil)
+  #7
+  MatterTaskStatusFlow.create(
+  :revert_to_step_id => awaiting_response.id,
+  :current_step_id   => canceled.id,
+  :pass_to_step_id   => nil)
 end

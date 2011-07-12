@@ -1,5 +1,11 @@
 Billing::Application.routes.draw do
 
+  get "profiles/show"
+
+  get "profiles/edit"
+
+  get "profiles/change_password"
+
   resources :invoices   do
     member do
       put :save_lines

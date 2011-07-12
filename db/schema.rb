@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110712070406) do
+ActiveRecord::Schema.define(:version => 20110712073540) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -227,8 +227,9 @@ ActiveRecord::Schema.define(:version => 20110712070406) do
     t.integer  "pass_to_step_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "start_state",       :default => false
-    t.integer  "function_id"
+    t.boolean  "start_state",           :default => false
+    t.integer  "pass_to_function_id"
+    t.integer  "revert_to_function_id"
   end
 
   create_table "matter_task_statuses", :force => true do |t|
@@ -237,7 +238,6 @@ ActiveRecord::Schema.define(:version => 20110712070406) do
     t.datetime "updated_at"
     t.string   "revert_to_name"
     t.string   "pass_to_name"
-    t.integer  "function_id"
   end
 
   create_table "matter_tasks", :force => true do |t|
@@ -256,6 +256,7 @@ ActiveRecord::Schema.define(:version => 20110712070406) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "function_id"
   end
 
   create_table "matters", :force => true do |t|

@@ -7,12 +7,12 @@
 #  official_fee_type_id :integer(4)
 #  attorney_fee_type_id :integer(4)
 #  name                 :string(255)
-#  official_fee         :string(255)
-#  attorney_fee         :string(255)
 #  created_at           :datetime
 #  updated_at           :datetime
 #  author_id            :integer(4)
 #  private_preset       :boolean(1)
+#  official_fee         :decimal(8, 2)
+#  attorney_fee         :decimal(8, 2)
 #
 
 require 'spec_helper'
