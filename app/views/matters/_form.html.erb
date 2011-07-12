@@ -1,4 +1,4 @@
-<%=form_for @document, :url => (@document.persisted?) ? matter_path : {:controller => 'matters', :action => 'create'} do |d_f| %>
+<%=form_for @document, :url => (@document.persisted?) ? matter_path : {:controller => 'matters', :action => 'create'}, :html => { :multipart => true } do |d_f| %>
 	<%= render :partial => "fields", 							:locals => {:fields 	=> d_f}%>
 	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> d_f}%>
 <%end%>

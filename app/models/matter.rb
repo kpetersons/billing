@@ -23,6 +23,8 @@
 
 class Matter < ActiveRecord::Base
   
+
+  
   belongs_to  :document
   belongs_to  :applicant, :class_name => "Customer", :foreign_key => :applicant_id
   belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
@@ -36,8 +38,8 @@ class Matter < ActiveRecord::Base
   has_many    :invoices, :through => :invoice_matters 
   has_many    :linked_matters, :class_name => "LinkedMatter", :foreign_key => :matter_id
   has_many    :matters, :through => :linked_matters
-  has_many    :linked, :class_name => "Matter", 
-  :finder_sql => 'select m.* from matters m join linked_matters lm on ((m.id = lm.matter_id and lm.linked_matter_id = #{id}) or (m.id = lm.linked_matter_id and lm.matter_id = #{id}))'
+  has_many    :linked, :class_name => "Matter", :finder_sql => 'select m.* from matters m join linked_matters lm on ((m.id = lm.matter_id and lm.linked_matter_id = #{id}) or (m.id = lm.linked_matter_id and lm.matter_id = #{id}))'
+  has_many    :matter_images
   
   has_one :trademark
   has_one :patent
@@ -53,7 +55,7 @@ class Matter < ActiveRecord::Base
   
   after_validation :prepare_ajax_fields  
   
-  accepts_nested_attributes_for :trademark, :patent, :design, :legal, :custom, :linked_matters
+  accepts_nested_attributes_for :trademark, :patent, :design, :legal, :custom, :linked_matters, :matter_images
   attr_protected :applicant_name, :agent_name, :classes
   
   def number

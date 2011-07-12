@@ -34,7 +34,8 @@ class MattersController < ApplicationController
     end    
     if @matter_type.name.eql?("matter.custom")
       @document.matter.custom = Custom.new
-    end    
+    end
+    @document.matter.matter_images<<MatterImage.new    
   end
 
   def create    
@@ -51,6 +52,7 @@ class MattersController < ApplicationController
 
   def edit
     @document = Matter.find(params[:id]).document
+    @document.matter.matter_images<<MatterImage.new unless !@document.matter.matter_images.empty?
   end
 
   def update
@@ -133,6 +135,17 @@ class MattersController < ApplicationController
       index += 1
     end
     render :json => @result    
+  end
+
+  def add_image
+    @matter = Matter.find(params[:id])
+    @image = MatterImage.create(params[:matter_image])
+    if @matter.matter_images<<@image
+      flash.now[:success] = "matter.success.image.added"
+      redirect_to @matter and return
+    end
+    flash.now[:error] = "matter.error.image.added"
+    redirect_to @matter and return
   end
   
 end

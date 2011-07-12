@@ -5,6 +5,7 @@
 .column.elastic 	 .panel-footer.controls a,
 .column.elastic form .panel-footer.controls a, 
 .column.elastic form .panel-footer.controls input[type="submit"], 
+.column.elastic form .panel-footer.controls input[type="file"],
 .column.elastic form .panel-footer.controls button {
 	text-decoration:none;
 	padding:5px 10px;
@@ -22,7 +23,8 @@
 }
 
 .column.elastic 	 .controls a:hover,
-.column.elastic form .controls a:hover, 
+.column.elastic form .controls a:hover,
+.column.elastic form .controls input[type="file"]:hover,  
 .column.elastic form .controls input[type="submit"]:hover, 
 .column.elastic form .controls button:hover {
 	background: rgb(229,229,229);
@@ -31,6 +33,7 @@
 
 .column.elastic 	 .controls a:active,
 .column.elastic form .controls a:active, 
+.column.elastic form .controls input[type="file"]:active,
 .column.elastic form .controls input[type="submit"]:active, 
 .column.elastic form .controls button:active {
 	background: rgb(198,198,198);

@@ -172,3 +172,9 @@ input[type="submit"], button, .panel-footer a {
 	color:#FFFFFF;
 	text-decoration: none;
 }
+
+.panel-content .images {float:right; vertical-align: top;}
+.panel-content .images img {
+	clear:both;
+	display:block;
+}

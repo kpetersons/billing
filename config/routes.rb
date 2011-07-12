@@ -22,8 +22,9 @@ Billing::Application.routes.draw do
 
   resources :matters do
     member do
-      get :find_ajax
-      post :link
+      get   :find_ajax
+      post  :link
+      post   :add_image
     end    
     resources :invoices, :only => [:new]
     resources :tasks, :controller => "MatterTasks" do
