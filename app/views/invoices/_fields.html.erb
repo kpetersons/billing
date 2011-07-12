@@ -1,12 +1,14 @@
 <%= fields.hidden_field :id %>
 <%= fields.hidden_field :parent_id %>
+<%= fields.hidden_field :user_id %>
 <ul>
 	<li>
 		<%= fields.label :registration_number, "Invoice number" %>
-		<%= fields.text_field :registration_number %>
+		<div class="value"><%= fields.object.registration_number %>&nbsp;</div>
 	</li>
 	<%= fields.fields_for :invoice do |i_f| %>
 	<li>
+		<%= i_f.hidden_field :author_id %>		
 		<%= i_f.label :invoice_date %>
 		<%= i_f.text_field :invoice_date %>
 	</li>

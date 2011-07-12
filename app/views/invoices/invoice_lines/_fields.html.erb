@@ -1,5 +1,5 @@
-<td class="col-text" style="width:1em">
-	<%= fields.hidden_field :id %>	
+<td class="col-text" style="width:1em">	
+	<%= fields.hidden_field :id %>
 	<%= fields.select :official_fee_type_id, OfficialFeeType.all.collect { |tt| [tt.name, tt.id] },
     {:include_blank => true},{:class => 'wide'} %>
 </td>

@@ -8,8 +8,8 @@ class InvoicesController < ApplicationController
   end
 
   def new
-    @document = Document.new()
-    @document.invoice = Invoice.new(:discount => 0)
+    @document = Document.new(:user_id => current_user.id)
+    @document.invoice = Invoice.new(:discount => 0, :author_id => current_user.id)
     @matter_task = MatterTask.find(params[:task_id]) unless params[:task_id].nil?
     @matter = Matter.find(params[:matter_id]) unless params[:matter_id].nil?
     if !@matter.nil? || !@matter_task.nil?
@@ -23,7 +23,7 @@ class InvoicesController < ApplicationController
 
   def create
     Document.transaction do
-      @document = Document.new(params[:document].merge(:user_id => current_user.id))
+      @document = Document.new(params[:document])      
       if @document.save
         @invoice = @document.invoice
         redirect_to @invoice
@@ -35,6 +35,8 @@ class InvoicesController < ApplicationController
 
   def edit
     @document = Invoice.find(params[:id]).document
+    @document.user_id = current_user.id
+    @document.invoice.author_id = current_user.id
   end
 
   def update

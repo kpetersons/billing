@@ -39,6 +39,7 @@ class Invoice < ActiveRecord::Base
   attr_accessible :document_id, 
                   :customer_id, 
                   :address_id, 
+                  :author_id,
                   :individual_id, 
                   :currency_id, 
                   :exchange_rate_id,
@@ -55,6 +56,7 @@ class Invoice < ActiveRecord::Base
   attr_protected :preset_id, :customer_name, :exchange_rate_str
 
 
+  before_validation :generate_registration_number  
   validates :discount, :numericality => true
   
   def exchange_rate_str
@@ -114,5 +116,11 @@ class Invoice < ActiveRecord::Base
   def after_discount
     @sum_total_fees = sum_official_fees + sum_attorney_fees-sum_attorney_fees/100*discount     
   end
-  
+
+  def generate_registration_number
+    Document.transaction do
+      @reg_nr = "#{author.initials}/#{id}"
+      document.update_attribute(:registration_number, @reg_nr)
+    end    
+  end  
 end
