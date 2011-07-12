@@ -1,10 +1,13 @@
 Billing::Application.routes.draw do
 
-  get "profiles/show"
-
-  get "profiles/edit"
-
-  get "profiles/change_password"
+  resource :profile, :only => [:show, :edit, :show_password, :change_password] do
+    member do
+      get :show
+      put :edit
+      get :show_password
+      put :change_password
+    end        
+  end  
 
   resources :invoices   do
     member do

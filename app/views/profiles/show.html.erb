@@ -1,2 +1,31 @@
-<h1>Profiles#show</h1>
-<p>Find me in app/views/profiles/show.html.erb</p>
+<div class="panel">
+	<div class="panel-header">
+		<strong>Edit user</strong>
+	</div>
+	<%= render :partial => "shared/flash", 	:locals => {:flash 	=> flash}%>
+	<%= render :partial => "shared/error", 	:locals => {:obj 	=> @party}%>
+	<%=form_for @party, :url => edit_profile_path do |p_f| %>
+	<ul>
+		<%= render :partial => "/shared/party/fields", :locals => {:fields => p_f} %>
+		<%= p_f.fields_for :individual do |pi_f| %>
+		<%= render :partial => "/shared/party/individual/fields", :locals => {:fields => pi_f} %>
+		<%= pi_f.fields_for :user do |piu_f| %>
+		<li>
+			<%= piu_f.label :initials %>
+			<%= piu_f.text_field :initials, {:style => "width: 2em;"} %>
+		</li>
+		<li>
+			<%= piu_f.hidden_field :id %>
+			<%= piu_f.label :email %>
+			<%= piu_f.text_field :email %>
+		</li>
+		<li>
+			<%= piu_f.label :operating_party_id %>
+			<%= piu_f.select :operating_party_id, OperatingParty.all.collect { |tt| [tt.name, tt.id] } %>
+		</li>
+		<%end%>
+		<%end%>
+	</ul>
+	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> p_f}%>
+	<%end%>
+</div>

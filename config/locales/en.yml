@@ -46,4 +46,10 @@ en:
     new:
       matter:
         type: "Creating %{matter_type}"
-   
+  user:
+    success:
+      profile:
+        changed: "Profile successfully updated."        
+    error:
+      profile:
+        changed: "Could not update profile."
