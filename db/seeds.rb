@@ -100,11 +100,18 @@ end
 @matter_functions =     [
   ["funct.matters.link", true],
   ["funct.create.matter", true],
+  ["funct.create.matter.trademark", true],
+  ["funct.create.matter.patent", true],
+  ["funct.create.matter.legal", true],
+  ["funct.create.matter.design", true],
+  ["funct.create.matter.custom", true],  
   ["funct.create.matter.task", true],
   ["funct.set.to.open.matter.task", true],
   ["funct.set.to.await.response.matter.task", true],
   ["funct.set.to.cancel.matter.task", false],
   ["funct.set.to.done.matter.task", false]
+  ["funct.revert.to.open.matter.task", true],
+  ["funct.revert.to.await.response.matter.task", true]
 ]
 
 @invoice_functions = [

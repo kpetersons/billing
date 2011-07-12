@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110712053317) do
+ActiveRecord::Schema.define(:version => 20110712070406) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -152,12 +152,12 @@ ActiveRecord::Schema.define(:version => 20110712053317) do
     t.integer  "official_fee_type_id"
     t.integer  "attorney_fee_type_id"
     t.string   "name"
-    t.string   "official_fee"
-    t.string   "attorney_fee"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "author_id"
     t.boolean  "private_preset"
+    t.decimal  "official_fee",         :precision => 8, :scale => 2
+    t.decimal  "attorney_fee",         :precision => 8, :scale => 2
   end
 
   create_table "invoice_lines", :force => true do |t|
@@ -228,6 +228,7 @@ ActiveRecord::Schema.define(:version => 20110712053317) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "start_state",       :default => false
+    t.integer  "function_id"
   end
 
   create_table "matter_task_statuses", :force => true do |t|
@@ -236,6 +237,7 @@ ActiveRecord::Schema.define(:version => 20110712053317) do
     t.datetime "updated_at"
     t.string   "revert_to_name"
     t.string   "pass_to_name"
+    t.integer  "function_id"
   end
 
   create_table "matter_tasks", :force => true do |t|
