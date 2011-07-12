@@ -5,10 +5,10 @@
 			<th class="col-text">Matter number</th>
 			<th class="col-text">Mark name</th>
 			<th class="col-text">Classes</th>
-			<th class="col-date">Applicant</th>
-			<th class="col-date">Agent</th>
+			<th class="col-text">Applicant</th>
+			<th class="col-text">Agent</th>
 			<th class="col-date">Application date</th>
-			<th class="col-date">Application number</th>
+			<th class="col-text">Application number</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -30,10 +30,10 @@
 			<td class="col-text"><%= matter.number%></td>
 			<td class="col-text"><%= matter.mark_name %></td>
 			<td class="col-text"><%= matter.classes%></td>
-			<td class="col-date"><%= matter.applicant_name %></td>
-			<td class="col-date"><%= matter.agent_name %></td>
+			<td class="col-text"><%= matter.applicant_name %></td>
+			<td class="col-text"><%= matter.agent_name %></td>
 			<td class="col-date"><%= matter.appl_date %></td>
-			<td class="col-date"><%= matter.appl_number %></td>
+			<td class="col-text"><%= matter.appl_number %></td>
 			<td class="col-number"><%= link_to "Show", matter_path(matter, :anchor => :tasks)%></td>
 		</tr>
 		<% end %>

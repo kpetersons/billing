@@ -37,3 +37,7 @@ table tbody tr:nth-child(odd) {
 }
 
 table td a:visited, table td a {color:inherit;}
+
+table tbody tr:hover td {
+	background-color: rgb(202,251,228);
+}

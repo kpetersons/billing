@@ -1,13 +1,13 @@
 <td class="col-text" style="width:1em">	
 	<%= fields.hidden_field :id %>
-	<%= fields.select :official_fee_type_id, OfficialFeeType.all.collect { |tt| [tt.name, tt.id] },
+	<%= fields.select :official_fee_type_id, OfficialFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [tt.name, tt.id] },
     {:include_blank => true},{:class => 'wide'} %>
 </td>
 <td class="col-number" style="width:1em">	
 	<%= fields.text_field :official_fee %>
 </td>
 <td class="col-text" style="width:1em">
-	<%= fields.select :attorney_fee_type_id, AttorneyFeeType.all.collect { |tt| [tt.name, tt.id] },
+	<%= fields.select :attorney_fee_type_id, AttorneyFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [tt.name, tt.id] },
     {:include_blank => true},{:class => 'wide'} %>
 </td>
 <td class="col-number" style="width:1em">
