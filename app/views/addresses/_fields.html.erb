@@ -1,27 +1,27 @@
 <%= fields.hidden_field :id %>
 <ul>
 	<li>
-		<%= fields.label :address_type_id, "Type" %>
+		<%= fields.label :address_type_id, t("address.fields.type") %>
 		<%= fields.select :address_type_id, AddressType.all.collect { |tt| [t(tt.name), tt.id] } %>
 	</li>	
 	<li>
-		<%= fields.label :country %>
+		<%= fields.label :country, t("address.fields.country") %>
 		<%= fields.text_field :country %>
 	</li>
 	<li>
-		<%= fields.label :city, "Address line 1" %>
+		<%= fields.label :city, t("address.fields.line_1") %>
 		<%= fields.text_field :city %>
 	</li>	
 	<li>
-		<%= fields.label :street , "Address line 2" %>
+		<%= fields.label :street , t("address.fields.line_2") %>
 		<%= fields.text_field :street %>
 	</li>	
 	<li>
-		<%= fields.label :house_number , "Address line 3"%>
+		<%= fields.label :house_number , t("address.fields.line_3") %>
 		<%= fields.text_field :house_number %>
 	</li>	
 	<li>
-		<%= fields.label :room_number , "Address line 4"%>
+		<%= fields.label :room_number , t("address.fields.line_4")%>
 		<%= fields.text_field :room_number %>
 	</li>
 <!-- 	<li>

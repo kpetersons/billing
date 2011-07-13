@@ -69,7 +69,7 @@ end
 @minimal_functions = [
   ["funct.login", true],
   ["funct.dashboard.link", true],
-  ["funct.settings.link", true]
+  ["funct.profile.link", true]
 ]
 
 @roles = ["role.minimal", "role.admin", "role.matters", "role.invoices", "role_customers"]

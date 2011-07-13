@@ -1,36 +1,36 @@
 <dl class="panel-content">
 	<dt>
-		<label> Preset Name </label>
+		<label> <%=t('invoice_line_preset.fields.name')%> </label>
 	</dt>
 	<dd>
 		<%= @invoice_line_preset.name %>&nbsp;
 	</dd>
 	<dt>
-		<label> Operating party </label>
+		<label> <%=t('invoice_line_preset.fields.operating_party')%> </label>
 	</dt>
 	<dd>
 		<%=link_to @invoice_line_preset.operating_party_name, operating_party_path(@invoice_line_preset.operating_party) %>&nbsp;
 	</dd>
 	<dt>
-		<label> Official fee type </label>
+		<label> <%=t('invoice_line_preset.fields.official_fee_type')%> </label>
 	</dt>
 	<dd>
 		<%= @invoice_line_preset.official_fee_name %>&nbsp;
 	</dd>	
 	<dt>
-		<label> Official fee </label>
+		<label> <%=t('invoice_line_preset.fields.official_fee')%> </label>
 	</dt>
 	<dd>
 		<%= @invoice_line_preset.official_fee %>&nbsp;
 	</dd>	
 	<dt>
-		<label> Official fee type </label>
+		<label> <%=t('invoice_line_preset.fields.attorney_fee_type')%> </label>
 	</dt>
 	<dd>
 		<%= @invoice_line_preset.attorney_fee_name %>&nbsp;
 	</dd>	
 	<dt>
-		<label> Official fee </label>
+		<label> <%=t('invoice_line_preset.fields.attorney_fee')%> </label>
 	</dt>
 	<dd>
 		<%= @invoice_line_preset.attorney_fee %>&nbsp;

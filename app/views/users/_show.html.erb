@@ -45,8 +45,7 @@
 		<label> Active </label>
 	</dt>
 	<dd>
-		<%= (@user.active)? 'Yes' : 'No' %>&nbsp;
-		<%= link_to "#{(@user.active)? 'de' : ''}activate".capitalize, activate_user_path(@user), :method => :post %>
+		<%= (@user.active)? 'Yes' : 'No' %>&nbsp;		
 	</dd>
 	<dt>
 		<label> Blocked </label>

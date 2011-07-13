@@ -1,11 +1,11 @@
 <%= fields.hidden_field :id %>
 <ul>
 	<li>
-		<%= fields.label :type %>
+		<%= fields.label :type, t('contact.fields.type') %>
 		<%= fields.select :contact_type_id, ContactType.all.collect { |tt| [tt.name, tt.id] } %>
 	</li>	
 	<li>
-		<%= fields.label :contact_value %>
+		<%= fields.label :contact_value, t('contact.fields.value') %>
 		<%= fields.text_field :contact_value %>
 	</li>
 </ul>

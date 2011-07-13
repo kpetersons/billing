@@ -2,12 +2,12 @@
 	<thead>
 		<tr>
 			<th class="col-radio"></th>
-			<th class="col-text">Preset name</th>			
-			<th class="col-text">Operating party</th>
-			<th class="col-text">Official fee name</th>
-			<th class="col-number">Official fee</th>			
-			<th class="col-text">Attorneys fee name</th>
-			<th class="col-number">Attorneys fee</th>
+			<th class="col-text"><%=t('invoice_line_preset.fields.name')%></th>			
+			<th class="col-text"><%=t('invoice_line_preset.fields.operating_party')%></th>
+			<th class="col-text"><%=t('invoice_line_preset.fields.official_fee_type')%></th>
+			<th class="col-number"><%=t('invoice_line_preset.fields.official_fee')%></th>			
+			<th class="col-text"><%=t('invoice_line_preset.fields.attorney_fee_type')%></th>
+			<th class="col-number"><%=t('invoice_line_preset.fields.attorney_fee_type')%></th>
 			<th class="col-number"></th>
 		</tr>
 	</thead>
@@ -27,7 +27,7 @@
 			<td class="col-text"><%= invoice_line_preset.attorney_fee_name%></td>
 			<td class="col-number"><%= invoice_line_preset.attorney_fee%></td>			
 			<td class="col-number"> 
-				<%=link_to 'Show', invoice_line_preset %> 
+				<%=link_to t('button.show'), invoice_line_preset %> 
 			</td>
 		</tr>
 		<%end%>

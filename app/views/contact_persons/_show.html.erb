@@ -1,36 +1,36 @@
 <dl class="panel-content">
 	<dt>
-		<label> Contact for </label>
+		<label> <%=t("contact_person.fields.contact_for")%> </label>
 	</dt>
 	<dd>
 		<%= link_to @customer.name, @customer %>&nbsp;
 	</dd>	
 	<dt>
-		<label> First name </label>
+		<label><%=t("individual.fields.first_name")%> </label>
 	</dt>
 	<dd>
 		<%= @contact_person.first_name%>&nbsp;
 	</dd>
 	<dt>
-		<label> Middle name </label>
+		<label><%=t("individual.fields.middle_name")%></label>
 	</dt>
 	<dd>
 		<%= @contact_person.middle_name%>&nbsp;
 	</dd>
 	<dt>
-		<label> Last name </label>
+		<label><%=t("individual.fields.last_name")%></label>
 	</dt>
 	<dd>
 		<%= @contact_person.last_name%>&nbsp;
 	</dd>
 	<dt>
-		<label> Gender </label>
+		<label><%=t("individual.fields.gender")%></label>
 	</dt>
 	<dd>
 		<%= @contact_person.gender_name%>&nbsp;
 	</dd>
 	<dt>
-		<label> Birth date </label>
+		<label><%=t("individual.fields.birth_date")%></label>
 	</dt>
 	<dd>
 		<%= @contact_person.birth_date%>&nbsp;

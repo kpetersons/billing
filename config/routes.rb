@@ -89,7 +89,7 @@ Billing::Application.routes.draw do
     resources :addresses
     resources :contacts
     member do
-      post :activate
+      get :activate
       post :block
     end
     resources :roles, :only => [:choose, :add, :remove] do

@@ -58,11 +58,12 @@ class User < ActiveRecord::Base
             :length       => {:maximum => 255}
   validates :password, :presence => true,
             :confirmation        => true,
-            :length              => {:within => 6..40}, :on => :create
+            :length              => {:within => 6..40}, :if => Proc.new{ |user| user.active == true }
   validates :operating_party_id, :presence => true
   validates :initials, :presence => true
   #
   before_save :encrypt_password
+  before_create :generate_activation_key
   #
   def has_password?(submitted_password)  
     encrypted_password == encrypt(submitted_password)
@@ -117,5 +118,9 @@ class User < ActiveRecord::Base
   def secure_hash(string)
     Digest::SHA2.hexdigest(string)
   end  
+
+  def generate_activation_key     
+    self.activation_key = UUIDTools::UUID.random_create.to_s    
+  end
   
 end

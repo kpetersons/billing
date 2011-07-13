@@ -2,8 +2,8 @@
 	<thead>
 		<tr>
 			<th class="col-radio"></th>
-			<th class="col-text">Code</th>
-			<th class="col-text">Name</th>			
+			<th class="col-text"><%= t('currency.fields.code')%></th>
+			<th class="col-text"><%= t('currency.fields.name')%></th>			
 			<th class="col-number"></th>
 		</tr>
 	</thead>
@@ -22,7 +22,7 @@
 				<td class="col-text"><%=currency.code%></td>
 				<td class="col-text"><%=currency.name%></td>							
 				<td class="col-number">
-					<%=link_to 'Show', currency_path(currency) %> 
+					<%=link_to t('button.show'), currency_path(currency) %> 
 				</td>
 			</tr>
 		<%end%>

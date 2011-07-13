@@ -2,8 +2,8 @@
 	<thead>
 		<tr>
 			<th class="col-radio"></th>	
-			<th class="col-text">Name</th>
-			<th class="col-text">Description</th>
+			<th class="col-text"><%= t('function.fields.name')%></th>
+			<th class="col-text"><%= t('function.fields.description')%></th>
 			<th></th>
 		</tr>
 	</thead>
@@ -25,7 +25,7 @@
 			<td class="col-text"><%= function.name %></td>
 			<td class="col-text"><%= function.description %></td>
 			<td class="col-number">
-				<%= link_to "Show", function_path(function)%>
+				<%= link_to t('button.show'), function_path(function)%>
 			</td>
 		</tr>
 		<% end %>

@@ -1,9 +1,9 @@
 <div class="panel">
 	<div class="panel-header">
-		<strong>Attorney fee type list</strong>
-	</div>		
+		<strong><%= t("attorney_fee_type.list")%></strong>
+	</div>
 	<%= render :partial => "index", :locals => {:attorney_fee_types => @attorney_fee_types, :param_name => "attorney_fee_types"} %>
 	<div class="panel-footer controls">
-		<%= link_to "New attorney fee type", new_attorney_fee_type_path %>
-	</div>		
+		<%= link_to t("button.new"), new_attorney_fee_type_path %>
+	</div>
 </div>

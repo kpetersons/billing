@@ -1,10 +1,10 @@
 <div class="panel">
 	<div class="panel-header">
-		<strong>Address information</strong>
+		<strong><%=t("address.show")%></strong>
 	</div>
 	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
 	<%= render :partial => "show" %>
 	<div class="show controls">
-		<%= link_to 'Edit', {:action => 'edit'} %>
+		<%= link_to t("button.edit"), {:action => 'edit'} %>
 	</div>
 </div>

@@ -1,12 +1,12 @@
 <div class="panel">
 	<div class="panel-header">
-		<strong>Function information</strong>
+		<strong><%= t('function.show')%></strong>
 	</div>
 	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
 	<dl class="panel-content">
 		<dt>
 			<label>
-				Name
+				<%= t('function.fields.name')%>
 			</label>
 		</dt>
 		<dd>
@@ -14,7 +14,7 @@
 		</dd>		
 		<dt>
 			<label>
-				Description
+				<%= t('function.fields.description')%>
 			</label>
 		</dt>
 		<dd>

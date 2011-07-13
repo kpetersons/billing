@@ -178,3 +178,8 @@ input[type="submit"], button, .panel-footer a {
 	clear:both;
 	display:block;
 }
+
+span.translation_missing {
+	color:red;
+	font-weight:bold;
+}

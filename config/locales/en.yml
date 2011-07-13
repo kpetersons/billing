@@ -4,15 +4,32 @@ en:
     matters: "Matters"
     invoices: "Invoices"    
     customers: "Customers"    
-    settings: "Settings"
-    administration: "Administration"    
+    profile: "Profile"
+    administration: "Administration"
+  button:
+    edit: "Edit"
+    save: "Save"
+    show: "Show"
+    create: "Create"
+  address:
+    fields:
+      type: "Type"
+      country: "Country"
+      line_1: "Address line 1"
+      line_2: "Address line 2"
+      line_3: "Address line 3"
+      line_4: "Address line 4"
+  attorney_fee_type:
+    fields:
+      name: "Name"
+      description: "Description"
   new:
     matter:
       trademark: "New trademark matter"
       patent:    "New patent matter"
       legal:    "New legal matter"    
       design:    "New design matter"
-      custom:    "New custom matter"
+      custom:    "New custom matter"            
   matter:
     trademark: "trademark matter"
     patent:    "patent matter"
