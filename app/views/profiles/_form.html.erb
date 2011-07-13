@@ -1,0 +1,17 @@
+<%=form_for @user, :url => change_password_profile_path do |p_f| %>
+	<ul>
+		<li>
+			<%= p_f.label :password, t('user.fields.password_current') %>
+			<%= p_f.password_field :password_current %>
+		</li>	
+		<li>
+			<%= p_f.label :password, t('user.fields.password') %>
+			<%= p_f.password_field :password %>
+		</li>	
+		<li>
+			<%= p_f.label :password_confirmation, t('user.fields.password_confirmation') %>
+			<%= p_f.password_field :password_confirmation %>
+		</li>
+	</ul>
+	<%= render :partial => "shared/ui/form-submit-controls_name", 	:locals => {:name => t('button.change'), :fields 	=> p_f}%>
+<%end%>

@@ -601,49 +601,85 @@ MatterTaskStatusFlow.transaction do
   :pass_to_step_id   => awaiting_response.id, 
   :start_state => true,
   :pass_to_function_id => Function.find_by_name("funct.set.to.await.response.matter.task").id,
-  :revert_to_function_id => nil) 
+  :revert_to_function_id => nil) unless !MatterTaskStatusFlow.where(
+                                          :revert_to_step_id => nil,
+                                          :current_step_id   => open.id,
+                                          :pass_to_step_id   => awaiting_response.id, 
+                                          :start_state => true,
+                                          :pass_to_function_id => Function.find_by_name("funct.set.to.await.response.matter.task").id,
+                                          :revert_to_function_id => nil).first.nil?
   #2
   MatterTaskStatusFlow.create(
   :revert_to_step_id => nil,
   :current_step_id   => open.id,
   :pass_to_step_id   => canceled.id,
   :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matter.task").id,
-  :revert_to_function_id => nil)
+  :revert_to_function_id => nil) unless !MatterTaskStatusFlow.where(
+                                          :revert_to_step_id => nil,
+                                          :current_step_id   => open.id,
+                                          :pass_to_step_id   => canceled.id,
+                                          :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matter.task").id,
+                                          :revert_to_function_id => nil).first.nil?
   #3
   MatterTaskStatusFlow.create(
   :revert_to_step_id => open.id,
   :current_step_id   => awaiting_response.id,
   :pass_to_step_id   => done.id,
   :pass_to_function_id => Function.find_by_name("funct.set.to.done.matter.task").id,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id)
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id) unless !MatterTaskStatusFlow.where(
+  :revert_to_step_id => open.id,
+  :current_step_id   => awaiting_response.id,
+  :pass_to_step_id   => done.id,
+  :pass_to_function_id => Function.find_by_name("funct.set.to.done.matter.task").id,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id).first.nil?
   #4
   MatterTaskStatusFlow.create(
   :revert_to_step_id => open.id,
   :current_step_id   => canceled.id,
   :pass_to_step_id   => nil,
   :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id)
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id) unless !MatterTaskStatusFlow.where(
+  :revert_to_step_id => open.id,
+  :current_step_id   => canceled.id,
+  :pass_to_step_id   => nil,
+  :pass_to_function_id => nil,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id).first.nil?
   #5
   MatterTaskStatusFlow.create(
   :revert_to_step_id => open.id,
   :current_step_id   => awaiting_response.id,
   :pass_to_step_id   => canceled.id,
   :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matter.task").id,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id)
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id) unless !MatterTaskStatusFlow.where(
+  :revert_to_step_id => open.id,
+  :current_step_id   => awaiting_response.id,
+  :pass_to_step_id   => canceled.id,
+  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matter.task").id,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id).first.nil?
   #6
   MatterTaskStatusFlow.create(
   :revert_to_step_id => awaiting_response.id,
   :current_step_id   => done.id,
   :pass_to_step_id   => nil,
   :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task"))
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task")) unless !MatterTaskStatusFlow.where(
+  :revert_to_step_id => awaiting_response.id,
+  :current_step_id   => done.id,
+  :pass_to_step_id   => nil,
+  :pass_to_function_id => nil,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task")).first.nil?
   #7
   MatterTaskStatusFlow.create(
   :revert_to_step_id => awaiting_response.id,
   :current_step_id   => canceled.id,
   :pass_to_step_id   => nil,
   :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task"))
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task")) unless !MatterTaskStatusFlow.where(
+  :revert_to_step_id => awaiting_response.id,
+  :current_step_id   => canceled.id,
+  :pass_to_step_id   => nil,
+  :pass_to_function_id => nil,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task")).first.nil?
 end
 
 

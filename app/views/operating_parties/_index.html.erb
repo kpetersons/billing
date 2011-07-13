@@ -19,9 +19,9 @@
 		<% operating_parties.each do |oparating_party| %>
 		<tr>
 			<td></td>
-			<td class="col-text"><%= oparating_party.name %></td>
+			<td class="col-text"><%= t(oparating_party.name) %></td>
 			<td class="col-text"><%= oparating_party.registration_number%></td>
-			<td class="col-text"><%= oparating_party.parent_name%></td>
+			<td class="col-text"><%= t(oparating_party.parent_name) unless oparating_party.parent_name.nil? %></td>
 			<td class="col-number"><%= link_to "Show", operating_party_path(oparating_party, :anchor => 'addresses')%></td>
 		</tr>
 		<% end %>

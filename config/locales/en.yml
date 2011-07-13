@@ -1,4 +1,11 @@
 en:
+  party:
+    operating:
+      petpat: "Pētersona patents"
+      administration: "Administrācija"
+      trademark: "Preču zīmju nodaļa"
+      patent: "Patentu nodaļa"
+      legal:  "Juridiskā nodaļa"
   menu:
     dashboard: "Dashboard"
     matters: "Matters"
@@ -6,11 +13,13 @@ en:
     customers: "Customers"    
     profile: "Profile"
     administration: "Administration"
+    change_password: "Change password"
   button:
     edit: "Edit"
     save: "Save"
     show: "Show"
     create: "Create"
+    change: "Change"
   address:
     fields:
       type: "Type"
@@ -54,19 +63,35 @@ en:
         canceled: "Canceled"
         pass_canceled: "Cancel"  
   list:
-    matters: "List matters"
+    matters: "List matters"     
   error:
+    matter:    
+      link_exists: "Matters already linked"    
+      link: "Could not link matters. Check if you actualy chose a matter!"
     invalid:
       matter:
         type: "Invalid matter type"
   success:
+    matter:
+      link: "Matters linked."
     new:
       matter:
         type: "Creating %{matter_type}"
   user:
+    fields:
+      password_current: "Current password"
+      password: "Password"
+      password_confirmation: "Confirm password"
+    password:
+      change: "Change password"
     success:
+      password:
+        changed: "Password successfully changed."
       profile:
         changed: "Profile successfully updated."        
     error:
+      password:
+        change: "Could not change password"
+        incorrect: "Invalid current password!"
       profile:
-        changed: "Could not update profile."
+        change: "Could not update profile."

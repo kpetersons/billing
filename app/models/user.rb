@@ -50,6 +50,7 @@ class User < ActiveRecord::Base
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   #
   attr_accessor :password
+  attr_protected :password_current
   attr_accessible :email, :password, :password_confirmation, :active, :blocked, :individual_id, :registration_date, :activation_key, :operating_party_id, :initials
   #
   validates :email, :presence => true,
@@ -98,6 +99,14 @@ class User < ActiveRecord::Base
     operating_party.matter_types unless operating_party.matter_types.nil?
   end    
   
+  def password_current
+    @password_current
+  end
+  
+  def password_current= value
+    @password_current = value
+  end  
+
   private
 
   def encrypt_password

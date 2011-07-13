@@ -21,7 +21,7 @@
 		</li>
 		<li>
 			<%= piu_f.label :operating_party_id %>
-			<%= piu_f.select :operating_party_id, OperatingParty.all.collect { |tt| [tt.name, tt.id] } %>
+			<%= piu_f.select :operating_party_id, OperatingParty.all.collect { |tt| [t(tt.name), tt.id] } %>
 		</li>
 		<%end%>
 		<%end%>

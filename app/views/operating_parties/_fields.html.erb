@@ -5,7 +5,7 @@
 		<%= comp_f.fields_for :operating_party do |op_f| %>
 		<li>
 			<%= op_f.label :operating_party_id, :included_in %>
-			<%= op_f.select :operating_party_id, OperatingParty.all.collect { |tt| [tt.name, tt.id] }, 
+			<%= op_f.select :operating_party_id, OperatingParty.all.collect { |tt| [t(tt.name), tt.id] }, 
 			 {:include_blank => true},{:class => 'wide'} %>
 		</li>
 		<% end %>		

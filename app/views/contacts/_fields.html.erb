@@ -2,7 +2,7 @@
 <ul>
 	<li>
 		<%= fields.label :type, t('contact.fields.type') %>
-		<%= fields.select :contact_type_id, ContactType.all.collect { |tt| [tt.name, tt.id] } %>
+		<%= fields.select :contact_type_id, ContactType.all.collect { |tt| [t(tt.name), tt.id] } %>
 	</li>	
 	<li>
 		<%= fields.label :contact_value, t('contact.fields.value') %>

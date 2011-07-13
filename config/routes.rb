@@ -1,9 +1,7 @@
 Billing::Application.routes.draw do
 
-  resource :profile, :only => [:show, :edit, :show_password, :change_password] do
+  resource :profile, :except => [:new, :delete] do
     member do
-      get :show
-      put :edit
       get :show_password
       put :change_password
     end        

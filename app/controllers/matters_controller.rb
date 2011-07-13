@@ -108,15 +108,16 @@ class MattersController < ApplicationController
 #    puts split_to_arry :value => params[:linked_matter][:linked_matter_registration_number]
     Matter.transaction do
       @matter = Matter.find(params[:id])
-      if @matter.linked_matters.exists?(:linked_matter_id => params[:linked_matter][:linked_matter_id]) || @matter.linked_matters.exists?(:matter_id => params[:linked_matter][:linked_matter_id])
-        flash[:warning] = "error.matter.link.exists"
+      link_to = params[:linked_matter][:linked_matter_id]
+      if @matter.linked_matters.exists?(:linked_matter_id => link_to) || @matter.linked_matters.exists?(:matter_id => link_to)
+        flash[:warning] = t("error.matter.link_exists")
         redirect_to @matter and return
       end
       if @matter.linked_matters<<LinkedMatter.new(params[:linked_matter])
-        flash[:success] = "success.matter.link"
+        flash[:success] = t("success.matter.link")
         redirect_to @matter and return
       end
-      flash[:error] = "error.matter.link"
+      flash[:error] = t("error.matter.link")
       redirect_to @matter and return
     end
   end
