@@ -89,9 +89,9 @@ en:
         changed: "Password successfully changed."
       profile:
         changed: "Profile successfully updated."        
-    error:
+    error:      
       password:
         change: "Could not change password"
         incorrect: "Invalid current password!"
       profile:
-        change: "Could not update profile."
+        change: "Could not update profile because errors occured"

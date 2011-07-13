@@ -4,7 +4,7 @@
 	</div>
 	<%= render :partial => "shared/flash", 	:locals => {:flash 	=> flash}%>
 	<%= render :partial => "shared/error", 	:locals => {:obj 	=> @party}%>
-	<%=form_for @party, :url => edit_profile_path do |p_f| %>
+	<%=form_for @party, :url => profile_path do |p_f| %>
 	<ul>
 		<%= render :partial => "/shared/party/fields", :locals => {:fields => p_f} %>
 		<%= p_f.fields_for :individual do |pi_f| %>

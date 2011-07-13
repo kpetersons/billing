@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   #
   attr_accessor :password
-  attr_protected :password_current
+  attr_protected :password_current, :change_pwd
   attr_accessible :email, :password, :password_confirmation, :active, :blocked, :individual_id, :registration_date, :activation_key, :operating_party_id, :initials
   #
   validates :email, :presence => true,
@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
             :length       => {:maximum => 255}
   validates :password, :presence => true,
             :confirmation        => true,
-            :length              => {:within => 6..40}, :if => Proc.new{ |user| user.active == true }
+            :length              => {:within => 6..40}, :if => Proc.new{ |user| user.change_pwd }
   validates :operating_party_id, :presence => true
   validates :initials, :presence => true
   #
@@ -106,6 +106,14 @@ class User < ActiveRecord::Base
   def password_current= value
     @password_current = value
   end  
+
+  def change_pwd
+    @change_pwd
+  end
+
+  def change_pwd= value
+    @change_pwd = value
+  end
 
   private
 
