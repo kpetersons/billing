@@ -16,11 +16,10 @@ class Patent < ActiveRecord::Base
   private
   def generate_registration_number
     Document.transaction do
-      @reg_nr = "P#{id}"
       unless matter.document.parent_document.nil?
-        @reg_nr = "#{matter.document.parent_document.registration_number}/#{@reg_nr}"
+        @reg_nr = "P#{id}"
+        matter.document.update_attribute(:registration_number, @reg_nr)        
       end
-      matter.document.update_attribute(:registration_number, @reg_nr)
     end
   end  
 end
