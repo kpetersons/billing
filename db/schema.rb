@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110714182652) do
+ActiveRecord::Schema.define(:version => 20110714201124) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -90,12 +90,21 @@ ActiveRecord::Schema.define(:version => 20110714182652) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "matter_id"
+    t.date     "date_of_order_alert"
+    t.date     "ca_application_date"
+    t.string   "ca_application_number"
+    t.integer  "client_all_ip"
   end
 
   create_table "designs", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "matter_id"
+    t.string   "application_number"
+    t.date     "application_date"
+    t.string   "design_number"
+    t.string   "rdc_appl_number"
+    t.string   "rdc_number"
   end
 
   create_table "document_tags", :force => true do |t|
@@ -218,6 +227,12 @@ ActiveRecord::Schema.define(:version => 20110714182652) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "matter_id"
+    t.string   "opposed_marks"
+    t.integer  "type"
+    t.string   "instance"
+    t.integer  "opposite_party"
+    t.integer  "opposite_party_agent"
+    t.date     "date_of_closure"
   end
 
   create_table "linked_matters", :force => true do |t|
@@ -360,6 +375,12 @@ ActiveRecord::Schema.define(:version => 20110714182652) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "matter_id"
+    t.string   "application_number"
+    t.date     "application_date"
+    t.string   "patent_number"
+    t.date     "patent_grant_date"
+    t.string   "ep_appl_number"
+    t.string   "ep_number"
   end
 
   create_table "relationship_types", :force => true do |t|
@@ -411,6 +432,17 @@ ActiveRecord::Schema.define(:version => 20110714182652) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "matter_id"
+    t.date     "appl_date"
+    t.string   "appl_number"
+    t.string   "notes"
+    t.string   "mark_name"
+    t.string   "cfe_index"
+    t.date     "application_date"
+    t.string   "application_number"
+    t.date     "priority_date"
+    t.string   "ctm_number"
+    t.string   "wipo_number"
+    t.string   "reg_number"
   end
 
   create_table "user_roles", :force => true do |t|
