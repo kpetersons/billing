@@ -1,3 +1,35 @@
 <li>
-	<%=fields.hidden_field :matter_id %>
+	<%= fields.hidden_field :matter_id %>
+</li>
+<li>
+	<%= fields.label :mark_name %>
+	<%= fields.text_field :mark_name %>
+</li>
+<li>
+	<%= fields.label :appl_date %>
+	<%= fields.text_field :appl_date, :class => 'field-date' %>
+</li>
+<li>
+	<%= fields.label :appl_number %>
+	<%= fields.text_field :appl_number %>
+</li>
+<li>
+	<%= fields.label :priority_date %>
+	<%= fields.text_field :priority_date %>
+</li>
+<li>
+	<%= fields.label :cfe_index%>
+	<%= fields.text_field :cfe_index %>
+</li>
+<li>
+	<%= fields.label :CTM_number %>
+	<%= fields.text_field :ctm_number %>
+</li>
+<li>
+	<%= fields.label :WIPO_number %>
+	<%= fields.text_field :wipo_number %>
+</li>
+<li>
+	<%= fields.label :reg_number %>
+	<%= fields.text_field :reg_number %>
 </li>

@@ -38,8 +38,8 @@ end
   ["funct.create.matter.design", true],
   ["funct.create.matter.custom", true],  
   ["funct.create.matter.task", true],
-  ["funct.create.matter.trademark.search", true],
-  ["funct.create.matter.patent.search", true],  
+  ["funct.create.matter.trademark_search", true],
+  ["funct.create.matter.patent_search", true],  
   ["funct.create.matter.domain", true],  
   ["funct.set.to.open.matter.task", true],
   ["funct.set.to.await.response.matter.task", true],
@@ -218,7 +218,7 @@ Currency.transaction do
 end
 
 MatterType.transaction do
-  matter_types = ["matter.trademark", "matter.patent", "matter.legal", "matter.design", "matter.custom", "matter.patent.search", "matter.trademark.search", "matter.domain"]
+  matter_types = ["matter.trademark", "matter.patent", "matter.legal", "matter.design", "matter.custom", "matter.patent_search", "matter.trademark_search", "matter.domain"]
   matter_types.each  do |matter_type|
     MatterType.create(
     :name => matter_type, 
@@ -247,10 +247,10 @@ OperatingPartyMatterType.transaction do
   :matter_type_id => MatterType.find_by_name("matter.custom").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.patent.search").id,
+  :matter_type_id => MatterType.find_by_name("matter.patent_search").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.trademark.search").id,
+  :matter_type_id => MatterType.find_by_name("matter.trademark_search").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.domain").id,
@@ -569,6 +569,36 @@ User.transaction do
   end
 end
 
+InvoiceStatus.transaction do
+  prefix = "invoice.status."  
+  invoice_statuses = [
+    ["re_open",            "open",              "pass_open"],
+    ["re_approved",           "approved",           "pass_approved"],
+    ["re_issued",              "issued",              "pass_issued"],
+    ["re_canceled",          "canceled",          "pass_canceled"],
+    ["re_awaiting",              "awaiting",              "pass_awaiting"],
+    ["re_paid",              "paid",              "pass_paid"]]
+  invoice_statuses.each do |name|
+    unless InvoiceStatus.find_by_name(name[0])
+      InvoiceStatus.create(:revert_to_name => "#{prefix}#{name[0]}", :name => "#{prefix}#{name[1]}", :pass_to_name => "#{prefix}#{name[2]}")
+    end
+  end  
+end
+
+MatterStatus.transaction do
+  prefix = "matter.status."  
+  matter_statuses = [
+    ["re_active",            "active",              "pass_active"],
+    ["re_pending",           "pending",           "pass_pending"],
+    ["re_done",              "closed",              "pass_closed"],
+    ["re_appealed",          "appealed",          "pass_appealed"]]
+  matter_statuses.each do |name|
+    unless MatterStatus.find_by_name(name[0])
+      MatterStatus.create(:revert_to_name => "#{prefix}#{name[0]}", :name => "#{prefix}#{name[1]}", :pass_to_name => "#{prefix}#{name[2]}")
+    end
+  end  
+end
+
 
 MatterTaskStatus.transaction do
   prefix = "matter.task.status."  
@@ -590,8 +620,6 @@ MatterTaskStatusFlow.transaction do
   awaiting_response = MatterTaskStatus.find_by_name("#{prefix}awaiting_response")
   done =              MatterTaskStatus.find_by_name("#{prefix}done")
   canceled =          MatterTaskStatus.find_by_name("#{prefix}canceled")
-
-  MatterTaskStatusFlow.delete_all
 
   # 1 * <->                 Open <->              Awaiting response  start state
   # 2 * <->                 Open <->              Canceled

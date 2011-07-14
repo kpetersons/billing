@@ -49,6 +49,9 @@ en:
       legal:    "New legal matter"    
       design:    "New design matter"
       custom:    "New custom matter"            
+      domain:    "New domain matter"
+      trademark_search:   "New trademark search matter"      
+      patent_search:   "New patent search matter"                     
   matter:
     trademark: "trademark matter"
     patent:    "patent matter"

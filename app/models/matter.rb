@@ -19,6 +19,7 @@
 #  author_id          :integer(4)
 #  matter_type_id     :integer(4)
 #  operating_party_id :integer(4)
+#  status_id          :integer(4)
 #
 
 class Matter < ActiveRecord::Base
@@ -31,6 +32,7 @@ class Matter < ActiveRecord::Base
   belongs_to  :author, :class_name => "User", :foreign_key => :author_id
   belongs_to  :matter_type
   belongs_to  :operating_party
+  belongs_to  :matter_status
   has_many    :matter_tasks
   has_many    :matter_clazzs
   has_many    :clazzs, :through => :matter_clazzs

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110714201124) do
+ActiveRecord::Schema.define(:version => 20110714210209) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -199,6 +199,14 @@ ActiveRecord::Schema.define(:version => 20110714201124) do
     t.datetime "updated_at"
   end
 
+  create_table "invoice_statuses", :force => true do |t|
+    t.string   "name"
+    t.string   "revert_to_name"
+    t.string   "pass_to_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invoices", :force => true do |t|
     t.integer  "document_id"
     t.integer  "customer_id"
@@ -221,6 +229,12 @@ ActiveRecord::Schema.define(:version => 20110714201124) do
     t.string   "ending_details",    :limit => 2000
     t.integer  "payment_term",      :limit => 1
     t.boolean  "apply_vat"
+    t.integer  "invoice_status_id"
+  end
+
+  create_table "legal_types", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "legals", :force => true do |t|

@@ -33,7 +33,8 @@ class Invoice < ActiveRecord::Base
   belongs_to :address
   belongs_to :individual
   belongs_to :currency
-  belongs_to  :author, :class_name => "User", :foreign_key => :author_id  
+  belongs_to  :author, :class_name => "User", :foreign_key => :author_id
+  belongs_to :invoice_status  
   has_many   :invoice_lines
   has_many   :invoice_matters
   has_many   :matters, :through => :invoice_matters
