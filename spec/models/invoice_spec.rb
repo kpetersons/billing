@@ -20,6 +20,10 @@
 #  updated_at        :datetime
 #  author_id         :integer(4)
 #  exchange_rate     :decimal(7, 4)
+#  subject           :string(2000)
+#  ending_details    :string(2000)
+#  payment_term      :integer(1)
+#  apply_vat         :boolean(1)
 #
 
 require 'spec_helper'

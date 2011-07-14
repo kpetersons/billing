@@ -20,6 +20,10 @@
 #  updated_at        :datetime
 #  author_id         :integer(4)
 #  exchange_rate     :decimal(7, 4)
+#  subject           :string(2000)
+#  ending_details    :string(2000)
+#  payment_term      :integer(1)
+#  apply_vat         :boolean(1)
 #
 
 class Invoice < ActiveRecord::Base
@@ -112,7 +116,7 @@ class Invoice < ActiveRecord::Base
 
   def generate_registration_number
     Document.transaction do
-      @reg_nr = "#{author.initials}/#{id}"
+      @reg_nr = "#{id}"
       document.update_attribute(:registration_number, @reg_nr)
     end    
   end  

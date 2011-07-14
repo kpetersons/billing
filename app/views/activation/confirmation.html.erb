@@ -1,0 +1,11 @@
+<div class="panel" style="width:29em; margin:20% auto">
+	<div class="panel-header">
+		<strong><%= t('user.success.activate')%></strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<div class="panel-content">		
+		<h4 style="font-weight:normal;">
+			Your account has been activated follow this link to <%=link_to t('application.login'), '/' %>.
+		</h4>
+	</div>
+</div>

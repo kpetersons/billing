@@ -38,6 +38,9 @@ end
   ["funct.create.matter.design", true],
   ["funct.create.matter.custom", true],  
   ["funct.create.matter.task", true],
+  ["funct.create.matter.trademark.search", true],
+  ["funct.create.matter.patent.search", true],  
+  ["funct.create.matter.domain", true],  
   ["funct.set.to.open.matter.task", true],
   ["funct.set.to.await.response.matter.task", true],
   ["funct.set.to.cancel.matter.task", true],
@@ -215,7 +218,7 @@ Currency.transaction do
 end
 
 MatterType.transaction do
-  matter_types = ["matter.trademark", "matter.patent", "matter.legal", "matter.design", "matter.custom"]
+  matter_types = ["matter.trademark", "matter.patent", "matter.legal", "matter.design", "matter.custom", "matter.patent.search", "matter.trademark.search", "matter.domain"]
   matter_types.each  do |matter_type|
     MatterType.create(
     :name => matter_type, 
@@ -242,6 +245,15 @@ OperatingPartyMatterType.transaction do
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
   :matter_type_id => MatterType.find_by_name("matter.custom").id,
+  :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.patent.search").id,
+  :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.trademark.search").id,
+  :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
+  OperatingPartyMatterType.create(
+  :matter_type_id => MatterType.find_by_name("matter.domain").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   #
   OperatingPartyMatterType.create(

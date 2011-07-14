@@ -1,0 +1,16 @@
+<%= form_for @user, :url => activate_account_path do |f| %>
+	<ul>
+		<li>
+			<%= f.hidden_field :id %>
+			<%= f.label :password, t('user.fields.password') %>
+			<%= f.password_field :password %>
+		</li>
+		<li>
+			<%= f.label :password_confirmation, t('user.fields.password_confirmation') %>
+			<%= f.password_field :password_confirmation  %>
+		</li>
+	</ul>
+	<div class="panel-footer controls" style="float:none;">
+		<%= f.submit t('button.confirm'), :style => 'float:none; width:auto;' %>
+	</div>	
+<% end %>

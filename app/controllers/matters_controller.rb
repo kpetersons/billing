@@ -114,7 +114,7 @@ class MattersController < ApplicationController
         redirect_to @matter and return
       end
       if @matter.linked_matters<<LinkedMatter.new(params[:linked_matter])
-        flash[:success] = t("success.matter.link")
+        flash[:success] = t("matter.link.success")
         redirect_to @matter and return
       end
       flash[:error] = t("error.matter.link")

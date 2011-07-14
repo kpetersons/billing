@@ -57,3 +57,7 @@ form select.wide {
 }
 
 form label+div.value {color:#000000; line-height:1.4em;}
+
+.center-form input {
+	width: 12em;
+}

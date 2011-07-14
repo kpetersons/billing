@@ -1,4 +1,13 @@
 en:
+  bool:
+      t:   "Yes"
+      f:  "No"    
+  basic:
+    yes: "Yes"
+    no: "No"  
+  application:
+    name: "PetPat billing"
+    login: "login"
   party:
     operating:
       petpat: "Pētersona patents"
@@ -20,6 +29,7 @@ en:
     show: "Show"
     create: "Create"
     change: "Change"
+    confirm: "Confirm"
   address:
     fields:
       type: "Type"
@@ -44,7 +54,9 @@ en:
     patent:    "patent matter"
     design:    "design matter"
     legal:      "legal matter"
-    custom:     "custom matter"    
+    custom:     "custom matter"
+    link:
+      success: "Matters successfully linked."    
     task:
       status:
         change:
@@ -78,6 +90,7 @@ en:
       matter:
         type: "Creating %{matter_type}"
   user:
+    activate: "User account activation"
     fields:
       password_current: "Current password"
       password: "Password"
@@ -85,13 +98,16 @@ en:
     password:
       change: "Change password"
     success:
+      activate: "Account activated"
       password:
+        set: "Password successfully set."
         changed: "Password successfully changed."
       profile:
         changed: "Profile successfully updated."        
     error:      
       password:
-        change: "Could not change password"
+        set: "Could not set password!"
+        change: "Could not change password!"
         incorrect: "Invalid current password!"
       profile:
         change: "Could not update profile because errors occured"

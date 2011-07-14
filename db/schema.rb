@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110712131816) do
+ActiveRecord::Schema.define(:version => 20110714182652) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -114,6 +114,14 @@ ActiveRecord::Schema.define(:version => 20110712131816) do
     t.integer  "parent_id"
   end
 
+  create_table "domains", :force => true do |t|
+    t.integer  "matter_id"
+    t.string   "domain_name"
+    t.date     "registration_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "exchange_rates", :force => true do |t|
     t.integer  "currency_id"
     t.decimal  "rate",         :precision => 8, :scale => 3
@@ -167,10 +175,11 @@ ActiveRecord::Schema.define(:version => 20110712131816) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "attorney_fee_type_id"
-    t.decimal  "official_fee",         :precision => 8, :scale => 2
-    t.decimal  "attorney_fee",         :precision => 8, :scale => 2
+    t.decimal  "official_fee",                      :precision => 8, :scale => 2
+    t.decimal  "attorney_fee",                      :precision => 8, :scale => 2
     t.integer  "author_id"
     t.string   "offering"
+    t.integer  "units",                :limit => 1
   end
 
   create_table "invoice_matters", :force => true do |t|
@@ -198,7 +207,11 @@ ActiveRecord::Schema.define(:version => 20110712131816) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "author_id"
-    t.decimal  "exchange_rate",     :precision => 7, :scale => 4
+    t.decimal  "exchange_rate",                     :precision => 7, :scale => 4
+    t.string   "subject",           :limit => 2000
+    t.string   "ending_details",    :limit => 2000
+    t.integer  "payment_term",      :limit => 1
+    t.boolean  "apply_vat"
   end
 
   create_table "legals", :force => true do |t|
@@ -227,6 +240,14 @@ ActiveRecord::Schema.define(:version => 20110712131816) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "matter_statuses", :force => true do |t|
+    t.string   "name"
+    t.string   "revert_to_name"
+    t.string   "pass_to_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -286,6 +307,7 @@ ActiveRecord::Schema.define(:version => 20110712131816) do
     t.integer  "author_id"
     t.integer  "matter_type_id"
     t.integer  "operating_party_id"
+    t.integer  "status_id"
   end
 
   create_table "official_fee_types", :force => true do |t|
@@ -324,6 +346,16 @@ ActiveRecord::Schema.define(:version => 20110712131816) do
     t.datetime "updated_at"
   end
 
+  create_table "patent_searches", :force => true do |t|
+    t.integer  "matter_id"
+    t.string   "description"
+    t.string   "patent_eq_numbers"
+    t.integer  "no_of_patents",     :limit => 1
+    t.date     "date_of_order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "patents", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -355,6 +387,16 @@ ActiveRecord::Schema.define(:version => 20110712131816) do
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "searches", :force => true do |t|
+    t.integer  "matter_id"
+    t.string   "search_for"
+    t.integer  "no_of_objects",  :limit => 1
+    t.boolean  "express_search"
+    t.date     "date_of_order"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

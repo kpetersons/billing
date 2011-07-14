@@ -9,7 +9,7 @@
 		System has created a user for you in PetPat application. 
 		
 		Click this link to proceed with activation:
-		<%=link_to activate_user_path(@user, :key => @user.activation_key), activate_user_path(@user, :key => @user.activation_key)%>
+		<%=link_to account_path(:key => @user.activation_key), account_path(:key => @user.activation_key)%>
 		
 		If your link does not open in a browser, copy it to the browsers address bar.		
 		

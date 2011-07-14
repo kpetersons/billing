@@ -26,7 +26,7 @@ class Address < ActiveRecord::Base
   validates :street, :presence => true
 
   def name
-    "#{country}, #{city}, #{street}, #{house_number}, #{post_code}"    
+    "#{city}, #{street}, #{house_number}, #{post_code}, #{country}"    
   end
   
 end

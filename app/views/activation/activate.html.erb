@@ -1,0 +1,9 @@
+<div class="panel center-form" style="width:29em; margin:20% auto">
+	<div class="panel-header">
+		<strong><%= t('user.activate')%></strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<div class="panel-content">		
+		<%= render :partial => "form" %>
+	</div>
+</div>

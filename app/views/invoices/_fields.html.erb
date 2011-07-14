@@ -4,11 +4,11 @@
 <ul>
 	<li>
 		<%= fields.label :registration_number, "Invoice number" %>
-		<div class="value"><%= fields.object.registration_number %>&nbsp;</div>
+		<%= fields.object.registration_number %>&nbsp;
 	</li>
 	<%= fields.fields_for :invoice do |i_f| %>
 	<li>
-		<%= i_f.hidden_field :author_id %>		
+		<%= i_f.hidden_field :author_id %>
 		<%= i_f.label :invoice_date %>
 		<%= i_f.text_field :invoice_date %>
 	</li>
@@ -23,21 +23,21 @@
 				<%= im_f.hidden_field :matter_task_id%>
 				<% end %>
 				<%= i_f.hidden_field :id %>
-				<%= i_f.hidden_field :customer_id %>				
+				<%= i_f.hidden_field :customer_id %>
 				<%= i_f.label :customer_name, "Name" %>
 				<%= i_f.text_field :customer_name %>
 			</li>
 			<li>
 				<%= i_f.label :address_id %>
 				<%= i_f.select :address_id, i_f.object.customer_addresses,
-					{}, 
-					{:class => 'wide', :disabled => false || i_f.object.customer.nil?} %>				
+          {},
+          {:class => 'wide', :disabled => false || i_f.object.customer.nil?} %>
 			</li>
 			<li>
 				<%= i_f.label :individual_id, "Person" %>
 				<%= i_f.select :individual_id, i_f.object.customer_contact_persons,
-					{}, 
-					{:class => 'wide', :disabled => false || i_f.object.customer.nil?} %>
+          {},
+          {:class => 'wide', :disabled => false || i_f.object.customer.nil?} %>
 			</li>
 		</ul>
 		<div id="invoice_address"></div>
@@ -66,12 +66,42 @@
 		</ul>
 	</li>
 	<li>
-		<%= i_f.label :currency_id %>
-		<%= i_f.select :currency_id, Currency.all.collect { |tt| [tt.name, tt.id] } %>
+		<ul>
+			<li>
+				<h3>Billing details</h3>
+			</li>			
+			<li>
+				<%= i_f.label :currency_id %>
+				<%= i_f.select :currency_id, Currency.all.collect { |tt| [tt.name, tt.id] } %>
+			</li>
+			<li>
+				<%= i_f.label :discount %>
+				<%= i_f.text_field :discount, {:class => 'field-num percent'} %><span class="post-field"> %</span>
+			</li>
+			<li>
+				<%= i_f.label :apply_vat %>
+				<%= i_f.check_box :apply_vat, :style => "width:auto;" %>
+			</li>
+			<li>
+				<%= i_f.label :payment_term %>
+				<%= i_f.text_field :payment_term, :class => 'field-num', :style => "width:auto; width:4em;" %>
+			</li>			
+		</ul>
 	</li>
 	<li>
-		<%= i_f.label :discount %>
-		<%= i_f.text_field :discount, {:class => 'field-num percent'} %><span class="post-field"> %</span>
+		<ul>
+		<li>
+			<h3>Invoice details</h3>
+		</li>
+			<li>
+				<%= i_f.label :subject %>
+				<%= i_f.text_area :subject %>
+			</li>
+			<li>
+				<%= i_f.label :ending_details, 'Ending' %>
+				<%= i_f.text_area :ending_details %>
+			</li>
+			</ul>
 	</li>
 	<% end %>
 </ul>

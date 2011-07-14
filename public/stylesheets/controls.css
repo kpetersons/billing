@@ -1,6 +1,7 @@
 .controls a, .panel-header a {text-decoration:none;}
 
 .column.elastic form .panel-footer {background:none;}
+.center-form 	 	 .controls input,
 .column.elastic 	 .show.controls a,
 .column.elastic 	 .panel-footer.controls a,
 .column.elastic form .panel-footer.controls a, 
@@ -22,6 +23,7 @@
 	margin:0;
 }
 
+.center-form 	 	 .controls input:hover,
 .column.elastic 	 .controls a:hover,
 .column.elastic form .controls a:hover,
 .column.elastic form .controls input[type="file"]:hover,  
@@ -31,6 +33,7 @@
 	border: rgb(219,219,219) 1px inset;	
 }
 
+.center-form 	 	 .controls input:active,
 .column.elastic 	 .controls a:active,
 .column.elastic form .controls a:active, 
 .column.elastic form .controls input[type="file"]:active,
@@ -41,6 +44,7 @@
 	color: #fff;	
 }
 
+.center-form 	 	 .controls,
 .column.elastic .controls {
 	margin: 0px 0px 10px 20px;
 	float:left;

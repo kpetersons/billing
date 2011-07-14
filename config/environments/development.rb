@@ -25,12 +25,15 @@ Billing::Application.configure do
 
   Paperclip.options[:command_path] = "/c/Windows/system32/convert"
 
-  ActionMailer::Base.smtp_settings = {
-    :address  => "smtp.someserver.net",
-    :port  => 25,
-    :user_name  => "someone@someserver.net",
-    :password  => "mypass",
-    :authentication  => "login"
-  }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    #  :domain               => 'petpat.lv.net',
+    :user_name            => 'kristapspetersons',
+    :password             => 'zanubis',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true  }
 end
 
