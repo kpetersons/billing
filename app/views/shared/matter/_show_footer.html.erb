@@ -1,0 +1,17 @@
+<dl>
+	<dt>
+		<label> Parent matter </label>
+	</dt>
+	<dd>
+		<%= link_to matter.document.parent_document_registration_number, matter_path(matter.document.parent_document)%>&nbsp;
+	</dd>
+	<dt>
+		<label> Linked matters </label>
+	</dt>
+	<dd>
+		<%= render :partial => "/matters/linked/item", :as => :matter, :collection => matter.linked, :spacer_template => "shared/ui/comma_spacer" %>
+	</dd>
+	<dd class="show">
+		<%= render :partial => "/matters/linked/form" %>
+	</dd>
+</dl>
