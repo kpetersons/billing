@@ -1,0 +1,48 @@
+<%= fields.fields_for :matter do |m_f| %>
+	<%= m_f.fields_for :patent_search do |t_f| %>
+		<%= t_f.hidden_field :matter_id %>
+		<ul>
+			<li>
+				<%= render :partial => "shared/matter/matter_number_field", :locals => {:fields 	=> fields}%>
+			</li>
+			<li>
+				<%= render :partial => "shared/matter/description_field", :locals => {:fields 	=> fields}%>				
+			</li>						
+			<li>
+				<ul>
+					<li>
+						<h3>Customer information</h3>
+					</li>
+					<li>
+						<%= render :partial => "shared/matter/agent_field", :locals => {:fields 	=> m_f}%>
+					</li>
+					<li>
+						<%= render :partial => "shared/matter/applicant_field", :locals => {:fields 	=> m_f}%>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<ul>
+					<li>
+						<h3>Patent search details</h3>
+					</li>
+					<li>
+						<%= t_f.label :patent_eq_numbers %>
+						<%= t_f.text_field :patent_eq_numbers %>
+					</li>
+					<li>
+						<%= t_f.label :no_of_patents %>
+						<%= t_f.text_field :no_of_patents %>
+					</li>
+					<li>
+						<%= t_f.label :date_of_order %>
+						<%= t_f.text_field :date_of_order, :class => 'field-date' %>
+					</li>					
+				</ul>
+			</li>
+			<li>
+				<%= render :partial => "shared/matter/notes_field", :locals => {:fields 	=> fields}%>
+			</li>
+		</ul>
+	<%end%>
+<%end%> 

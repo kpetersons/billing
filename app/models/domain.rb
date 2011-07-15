@@ -15,7 +15,7 @@ class Domain < ActiveRecord::Base
   after_create :generate_registration_number
   def generate_registration_number
     if matter.document.parent_id.nil?
-      matter.document.registration_number = "N#{id}"
+      matter.document.update_attribute(:registration_number, "N#{id}")
     end
   end
 end

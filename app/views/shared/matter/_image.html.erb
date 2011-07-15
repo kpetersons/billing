@@ -1,0 +1,14 @@
+<div class="images">		
+	<div><label>Images</label></div>
+	<%@matter.matter_images.each do |mi|%>
+		<%= image_tag mi.image.url(:medium) %>
+	<%end%>
+	<%=form_for :matter_image, :url => add_image_matter_path(@matter), :html => { :multipart => true } do |mi_f| %>
+		<div style="float:left; margin-top:1em;">		
+			<%= mi_f.file_field :image, :style => "" %>
+		</div>
+		<div style="float:right; margin-top:1em;">
+		<%= render :partial => "shared/ui/form-submit-controls_name", 	:locals => {:fields 	=> mi_f, :name => "Add"}%>
+		</div>
+	<% end %>				
+</div>

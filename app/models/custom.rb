@@ -19,7 +19,7 @@ class Custom < ActiveRecord::Base
   
   def generate_registration_number
     if matter.document.parent_id.nil?
-      matter.document.registration_number = "B#{id}"
+      matter.document.update_attribute(:registration_number, "B#{id}")
     end
   end
 end

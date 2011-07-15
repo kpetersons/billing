@@ -1,6 +1,6 @@
 <%= fields.label :registration_number, 'Matter number' %>
 <% if fields.object.parent_id.nil? %>
-	<span class="acts-as-field"><%=fields.object.registration_number%>&nbsp;</span>
+	<span class="acts-as-field" style="color:#000000"><%=fields.object.registration_number%>&nbsp;</span>
 <%else%>	
 	<%= fields.text_field :registration_number %>	
 <%end%>

@@ -88,6 +88,7 @@ class MattersController < ApplicationController
 
   def show
     @matter = Matter.find(params[:id])
+    @document = @matter.document
   end
 
   def choose

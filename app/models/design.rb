@@ -19,7 +19,7 @@ class Design < ActiveRecord::Base
   after_create :generate_registration_number
   def generate_registration_number
     if matter.document.parent_id.nil?
-      matter.document.registration_number = "D#{id}"
+      matter.document.update_attribute(:registration_number, "D#{id}")
     end
   end
 end
