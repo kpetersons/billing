@@ -24,6 +24,7 @@
 #  ending_details    :string(2000)
 #  payment_term      :integer(1)
 #  apply_vat         :boolean(1)
+#  invoice_status_id :integer(4)
 #
 
 class Invoice < ActiveRecord::Base

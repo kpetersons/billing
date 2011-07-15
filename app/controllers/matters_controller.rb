@@ -20,19 +20,19 @@ class MattersController < ApplicationController
       :matter_type_id => @matter_type.id, 
       :operating_party_id => current_user.operating_party_id,
       :author_id => current_user.id) 
-    if @matter_type.name.eql?("matter.trademark")
+    if @matter_type.name.eql?("matters.trademark")
       @document.matter.trademark = Trademark.new
     end  
-    if @matter_type.name.eql?("matter.patent")
+    if @matter_type.name.eql?("matters.patent")
       @document.matter.patent = Patent.new
     end
-    if @matter_type.name.eql?("matter.legal")
+    if @matter_type.name.eql?("matters.legal")
       @document.matter.legal = Legal.new
     end        
-    if @matter_type.name.eql?("matter.design")
+    if @matter_type.name.eql?("matters.design")
       @document.matter.design = Design.new
     end    
-    if @matter_type.name.eql?("matter.custom")
+    if @matter_type.name.eql?("matters.custom")
       @document.matter.custom = Custom.new
     end
     @document.matter.matter_images<<MatterImage.new    

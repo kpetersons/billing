@@ -6,21 +6,11 @@
 		<div class="value"><%= fields.object.registration_number %></div>&nbsp;
 	</li>
 	<%= fields.fields_for :matter do |m_f| %>
-	<%= m_f.fields_for :custom do |c_f| %>
-		<%= render :partial => "matters/fields/custom_fields", :locals => {:fields 	=> c_f}%>
+		
+	<%= m_f.fields_for @document.matter.matter_type.name.sub('matters.', ':') do |ms_f| %>
+		<%= render :partial => "#{@document.matter.matter_type.name.sub('.', '/')}/fields", :locals => {:fields 	=> ms_f}%>
 	<%end%>
-	<%= m_f.fields_for :design do |d_f| %>
-		<%= render :partial => "matters/fields/design_fields", :locals => {:fields 	=> d_f}%>
-	<%end%>
-	<%= m_f.fields_for :legal do |l_f| %>
-		<%= render :partial => "matters/fields/legal_fields", :locals => {:fields 	=> l_f}%>
-	<%end%>
-	<%= m_f.fields_for :patent do |p_f| %>
-		<%= render :partial => "matters/fields/patent_fields", :locals => {:fields 	=> p_f}%>
-	<%end%>
-	<%= m_f.fields_for :trademark do |t_f| %>
-		<%= render :partial => "matters/fields/trademark_fields", :locals => {:fields 	=> t_f}%>
-	<%end%>	
+		
 	<li>
 		<%= m_f.hidden_field :matter_type_id %>
 		<%= m_f.hidden_field :operating_party_id %>

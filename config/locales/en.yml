@@ -43,7 +43,7 @@ en:
       name: "Name"
       description: "Description"
   new:
-    matter:
+    matters:
       trademark: "New trademark matter"
       patent:    "New patent matter"
       legal:    "New legal matter"    
@@ -52,7 +52,7 @@ en:
       domain:    "New domain matter"
       trademark_search:   "New trademark search matter"      
       patent_search:   "New patent search matter"                     
-  matter:
+  matters:
     trademark: "trademark matter"
     patent:    "patent matter"
     design:    "design matter"
@@ -80,17 +80,17 @@ en:
   list:
     matters: "List matters"     
   error:
-    matter:    
+    matters:    
       link_exists: "Matters already linked"    
       link: "Could not link matters. Check if you actualy chose a matter!"
     invalid:
-      matter:
+      matters:
         type: "Invalid matter type"
   success:
-    matter:
+    matters:
       link: "Matters linked."
     new:
-      matter:
+      matters:
         type: "Creating %{matter_type}"
   user:
     activate: "User account activation"

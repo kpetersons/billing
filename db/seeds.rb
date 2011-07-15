@@ -32,21 +32,21 @@ end
 @matter_functions =     [
   ["funct.matters.link", true],
   ["funct.create.matter", true],
-  ["funct.create.matter.trademark", true],
-  ["funct.create.matter.patent", true],
-  ["funct.create.matter.legal", true],
-  ["funct.create.matter.design", true],
-  ["funct.create.matter.custom", true],  
-  ["funct.create.matter.task", true],
-  ["funct.create.matter.trademark_search", true],
-  ["funct.create.matter.patent_search", true],  
-  ["funct.create.matter.domain", true],  
-  ["funct.set.to.open.matter.task", true],
-  ["funct.set.to.await.response.matter.task", true],
-  ["funct.set.to.cancel.matter.task", true],
-  ["funct.set.to.done.matter.task", true],
-  ["funct.revert.to.open.matter.task", true],
-  ["funct.revert.to.await.response.matter.task", true]
+  ["funct.create.matters.trademark", true],
+  ["funct.create.matters.patent", true],
+  ["funct.create.matters.legal", true],
+  ["funct.create.matters.design", true],
+  ["funct.create.matters.custom", true],  
+  ["funct.create.matters.task", true],
+  ["funct.create.matters.trademark_search", true],
+  ["funct.create.matters.patent_search", true],  
+  ["funct.create.matters.domain", true],  
+  ["funct.set.to.open.matters.task", true],
+  ["funct.set.to.await.response.matters.task", true],
+  ["funct.set.to.cancel.matters.task", true],
+  ["funct.set.to.done.matters.task", true],
+  ["funct.revert.to.open.matters.task", true],
+  ["funct.revert.to.await.response.matters.task", true]
 ]
 
 @invoice_functions = [
@@ -218,7 +218,7 @@ Currency.transaction do
 end
 
 MatterType.transaction do
-  matter_types = ["matter.trademark", "matter.patent", "matter.legal", "matter.design", "matter.custom", "matter.patent_search", "matter.trademark_search", "matter.domain"]
+  matter_types = ["matters.trademark", "matters.patent", "matters.legal", "matters.design", "matters.custom", "matters.patent_search", "matters.trademark_search", "matters.domain"]
   matter_types.each  do |matter_type|
     MatterType.create(
     :name => matter_type, 
@@ -232,62 +232,62 @@ OperatingPartyMatterType.transaction do
   #
   OperatingPartyMatterType.delete_all
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.trademark").id,
+  :matter_type_id => MatterType.find_by_name("matters.trademark").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.patent").id,
+  :matter_type_id => MatterType.find_by_name("matters.patent").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.design").id,
+  :matter_type_id => MatterType.find_by_name("matters.design").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.legal").id,
+  :matter_type_id => MatterType.find_by_name("matters.legal").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.custom").id,
+  :matter_type_id => MatterType.find_by_name("matters.custom").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.patent_search").id,
+  :matter_type_id => MatterType.find_by_name("matters.patent_search").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.trademark_search").id,
+  :matter_type_id => MatterType.find_by_name("matters.trademark_search").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.domain").id,
+  :matter_type_id => MatterType.find_by_name("matters.domain").id,
   :operating_party_id => Company.find_by_name("party.operating.petpat").operating_party.id)
   #
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.trademark").id,
+  :matter_type_id => MatterType.find_by_name("matters.trademark").id,
   :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.patent").id,
+  :matter_type_id => MatterType.find_by_name("matters.patent").id,
   :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.design").id,
+  :matter_type_id => MatterType.find_by_name("matters.design").id,
   :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.legal").id,
+  :matter_type_id => MatterType.find_by_name("matters.legal").id,
   :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.custom").id,
+  :matter_type_id => MatterType.find_by_name("matters.custom").id,
   :operating_party_id => Company.find_by_name("party.operating.administration").operating_party.id)
   #
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.trademark").id,
+  :matter_type_id => MatterType.find_by_name("matters.trademark").id,
   :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.design").id,
+  :matter_type_id => MatterType.find_by_name("matters.design").id,
   :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id)
   #
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.patent").id,
+  :matter_type_id => MatterType.find_by_name("matters.patent").id,
   :operating_party_id => Company.find_by_name("party.operating.patent").operating_party.id)
   #
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.legal").id,
+  :matter_type_id => MatterType.find_by_name("matters.legal").id,
   :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id)
   OperatingPartyMatterType.create(
-  :matter_type_id => MatterType.find_by_name("matter.custom").id,
+  :matter_type_id => MatterType.find_by_name("matters.custom").id,
   :operating_party_id => Company.find_by_name("party.operating.legal").operating_party.id)
 end
 
@@ -586,7 +586,7 @@ InvoiceStatus.transaction do
 end
 
 MatterStatus.transaction do
-  prefix = "matter.status."  
+  prefix = "matters.status."  
   matter_statuses = [
     ["re_active",            "active",              "pass_active"],
     ["re_pending",           "pending",           "pass_pending"],
@@ -601,7 +601,7 @@ end
 
 
 MatterTaskStatus.transaction do
-  prefix = "matter.task.status."  
+  prefix = "matters.task.status."  
   matter_task_statuses = [
     ["re_open",              "open",              "pass_open"],
     ["re_awaiting_response", "awaiting_response", "pass_awaiting_response"],
@@ -615,7 +615,7 @@ MatterTaskStatus.transaction do
 end
 
 MatterTaskStatusFlow.transaction do
-  prefix = "matter.task.status."
+  prefix = "matters.task.status."
   open =              MatterTaskStatus.find_by_name("#{prefix}open")
   awaiting_response = MatterTaskStatus.find_by_name("#{prefix}awaiting_response")
   done =              MatterTaskStatus.find_by_name("#{prefix}done")
@@ -628,98 +628,98 @@ MatterTaskStatusFlow.transaction do
   # 5 Open <->              Awaiting response <-> Canceled
   # 6 Awaiting response <-> Done <->              *
   # 7 Awaiting response <-> Canceled <->          *
-  # ["funct.set.to.open.matter.task", true],
-  # ["funct.set.to.await.response.matter.task", true],
-  # ["funct.set.to.cancel.matter.task", false],
-  # ["funct.set.to.done.matter.task", false],
-  # ["funct.revert.to.open.matter.task", true],
-  # ["funct.revert.to.await.response.matter.task", true]
+  # ["funct.set.to.open.matters.task", true],
+  # ["funct.set.to.await.response.matters.task", true],
+  # ["funct.set.to.cancel.matters.task", false],
+  # ["funct.set.to.done.matters.task", false],
+  # ["funct.revert.to.open.matters.task", true],
+  # ["funct.revert.to.await.response.matters.task", true]
   #1
   MatterTaskStatusFlow.create(
   :revert_to_step_id => nil,
   :current_step_id   => open.id,
   :pass_to_step_id   => awaiting_response.id, 
   :start_state => true,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.await.response.matter.task").id,
+  :pass_to_function_id => Function.find_by_name("funct.set.to.await.response.matters.task").id,
   :revert_to_function_id => nil) unless !MatterTaskStatusFlow.where(
                                           :revert_to_step_id => nil,
                                           :current_step_id   => open.id,
                                           :pass_to_step_id   => awaiting_response.id, 
                                           :start_state => true,
-                                          :pass_to_function_id => Function.find_by_name("funct.set.to.await.response.matter.task").id,
+                                          :pass_to_function_id => Function.find_by_name("funct.set.to.await.response.matters.task").id,
                                           :revert_to_function_id => nil).first.nil?
   #2
   MatterTaskStatusFlow.create(
   :revert_to_step_id => nil,
   :current_step_id   => open.id,
   :pass_to_step_id   => canceled.id,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matter.task").id,
+  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matters.task").id,
   :revert_to_function_id => nil) unless !MatterTaskStatusFlow.where(
                                           :revert_to_step_id => nil,
                                           :current_step_id   => open.id,
                                           :pass_to_step_id   => canceled.id,
-                                          :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matter.task").id,
+                                          :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matters.task").id,
                                           :revert_to_function_id => nil).first.nil?
   #3
   MatterTaskStatusFlow.create(
   :revert_to_step_id => open.id,
   :current_step_id   => awaiting_response.id,
   :pass_to_step_id   => done.id,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.done.matter.task").id,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id) unless !MatterTaskStatusFlow.where(
+  :pass_to_function_id => Function.find_by_name("funct.set.to.done.matters.task").id,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id) unless !MatterTaskStatusFlow.where(
   :revert_to_step_id => open.id,
   :current_step_id   => awaiting_response.id,
   :pass_to_step_id   => done.id,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.done.matter.task").id,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id).first.nil?
+  :pass_to_function_id => Function.find_by_name("funct.set.to.done.matters.task").id,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id).first.nil?
   #4
   MatterTaskStatusFlow.create(
   :revert_to_step_id => open.id,
   :current_step_id   => canceled.id,
   :pass_to_step_id   => nil,
   :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id) unless !MatterTaskStatusFlow.where(
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id) unless !MatterTaskStatusFlow.where(
   :revert_to_step_id => open.id,
   :current_step_id   => canceled.id,
   :pass_to_step_id   => nil,
   :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id).first.nil?
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id).first.nil?
   #5
   MatterTaskStatusFlow.create(
   :revert_to_step_id => open.id,
   :current_step_id   => awaiting_response.id,
   :pass_to_step_id   => canceled.id,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matter.task").id,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id) unless !MatterTaskStatusFlow.where(
+  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matters.task").id,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id) unless !MatterTaskStatusFlow.where(
   :revert_to_step_id => open.id,
   :current_step_id   => awaiting_response.id,
   :pass_to_step_id   => canceled.id,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matter.task").id,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matter.task").id).first.nil?
+  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matters.task").id,
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id).first.nil?
   #6
   MatterTaskStatusFlow.create(
   :revert_to_step_id => awaiting_response.id,
   :current_step_id   => done.id,
   :pass_to_step_id   => nil,
   :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task")) unless !MatterTaskStatusFlow.where(
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matters.task")) unless !MatterTaskStatusFlow.where(
   :revert_to_step_id => awaiting_response.id,
   :current_step_id   => done.id,
   :pass_to_step_id   => nil,
   :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task")).first.nil?
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matters.task")).first.nil?
   #7
   MatterTaskStatusFlow.create(
   :revert_to_step_id => awaiting_response.id,
   :current_step_id   => canceled.id,
   :pass_to_step_id   => nil,
   :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task")) unless !MatterTaskStatusFlow.where(
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matters.task")) unless !MatterTaskStatusFlow.where(
   :revert_to_step_id => awaiting_response.id,
   :current_step_id   => canceled.id,
   :pass_to_step_id   => nil,
   :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matter.task")).first.nil?
+  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matters.task")).first.nil?
 end
 
 
