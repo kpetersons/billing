@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110714210209) do
+ActiveRecord::Schema.define(:version => 20110715104813) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20110714210209) do
     t.date     "date_of_order_alert"
     t.date     "ca_application_date"
     t.string   "ca_application_number"
-    t.integer  "client_all_ip"
+    t.integer  "client_all_ip_id"
   end
 
   create_table "designs", :force => true do |t|
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20110714210209) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "parent_id"
+    t.string   "notes"
   end
 
   create_table "domains", :force => true do |t|
@@ -235,6 +236,8 @@ ActiveRecord::Schema.define(:version => 20110714210209) do
   create_table "legal_types", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.string   "description"
   end
 
   create_table "legals", :force => true do |t|
@@ -242,11 +245,13 @@ ActiveRecord::Schema.define(:version => 20110714210209) do
     t.datetime "updated_at"
     t.integer  "matter_id"
     t.string   "opposed_marks"
-    t.integer  "type"
     t.string   "instance"
-    t.integer  "opposite_party"
-    t.integer  "opposite_party_agent"
     t.date     "date_of_closure"
+    t.integer  "oposing_party_id"
+    t.integer  "oposing_party_agent_id"
+    t.integer  "opposite_party_id"
+    t.integer  "opposite_party_agent_id"
+    t.integer  "legal_type_id"
   end
 
   create_table "linked_matters", :force => true do |t|
@@ -336,7 +341,7 @@ ActiveRecord::Schema.define(:version => 20110714210209) do
     t.integer  "author_id"
     t.integer  "matter_type_id"
     t.integer  "operating_party_id"
-    t.integer  "status_id"
+    t.integer  "matter_status_id"
   end
 
   create_table "official_fee_types", :force => true do |t|

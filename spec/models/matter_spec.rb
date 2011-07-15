@@ -19,7 +19,7 @@
 #  author_id          :integer(4)
 #  matter_type_id     :integer(4)
 #  operating_party_id :integer(4)
-#  status_id          :integer(4)
+#  matter_status_id   :integer(4)
 #
 
 require 'spec_helper'

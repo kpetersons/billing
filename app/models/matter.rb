@@ -19,7 +19,7 @@
 #  author_id          :integer(4)
 #  matter_type_id     :integer(4)
 #  operating_party_id :integer(4)
-#  status_id          :integer(4)
+#  matter_status_id   :integer(4)
 #
 
 class Matter < ActiveRecord::Base
@@ -48,6 +48,9 @@ class Matter < ActiveRecord::Base
   has_one :design
   has_one :legal
   has_one :custom
+  has_one :patent_search
+  has_one :search
+  has_one :domain
   
   validates :agent_id,            :presence => true
   validates :applicant_id,        :presence => true
@@ -57,8 +60,8 @@ class Matter < ActiveRecord::Base
   
   after_validation :prepare_ajax_fields  
   
-  accepts_nested_attributes_for :trademark, :patent, :design, :legal, :custom, :linked_matters, :matter_images
-  attr_protected :applicant_name, :agent_name, :classes
+  accepts_nested_attributes_for :trademark, :patent, :design, :legal, :custom, :linked_matters, :matter_images, :patent_search, :search, :domain
+  attr_protected :applicant_name, :agent_name, :classes, :prefix
   
   def number
     document.registration_number
@@ -88,6 +91,14 @@ class Matter < ActiveRecord::Base
     if has_parent
       Matter.find_by_document_id(document.parent_document.id)
     end
+  end
+  
+  def matter_status_name
+    matter_status.name unless matter_status.nil?
+  end
+  
+  def notes
+    document.notes
   end
   
   def tags

@@ -1,5 +1,5 @@
 <%= fields.fields_for :matter do |m_f| %>
-	<%= m_f.fields_for :patent do |t_f| %>
+	<%= m_f.fields_for :search do |t_f| %>
 		<%= t_f.hidden_field :matter_id %>
 		<ul>
 			<li>
@@ -21,38 +21,23 @@
 			<li>
 				<ul>
 					<li>
-						<h3>Application details</h3>
+						<h3>Trademark search details</h3>
 					</li>
 					<li>
-						<%= t_f.label :application_date %>
-						<%= t_f.text_field :application_date, :class => 'field-date' %>
+						<%= t_f.label :search_for %>
+						<%= t_f.text_field :search_for %>
+					</li>					
+					<li>
+						<%= t_f.label :no_of_objects %>
+						<%= t_f.text_field :no_of_objects %>
 					</li>
 					<li>
-						<%= t_f.label :application_number %>
-						<%= t_f.text_field :application_number %>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<ul>
-					<li>
-						<h3>Patent data</h3>
+						<%= t_f.label :express_search %>
+						<%= t_f.check_box :express_search, :style => "width:auto;" %>
 					</li>
 					<li>
-						<%= t_f.label :patent_number%>
-						<%= t_f.text_field :patent_number %>
-					</li>
-					<li>
-						<%= t_f.label :patent_grant_date %>
-						<%= t_f.text_field :patent_grant_date %>
-					</li>
-					<li>
-						<%= t_f.label :ep_appl_number %>
-						<%= t_f.text_field :ep_appl_number %>
-					</li>
-					<li>
-						<%= t_f.label :ep_number %>
-						<%= t_f.text_field :ep_number %>
+						<%= t_f.label :date_of_order %>
+						<%= t_f.text_field :date_of_order, :class => 'field-date' %>
 					</li>
 				</ul>
 			</li>

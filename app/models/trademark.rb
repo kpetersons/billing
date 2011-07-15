@@ -21,17 +21,11 @@
 
 class Trademark < ActiveRecord::Base
   belongs_to :matter
-  #
-  after_create :generate_registration_number
   
-
-  private
+  after_create :generate_registration_number
   def generate_registration_number
-    Document.transaction do
-      unless matter.document.parent_document.nil?
-        @reg_nr = "M#{id}"
-        matter.document.update_attribute(:registration_number, @reg_nr)        
-      end
+    if matter.document.parent_id.nil?
+      matter.document.registration_number = "M#{id}"
     end
-  end
+  end  
 end

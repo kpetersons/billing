@@ -2,19 +2,17 @@
 	<thead>
 		<tr>
 			<th class="col-radio"></th>	
-			<th class="col-text">Matter number</th>
-			<th class="col-text">Mark name</th>
-			<th class="col-text">Classes</th>
+			<th class="col-text">Registration number</th>
+			<th class="col-text">Agent</th>			
 			<th class="col-text">Applicant</th>
-			<th class="col-text">Agent</th>
-			<th class="col-date">Application date</th>
-			<th class="col-text">Application number</th>
+			<th class="col-text">Notes</th>
+			<th class="col-date">Status</th>			
 			<th></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="9">
+			<th class="list-paginate" colspan="7">
 				<%= will_paginate matters, :param_name => param_name %>
 			</th>
 		</tr>
@@ -28,18 +26,16 @@
 				<%end%>
 			</td>
 			<td class="col-text"><%= matter.number%></td>
-			<td class="col-text"><%= matter.mark_name %></td>
-			<td class="col-text"><%= matter.classes%></td>
+			<td class="col-text"><%= matter.agent_name %></td>			
 			<td class="col-text"><%= matter.applicant_name %></td>
-			<td class="col-text"><%= matter.agent_name %></td>
-			<td class="col-date"><%= matter.appl_date %></td>
-			<td class="col-text"><%= matter.appl_number %></td>
+			<td class="col-date"><%= matter.notes %></td>
+			<td class="col-text"><%= matter.matter_status_name %></td>
 			<td class="col-number"><%= link_to "Show", matter_path(matter, :anchor => :tasks)%></td>
 		</tr>
 		<% end %>
 		<% if matters.empty? %>
 		<tr>
-			<td colspan="9">&nbsp;</td>
+			<td colspan="7">&nbsp;</td>
 		</tr>
 		<% end %>
 	</tbody>

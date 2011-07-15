@@ -227,6 +227,15 @@ MatterType.transaction do
   end
 end
 
+LegalType.transaction do
+  
+  prefix = 'matters.legal.type'
+  legal_types = ["opp_attack", "opp_Defend", "deeds", "litigation", "other"]
+  legal_types.each do |legal_type|
+    LegalType.create(:name => legal_type) unless !LegalType.where(:name => legal_type).first.nil?
+  end
+end
+
 OperatingPartyMatterType.transaction do
   operating_parties = ["party.operating.administration", "party.operating.trademark", "party.operating.patent", "party.operating.legal"]
   #

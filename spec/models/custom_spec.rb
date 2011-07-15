@@ -9,7 +9,7 @@
 #  date_of_order_alert   :date
 #  ca_application_date   :date
 #  ca_application_number :string(255)
-#  client_all_ip         :integer(4)
+#  client_all_ip_id      :integer(4)
 #
 
 require 'spec_helper'

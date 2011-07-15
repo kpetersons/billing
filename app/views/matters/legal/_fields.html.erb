@@ -1,3 +1,67 @@
-<li>
-	<%=fields.hidden_field :matter_id %>
-</li>
+<%= fields.fields_for :matter do |m_f| %>
+	<%= m_f.fields_for :legal do |t_f| %>
+		<%= t_f.hidden_field :matter_id %>
+		<ul>
+			<li>
+				<%= render :partial => "shared/matter/matter_number_field", :locals => {:fields 	=> fields}%>
+			</li>
+			<li>
+				<%= render :partial => "shared/matter/description_field", :locals => {:fields 	=> fields}%>				
+			</li>			
+			<li>
+				<ul>
+					<li>
+						<h3>Customer information</h3>
+					</li>
+					<li>
+						<%= render :partial => "shared/matter/agent_field", :locals => {:fields 	=> m_f}%>
+					</li>
+					<li>
+						<%= render :partial => "shared/matter/applicant_field", :locals => {:fields 	=> m_f}%>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<ul>
+					<li>
+						<h3>Opposite party data</h3>
+					</li>
+					<li>
+						<%= t_f.label :opposite_party_agent_id %>
+						<%= t_f.text_field :opposite_party_agent_id %>
+					</li>
+					<li>
+						<%= t_f.label :opposite_party_id %>
+						<%= t_f.text_field :opposite_party_id %>
+					</li>					
+				</ul>
+			</li>			
+			<li>
+				<ul>
+					<li>
+						<h3>Legal data</h3>
+					</li>
+					<li>
+						<%= t_f.label :opposed_marks%>
+						<%= t_f.text_field :opposed_marks %>
+					</li>
+					<li>
+						<%= t_f.label :legal_type_id %>
+						<%= t_f.select :legal_type_id, LegalType.all.collect { |tt| [t(tt.name), tt.id] } %>
+					</li>
+					<li>
+						<%= t_f.label :instance %>
+						<%= t_f.text_field :instance %>
+					</li>
+					<li>
+						<%= t_f.label :date_of_closure %>
+						<%= t_f.text_field :date_of_closure %>						
+					</li>					
+				</ul>
+			</li>
+			<li>
+				<%= render :partial => "shared/matter/notes_field", :locals => {:fields 	=> fields}%>
+			</li>
+		</ul>
+	<%end%>
+<%end%> 

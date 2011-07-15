@@ -1,5 +1,5 @@
 <%= fields.fields_for :matter do |m_f| %>
-	<%= m_f.fields_for :design do |t_f| %>
+	<%= m_f.fields_for :patent_search do |t_f| %>
 		<%= t_f.hidden_field :matter_id %>
 		<ul>
 			<li>
@@ -7,7 +7,7 @@
 			</li>
 			<li>
 				<%= render :partial => "shared/matter/description_field", :locals => {:fields 	=> fields}%>				
-			</li>			
+			</li>						
 			<li>
 				<ul>
 					<li>
@@ -24,35 +24,20 @@
 			<li>
 				<ul>
 					<li>
-						<h3>Application details</h3>
+						<h3>Patent search details</h3>
 					</li>
 					<li>
-						<%= t_f.label :application_date %>
-						<%= t_f.text_field :application_date, :class => 'field-date' %>
+						<%= t_f.label :patent_eq_numbers %>
+						<%= t_f.text_field :patent_eq_numbers %>
 					</li>
 					<li>
-						<%= t_f.label :application_number %>
-						<%= t_f.text_field :application_number %>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<ul>
-					<li>
-						<h3>Design data</h3>
+						<%= t_f.label :no_of_patents %>
+						<%= t_f.text_field :no_of_patents %>
 					</li>
 					<li>
-						<%= t_f.label :design_number%>
-						<%= t_f.text_field :design_number %>
-					</li>
-					<li>
-						<%= t_f.label :rdc_appl_number %>
-						<%= t_f.text_field :rdc_appl_number %>
-					</li>
-					<li>
-						<%= t_f.label :rdc_number %>
-						<%= t_f.text_field :rdc_number %>
-					</li>
+						<%= t_f.label :date_of_order %>
+						<%= t_f.text_field :date_of_order, :class => 'field-date' %>
+					</li>					
 				</ul>
 			</li>
 			<li>

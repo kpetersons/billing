@@ -34,6 +34,15 @@ class MattersController < ApplicationController
     if @matter_type.name.eql?("matters.custom")
       @document.matter.custom = Custom.new
     end
+    if @matter_type.name.eql?("matters.patent_search")
+      @document.matter.patent_search = PatentSearch.new
+    end
+    if @matter_type.name.eql?("matters.trademark_search")
+      @document.matter.search = Search.new
+    end
+    if @matter_type.name.eql?("matters.domain")
+      @document.matter.domain = Domain.new
+    end    
     @document.matter.matter_images<<MatterImage.new
   end
 
