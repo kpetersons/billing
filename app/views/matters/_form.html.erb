@@ -1,22 +1,4 @@
-<%=form_for @document, :url => (@document.persisted?) ? matter_path : {:controller => 'matters', :action => 'create'}, :html => { :multipart => true } do |d_f| %>
+<%=form_for @document, :url => {:controller => 'matters', :action => (@document.persisted?) ?  :update : :create}, :html => { :multipart => true } do |d_f| %>
 	<%= render :partial => "fields", 							:locals => {:fields 	=> d_f}%>
 	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> d_f}%>
 <%end%>
-<script>
-	new Autocomplete('document_matter_attributes_applicant_name', 
-	{
-		serviceUrl:'/customers/applicant_find_ajax'
-		,minChars:2
-		,onSelect: function(value, data){
-        	$('document_matter_attributes_applicant_id').setValue(data)
-      	}
-	});
-	new Autocomplete('document_matter_attributes_agent_name', 
-	{
-		serviceUrl:'/customers/agent_find_ajax'
-		,minChars:2
-		,onSelect: function(value, data){
-        	$('document_matter_attributes_agent_id').setValue(data)
-      	}
-	});	
-</script>

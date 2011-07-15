@@ -1,8 +1,7 @@
 class MattersController < ApplicationController
 
   layout "matters"
-  
-  def index    
+  def index
     @matters = Matter.joins(:document).where(:documents => {:parent_id => nil, :user_id => current_user.id}).paginate(:page => params[:param_name])
     @other_matters = Matter.joins(:document).where(:documents => {:parent_id => nil}).where("user_id != #{current_user.id}").paginate(:page => params[:param_name])
   end
@@ -14,36 +13,36 @@ class MattersController < ApplicationController
       flash[:error] = t("error.invalid.matter.type")
       redirect_to matters_path and return
     end
-    @matter_type = MatterType.find(params[:type])    
-    flash.now[:success] = t("success.new.matter.type", {:matter_type => t(@matter_type.name)})     
+    @matter_type = MatterType.find(params[:type])
+    flash.now[:success] = t("success.new.matter.type", {:matter_type => t(@matter_type.name)})
     @document.matter = Matter.new(
-      :matter_type_id => @matter_type.id, 
-      :operating_party_id => current_user.operating_party_id,
-      :author_id => current_user.id) 
+    :matter_type_id => @matter_type.id,
+    :operating_party_id => current_user.operating_party_id,
+    :author_id => current_user.id)
     if @matter_type.name.eql?("matters.trademark")
       @document.matter.trademark = Trademark.new
-    end  
+    end
     if @matter_type.name.eql?("matters.patent")
       @document.matter.patent = Patent.new
     end
     if @matter_type.name.eql?("matters.legal")
       @document.matter.legal = Legal.new
-    end        
+    end
     if @matter_type.name.eql?("matters.design")
       @document.matter.design = Design.new
-    end    
+    end
     if @matter_type.name.eql?("matters.custom")
       @document.matter.custom = Custom.new
     end
-    @document.matter.matter_images<<MatterImage.new    
+    @document.matter.matter_images<<MatterImage.new
   end
 
-  def create    
+  def create
     Document.transaction do
       @document = Document.new(params[:document].merge(:user_id => current_user.id))
       if @document.save
-        @matter = @document.matter        
-        redirect_to matter_path(@matter)
+        @matter = @document.matter
+        redirect_to @matter
       else
         render 'new'
       end
@@ -60,15 +59,17 @@ class MattersController < ApplicationController
     Document.transaction do
       if @document.update_attributes(params[:document])
         @matter = @document.matter
-        matter_clazzs = params[:document][:matter_attributes][:classes]      
-        matter_clazzs.split(',').each do |name|
-          clazz = Clazz.find_by_code(name)
-          unless clazz.nil?
-            if MatterClazz.where(:matter_id => @matter.id, :clazz_id => clazz.id).first.nil?
-              @matter.matter_clazzs<<MatterClazz.new(:clazz_id => clazz.id, :matter_id => @matter.id)
+        matter_clazzs = params[:document][:matter_attributes][:classes]
+        unless matter_clazzs.nil?
+          matter_clazzs.split(',').each do |name|
+            clazz = Clazz.find_by_code(name)
+            unless clazz.nil?
+              if MatterClazz.where(:matter_id => @matter.id, :clazz_id => clazz.id).first.nil?
+                @matter.matter_clazzs<<MatterClazz.new(:clazz_id => clazz.id, :matter_id => @matter.id)
+              end
             end
           end
-        end        
+        end
         redirect_to matter_path(@matter)
       else
         render 'edit'
@@ -88,12 +89,12 @@ class MattersController < ApplicationController
   def add
     Document.transaction do
       @document = Document.find_by_id(params[:document][:id])
-      @child_matter = Matter.find(params[:matter_id])    
+      @child_matter = Matter.find(params[:matter_id])
       @document.child_documents<<@child_matter.document
       redirect_to @child_matter
     end
   end
-  
+
   def remove
     Document.transaction do
       @matter_child = Matter.find(params[:matter_id])
@@ -105,7 +106,7 @@ class MattersController < ApplicationController
   end
 
   def link
-#    puts split_to_arry :value => params[:linked_matter][:linked_matter_registration_number]
+    #    puts split_to_arry :value => params[:linked_matter][:linked_matter_registration_number]
     Matter.transaction do
       @matter = Matter.find(params[:id])
       link_to = params[:linked_matter][:linked_matter_id]
@@ -121,7 +122,7 @@ class MattersController < ApplicationController
       redirect_to @matter and return
     end
   end
-  
+
   def find_ajax
     @matter = Matter.find(params[:id])
     @result = Hash.new
@@ -129,13 +130,13 @@ class MattersController < ApplicationController
     @result[:suggestions] = Array.new
     @result[:data] = Array.new
     index = 0
-    @matters = Matter.where(['matters.id != ?', "#{@matter.id}"]).joins(:document).where(:matter_type_id => @matter.matter_type_id).all(:conditions => ['registration_number like ?', "%#{params[:query]}%"])    
+    @matters = Matter.where(['matters.id != ?', "#{@matter.id}"]).joins(:document).where(:matter_type_id => @matter.matter_type_id).all(:conditions => ['registration_number like ?', "%#{params[:query]}%"])
     @matters.each do |matter|
       @result[:suggestions][index] = matter.document.registration_number
       @result[:data][index] = matter.id
       index += 1
     end
-    render :json => @result    
+    render :json => @result
   end
 
   def add_image
@@ -148,5 +149,5 @@ class MattersController < ApplicationController
     flash.now[:error] = "matter.error.image.added"
     redirect_to @matter and return
   end
-  
+
 end

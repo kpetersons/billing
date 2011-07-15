@@ -1,37 +1,9 @@
 <%= fields.hidden_field :id %>
 <%= fields.hidden_field :parent_id %>
-<ul>
-	<li>
-		<%= fields.label :registration_number, "Matter number" %>
-		<div class="value"><%= fields.object.registration_number %></div>&nbsp;
-	</li>
-	<%= fields.fields_for :matter do |m_f| %>
-		
-	<%= m_f.fields_for @document.matter.matter_type.name.sub('matters.', ':') do |ms_f| %>
-		<%= render :partial => "#{@document.matter.matter_type.name.sub('.', '/')}/fields", :locals => {:fields 	=> ms_f}%>
-	<%end%>
-		
-	<li>
-		<%= m_f.hidden_field :matter_type_id %>
-		<%= m_f.hidden_field :operating_party_id %>
-		<%= m_f.hidden_field :author_id %>
-		<%= m_f.hidden_field :id %>		
-		<%= fields.label :description %>
-		<%= fields.text_area :description %>
-	</li>
-	<li>
-		<%= m_f.hidden_field :applicant_id %>
-		<%= m_f.label :applicant_name %>
-		<%= m_f.text_field :applicant_name %>
-	</li>
-	<li>
-		<%= m_f.hidden_field :agent_id %>
-		<%= m_f.label :agent_name %>
-		<%= m_f.text_field :agent_name %>
-	</li>
-	<li>
-		<%= m_f.label :comment, "Notes" %>
-		<%= m_f.text_area :comment %>
-	</li>
-	<% end %>
-</ul>
+<%= fields.fields_for :matter, @document.matter do |m_f| %>
+	<%= m_f.hidden_field :matter_type_id %>
+	<%= m_f.hidden_field :operating_party_id %>
+	<%= m_f.hidden_field :author_id %>
+	<%= m_f.hidden_field :id %>	
+<%end%>		
+<%= render :partial => "#{@document.matter.matter_type.name.sub('.', '/')}/fields", :locals => {:fields => fields}%>

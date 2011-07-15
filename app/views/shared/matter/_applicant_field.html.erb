@@ -1,0 +1,13 @@
+<%= fields.hidden_field :applicant_id %>
+<%= fields.label :applicant_name %>
+<%= fields.text_field :applicant_name %>
+<script>
+	new Autocomplete('document_matter_attributes_applicant_name', 
+	{
+		serviceUrl:'/customers/applicant_find_ajax'
+		,minChars:2
+		,onSelect: function(value, data){
+	    	$('document_matter_attributes_applicant_id').setValue(data)
+	  	}
+	});
+</script>
