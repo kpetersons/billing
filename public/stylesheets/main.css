@@ -183,3 +183,52 @@ span.translation_missing {
 	color:red;
 	font-weight:bold;
 }
+
+ul.fields-show, ul.fields-show ul, ul.fields-show dl, ul.fields-show dt, ul.fields-show dd {
+	list-style: none;
+	margin-left:0;
+	padding-left:0;
+}
+
+ul.fields-show, ul.fields-show h3 {
+	margin-left:2em;
+}
+
+ul.fields-show h3 {
+	font-size:1em;
+	margin-bottom:0;
+}
+
+ul.fields-show dl {
+	margin-top:.4em;
+}
+
+ul.fields-show ul {
+	margin:0 0 5px -10px;
+	padding:0 10px 10px 10px;
+	border-radius:5px;
+	width:auto;	
+}
+
+ul.fields-show ul:hover {
+	background-color:rgb(244,244,244);
+	box-shadow: 1px 1px rgb(224,224,224);
+}
+
+ul.fields-show label {
+	font-weight:normal;
+	font-size:1.05em;
+}
+
+ul.fields-show dt {
+	min-width:12em;
+}
+
+/*ul.fields-show>li:not(:first-child):not(:last-child) {
+	display:inline-block;
+	width:33%;
+	vertical-align: top;*/}
+
+ul.fields-show>li:not(:first-child):not(:last-child) ul {
+	margin: 0 auto;
+}

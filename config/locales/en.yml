@@ -114,3 +114,76 @@ en:
         incorrect: "Invalid current password!"
       profile:
         change: "Could not update profile because errors occured"
+  header:
+    customer_information: "Customer information"
+    application_details: "Application details"
+    trademark_data: "Trademark details"
+    patent_data:  "Patent dat"
+    design_data: "Design data"
+    opposite_party_details: "Opposite party details"
+    legal_data: "Legal data"
+    custom_data: "Custom data"
+    patent_search_details: "Patent search details"
+    search_details: "Search details"
+    domain_details: "Domain details"    
+  matter:
+    fields:
+        matter_number: "Matter number"
+        description: "Description"
+        agent: "Agent name"
+        applicant: "Applicant"
+        notes: "Notes"
+    trademark:
+      fields:
+        mark_name: " Mark name"
+        appl_date: "Application date"
+        appl_number: "Application number"
+        priority_date: "Priority date"
+        cfe_index: "CFE index"
+        ctm_number: "CTM number"
+        wipo_number: "WIPO number"
+        reg_number: "Registration number"          
+    patent:
+      fields:
+        application_date: "Application date"
+        application_number: "Application number"
+        patent_number: "Patent number"
+        patent_grant_date: "Grant date"
+        ep_appl_number: "EP application number"
+        ep_number: "EP number"
+    design:
+      fields:
+        application_date: "Application date"
+        application_number: "Application number"
+        design_number: "Design number"
+        rdc_appl_number: "RDC Application number"
+        rdc_number: "RDC number"
+    legal:
+      fields:
+        opposite_party_agent: "Opposite party agent"
+        opposite_party: "Opposite party"
+        opposed_marks: "Opposed marks"
+        legal_type: "Legal type"
+        instance: "Instance"
+        date_of_closure: "Date of closure"
+    custom:
+      fields:
+        date_of_order_alert: "Date of order alert"
+        ca_application_date: "CA application date"
+        ca_application_number: "CA application number"
+        client_all_ip: "Client (all IP)"
+    patent_search:
+      fields:
+        patent_eq_numbers: "Patent eq numbers"
+        no_of_patents: Number of patents
+        date_of_order: Date of order        
+    search:
+      fields:
+        search_for: "Search for"
+        no_of_objects: "Number of objects"
+        express_search: "Express search"
+        date_of_order: "Date of order"        
+    domain:
+      fields:
+        domain_name: "Domain name"
+        registration_date: "Registration date"        

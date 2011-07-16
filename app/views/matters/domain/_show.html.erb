@@ -1,41 +1,48 @@
-<%= fields.fields_for :matter do |m_f| %>
-	<%= m_f.fields_for :domain do |t_f| %>
-		<%= t_f.hidden_field :matter_id %>
+<ul class="fields-show">
+	<li>
+		<dl>
+			<%= render :partial => "shared/matter/matter_number_show", :locals => {:matter 	=> matter}%>
+		</dl>
+	</li>
+	<li>
 		<ul>
 			<li>
-				<%= render :partial => "shared/matter/matter_number_field", :locals => {:fields 	=> fields}%>
+				<h3><%=t('header.customer_information')%></h3>
 			</li>
 			<li>
-				<ul>
-					<li>
-						<h3>Customer information</h3>
-					</li>
-					<li>
-						<%= render :partial => "shared/matter/agent_field", :locals => {:fields 	=> m_f}%>
-					</li>
-					<li>
-						<%= render :partial => "shared/matter/applicant_field", :locals => {:fields 	=> m_f}%>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<ul>
-					<li>
-						<h3>Domain details</h3>
-					</li>
-					<li>
-						<%= t_f.label :domain_name %>
-						<%= t_f.text_field :domain_name %>
-					</li>					
-					<li>
-						<%= t_f.label :registration_date %>
-						<%= t_f.text_field :registration_date, :class => 'field-date' %>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<%= render :partial => "shared/matter/notes_field", :locals => {:fields 	=> fields}%>
+				<dl>
+					<%= render :partial => "shared/matter/agent_show", :locals => {:matter 	=> matter}%>
+					<%= render :partial => "shared/matter/applicant_show", :locals => {:matter 	=> matter}%>
+				</dl>
 			</li>
 		</ul>
-	<%end%>
-<%end%> 
+	</li>
+	<li>
+		<ul>
+			<li>
+				<h3><%=t('header.domain_details')%></h3>
+			</li>
+			<li>
+				<dl>
+					<dt>
+						<label><%= t('matter.domain.fields.domain_name')%></label>
+					</dt>
+					<dd>
+						<%= matter.domain.domain_name %>&nbsp;
+					</dd>
+					<dt>
+						<label><%= t('matter.domain.fields.registration_date')%></label>
+					</dt>
+					<dd>
+						<%= matter.domain.registration_date %>&nbsp;
+					</dd>
+				</dl>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<dl>
+			<%= render :partial => "shared/matter/notes_show", :locals => {:matter 	=> matter}%>
+		</dl>
+	</li>
+</ul>

@@ -17,8 +17,21 @@
 #
 
 class Legal < ActiveRecord::Base
+
   belongs_to :matter
   belongs_to :legal_type
+  belongs_to :opposite_party, :class_name => 'Customer', :foreign_key => :opposite_party_id
+  belongs_to :opposite_party_agent, :class_name => 'Customer', :foreign_key => :opposite_party_agent_id
+  
+  attr_accessor :opposite_party_name, :opposite_party_agent_name
+  
+  def opposite_party_name
+    opposite_party.name unless opposite_party.nil?
+  end
+  
+  def opposite_party_agent_name
+    opposite_party_agent.name unless opposite_party_agent.nil?
+  end  
   
   after_create :generate_registration_number
   

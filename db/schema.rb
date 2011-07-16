@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110715104813) do
+ActiveRecord::Schema.define(:version => 20110716154052) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -247,8 +247,6 @@ ActiveRecord::Schema.define(:version => 20110715104813) do
     t.string   "opposed_marks"
     t.string   "instance"
     t.date     "date_of_closure"
-    t.integer  "oposing_party_id"
-    t.integer  "oposing_party_agent_id"
     t.integer  "opposite_party_id"
     t.integer  "opposite_party_agent_id"
     t.integer  "legal_type_id"

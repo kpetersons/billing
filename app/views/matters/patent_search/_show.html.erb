@@ -1,48 +1,54 @@
-<%= fields.fields_for :matter do |m_f| %>
-	<%= m_f.fields_for :patent_search do |t_f| %>
-		<%= t_f.hidden_field :matter_id %>
+<ul class="fields-show">
+	<li>
+		<dl>
+			<%= render :partial => "shared/matter/matter_number_show", :locals => {:matter 	=> matter}%>
+		</dl>
+	</li>
+	<li>
 		<ul>
 			<li>
-				<%= render :partial => "shared/matter/matter_number_field", :locals => {:fields 	=> fields}%>
+				<h3><%=t('header.customer_information')%></h3>
 			</li>
 			<li>
-				<%= render :partial => "shared/matter/description_field", :locals => {:fields 	=> fields}%>				
-			</li>						
-			<li>
-				<ul>
-					<li>
-						<h3>Customer information</h3>
-					</li>
-					<li>
-						<%= render :partial => "shared/matter/agent_field", :locals => {:fields 	=> m_f}%>
-					</li>
-					<li>
-						<%= render :partial => "shared/matter/applicant_field", :locals => {:fields 	=> m_f}%>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<ul>
-					<li>
-						<h3>Patent search details</h3>
-					</li>
-					<li>
-						<%= t_f.label :patent_eq_numbers %>
-						<%= t_f.text_field :patent_eq_numbers %>
-					</li>
-					<li>
-						<%= t_f.label :no_of_patents %>
-						<%= t_f.text_field :no_of_patents %>
-					</li>
-					<li>
-						<%= t_f.label :date_of_order %>
-						<%= t_f.text_field :date_of_order, :class => 'field-date' %>
-					</li>					
-				</ul>
-			</li>
-			<li>
-				<%= render :partial => "shared/matter/notes_field", :locals => {:fields 	=> fields}%>
+				<dl>
+					<%= render :partial => "shared/matter/agent_show", :locals => {:matter 	=> matter}%>
+					<%= render :partial => "shared/matter/applicant_show", :locals => {:matter 	=> matter}%>
+				</dl>
 			</li>
 		</ul>
-	<%end%>
-<%end%> 
+	</li>
+	<li>
+		<ul>
+			<li>
+				<h3><%=t('header.patent_search_details')%></h3>
+			</li>
+			<li>
+				<dl>
+					<dt>
+						<label><%= t('matter.patent_search.fields.patent_eq_numbers')%></label>
+					</dt>
+					<dd>
+						<%= matter.patent_search.patent_eq_numbers %>&nbsp;
+					</dd>
+					<dt>
+						<label><%= t('matter.patent_search.fields.no_of_patents')%></label>
+					</dt>
+					<dd>
+						<%= matter.patent_search.no_of_patents %>&nbsp;
+					</dd>
+					<dt>
+						<label><%= t('matter.patent_search.fields.date_of_order')%></label>
+					</dt>
+					<dd>
+						<%= matter.patent_search.date_of_order %>&nbsp;
+					</dd>
+				</dl>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<dl>
+			<%= render :partial => "shared/matter/notes_show", :locals => {:matter 	=> matter}%>
+		</dl>
+	</li>
+</ul>

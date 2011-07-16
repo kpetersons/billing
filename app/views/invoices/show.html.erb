@@ -104,6 +104,7 @@
 				<th class="col-number" style="width:1em">Fee</th>
 				<th class="col-text" style="width:1em">Attorneys fee type</th>
 				<th class="col-number" style="width:1em">Fee</th>
+				<th class="col-number" style="width:1em">Units</th>				
 				<th class="col-text" style="width:1em">Offering</th>				
 				<th class="col-number" style="width:1em">Details</th>
 				<th class="col-text" style="width:1em"></th>
@@ -113,18 +114,18 @@
 			<tr>
 				<th class="col-text">Sub total</th>
 				<th class="col-number"><%=@document.invoice.sum_official_fees%></th>
-				<th colspan="2" class="col-number"><%=@document.invoice.sum_attorney_fees%></th>
+				<th colspan="3" class="col-number"><%=@document.invoice.sum_attorney_fees%></th>
 				<th colspan="3"></th>
 			</tr>
 			<tr>
 				<th class="col-text">Total</th>
 				<th class="col-number"><%=@document.invoice.sum_total_fees%></th>
 				<th class="col-text">Total with discount</th>
-				<th colspan="3" class="col-number"><%=@document.invoice.after_discount%></th>
+				<th colspan="4" class="col-number"><%=@document.invoice.after_discount%></th>
 				<th class="col-text"></th>								
 			</tr>
 			<tr>
-				<th colspan="7">
+				<th colspan="8">
 				<div class="panel-footer controls">
 					<%= i_f.submit 'Save lines'%>
 				</div>

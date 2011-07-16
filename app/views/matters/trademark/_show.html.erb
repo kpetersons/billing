@@ -1,64 +1,96 @@
-<dl>
-	<%= render :partial => "shared/matter/matter_number_show", :locals => {:matter 	=> matter}%>
-	<%= render :partial => "shared/matter/matter_description_show", :locals => {:matter 	=> matter}%>
-	<dt>
-		<h3>Customer information</h3>
-	</dt>
-	<%= render :partial => "shared/matter/agent_show", :locals => {:matter 	=> matter}%>
-	<%= render :partial => "shared/matter/applicant_show", :locals => {:matter 	=> matter}%>
-	<dt>
-		<h3>Application details</h3>
-	</dt>
-	<dt>
-		<label><%=t('matter.trademark.fields.mark_name')%></label>		
-	</dt>
-	<dd>
-		<%=matter.trademark.mark_name%>&nbsp;
-	</dd>
-	<dt>
-		<label><%=t('matter.trademark.fields.appl_date')%></label>
-	</dt>
-	<dd>
-		<%=matter.trademark.appl_date%>&nbsp;
-	</dd>
-	<dt>
-		<label><%=t('matter.trademark.fields.appl_number')%></label>
-	</dt>
-	<dd>
-		<%=matter.trademark.appl_number%>&nbsp;
-	</dd>
-	<dt>
-		<label><%=t('matter.trademark.fields.priority_date')%></label>		
-	</dt>
-	<dd>
-		<%= matter.trademark.priority_date %>&nbsp;
-	</dd>
-	<dt>
-		<h3>Trademark data</h3>
-	</dt>
-	<dt>
-		<label><%=t('matter.trademark.fields.cfe_index')%></label>
-	</dt>
-	<dd>
-		<%= matter.trademark.cfe_index %>&nbsp;
-	</dd>
-	<dt>
-		<label><%=t('matter.trademark.fields.ctm_number')%></label>
-	</dt>
-	<dd>
-		<%= matter.trademark.ctm_number %>&nbsp;
-	</dd>
-	<dt>
-		<label><%=t('matter.trademark.fields.wipo_number')%></label>
-	</dt>
-	<dd>
-		<%= matter.trademark.wipo_number %>&nbsp;
-	</dd>
-	<dt>
-		<label><%=t('matter.trademark.fields.reg_number')%></label>
-	</dt>
-	<dd>
-		<%= matter.trademark.reg_number %>&nbsp;
-	</dd>
-	<%= render :partial => "shared/matter/notes_show", :locals => {:matter 	=> matter}%>
-</dl>
+<ul class="fields-show">
+	<li>
+		<dl>
+			<%= render :partial => "shared/matter/matter_number_show", :locals => {:matter 	=> matter}%>
+			<%= render :partial => "shared/matter/matter_description_show", :locals => {:matter 	=> matter}%>
+		</dl>
+	</li>
+	<li>
+		<ul>
+			<li>
+				<h3><%=t('header.customer_information')%></h3>
+			</li>
+			<li>
+				<dl>
+					<%= render :partial => "shared/matter/agent_show", :locals => {:matter 	=> matter}%>
+					<%= render :partial => "shared/matter/applicant_show", :locals => {:matter 	=> matter}%>
+				</dl>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<ul>
+			<li>
+				<h3><%=t('header.application_details')%></h3>
+			</li>
+			<li>
+				<dl>
+					<dt>
+						<label><%= t('matter.trademark.fields.mark_name')%></label>
+					</dt>
+					<dd>
+						<%= matter.trademark.mark_name%>&nbsp;
+					</dd>
+					<dt>
+						<label><%= t('matter.trademark.fields.appl_date')%></label>
+					</dt>
+					<dd>
+						<%= matter.trademark.appl_date%>&nbsp;
+					</dd>
+					<dt>
+						<label><%= t('matter.trademark.fields.appl_number')%></label>
+					</dt>
+					<dd>
+						<%= matter.trademark.appl_number%>&nbsp;
+					</dd>
+					<dt>
+						<label><%= t('matter.trademark.fields.priority_date')%></label>
+					</dt>
+					<dd>
+						<%= matter.trademark.priority_date %>&nbsp;
+					</dd>
+				</dl>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<ul>
+			<li>
+				<h3><%=t('header.trademark_data')%></h3>
+			</li>
+			<li>
+				<dl>
+					<dt>
+						<label><%= t('matter.trademark.fields.cfe_index')%></label>
+					</dt>
+					<dd>
+						<%= matter.trademark.cfe_index %>&nbsp;
+					</dd>
+					<dt>
+						<label><%= t('matter.trademark.fields.ctm_number')%></label>
+					</dt>
+					<dd>
+						<%= matter.trademark.ctm_number %>&nbsp;
+					</dd>
+					<dt>
+						<label><%= t('matter.trademark.fields.wipo_number')%></label>
+					</dt>
+					<dd>
+						<%= matter.trademark.wipo_number %>&nbsp;
+					</dd>
+					<dt>
+						<label><%= t('matter.trademark.fields.reg_number')%></label>
+					</dt>
+					<dd>
+						<%= matter.trademark.reg_number %>&nbsp;
+					</dd>
+				</dl>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<dl>
+			<%= render :partial => "shared/matter/notes_show", :locals => {:matter 	=> matter}%>
+		</dl>
+	</li>
+</ul>

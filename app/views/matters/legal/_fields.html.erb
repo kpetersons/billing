@@ -27,13 +27,11 @@
 						<h3>Opposite party data</h3>
 					</li>
 					<li>
-						<%= t_f.label :opposite_party_agent_id %>
-						<%= t_f.text_field :opposite_party_agent_id %>
+						<%= render :partial => "matters/legal/opposite_party_agent_field", :locals => {:fields 	=> t_f}%>
 					</li>
 					<li>
-						<%= t_f.label :opposite_party_id %>
-						<%= t_f.text_field :opposite_party_id %>
-					</li>					
+						<%= render :partial => "matters/legal/opposite_party_field", :locals => {:fields 	=> t_f}%>
+					</li>
 				</ul>
 			</li>			
 			<li>
