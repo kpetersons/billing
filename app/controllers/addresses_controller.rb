@@ -1,6 +1,7 @@
 class AddressesController < ApplicationController
 
   layout "customers"
+   
   def index
     @addresses = Address.all()
   end
@@ -14,6 +15,10 @@ class AddressesController < ApplicationController
     @individual = ContactPerson.find(individual_id) unless individual_id.nil?
     @user = User.find(user_id) unless user_id.nil?    
     @path_elements = [@customer, @individual, @user]
+    
+    @party = @customer.party unless customer_id.nil?
+    @party = @individual.party unless individual_id.nil?    
+    @party = @user.individual.party unless user_id.nil?     
   end
 
   def create
@@ -30,6 +35,14 @@ class AddressesController < ApplicationController
     @party = @individual.party unless individual_id.nil?    
     @party = @user.individual.party unless user_id.nil?    
     Address.transaction do
+      unless @address.address_type_name.nil? && @address.address_type_name.empty?
+        if AddressType.exists?(:name => @address.address_type_name)
+          @address.address_type_id = AddressType.find_by_name(@address.address_type_name)
+        else
+          @address_type = AddressType.create(:name => @address.address_type_name, :party_id => @party.id, :built_in => false)
+          @address.address_type_id = @address_type.id
+        end
+      end
       if @party.addresses<<@address
         redirect_to @path_elements  and return
       end
@@ -46,6 +59,10 @@ class AddressesController < ApplicationController
     @individual = ContactPerson.find(individual_id) unless individual_id.nil?
     @user = User.find(user_id) unless user_id.nil?    
     @path_elements = [@customer, @individual, @user]
+    
+    @party = @customer.party unless customer_id.nil?
+    @party = @individual.party unless individual_id.nil?    
+    @party = @user.individual.party unless user_id.nil?     
   end
 
   def update
@@ -59,6 +76,14 @@ class AddressesController < ApplicationController
     #
     @path_elements = [@customer, @individual, @user]
     Address.transaction do
+      unless @address.address_type_name.nil? && @address.address_type_name.empty?
+        if AddressType.exists?(:name => @address.address_type_name)
+          @address.address_type_id = AddressType.find_by_name(@address.address_type_name)
+        else
+          @address_type = AddressType.create(:name => @address.address_type_name, :party_id => @party.id, :built_in => false)
+          @address.address_type_id = @address_type.id
+        end
+      end      
       if @address.update_attributes(params[:address])
         redirect_to @path_elements and return
       end
@@ -77,5 +102,5 @@ class AddressesController < ApplicationController
     @path_elements = [@customer, @individual, @user]
     render "show" and return
   end
-  
+
 end

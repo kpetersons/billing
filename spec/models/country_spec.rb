@@ -1,17 +1,15 @@
 # == Schema Information
 #
-# Table name: address_types
+# Table name: countries
 #
 #  id         :integer(4)      not null, primary key
 #  name       :string(255)
-#  built_in   :boolean(1)
 #  created_at :datetime
 #  updated_at :datetime
-#  party_id   :integer(4)
 #
 
 require 'spec_helper'
 
-describe AddressType do
+describe Country do
   pending "add some examples to (or delete) #{__FILE__}"
 end

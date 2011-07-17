@@ -9,8 +9,6 @@
 #  opposed_marks           :string(255)
 #  instance                :string(255)
 #  date_of_closure         :date
-#  oposing_party_id        :integer(4)
-#  oposing_party_agent_id  :integer(4)
 #  opposite_party_id       :integer(4)
 #  opposite_party_agent_id :integer(4)
 #  legal_type_id           :integer(4)

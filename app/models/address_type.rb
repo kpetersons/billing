@@ -1,5 +1,4 @@
 # == Schema Information
-# Schema version: 20110615122529
 #
 # Table name: address_types
 #
@@ -8,7 +7,14 @@
 #  built_in   :boolean(1)
 #  created_at :datetime
 #  updated_at :datetime
+#  party_id   :integer(4)
 #
 
 class AddressType < ActiveRecord::Base
+  belongs_to :party
+  
+  def self.for_party party
+    where("party_id = :party or built_in = :built_in", {:party => party[:party].id, :built_in => true}).all
+  end
+  
 end

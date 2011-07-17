@@ -772,10 +772,32 @@ AttorneyFeeType.transaction do
   end
 end
 
+Country.transaction do
+countries = [
+'Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola', 'Anguilla', 'Antarctica', 'Antigua and Barbuda', 'Arctic Ocean', 'Argentina', 'Armenia', 'Aruba', 'Ashmore and Cartier Islands', 'Atlantic Ocean', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Baltic Sea', 'Baker Island', 'Bangladesh', 'Barbados', 'Bassas da India', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Borneo', 'Bosnia and Herzegovina', 'Botswana', 'Bouvet Island', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Cayman Islands', 'Central African Republic', 'Chad', 'Chile', 'China', 'Christmas Island', 'Clipperton Island',
+'Cocos Islands', 'Colombia', 'Comoros', 'Cook Islands', 'Coral Sea Islands', 'Costa Rica', 'Cote d''Ivoire', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Democratic Republic of the Congo', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Europa Island', 'Falkland Islands (Islas Malvinas)', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Guiana', 'French Polynesia', 'French Southern and Antarctic Lands', 'Gabon', 'Gambia', 'Gaza Strip', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Glorioso Islands', 'Greece', 'Greenland', 'Grenada', 'Guadeloupe', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 
+'Heard Island and McDonald Islands', 'Honduras', 'Hong Kong', 'Howland Island', 'Hungary', 'Iceland', 'India', 'Indian Ocean', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Jan Mayen', 'Japan', 'Jarvis Island', 'Jersey', 'Johnston Atoll', 'Jordan', 'Juan de Nova Island', 'Kazakhstan', 'Kenya', 'Kerguelen Archipelago', 'Kingman Reef', 'Kiribati', 'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Martinique', 'Mauritania', 'Mauritius', 'Mayotte', 'Mediterranean Sea', 'Mexico', 'Micronesia', 'Midway Islands',
+'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 
+'Myanmar', 'Namibia', 'Nauru', 'Navassa Island', 'Nepal', 'Netherlands', 'Netherlands Antilles', 'New Caledonia',
+'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Niue', 'Norfolk Island', 'North Korea', 'North Sea', 'Northern Mariana Islands',
+'Norway', 'Oman', 'Pacific Ocean', 'Pakistan', 'Palau', 'Palmyra Atoll', 'Panama', 'Papua New Guinea', 'Paracel Islands', 'Paraguay', 'Peru', 'Philippines', 'Pitcairn Islands', 'Poland', 'Portugal',
+'Puerto Rico', 'Qatar', 'Republic of the Congo', 'Reunion', 'Romania', 'Ross Sea', 'Russia', 'Rwanda', 'Saint Helena', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Pierre and Miquelon', 'Saint Vincent and the Grenadines',
+'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Georgia and the South Sandwich Islands','South Korea',
+'Southern Ocean', 'Spain', 'Spratly Islands', 'Sri Lanka', 'Sudan', 'Suriname', 'Svalbard', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Tasman Sea', 'Thailand', 'Togo', 'Tokelau','Tonga', 'Trinidad and Tobago',
+'Tromelin Island', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks and Caicos Islands', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'Uruguay',
+'USA', 'Uzbekistan', 'Vanuatu', 'Venezuela', 'Viet Nam', 'Virgin Islands', 'Wake Island', 'Wallis and Futuna', 'West Bank', 'Western Sahara',
+'Yemen', 'Zambia', 'Zimbabwe'
+]
+
+  countries.each do |country|
+    Country.create(:name => country) unless !Country.find_by_name(country).nil?
+  end
+end
+
 Customer.transaction do
   customers = [
 ["Agent","A. A. Thornton & Co.","GB232930088","235 High Holborn","London WC1V 7LE","","UNITED KINGDOM"],
-["Agent","Ab Ovo Patents & Trademarks","NL806653772B01","","","","THE NETHERLANDS"],
+["Agent","Ab Ovo Patents & Trademarks","NL806653772B01","","","","NETHERLANDS"],
 ["Agent","ABG Patentes, S.L.","ESB83769737","","","","SPAIN"],
 ["Agent","Adamed sp. Z.o.o.","PL5251032201","Pienkow 149","05-152 Czosnow k/Warszawy","","POLAND"],
 ["Agent","Addleshaw Goddard LPP","GB873199680","","","","UNITED KINGDOM"],
@@ -824,7 +846,7 @@ Customer.transaction do
 ["Agent","Compu-Mark NV","BE0422317610","","","","BELGIUM"],
 ["Agent","CONIMAR AB","SE556306118201","Stationsvagen 29","S-141 02 Huddinge","","SWEDEN"],
 ["Agent","Cornelia Stoppkotte","DE185430025","","","","GERMANY"],
-["Agent","Creative Brands C.V.","NL812585379B01","","","","THE NETHERLANDS"],
+["Agent","Creative Brands C.V.","NL812585379B01","","","","NETHERLANDS"],
 ["Agent","CURELL SUNOL SLP","ESB08503963","","","","SPAIN"],
 ["Agent","Čermak Horejs Myslil a spol","CZ27109500","","","","CZECH REPUBLIC"],
 ["Agent","Červenka, Kleintova, Turkova","CZ5553070094","","","","CZECH REPUBLIC"],
@@ -899,7 +921,7 @@ Customer.transaction do
 ["Owner","Martel & CO","FR67342438892","","","","FRANCE"],
 ["Owner","MAVIC S.A.S.","FR09515155844","","","","FRANCE"],
 ["Agent","MCR Ricerche","IT13143070152","","","","ITALY"],
-["Agent","Merkenbureau Knijff & Partners BV","NL007033199B01","P.O. Box 5054","1380 GB WEESP","","THE NETHERLANDS"],
+["Agent","Merkenbureau Knijff & Partners BV","NL007033199B01","P.O. Box 5054","1380 GB WEESP","","NETHERLANDS"],
 ["Owner","Merz GmbH & Co. KGaA","DE813402129","Eckenheimer Landstrasse 100","D-60318 Frankfurt / Main","","GERMANY"],
 ["Agent","METIDA Law firm of Reda Žaboliene","LT100002043411","","","","LITHUANIA"],
 ["Agent","Mewburn Ellis LLP","GB233114903","33 Gutter Lane","London EC2V 8AS","","UNITED KINGDOM"],
@@ -925,7 +947,7 @@ Customer.transaction do
 ["Agent","Perfetti van Melle S.p.A","IT04219660158","Via XXV Aprile 7","Lainate 20020","","ITALY"],
 ["Owner","PharmIdea Eesti OU","EE101333427","1/3 Estonia Pst.","Tallin, 10143","","ESTONIA"],
 ["Agent","Philips & Leigh","GB232702496","","","","UNITED KINGDOM"],
-["Agent","PHS General Design Services B.V.","NL812104389B01","PO Box 12222","Amsterdam 1100 AE","","THE NETHERLANDS"],
+["Agent","PHS General Design Services B.V.","NL812104389B01","PO Box 12222","Amsterdam 1100 AE","","NETHERLANDS"],
 ["Agent","PMR Avocats","FR02487660060","153 boulevar Haussmann","75008 Paris","","FRANCE"],
 ["Agent","Polmos Bialystok S.A.","PL5420201558","","","","POLAND"],
 ["Owner","POLPHARMA SA","PL5920202822","","","","POLAND"],
@@ -966,8 +988,8 @@ Customer.transaction do
 ["Agent","Uexull & Stolberg","DE118166268","","","","GERMANY"],
 ["Agent","USTERVALL","EE100022205","","","","ESTONIA"],
 ["Agent","Valdorfo Didmenos UAB","LT249370416","V.Sirokomles g. 36","Nemezio gyv., Vilniaus raj., LT-13260","","LITHUANIA"],
-["Agent","VEREENIGDE","NL002877168B01","","","","THE NETHERLANDS"],
-["Owner","VION N.V.","NL001665455B01","","","","THE NETHERLANDS"],
+["Agent","VEREENIGDE","NL002877168B01","","","","NETHERLANDS"],
+["Owner","VION N.V.","NL001665455B01","","","","NETHERLANDS"],
 ["Agent","Wallach, Koch, Dr. Haibach, Feldkamp","DE129991350","Garmischer Str. 4,","80339, Munchen","","GERMANY"],
 ["Agent","Weickmann & Weickmann","DE130753315","","","","GERMANY"],
 ["Agent","Wilson Gunn | Patent and Trademark Attorneys","GB306164289","5th Floor, Blackfriars House","The Parsonage, Manchester M3 2JA","","UNITED KINGDOM"],
@@ -976,7 +998,7 @@ Customer.transaction do
 ["Agent","Worldwide Brands, Inc.","DE122787403","","","","GERMANY"],
 ["Owner","YVES SAINT LAURENT","FR76429057276","7, avenue George V","F-75008 Paris","","FRANCE"],
 ["Agent","Zacco Denmark A/S","DK21624683","Hans-Bekkevolds Alle 7","DK-2900 Hellerup","","DENMARK"],
-["Agent","Zacco Netherlands BV","NL009402627B01","","","","THE NETHERLANDS"],
+["Agent","Zacco Netherlands BV","NL009402627B01","","","","NETHERLANDS"],
 ["Agent","ZBM Patents, S.L.","ESB63357735","Pl. Catalunya, 1","08002 Barcelona","","SPAIN"]
   ]
   customers.each do |company|
@@ -994,8 +1016,8 @@ Customer.transaction do
    })
     puts @result.errors unless @result.errors.empty?
     if @result.save
-      unless !Address.where(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country => company[6], :city => company[3], :street => company[4], :house_number => company[5]).first.nil?
-        @address = Address.new(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country => company[6], :city => company[3], :street => company[4], :house_number => company[5])
+      unless !Address.where(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country_id => Country.find_by_name(company[6]).id, :city => company[3], :street => company[4], :house_number => company[5]).first.nil?
+        @address = Address.new(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country_id => Country.find_by_name(company[6]).id, :city => company[3], :street => company[4], :house_number => company[5])
         puts @address.errors unless @address.errors.empty?
         @address.save
       end

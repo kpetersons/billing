@@ -3,13 +3,15 @@
 		<label> Parent matter </label>
 	</dt>
 	<dd>
-		<%= link_to matter.document.parent_document_registration_number, matter_path(matter.document.parent_document)%>&nbsp;
+		<%unless matter.document.parent_document.nil? %>
+		<%= link_to matter.document.parent_document_registration_number, matter_path(matter.document.parent_document.matter)%>&nbsp;
+		<%end%>
 	</dd>
 	<dt>
 		<label> Linked matters </label>
 	</dt>
 	<dd>
-		<%= render :partial => "/matters/linked/item", :as => :matter, :collection => matter.linked, :spacer_template => "shared/ui/comma_spacer" %>
+		<%= render :partial => "/matters/linked/item", :as => :matter, :collection => matter.all_linked(:parent => nil), :spacer_template => "shared/ui/comma_spacer" %>
 	</dd>
 	<dd class="show">
 		<%= render :partial => "/matters/linked/form" %>

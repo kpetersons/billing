@@ -4,7 +4,8 @@ en:
       f:  "No"    
   basic:
     yes: "Yes"
-    no: "No"  
+    no: "No"
+    or: "Or"  
   application:
     name: "PetPat billing"
     login: "login"

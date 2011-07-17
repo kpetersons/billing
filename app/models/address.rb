@@ -1,12 +1,10 @@
 # == Schema Information
-# Schema version: 20110615122529
 #
 # Table name: addresses
 #
 #  id              :integer(4)      not null, primary key
 #  party_id        :integer(4)
 #  address_type_id :integer(4)
-#  country         :string(255)
 #  city            :string(255)
 #  street          :string(255)
 #  house_number    :string(255)
@@ -15,18 +13,22 @@
 #  po_box          :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime
+#  country_id      :integer(4)
 #
 
 class Address < ActiveRecord::Base
   belongs_to :address_type
   belongs_to :party
+  belongs_to :country
   
-  validates :country, :presence => true
+  validates :country_id, :presence => true
   validates :city, :presence => true
   validates :street, :presence => true
 
+  attr_accessor :address_type_name
+
   def name
-    "#{city}, #{street}, #{house_number}, #{post_code}, #{country}"    
+    "#{city}, #{street}, #{house_number}, #{post_code}, #{country.name}"    
   end
   
 end

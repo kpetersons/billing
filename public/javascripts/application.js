@@ -8,9 +8,6 @@ function setDropDown(field, data, method) {
 	});
 }
 
-// event.observe($$(".field-date"), 
-	// 'click', 
-	// function(e) {
-		// alert(e);
-	// }
-// )
+Event.observe($('document_matter_attributes_legal_attributes_date_of_closure'), 'blur', function(evt) {
+	alert(evt);
+})
