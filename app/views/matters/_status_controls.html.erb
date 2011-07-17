@@ -1,10 +1,12 @@
-<div class="status-controls">
+<div class="status-controls" style="margin-left:2em;">
 	<% matter.available_statuses.each do |status|%>
-		<div class="status-control">
-			<%=form_for status, :url => flow_matter_path(matter), do |f| %>
-				<%=f.hidden_field :id%>				
-				<%= render :partial => "shared/ui/form-submit-controls_name", :locals => {:name=>  t(status.name), :fields => f} %>				
-			<%end%>
-		</div>
+		<% if has_function :name => "funct.#{status.name}"%>
+			<div class="status-control">
+				<%=form_for status, :url => flow_matter_path(matter), do |f| %>
+					<%=f.hidden_field :id%>				
+					<%= render :partial => "shared/ui/form-submit-controls_name", :locals => {:name=>  t(status.name), :fields => f} %>				
+				<%end%>
+			</div>
+		<%end%>
 	<%end%>
 </div>

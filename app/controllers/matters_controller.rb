@@ -44,7 +44,7 @@ class MattersController < ApplicationController
     if @matter_type.name.eql?("matters.domain")
       @document.matter.domain = Domain.new
     end    
-    @document.matter.matter_images<<MatterImage.new
+#    @document.matter.matter_images<<MatterImage.new
   end
 
   def create
@@ -61,7 +61,7 @@ class MattersController < ApplicationController
 
   def edit
     @document = Matter.find(params[:id]).document
-    @document.matter.matter_images<<MatterImage.new unless !@document.matter.matter_images.empty?
+#    @document.matter.matter_images<<MatterImage.new unless !@document.matter.matter_images.empty?
   end
 
   def update
