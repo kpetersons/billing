@@ -29,7 +29,7 @@
 						<label><%= t('matter.design.fields.application_date')%></label>
 					</dt>
 					<dd>
-						<%= matter.design.application_date%>&nbsp;
+						<%= matter.design.application_date.to_s(:show) unless matter.design.application_date.nil?%>&nbsp;
 					</dd>
 					<dt>
 						<label><%= t('matter.design.fields.application_number')%></label>

@@ -46,7 +46,7 @@
 						<label><%= t('matter.search.fields.date_of_order')%></label>
 					</dt>
 					<dd>
-						<%= matter.search.date_of_order %>&nbsp;
+						<%= matter.search.date_of_order.to_s(:show) unless matter.search.date_of_order.nil? %>&nbsp;
 					</dd>
 				</dl>
 			</li>

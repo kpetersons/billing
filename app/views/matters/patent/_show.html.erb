@@ -28,7 +28,7 @@
 						<label><%= t('matter.patent.fields.application_date')%></label>
 					</dt>
 					<dd>
-						<%= matter.patent.application_date%>&nbsp;
+						<%= matter.patent.application_date.to_s(:show) unless matter.patent.application_date.nil?%>&nbsp;
 					</dd>
 					<dt>
 						<label><%= t('matter.patent.fields.application_number')%></label>
@@ -57,7 +57,7 @@
 						<label><%= t('matter.patent.fields.patent_grant_date')%></label>
 					</dt>
 					<dd>
-						<%= matter.patent.patent_grant_date %>&nbsp;
+						<%= matter.patent.patent_grant_date.to_s(:show) unless matter.patent.patent_grant_date.nil? %>&nbsp;
 					</dd>
 					<dt>
 						<label><%= t('matter.patent.fields.ep_appl_number')%></label>

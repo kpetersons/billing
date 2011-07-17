@@ -33,7 +33,7 @@
 		<label> Birth date </label>
 	</dt>
 	<dd>
-		<%= @user.individual.birth_date%>&nbsp;
+		<%= @user.individual.birth_date.to_s(:show) unless @user.individual.birth_date.nil?%>&nbsp;
 	</dd>
 	<dt>
 		<label> Initials </label>

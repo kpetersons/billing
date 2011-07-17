@@ -33,6 +33,6 @@
 		<label><%=t("individual.fields.birth_date")%></label>
 	</dt>
 	<dd>
-		<%= @contact_person.birth_date%>&nbsp;
+		<%= @contact_person.birth_date.to_s(:show) unless @contact_person.birth_date.nil? %>&nbsp;
 	</dd>
 </dl>

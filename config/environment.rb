@@ -12,3 +12,7 @@ class ActiveRecord::Base
     10
   end
 end
+
+Date::DATE_FORMATS[:default] = "%d.%m.%Y"
+Date::DATE_FORMATS[:show] = "%d.%b.%Y"
+Date::DATE_FORMATS[:check] = "%d.%b.%Y"

@@ -19,7 +19,7 @@
 		<% matter_tasks.each do |matter_task|%>
 			<tr>
 				<td class="col-text"><%=matter_task.description%></td>
-				<td class="col-date"><%=matter_task.proposed_deadline%></td>
+				<td class="col-date"><%=matter_task.proposed_deadline.to_s(:show) unless matter_task.proposed_deadline.nil?%></td>
 				<td class="col-text">
 					<%= render :partial => "/invoices/number_index", :as => :invoice, :collection => (matter_task.invoices unless matter_task.invoices.empty?), :spacer_template => "shared/ui/comma_spacer" %>
 					<%=", " if matter_task.invoices.nil?%>					

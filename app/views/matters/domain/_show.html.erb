@@ -34,7 +34,7 @@
 						<label><%= t('matter.domain.fields.registration_date')%></label>
 					</dt>
 					<dd>
-						<%= matter.domain.registration_date %>&nbsp;
+						<%= matter.domain.registration_date.to_s(:show) unless matter.domain.registration_date.nil? %>&nbsp;
 					</dd>
 				</dl>
 			</li>

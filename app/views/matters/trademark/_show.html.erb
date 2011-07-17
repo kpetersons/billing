@@ -35,7 +35,7 @@
 						<label><%= t('matter.trademark.fields.appl_date')%></label>
 					</dt>
 					<dd>
-						<%= matter.trademark.appl_date%>&nbsp;
+						<%= matter.trademark.appl_date.to_s(:show) unless matter.trademark.appl_date.nil? %>&nbsp;
 					</dd>
 					<dt>
 						<label><%= t('matter.trademark.fields.appl_number')%></label>
@@ -47,7 +47,7 @@
 						<label><%= t('matter.trademark.fields.priority_date')%></label>
 					</dt>
 					<dd>
-						<%= matter.trademark.priority_date %>&nbsp;
+						<%= matter.trademark.priority_date.to_s(:show) unless matter.trademark.priority_date.nil? %>&nbsp;
 					</dd>
 				</dl>
 			</li>

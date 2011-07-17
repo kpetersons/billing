@@ -40,7 +40,7 @@
 						<label><%= t('matter.patent_search.fields.date_of_order')%></label>
 					</dt>
 					<dd>
-						<%= matter.patent_search.date_of_order %>&nbsp;
+						<%= matter.patent_search.date_of_order.to_s(:show) unless matter.patent_search.date_of_order.nil? %>&nbsp;
 					</dd>
 				</dl>
 			</li>

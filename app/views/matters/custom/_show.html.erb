@@ -29,13 +29,13 @@
 						<label><%= t('matter.custom.fields.date_of_order_alert')%></label>
 					</dt>
 					<dd>
-						<%= matter.custom.date_of_order_alert %>&nbsp;
+						<%= matter.custom.date_of_order_alert.to_s(:show) unless matter.custom.date_of_order_alert.nil? %>&nbsp;
 					</dd>
 					<dt>
 						<label><%= t('matter.custom.fields.ca_application_date')%></label>
 					</dt>
 					<dd>
-						<%= matter.custom.ca_application_date %>&nbsp;
+						<%= matter.custom.ca_application_date.to_s(:show) unless matter.custom.ca_application_date.nil? %>&nbsp;
 					</dd>
 					<dt>
 						<label><%= t('matter.custom.fields.ca_application_number')%></label>

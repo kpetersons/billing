@@ -27,7 +27,7 @@
 				<td class="col-text"><%=user.individual.last_name%></td>
 				<td class="col-check"><%= col_check user.id, user.active%></td>
 				<td class="col-check"><%= col_check user.id, user.blocked%></td>
-				<td class="col-date"><%=user.registration_date%></td>				
+				<td class="col-date"><%=user.registration_date.to_s(:show) unless user.registration_date.nil?%></td>				
 				<td class="col-number">
 				<%=link_to 'Show', user_path(user, :anchor => "addresses") %>
 				</td>

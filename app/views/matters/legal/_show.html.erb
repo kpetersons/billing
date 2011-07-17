@@ -59,7 +59,7 @@
 						<label><%= t('matter.legal.fields.date_of_closure')%></label>
 					</dt>
 					<dd>
-						<%= matter.legal.date_of_closure %>&nbsp;
+						<%= matter.legal.date_of_closure.to_s(:show) unless matter.legal.date_of_closure.nil?%>&nbsp;
 					</dd>
 				</dl>
 			</li>

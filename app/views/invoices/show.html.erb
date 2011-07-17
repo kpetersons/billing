@@ -56,7 +56,7 @@
 			<label> Your date </label>
 		</dt>
 		<dd>
-			<%= @document.invoice.your_date%>&nbsp;
+			<%= @document.invoice.your_date.to_s(:show) unless @document.invoice.your_date.nil?%>&nbsp;
 		</dd>
 		<dt>
 			<label> PO Billing </label>
@@ -68,7 +68,7 @@
 			<label> Invoice date </label>
 		</dt>
 		<dd>
-			<%= @document.invoice.invoice_date%>&nbsp;
+			<%= @document.invoice.invoice_date.to_s(:show) unless @document.invoice.invoice_date.nil?%>&nbsp;
 		</dd>
 		<dt>
 			<label> Subject </label>
