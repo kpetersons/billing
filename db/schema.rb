@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110717072732) do
+ActiveRecord::Schema.define(:version => 20110717095245) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -207,12 +207,22 @@ ActiveRecord::Schema.define(:version => 20110717072732) do
     t.datetime "updated_at"
   end
 
-  create_table "invoice_statuses", :force => true do |t|
-    t.string   "name"
-    t.string   "revert_to_name"
-    t.string   "pass_to_name"
+  create_table "invoice_status_flows", :force => true do |t|
+    t.integer  "revert_to_step_id"
+    t.integer  "current_step_id"
+    t.integer  "pass_to_step_id"
+    t.integer  "pass_to_function_id"
+    t.integer  "revert_to_function_id"
+    t.boolean  "start_state",           :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "invoice_statuses", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "function_id"
   end
 
   create_table "invoices", :force => true do |t|
@@ -283,12 +293,22 @@ ActiveRecord::Schema.define(:version => 20110717072732) do
     t.datetime "updated_at"
   end
 
-  create_table "matter_statuses", :force => true do |t|
-    t.string   "name"
-    t.string   "revert_to_name"
-    t.string   "pass_to_name"
+  create_table "matter_status_flows", :force => true do |t|
+    t.integer  "revert_to_step_id"
+    t.integer  "current_step_id"
+    t.integer  "pass_to_step_id"
+    t.integer  "pass_to_function_id"
+    t.integer  "revert_to_function_id"
+    t.boolean  "start_state",           :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "matter_statuses", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "function_id"
   end
 
   create_table "matter_task_status_flows", :force => true do |t|
@@ -306,8 +326,7 @@ ActiveRecord::Schema.define(:version => 20110717072732) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "revert_to_name"
-    t.string   "pass_to_name"
+    t.integer  "function_id"
   end
 
   create_table "matter_tasks", :force => true do |t|
@@ -318,7 +337,6 @@ ActiveRecord::Schema.define(:version => 20110717072732) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "author_id"
-    t.integer  "matter_task_status_flow_id"
   end
 
   create_table "matter_types", :force => true do |t|

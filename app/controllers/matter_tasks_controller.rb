@@ -7,8 +7,7 @@ class MatterTasksController < ApplicationController
   def new
     @matter_task = MatterTask.new(
     :matter_id => params[:matter_id],
-    :matter_task_status_id => MatterTaskStatusFlow.where(:start_state => true).first.current_step.id,
-    :matter_task_status_flow_id => MatterTaskStatusFlow.where(:start_state => true).first.id,
+    :matter_task_status_id => MatterTaskStatus.first.id,
     :author_id => current_user.id
     )
   end
@@ -45,22 +44,15 @@ class MatterTasksController < ApplicationController
   end
 
   def flow
-    @matter_task = MatterTask.find(params[:id])
-    @matter_task_status = MatterTaskStatus.find(params[:status])
+    @matter = Matter.find(params[:matter_id])
+    @matter_task = MatterTask.find(params[:id])    
     MatterTask.transaction do
-      if @matter_task.update_attribute(:matter_task_status_id, @matter_task_status.id)
-        puts "MatterTaskStatusFlow.where(:current_step_id => @matter_task_status.id).first #{MatterTaskStatusFlow.where(:current_step_id => @matter_task_status.id).first.id}"
-        if @matter_task.update_attribute(:matter_task_status_flow_id, MatterTaskStatusFlow.where(:current_step_id => @matter_task_status.id).first.id)
-          flash[:success] = t("matter.task.status.change.success")
-          redirect_to matter_path(@matter_task.matter, :anchor => :tasks)
-        else
-          flash[:error] = t("matter.task.status.change.failed")
-          redirect_to matter_path(@matter_task.matter)
-        end
+      if @matter_task.update_attribute(:matter_task_status_id, params[:matter_task_status][:id])
+        redirect_to matter_task_path(@matter, @matter_task) and return
       else
-        flash[:error] = t("matter.task.status.change.failed")
-        redirect_to matter_path(@matter_task.matter)
+        redirect_to matter_task_path(@matter, @matter_task) and return
       end
     end
   end
+
 end

@@ -95,6 +95,7 @@
 			<%= @document.invoice.payment_term %>&nbsp;
 		</dd>
 	</dl>
+	<%= render :partial => "status_controls", 		:locals => {:invoice 	=> @document.invoice}%>	
 	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
 	<%=form_for @document.invoice, :url => {:action => 'save_lines'}  do |i_f| %>
 	<table style="clear:left; height:auto; width: 100%;">
@@ -147,7 +148,4 @@
 		<%= i_f.submit 'Add line' %>		
 	</div>
 	<% end %>
-	<dl class="panel-content" style="clear:left">
-
-	</dl>
 </div>

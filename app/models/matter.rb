@@ -93,7 +93,7 @@ class Matter < ActiveRecord::Base
     end
   end
   
-  def matter_status_name
+  def status_name
     matter_status.name unless matter_status.nil?
   end
   
@@ -108,7 +108,20 @@ class Matter < ActiveRecord::Base
   def all_linked parent
     linked
   end
+
+  def available_statuses
+    MatterStatus.where("id != ?", [matter_status_id]).all
+  end
   
+  def has_invoices?
+    if invoices.empty?
+      return false;
+    end
+    if invoices.where(:invoice_status_id => InvoiceStatus.find_by_name('invoice.status.canceled').id).first.nil?
+      return false;
+    end
+    return true;
+  end
   
   private
   def prepare_ajax_fields

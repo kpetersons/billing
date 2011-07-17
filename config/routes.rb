@@ -19,6 +19,7 @@ Billing::Application.routes.draw do
       put :save_lines
       put :add_line
       delete :remove_line
+      put :flow
     end
   end
 
@@ -33,11 +34,12 @@ Billing::Application.routes.draw do
       get   :find_ajax
       post  :link
       post   :add_image
+      put :flow
     end    
     resources :invoices, :only => [:new]
     resources :tasks, :controller => "MatterTasks" do
       member do
-        get :flow
+        put :flow
       end
       resources :invoices, :only => [:new]
     end

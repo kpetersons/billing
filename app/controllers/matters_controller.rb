@@ -18,6 +18,7 @@ class MattersController < ApplicationController
     @document.matter = Matter.new(
     :matter_type_id => @matter_type.id,
     :operating_party_id => current_user.operating_party_id,
+    :matter_status_id => MatterStatus.first.id,
     :author_id => current_user.id)
     if @matter_type.name.eql?("matters.trademark")
       @document.matter.trademark = Trademark.new
@@ -158,6 +159,17 @@ class MattersController < ApplicationController
     end
     flash.now[:error] = "matter.error.image.added"
     redirect_to @matter and return
+  end
+
+  def flow
+    @matter = Matter.find(params[:id])    
+    Matter.transaction do
+      if @matter.update_attribute(:matter_status_id, params[:matter_status][:id])
+        redirect_to matter_path(@matter) and return
+      else
+        redirect_to matter_path(@matter) and return
+      end
+    end
   end
 
 end

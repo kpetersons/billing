@@ -6,7 +6,8 @@
 	<div class="panel-content">
 		<%= render :partial => "show", 					:locals => {:matter 	=> @matter}%>
 		<%= render :partial => "shared/matter/image", 	:locals => {:matter 	=> @matter}%>
-		<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_matter_path(@matter)} %>		
-	</div>	
+		<%= render :partial => "status_controls", 		:locals => {:matter 	=> @matter}%>		
+		<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_matter_path(@matter)} %>				
+	</div>
 	<%= render :partial => "shared/matter/accordion", 	:locals => {:matter 	=> @matter}%>	
 </div>

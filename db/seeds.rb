@@ -41,17 +41,25 @@ end
   ["funct.create.matters.trademark_search", true],
   ["funct.create.matters.patent_search", true],  
   ["funct.create.matters.domain", true],  
-  ["funct.set.to.open.matters.task", true],
-  ["funct.set.to.await.response.matters.task", true],
-  ["funct.set.to.cancel.matters.task", true],
-  ["funct.set.to.done.matters.task", true],
-  ["funct.revert.to.open.matters.task", true],
-  ["funct.revert.to.await.response.matters.task", true]
+  ["funct.matters.status.active", true],
+  ["funct.matters.status.pending", true],  
+  ["funct.matters.status.closed", true],  
+  ["funct.matters.status.appealed", true],  
+  ["funct.matters.task.status.open", true],
+  ["funct.matters.task.status.awaiting_response", true],
+  ["funct.matters.task.status.done", true],  
+  ["funct.matters.task.status.canceled", true]
 ]
 
 @invoice_functions = [
   ["funct.invoices.link", true],
-  ["funct.create.invoice", true]
+  ["funct.create.invoice", true],
+  ["funct.invoice.status.open", true],
+  ["funct.invoice.status.approved", true],
+  ["funct.invoice.status.issued", true],  
+  ["funct.invoice.status.canceled", true],  
+  ["funct.invoice.status.awaiting", true],  
+  ["funct.invoice.status.paid", true]
 ]
 
 @customer_functions = [
@@ -580,157 +588,33 @@ end
 
 InvoiceStatus.transaction do
   prefix = "invoice.status."  
-  invoice_statuses = [
-    ["re_open",            "open",              "pass_open"],
-    ["re_approved",           "approved",           "pass_approved"],
-    ["re_issued",              "issued",              "pass_issued"],
-    ["re_canceled",          "canceled",          "pass_canceled"],
-    ["re_awaiting",              "awaiting",              "pass_awaiting"],
-    ["re_paid",              "paid",              "pass_paid"]]
+  invoice_statuses = ["open","approved","issued","canceled","awaiting","paid"]
   invoice_statuses.each do |name|
-    unless InvoiceStatus.find_by_name(name[0])
-      InvoiceStatus.create(:revert_to_name => "#{prefix}#{name[0]}", :name => "#{prefix}#{name[1]}", :pass_to_name => "#{prefix}#{name[2]}")
+    unless InvoiceStatus.find_by_name("#{prefix}#{name}")
+      InvoiceStatus.create(:name => "#{prefix}#{name}", :function_id => Function.find_by_name("funct.#{prefix}#{name}").id)
     end
   end  
 end
 
 MatterStatus.transaction do
   prefix = "matters.status."  
-  matter_statuses = [
-    ["re_active",            "active",              "pass_active"],
-    ["re_pending",           "pending",           "pass_pending"],
-    ["re_done",              "closed",              "pass_closed"],
-    ["re_appealed",          "appealed",          "pass_appealed"]]
+  matter_statuses = ["active","pending","closed","appealed"]
   matter_statuses.each do |name|
-    unless MatterStatus.find_by_name(name[0])
-      MatterStatus.create(:revert_to_name => "#{prefix}#{name[0]}", :name => "#{prefix}#{name[1]}", :pass_to_name => "#{prefix}#{name[2]}")
+    unless MatterStatus.find_by_name("#{prefix}#{name}")
+      MatterStatus.create(:name => "#{prefix}#{name}", :function_id => Function.find_by_name("funct.#{prefix}#{name}").id)
     end
   end  
 end
 
-
 MatterTaskStatus.transaction do
   prefix = "matters.task.status."  
-  matter_task_statuses = [
-    ["re_open",              "open",              "pass_open"],
-    ["re_awaiting_response", "awaiting_response", "pass_awaiting_response"],
-    ["re_done",              "done",              "pass_done"],
-    ["re_canceled",          "canceled",          "pass_canceled"]]
+  matter_task_statuses = ["open","awaiting_response","done","canceled"]
   matter_task_statuses.each do |name|
-    unless MatterTaskStatus.find_by_name(name[0])
-      MatterTaskStatus.create(:revert_to_name => "#{prefix}#{name[0]}", :name => "#{prefix}#{name[1]}", :pass_to_name => "#{prefix}#{name[2]}")
+    unless MatterTaskStatus.find_by_name("#{prefix}#{name}")
+      MatterTaskStatus.create(:name => "#{prefix}#{name}", :function_id => Function.find_by_name("funct.#{prefix}#{name}").id)
     end
   end
 end
-
-MatterTaskStatusFlow.transaction do
-  prefix = "matters.task.status."
-  open =              MatterTaskStatus.find_by_name("#{prefix}open")
-  awaiting_response = MatterTaskStatus.find_by_name("#{prefix}awaiting_response")
-  done =              MatterTaskStatus.find_by_name("#{prefix}done")
-  canceled =          MatterTaskStatus.find_by_name("#{prefix}canceled")
-
-  # 1 * <->                 Open <->              Awaiting response  start state
-  # 2 * <->                 Open <->              Canceled
-  # 3 Open <->              Awaiting response <-> Done
-  # 4 Open <->              Canceled <->          *
-  # 5 Open <->              Awaiting response <-> Canceled
-  # 6 Awaiting response <-> Done <->              *
-  # 7 Awaiting response <-> Canceled <->          *
-  # ["funct.set.to.open.matters.task", true],
-  # ["funct.set.to.await.response.matters.task", true],
-  # ["funct.set.to.cancel.matters.task", false],
-  # ["funct.set.to.done.matters.task", false],
-  # ["funct.revert.to.open.matters.task", true],
-  # ["funct.revert.to.await.response.matters.task", true]
-  #1
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => nil,
-  :current_step_id   => open.id,
-  :pass_to_step_id   => awaiting_response.id, 
-  :start_state => true,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.await.response.matters.task").id,
-  :revert_to_function_id => nil) unless !MatterTaskStatusFlow.where(
-                                          :revert_to_step_id => nil,
-                                          :current_step_id   => open.id,
-                                          :pass_to_step_id   => awaiting_response.id, 
-                                          :start_state => true,
-                                          :pass_to_function_id => Function.find_by_name("funct.set.to.await.response.matters.task").id,
-                                          :revert_to_function_id => nil).first.nil?
-  #2
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => nil,
-  :current_step_id   => open.id,
-  :pass_to_step_id   => canceled.id,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matters.task").id,
-  :revert_to_function_id => nil) unless !MatterTaskStatusFlow.where(
-                                          :revert_to_step_id => nil,
-                                          :current_step_id   => open.id,
-                                          :pass_to_step_id   => canceled.id,
-                                          :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matters.task").id,
-                                          :revert_to_function_id => nil).first.nil?
-  #3
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => open.id,
-  :current_step_id   => awaiting_response.id,
-  :pass_to_step_id   => done.id,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.done.matters.task").id,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id) unless !MatterTaskStatusFlow.where(
-  :revert_to_step_id => open.id,
-  :current_step_id   => awaiting_response.id,
-  :pass_to_step_id   => done.id,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.done.matters.task").id,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id).first.nil?
-  #4
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => open.id,
-  :current_step_id   => canceled.id,
-  :pass_to_step_id   => nil,
-  :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id) unless !MatterTaskStatusFlow.where(
-  :revert_to_step_id => open.id,
-  :current_step_id   => canceled.id,
-  :pass_to_step_id   => nil,
-  :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id).first.nil?
-  #5
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => open.id,
-  :current_step_id   => awaiting_response.id,
-  :pass_to_step_id   => canceled.id,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matters.task").id,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id) unless !MatterTaskStatusFlow.where(
-  :revert_to_step_id => open.id,
-  :current_step_id   => awaiting_response.id,
-  :pass_to_step_id   => canceled.id,
-  :pass_to_function_id => Function.find_by_name("funct.set.to.cancel.matters.task").id,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.open.matters.task").id).first.nil?
-  #6
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => awaiting_response.id,
-  :current_step_id   => done.id,
-  :pass_to_step_id   => nil,
-  :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matters.task")) unless !MatterTaskStatusFlow.where(
-  :revert_to_step_id => awaiting_response.id,
-  :current_step_id   => done.id,
-  :pass_to_step_id   => nil,
-  :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matters.task")).first.nil?
-  #7
-  MatterTaskStatusFlow.create(
-  :revert_to_step_id => awaiting_response.id,
-  :current_step_id   => canceled.id,
-  :pass_to_step_id   => nil,
-  :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matters.task")) unless !MatterTaskStatusFlow.where(
-  :revert_to_step_id => awaiting_response.id,
-  :current_step_id   => canceled.id,
-  :pass_to_step_id   => nil,
-  :pass_to_function_id => nil,
-  :revert_to_function_id => Function.find_by_name("funct.revert.to.await.response.matters.task")).first.nil?
-end
-
 
 OfficialFeeType.transaction do
   OperatingParty.all.each do |op|

@@ -50,3 +50,18 @@
 	float:left;
 	clear:left;
 }
+
+.status-controls {clear:left;}
+.status-control {display:inline-block; float:none;}
+
+.status-controls .status-control .panel-footer.controls {
+	clear:left;
+	float:none;
+	display:inline-block;
+	margin: 5px 5px;
+}
+.column.elastic .status-controls .status-control .panel-footer.controls input[type="submit"] {
+	clear:left;
+	float:none;
+	display:inline-block;
+}

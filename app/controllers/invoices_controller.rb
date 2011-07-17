@@ -9,7 +9,10 @@ class InvoicesController < ApplicationController
 
   def new
     @document = Document.new(:user_id => current_user.id)
-    @document.invoice = Invoice.new(:discount => 0, :author_id => current_user.id)
+    @document.invoice = Invoice.new(
+        :discount => 0, 
+        :invoice_status_id => InvoiceStatus.first.id,        
+        :author_id => current_user.id)
     @matter_task = MatterTask.find(params[:task_id]) unless params[:task_id].nil?
     @matter = Matter.find(params[:matter_id]) unless params[:matter_id].nil?
     if !@matter.nil? || !@matter_task.nil?
@@ -88,6 +91,17 @@ class InvoicesController < ApplicationController
     else
       flash[:error] = "Could not save lines"
       render 'show'
+    end
+  end
+
+  def flow
+    @invoice = Invoice.find(params[:id])
+    Invoice.transaction do
+      if @invoice.update_attribute(:invoice_status_id, params[:invoice_status][:id])
+        redirect_to invoice_path(@invoice) and return
+      else
+        redirect_to invoice_path(@invoice) and return
+      end
     end
   end
 

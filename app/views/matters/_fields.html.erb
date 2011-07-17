@@ -4,6 +4,7 @@
 	<%= m_f.hidden_field :matter_type_id %>
 	<%= m_f.hidden_field :operating_party_id %>
 	<%= m_f.hidden_field :author_id %>
-	<%= m_f.hidden_field :id %>	
+	<%= m_f.hidden_field :id %>
+	<%= m_f.hidden_field :matter_status_id %>
 <%end%>		
 <%= render :partial => "#{@document.matter.matter_type.name.sub('.', '/')}/fields", :locals => {:fields => fields}%>

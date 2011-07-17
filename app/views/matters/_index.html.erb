@@ -6,7 +6,7 @@
 			<th class="col-text">Agent</th>			
 			<th class="col-text">Applicant</th>
 			<th class="col-text">Notes</th>
-			<th class="col-date">Status</th>			
+			<th class="col-text">Status</th>			
 			<th></th>
 		</tr>
 	</thead>
@@ -28,8 +28,8 @@
 			<td class="col-text"><%= matter.number%></td>
 			<td class="col-text"><%= matter.agent_name %></td>			
 			<td class="col-text"><%= matter.applicant_name %></td>
-			<td class="col-date"><%= matter.notes %></td>
-			<td class="col-text"><%= matter.matter_status_name %></td>
+			<td class="col-text"><%= matter.notes %></td>
+			<td class="col-text"><%= t(matter.status_name) %></td>
 			<td class="col-number"><%= link_to "Show", matter_path(matter, :anchor => :tasks)%></td>
 		</tr>
 		<% end %>

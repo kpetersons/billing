@@ -8,6 +8,7 @@
 	</li>
 	<%= fields.fields_for :invoice do |i_f| %>
 	<li>
+		<%= i_f.hidden_field :invoice_status_id %>		
 		<%= i_f.hidden_field :author_id %>
 		<%= i_f.label :invoice_date %>
 		<%= i_f.text_field :invoice_date %>

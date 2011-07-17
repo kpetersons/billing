@@ -32,6 +32,10 @@ en:
     change: "Change"
     confirm: "Confirm"
   address:
+    create: "Create address"
+    show:   "Address"
+    edit: "Edit address"
+    list: "Addresses"
     fields:
       type: "Type"
       country: "Country"
@@ -54,6 +58,11 @@ en:
       trademark_search:   "New trademark search matter"      
       patent_search:   "New patent search matter"                     
   matters:
+    status:
+      active: "Active"      
+      pending: "Pending"
+      closed: "Closed"
+      appealed: "Appealed"
     trademark: "trademark matter"
     patent:    "patent matter"
     design:    "design matter"
@@ -78,6 +87,14 @@ en:
         re_canceled: "Cancel"
         canceled: "Canceled"
         pass_canceled: "Cancel"  
+  invoice:
+      status:
+          open:   "Open"
+          approved: "Approved"
+          issued: "Issued"
+          canceled: "Canceled"
+          awaiting: "Awaiting"
+          paid: "Paid"
   list:
     matters: "List matters"     
   error:
@@ -188,3 +205,40 @@ en:
       fields:
         domain_name: "Domain name"
         registration_date: "Registration date"        
+  contact:
+      create: "Create contact"
+      show: "Contact"
+      edit: "Edit contact"
+      list: "Contacts"
+      fields:
+        type: "Type"
+        value: "Value"
+  contact_person:
+      create: "Create contact person"
+      list: "Contact persons"
+      show: "Contact person"
+      fields:
+        contact_for: "Contact for"
+  function:
+      show: "Function" 
+      fields:
+        name: "Name"
+        description: "Description"
+  customer:
+      show: "Customer"
+      list:
+          default: "Customers"
+          as_agent: "As agent"
+          as_applicant: "As applicant"
+      fields:
+          name: "Name"
+          registration_number: "Registration number"
+          type: "Type"
+          vat_number: "VAT number"
+  individual:
+      fields:
+          first_name: "First name"
+          last_name: "Last name"
+          middle_name: "Middle name"
+          gender: "Gender"
+          birth_date: "Birth date"
