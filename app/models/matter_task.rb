@@ -10,6 +10,7 @@
 #  created_at            :datetime
 #  updated_at            :datetime
 #  author_id             :integer(4)
+#  matter_task_type_id   :integer(4)
 #
 
 class MatterTask < ActiveRecord::Base
@@ -17,6 +18,7 @@ class MatterTask < ActiveRecord::Base
   belongs_to :matter
   belongs_to :matter_task_status 
   belongs_to :author, :class_name => "User", :foreign_key => :author_id
+  belongs_to :matter_task_type
   has_many   :invoice_matters
   has_many   :invoices, :through => :invoice_matters
   
@@ -28,6 +30,10 @@ class MatterTask < ActiveRecord::Base
   
   def status_name
     matter_task_status.name unless matter_task_status.nil?
+  end
+
+  def type_name
+    matter_task_type.name unless matter_task_type.nil? 
   end
 
   def available_statuses

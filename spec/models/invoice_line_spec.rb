@@ -13,7 +13,8 @@
 #  attorney_fee         :decimal(8, 2)
 #  author_id            :integer(4)
 #  offering             :string(255)
-#  units                :integer(1)
+#  items                :integer(4)
+#  units                :string(255)
 #
 
 require 'spec_helper'

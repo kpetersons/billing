@@ -8,12 +8,13 @@
 			<th class="col-number"><%=t('invoice_line_preset.fields.official_fee')%></th>			
 			<th class="col-text"><%=t('invoice_line_preset.fields.attorney_fee_type')%></th>
 			<th class="col-number"><%=t('invoice_line_preset.fields.attorney_fee_type')%></th>
+	  		<%= render :partial => "shared/ui/date_th"%>			
 			<th class="col-number"></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="8"> <%= will_paginate invoice_line_presets, :param_name => param_name, :params => {:anchor => param_name} %> </th>
+			<th class="list-paginate" colspan="10"> <%= will_paginate invoice_line_presets, :param_name => param_name, :params => {:anchor => param_name} %> </th>
 		</tr>
 	</tfoot>
 	<tbody>
@@ -25,7 +26,8 @@
 			<td class="col-text"><%= invoice_line_preset.official_fee_name%></td>
 			<td class="col-number"><%= invoice_line_preset.official_fee%></td>
 			<td class="col-text"><%= invoice_line_preset.attorney_fee_name%></td>
-			<td class="col-number"><%= invoice_line_preset.attorney_fee%></td>			
+			<td class="col-number"><%= invoice_line_preset.attorney_fee%></td>
+	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => invoice_line_preset}%>
 			<td class="col-number"> 
 				<%=link_to t('button.show'), invoice_line_preset %> 
 			</td>
@@ -33,7 +35,7 @@
 		<%end%>
 		<% if invoice_line_presets.empty? %>
 		<tr>
-			<td colspan="8">&nbsp;</td>
+			<td colspan="10">&nbsp;</td>
 		</tr>
 		<%end%>
 	</tbody>

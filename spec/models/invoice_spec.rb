@@ -25,6 +25,7 @@
 #  payment_term      :integer(1)
 #  apply_vat         :boolean(1)
 #  invoice_status_id :integer(4)
+#  date_paid         :date
 #
 
 require 'spec_helper'

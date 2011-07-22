@@ -4,12 +4,13 @@
 			<th class="col-radio"></th>
 			<th class="col-text"><%=t("individual.fields.first_name")%></th>
 			<th class="col-text"><%=t("individual.fields.last_name")%></th>
+	  		<%= render :partial => "shared/ui/date_th"%>			
 			<th class="col-number"></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="4">
+			<th class="list-paginate" colspan="6">
 				<%= will_paginate contact_persons, :param_name => param_name %>
 			</th>
 		</tr>
@@ -24,6 +25,7 @@
 				</td>
 				<td class="col-text"><%=contact_person.first_name%></td>
 				<td class="col-text"><%=contact_person.last_name%></td>
+	  			<%= render :partial => "shared/ui/date_td", :locals => {:object => contact_person}%>				
 				<td class="col-number">
 				<%=link_to t('button.show'), customer_contact_person_path(@customer, contact_person, :anchor => 'addresses') %>
 				</td>
@@ -31,7 +33,7 @@
 		<%end%>
 		<% if contact_persons.empty? %>
 			<tr>
-				<td colspan="4">&nbsp;</td>
+				<td colspan="6">&nbsp;</td>
 			</tr>
 		<%end%>
 	</tbody>

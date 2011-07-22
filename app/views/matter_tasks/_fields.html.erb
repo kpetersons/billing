@@ -11,4 +11,8 @@
 		<%= fields.label :proposed_deadline %>
 		<%= fields.text_field :proposed_deadline %>
 	</li>
+	<li>
+		<%= fields.label :matter_task_type_id, t("matter_task.fields.type") %>
+		<%= fields.select :matter_task_type_id, MatterTaskType.all.collect { |tt| [t(tt.name), tt.id] } %>
+	</li>	
 </ul>

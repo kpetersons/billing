@@ -20,6 +20,14 @@
 		<dd>
 			<%=@matter_task.proposed_deadline%>&nbsp;
 		</dd>
+		<dt>
+			<label>
+				<%=t('matter_task.fields.type')%>
+			</label>
+		</dt>
+		<dd>
+			<%=@matter_task.type_name%>&nbsp;
+		</dd>		
 	</dl>
 	<%= render :partial => "status_controls", 		:locals => {:matter_task 	=> @matter_task}%>	
 	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_matter_task_path(@matter_task.matter, @matter_task)} %>	

@@ -104,5 +104,11 @@
 			</li>
 			</ul>
 	</li>
-	<% end %>
+	<%if has_function :name => 'funct.invoice.status.paid' %>
+		<li>
+			<%= i_f.label :date_paid %>
+			<%= i_f.text_field :date_paid %>
+		</li>	
+	<%end%>
+	<%end%>	
 </ul>

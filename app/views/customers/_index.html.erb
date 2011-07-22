@@ -6,12 +6,13 @@
 			<th class="col-text"><%= t('customer.fields.registration_number')%></th>
 			<th class="col-text"><%= t('customer.fields.type')%></th>
 			<th class="col-text"><%= t('customer.fields.vat_number')%></th>
+	  		<%= render :partial => "shared/ui/date_th"%>			
 			<th></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="6">
+			<th class="list-paginate" colspan="8">
 				<%= will_paginate customers, :param_name => param_name %>
 			</th>
 		</tr>
@@ -24,12 +25,13 @@
 			<td class="col-text"><%= customer.registration_number %></td>
 			<td class="col-text"><%= customer.type%></td>
 			<td class="col-text"><%= customer.vat_registration_number %></td>
+	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => customer}%>			
 			<td class="col-number"><%= link_to t("button.show"), customer_path(customer, :anchor => 'addresses')%></td>
 		</tr>
 		<% end %>
 		<% if customers.empty? %>
 		<tr>
-			<td colspan="6">&nbsp;</td>
+			<td colspan="8">&nbsp;</td>
 		</tr>
 		<% end %>
 	</tbody>

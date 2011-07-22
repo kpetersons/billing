@@ -20,7 +20,16 @@
 #
 
 class Trademark < ActiveRecord::Base
+  
   belongs_to :matter
+  has_many    :trademark_clazzs
+  has_many    :clazzs, :through => :trademark_clazzs
+  
+  attr_protected :classes  
+
+  def classes
+    clazzs.all.collect { |c| "#{c.code}" }*","
+  end
   
   after_create :generate_registration_number
   def generate_registration_number

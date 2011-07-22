@@ -2,24 +2,19 @@
 	<thead>
 		<tr>
 			<th class="col-radio"></th>
-			<th class="col-text">Type</th>
+			<th class="col-text"><%=t("address.fields.type")%></th>
 			<th class="col-text"><%=t("address.fields.country")%></th>
-<!-- 			<th class="col-text">City</th>
-			<th class="col-text">Street</th>
-			<th class="col-text">House number</th>
-			<th class="col-text">Room number</th>
-			<th class="col-text">Post code</th>
-			<th class="col-text">PO BOX</th> -->
-			<th><%=t("address.fields.line_1")%></th>
-			<th><%=t("address.fields.line_2")%></th>
-			<th><%=t("address.fields.line_3")%></th>
-			<th><%=t("address.fields.line_4")%></th>
+			<th class="col-text"><%=t("address.fields.line_1")%></th>
+			<th class="col-text"><%=t("address.fields.line_2")%></th>
+			<th class="col-text"><%=t("address.fields.line_3")%></th>
+			<th class="col-text"><%=t("address.fields.line_4")%></th>
+	  		<%= render :partial => "shared/ui/date_th"%>
 			<th class="col-number"></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="8"> <%= will_paginate addresses, :param_name => param_name, :params => {:anchor => param_name} %> </th>
+			<th class="list-paginate" colspan="10"> <%= will_paginate addresses, :param_name => param_name, :params => {:anchor => param_name} %> </th>
 		</tr>
 	</tfoot>
 	<tbody>
@@ -32,8 +27,7 @@
 			<td class="col-text"><%= address.street%></td>
 			<td class="col-text"><%= address.house_number%></td>
 			<td class="col-text"><%= address.room_number%></td>
-<!-- 			<td class="col-text"><%= address.post_code%></td>
-			<td class="col-text"><%= address.po_box%></td> -->
+	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => address}%>
 			<td class="col-number"> 
 				<%=link_to t("button.show"), path_elements+[address] %> 
 			</td>
@@ -41,7 +35,7 @@
 		<%end%>
 		<% if addresses.empty? %>
 		<tr>
-			<td colspan="8">&nbsp;</td>
+			<td colspan="10">&nbsp;</td>
 		</tr>
 		<%end%>
 	</tbody>

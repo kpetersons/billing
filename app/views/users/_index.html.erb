@@ -7,13 +7,14 @@
 			<th class="col-text">Last name</th>
 			<th class="col-check">Active</th>
 			<th class="col-check">Blocked</th>
-			<th class="col-date">Registration date</th>			
+			<th class="col-date">Registration date</th>
+			<%= render :partial => "shared/ui/date_th"%>
 			<th></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="8">
+			<th class="list-paginate" colspan="10">
 				<%= will_paginate users, :param_name => param_name %>
 			</th>
 		</tr>
@@ -28,6 +29,7 @@
 				<td class="col-check"><%= col_check user.id, user.active%></td>
 				<td class="col-check"><%= col_check user.id, user.blocked%></td>
 				<td class="col-date"><%=user.registration_date.to_s(:show) unless user.registration_date.nil?%></td>				
+	  			<%= render :partial => "shared/ui/date_td", :locals => {:object => user}%>
 				<td class="col-number">
 				<%=link_to 'Show', user_path(user, :anchor => "addresses") %>
 				</td>
@@ -35,7 +37,7 @@
 		<% end %>
 		<% if users.empty? %>
 		<tr>
-			<td colspan="8">&nbsp;</td>
+			<td colspan="10">&nbsp;</td>
 		</tr>
 		<% end %>
 	</tbody>

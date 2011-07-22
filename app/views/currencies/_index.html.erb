@@ -4,12 +4,13 @@
 			<th class="col-radio"></th>
 			<th class="col-text"><%= t('currency.fields.code')%></th>
 			<th class="col-text"><%= t('currency.fields.name')%></th>			
+	  		<%= render :partial => "shared/ui/date_th"%>			
 			<th class="col-number"></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="4">
+			<th class="list-paginate" colspan="6">
 				<%= will_paginate currencies, :param_name => param_name %>				
 			</th>
 		</tr>
@@ -21,6 +22,7 @@
 				</td>
 				<td class="col-text"><%=currency.code%></td>
 				<td class="col-text"><%=currency.name%></td>							
+	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => currency}%>				
 				<td class="col-number">
 					<%=link_to t('button.show'), currency_path(currency) %> 
 				</td>
@@ -28,7 +30,7 @@
 		<%end%>
 		<% if currencies.empty? %>
 			<tr>
-				<td colspan="4">&nbsp;</td>
+				<td colspan="6">&nbsp;</td>
 			</tr>
 		<%end%>
 	</tbody>

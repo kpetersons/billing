@@ -12,7 +12,7 @@
 
 class Clazz < ActiveRecord::Base
   
-  has_many :matter_clazzs
-  has_many :matters, :through => :matter_clazzs
+  has_many :trademark_clazzs
+  has_many :trademakrs, :through => :trademark_clazzs
     
 end

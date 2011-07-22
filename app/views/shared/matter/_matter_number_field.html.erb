@@ -2,7 +2,7 @@
 <% if fields.object.parent_id.nil? %> 
 	<span class="acts-as-field" style="color:#000000"><%= fields.object.registration_number%>&nbsp;</span>
 <%else%>
-	<% if fields.object.matter.has_invoices? %>
+	<% if !fields.object.matter.has_invoices? %>
 		<%= fields.text_field :registration_number %>
 	<%else%>
 		<span class="acts-as-field" style="color:#000000"><%= fields.object.registration_number%>&nbsp;</span>		

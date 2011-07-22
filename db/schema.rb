@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110717095245) do
+ActiveRecord::Schema.define(:version => 20110721132117) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -192,11 +192,12 @@ ActiveRecord::Schema.define(:version => 20110717095245) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "attorney_fee_type_id"
-    t.decimal  "official_fee",                      :precision => 8, :scale => 2
-    t.decimal  "attorney_fee",                      :precision => 8, :scale => 2
+    t.decimal  "official_fee",         :precision => 8, :scale => 2
+    t.decimal  "attorney_fee",         :precision => 8, :scale => 2
     t.integer  "author_id"
     t.string   "offering"
-    t.integer  "units",                :limit => 1
+    t.integer  "items"
+    t.string   "units"
   end
 
   create_table "invoice_matters", :force => true do |t|
@@ -223,6 +224,7 @@ ActiveRecord::Schema.define(:version => 20110717095245) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "function_id"
+    t.boolean  "editable_state"
   end
 
   create_table "invoices", :force => true do |t|
@@ -248,6 +250,7 @@ ActiveRecord::Schema.define(:version => 20110717095245) do
     t.integer  "payment_term",      :limit => 1
     t.boolean  "apply_vat"
     t.integer  "invoice_status_id"
+    t.date     "date_paid"
   end
 
   create_table "legal_types", :force => true do |t|
@@ -272,13 +275,6 @@ ActiveRecord::Schema.define(:version => 20110717095245) do
   create_table "linked_matters", :force => true do |t|
     t.integer  "matter_id"
     t.integer  "linked_matter_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "matter_clazzs", :force => true do |t|
-    t.integer  "matter_id"
-    t.integer  "clazz_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -329,6 +325,13 @@ ActiveRecord::Schema.define(:version => 20110717095245) do
     t.integer  "function_id"
   end
 
+  create_table "matter_task_types", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "matter_tasks", :force => true do |t|
     t.integer  "matter_id"
     t.integer  "matter_task_status_id"
@@ -337,6 +340,7 @@ ActiveRecord::Schema.define(:version => 20110717095245) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "author_id"
+    t.integer  "matter_task_type_id"
   end
 
   create_table "matter_types", :force => true do |t|
@@ -466,6 +470,13 @@ ActiveRecord::Schema.define(:version => 20110717095245) do
 
   create_table "tags", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "trademark_clazzs", :force => true do |t|
+    t.integer  "trademark_id"
+    t.integer  "clazz_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

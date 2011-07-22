@@ -1,4 +1,8 @@
 en:
+  date:
+    th:
+      created_at: "Created at"
+      updated_at: "Updated at"
   bool:
       t:   "Yes"
       f:  "No"    
@@ -47,6 +51,8 @@ en:
     fields:
       name: "Name"
       description: "Description"
+      created_at: "Created at"
+      updated_at: "Updated at"      
   new:
     matters:
       trademark: "New trademark matter"
@@ -96,7 +102,10 @@ en:
           awaiting: "Awaiting"
           paid: "Paid"
   list:
-    matters: "List matters"     
+    matters: "List matters"
+    column:
+        created_at: "Created at"
+        updated_at: "Updated_at"        
   error:
     matters:    
       link_exists: "Matters already linked"    
@@ -157,6 +166,7 @@ en:
         appl_date: "Application date"
         appl_number: "Application number"
         priority_date: "Priority date"
+        classes: "Classes"
         cfe_index: "CFE index"
         ctm_number: "CTM number"
         wipo_number: "WIPO number"
@@ -213,6 +223,8 @@ en:
       fields:
         type: "Type"
         value: "Value"
+        created_at: "Created at"
+        updated_at: "Updated at"
   contact_person:
       create: "Create contact person"
       list: "Contact persons"
@@ -235,6 +247,8 @@ en:
           registration_number: "Registration number"
           type: "Type"
           vat_number: "VAT number"
+          created_at: "Created at"
+          updated_at: "Updated at"
   individual:
       fields:
           first_name: "First name"
@@ -242,3 +256,14 @@ en:
           middle_name: "Middle name"
           gender: "Gender"
           birth_date: "Birth date"
+          created_at: "Created at"
+          updated_at: "Updated at"
+  currency:
+      fields:
+          code: "Code"
+          name: "Name"
+          created_at: "Created at"
+          updated_at: "Updated at"
+  matter_task:
+    fields:
+      type: "Type"

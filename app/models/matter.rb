@@ -34,8 +34,6 @@ class Matter < ActiveRecord::Base
   belongs_to  :operating_party
   belongs_to  :matter_status
   has_many    :matter_tasks
-  has_many    :matter_clazzs
-  has_many    :clazzs, :through => :matter_clazzs
   has_many    :invoice_matters
   has_many    :invoices, :through => :invoice_matters 
   has_many    :linked_matters, :class_name => "LinkedMatter", :foreign_key => :matter_id
@@ -121,6 +119,13 @@ class Matter < ActiveRecord::Base
       return false;
     end
     return true;
+  end
+  
+  def full_reg_nr_for_invoice
+    if document.parent_id.nil?
+      return document.registration_number
+    end
+    "#{document.parent_document.registration_number}/#{document.registration_number}"
   end
   
   private

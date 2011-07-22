@@ -43,8 +43,8 @@ class MattersController < ApplicationController
     end
     if @matter_type.name.eql?("matters.domain")
       @document.matter.domain = Domain.new
-    end    
-#    @document.matter.matter_images<<MatterImage.new
+    end
+  #    @document.matter.matter_images<<MatterImage.new
   end
 
   def create
@@ -52,6 +52,19 @@ class MattersController < ApplicationController
       @document = Document.new(params[:document].merge(:user_id => current_user.id))
       if @document.save
         @matter = @document.matter
+        unless params[:document][:matter_attributes][:trademark_attributes].nil?
+          trademark_clazzs = params[:document][:matter_attributes][:trademark_attributes][:classes]
+          unless trademark_clazzs.nil?
+            trademark_clazzs.split(',').each do |name|
+              clazz = Clazz.find_by_code(name)
+              unless clazz.nil?
+                if TrademarkClazz.where(:trademark_id => @matter.trademark.id, :clazz_id => clazz.id).first.nil?
+                  @matter.trademark.trademark_clazzs<<TrademarkClazz.new(:clazz_id => clazz.id, :trademark_id => @matter.trademark.id)
+                end
+              end
+            end
+          end
+        end
         redirect_to @matter
       else
         render 'new'
@@ -61,7 +74,7 @@ class MattersController < ApplicationController
 
   def edit
     @document = Matter.find(params[:id]).document
-#    @document.matter.matter_images<<MatterImage.new unless !@document.matter.matter_images.empty?
+  #    @document.matter.matter_images<<MatterImage.new unless !@document.matter.matter_images.empty?
   end
 
   def update
@@ -69,13 +82,15 @@ class MattersController < ApplicationController
     Document.transaction do
       if @document.update_attributes(params[:document])
         @matter = @document.matter
-        matter_clazzs = params[:document][:matter_attributes][:classes]
-        unless matter_clazzs.nil?
-          matter_clazzs.split(',').each do |name|
-            clazz = Clazz.find_by_code(name)
-            unless clazz.nil?
-              if MatterClazz.where(:matter_id => @matter.id, :clazz_id => clazz.id).first.nil?
-                @matter.matter_clazzs<<MatterClazz.new(:clazz_id => clazz.id, :matter_id => @matter.id)
+        unless params[:document][:matter_attributes][:trademark_attributes].nil?
+          trademark_clazzs = params[:document][:matter_attributes][:trademark_attributes][:classes]
+          unless trademark_clazzs.nil?
+            trademark_clazzs.split(',').each do |name|
+              clazz = Clazz.find_by_code(name)
+              unless clazz.nil?
+                if TrademarkClazz.where(:trademark_id => @matter.trademark.id, :clazz_id => clazz.id).first.nil?
+                  @matter.trademark.trademark_clazzs<<TrademarkClazz.new(:clazz_id => clazz.id, :trademark_id => @matter.trademark.id)
+                end
               end
             end
           end
@@ -162,7 +177,7 @@ class MattersController < ApplicationController
   end
 
   def flow
-    @matter = Matter.find(params[:id])    
+    @matter = Matter.find(params[:id])
     Matter.transaction do
       if @matter.update_attribute(:matter_status_id, params[:matter_status][:id])
         redirect_to matter_path(@matter) and return

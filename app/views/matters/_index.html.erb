@@ -7,12 +7,13 @@
 			<th class="col-text">Applicant</th>
 			<th class="col-text">Notes</th>
 			<th class="col-text">Status</th>			
+	  		<%= render :partial => "shared/ui/date_th"%>
 			<th></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="7">
+			<th class="list-paginate" colspan="9">
 				<%= will_paginate matters, :param_name => param_name %>
 			</th>
 		</tr>
@@ -30,12 +31,13 @@
 			<td class="col-text"><%= matter.applicant_name %></td>
 			<td class="col-text"><%= matter.notes %></td>
 			<td class="col-text"><%= t(matter.status_name) %></td>
+	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => matter}%>			
 			<td class="col-number"><%= link_to "Show", matter_path(matter, :anchor => :tasks)%></td>
 		</tr>
 		<% end %>
 		<% if matters.empty? %>
 		<tr>
-			<td colspan="7">&nbsp;</td>
+			<td colspan="9">&nbsp;</td>
 		</tr>
 		<% end %>
 	</tbody>

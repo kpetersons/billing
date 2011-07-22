@@ -8,13 +8,14 @@
 			<th class="col-text">Your ref</th>
 			<th class="col-date">Your date</th>
 			<th class="col-text">PO billing</th>
-			<th class="col-text">Status</th>			
+			<th class="col-text">Status</th>
+	  		<%= render :partial => "shared/ui/date_th"%>						
 			<th></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="9">
+			<th class="list-paginate" colspan="11">
 				<%= will_paginate invoices, :param_name => param_name %>			
 			</th>
 		</tr>
@@ -33,13 +34,14 @@
 			<td class="col-text"><%= invoice.your_ref %></td>
 			<td class="col-date"><%= invoice.your_date.to_s(:show) unless invoice.your_date.nil?%></td>
 			<td class="col-text"><%= invoice.po_billing %></td>
-			<td class="col-text"><%= t(invoice.status_name) %></td>			
+			<td class="col-text"><%= t(invoice.status_name) %></td>
+	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => invoice}%>			
 			<td class="col-number"><%= link_to "Show", invoice_path(invoice)%></td>
 		</tr>
 		<% end %>
 		<% if invoices.empty? %>
 		<tr>
-			<td colspan="9">&nbsp;</td>
+			<td colspan="11">&nbsp;</td>
 		</tr>
 		<% end %>
 	</tbody>

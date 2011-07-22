@@ -1,3 +1,4 @@
+textarea {resize:none;}
 form label {color:black;}
 form ul li{clear:left;}
 form ul {list-style:none;}
@@ -63,3 +64,11 @@ form label+div.value {color:#000000; line-height:1.4em;}
 }
 
 .acts-as-field {line-height: 2em;}
+
+form table tbody tr:nth-child(1n+1) {
+	background-color: #FFFFFF;
+}
+
+form table tbody tr:nth-child(4n+1), form table tbody tr:nth-child(4n+2) {
+	background-color: rgb(239,255,248);	
+}

@@ -21,7 +21,7 @@ class InvoicesController < ApplicationController
       :matter_task_id => (@matter_task.id unless @matter_task.nil?))
     end
     @document.invoice.customer = @matter.agent unless @matter.nil?
-    @document.invoice.our_ref = @matter.document.registration_number unless @matter.nil? 
+    @document.invoice.our_ref = "#{current_user.initials}/#{@matter.full_reg_nr_for_invoice}" unless @matter.nil? 
   end
 
   def create
@@ -67,7 +67,8 @@ class InvoicesController < ApplicationController
       :official_fee_type_id => @preset.official_fee_type_id,
       :attorney_fee_type_id => @preset.attorney_fee_type_id,
       :official_fee => @preset.official_fee,
-      :attorney_fee => @preset.attorney_fee
+      :attorney_fee => @preset.attorney_fee,
+      :offering => @preset.name
     )
     else
       @invoice.invoice_lines<<InvoiceLine.new

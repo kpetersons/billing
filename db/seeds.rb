@@ -588,10 +588,17 @@ end
 
 InvoiceStatus.transaction do
   prefix = "invoice.status."  
-  invoice_statuses = ["open","approved","issued","canceled","awaiting","paid"]
+  invoice_statuses = [
+    ["open", true],
+    ["approved", true],
+    ["issued", false],
+    ["canceled", false],
+    ["awaiting", false],
+    ["paid", false]
+    ]
   invoice_statuses.each do |name|
-    unless InvoiceStatus.find_by_name("#{prefix}#{name}")
-      InvoiceStatus.create(:name => "#{prefix}#{name}", :function_id => Function.find_by_name("funct.#{prefix}#{name}").id)
+    unless InvoiceStatus.find_by_name("#{prefix}#{name[0]}")
+      InvoiceStatus.create(:editable_state => name[1], :name => "#{prefix}#{name[0]}", :function_id => Function.find_by_name("funct.#{prefix}#{name[0]}").id)
     end
   end  
 end

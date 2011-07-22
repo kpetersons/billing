@@ -25,6 +25,7 @@
 #  payment_term      :integer(1)
 #  apply_vat         :boolean(1)
 #  invoice_status_id :integer(4)
+#  date_paid         :date
 #
 
 class Invoice < ActiveRecord::Base
@@ -34,7 +35,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :address
   belongs_to :individual
   belongs_to :currency
-  belongs_to  :author, :class_name => "User", :foreign_key => :author_id
+  belongs_to :author, :class_name => "User", :foreign_key => :author_id
   belongs_to :invoice_status
   has_many   :invoice_lines
   has_many   :invoice_matters
@@ -59,6 +60,10 @@ class Invoice < ActiveRecord::Base
 
   after_create :generate_registration_number
   validates :discount, :numericality => true
+  
+  before_save :mark_as_paid
+  
+  
   def number
     document.registration_number
   end
@@ -127,4 +132,13 @@ class Invoice < ActiveRecord::Base
   def available_statuses
     InvoiceStatus.where("id != ?", [invoice_status_id]).all
   end
+  
+  private
+  def mark_as_paid
+    puts "invoice_status.name: #{invoice_status.name} and invoice_status.name.eql?('invoice.status.paid') #{invoice_status.name.eql?('invoice.status.paid')}"
+    if invoice_status.name.eql?('invoice.status.paid') && date_paid.nil?
+      self.date_paid = Date.today
+    end
+  end
+  
 end

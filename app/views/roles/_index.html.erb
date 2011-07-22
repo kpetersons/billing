@@ -4,12 +4,13 @@
 			<th class="col-radio"></th>	
 			<th class="col-text">Name</th>
 			<th class="col-text">Description</th>
+	  		<%= render :partial => "shared/ui/date_th"%>			
 			<th></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="4">
+			<th class="list-paginate" colspan="6">
 				<%= will_paginate roles, :param_name => param_name, :params => {:anchor => param_name} %>
 			</th>
 		</tr>
@@ -24,6 +25,7 @@
 			</td>
 			<td class="col-text"><%= role.name %></td>
 			<td class="col-text"><%= role.description %></td>
+	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => role}%>			
 			<td class="col-number">
 				<%= link_to "Show", role_path(role, :anchor => "functions")%>
 			</td>
@@ -31,7 +33,7 @@
 		<% end %>
 		<% if roles.empty? %>
 		<tr>
-			<td colspan="4">&nbsp;</td>
+			<td colspan="6">&nbsp;</td>
 		</tr>
 		<% end %>
 	</tbody>

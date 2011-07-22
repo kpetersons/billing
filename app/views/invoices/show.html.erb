@@ -11,6 +11,18 @@
 			<%= @document.registration_number%>&nbsp;
 		</dd>
 		<dt>
+			<label> Date paid </label>
+		</dt>
+		<dd>
+			<%= @document.invoice.date_paid.to_s(:show) unless @document.invoice.date_paid.nil?%>&nbsp;
+		</dd>
+		<dt>
+			<label> Invoice date </label>
+		</dt>
+		<dd>
+			<%= @document.invoice.invoice_date.to_s(:show) unless @document.invoice.invoice_date.nil?%>&nbsp;
+		</dd>
+		<dt>
 			<label> Customer </label>
 		</dt>
 		<dd>
@@ -65,12 +77,6 @@
 			<%= @document.invoice.po_billing%>&nbsp;
 		</dd>
 		<dt>
-			<label> Invoice date </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.invoice_date.to_s(:show) unless @document.invoice.invoice_date.nil?%>&nbsp;
-		</dd>
-		<dt>
 			<label> Subject </label>
 		</dt>
 		<dd>
@@ -95,57 +101,9 @@
 			<%= @document.invoice.payment_term %>&nbsp;
 		</dd>
 	</dl>
-	<%= render :partial => "status_controls", 		:locals => {:invoice 	=> @document.invoice}%>	
-	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
-	<%=form_for @document.invoice, :url => {:action => 'save_lines'}  do |i_f| %>
-	<table style="clear:left; height:auto; width: 100%;">
-		<thead>
-			<tr>
-				<th class="col-text" style="width:1em">Official fee type</th>
-				<th class="col-number" style="width:1em">Fee</th>
-				<th class="col-text" style="width:1em">Attorneys fee type</th>
-				<th class="col-number" style="width:1em">Fee</th>
-				<th class="col-number" style="width:1em">Units</th>				
-				<th class="col-text" style="width:1em">Offering</th>				
-				<th class="col-number" style="width:1em">Details</th>
-				<th class="col-text" style="width:1em"></th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<th class="col-text">Sub total</th>
-				<th class="col-number"><%=@document.invoice.sum_official_fees%></th>
-				<th colspan="3" class="col-number"><%=@document.invoice.sum_attorney_fees%></th>
-				<th colspan="3"></th>
-			</tr>
-			<tr>
-				<th class="col-text">Total</th>
-				<th class="col-number"><%=@document.invoice.sum_total_fees%></th>
-				<th class="col-text">Total with discount</th>
-				<th colspan="4" class="col-number"><%=@document.invoice.after_discount%></th>
-				<th class="col-text"></th>								
-			</tr>
-			<tr>
-				<th colspan="8">
-				<div class="panel-footer controls">
-					<%= i_f.submit 'Save lines'%>
-				</div>
-				</th>
-			</tr>
-		</tfoot>
-		<tbody>
-			<%= i_f.fields_for :invoice_lines do |il_f|%>
-			<tr>
-				<%= render :partial => "invoices/invoice_lines/fields", :locals => {:fields 	=> il_f}%>
-			</tr>
-			<% end %>
-		</tbody>
-	</table>	
-	<%end%>
-	<%=form_for @document.invoice, :url => {:action => 'add_line'}  do |i_f| %>	
-	<div class="panel-footer controls">
-		<%= i_f.select :preset_id, InvoiceLinePreset.find_all_by_operating_party_id(current_user.operating_party_id).collect { |tt| [tt.name, tt.id]}, {:include_blank => true}, {:style => 'float:left; margin-right:15px;' } %>
-		<%= i_f.submit 'Add line' %>		
-	</div>
-	<% end %>
+	<%if @document.invoice.invoice_status.editable_state %>	
+		<%= render :partial => "status_controls", 		:locals => {:invoice 	=> @document.invoice}%>	
+		<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
+	<%end%>	
+	<%= render :partial => "invoices/invoice_lines/index", 		:locals => {:document 	=> @document}%>	
 </div>

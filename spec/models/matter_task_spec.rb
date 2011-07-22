@@ -10,6 +10,7 @@
 #  created_at            :datetime
 #  updated_at            :datetime
 #  author_id             :integer(4)
+#  matter_task_type_id   :integer(4)
 #
 
 require 'spec_helper'
