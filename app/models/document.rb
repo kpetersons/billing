@@ -26,10 +26,23 @@ class Document < ActiveRecord::Base
   attr_accessible :registration_number, :notes, :description, :matter_attributes, :invoice_attributes, :parent_id, :user_id
   accepts_nested_attributes_for :matter, :invoice
 
+  validates :description, :presence => true, :length => {:within => 1..250}, :if => :is_design
+
 #  validates :registration_number, :uniqueness=> {:scope => :parent_id, :unless => parent.nil?}  
 
   def parent_document_registration_number
     (parent_document.nil?)? '' : parent_document.registration_number
+  end
+
+  private 
+  def is_design
+    if matter.nil?
+      return false
+    end
+    if matter.design.nil?
+      return false
+    end
+    return true;
   end
 
 end

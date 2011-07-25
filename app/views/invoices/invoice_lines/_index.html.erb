@@ -1,4 +1,4 @@
-<%=form_for document.invoice, :url => {:action => 'save_lines'}  do |i_f| %>
+<%=form_for document.invoice, :url => {:action => 'process_lines'}  do |i_f| %>
 <table style="clear:left; height:auto; width: 100%;">
 	<thead>
 		<tr>
@@ -28,26 +28,20 @@
 		</tr>
 		<tr>
 			<th colspan="8">
-			<div class="panel-footer controls">
+			<div class="panel-footer controls" style="margin-top:1em;">
 				<%if (has_function :name=>i_f.object.invoice_status.function.name) && (document.invoice.invoice_status.editable_state) %>				
-					<%= i_f.submit 'Save lines'%>
-				<% end %>
+					<%= i_f.submit 'Save lines', :name => "save_lines", :style => "display:inline-block; float:none;"%>
+					<%= i_f.select :preset_id, InvoiceLinePreset.all.collect { |tt| [t(tt.name), tt.id] }, {}, {:style => "display:inline-block; float:none; margin-left:5em;"}%>
+					<%= i_f.submit 'Add line', :name => "add_line", :style => "display:inline-block; float:none;" %>
+				<% end %>				
 			</div>
 			</th>
 		</tr>
 	</tfoot>
 	<tbody>
 		<%= i_f.fields_for :invoice_lines do |il_f|%>
-		<%= render :partial => "invoices/invoice_lines/fields", :locals => {:fields 	=> il_f}%>
+			<%= render :partial => "invoices/invoice_lines/fields", :locals => {:fields 	=> il_f}%>
 		<% end %>
 	</tbody>
 </table>
 <%end%>
-<%if (has_function :name=>document.invoice.invoice_status.function.name) && (document.invoice.invoice_status.editable_state) %>
-	<%=form_for @document.invoice, :url => {:action => 'add_line'}  do |i_f| %>
-	<div class="panel-footer controls">
-		<%= i_f.select :preset_id, InvoiceLinePreset.find_all_by_operating_party_id(current_user.operating_party_id).collect { |tt| [tt.name, tt.id]}, {:include_blank => true}, {:style => 'float:left; margin-right:15px;' } %>
-		<%= i_f.submit 'Add line' %>
-	</div>
-	<% end %>
-<% end %>

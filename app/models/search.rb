@@ -15,6 +15,10 @@
 class Search < ActiveRecord::Base
   belongs_to :matter
   
+  validates :search_for, :presence => true
+  validates :date_of_order, :presence => true
+  validates :no_of_objects, :presence => true
+  
   after_create :generate_registration_number
   def generate_registration_number
     if matter.document.parent_id.nil?

@@ -21,5 +21,10 @@ class InvoiceLine < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :official_fee_type
   belongs_to :attorney_fee_type
-  belongs_to  :author, :class_name => "User", :foreign_key => :author_id  
+  belongs_to  :author, :class_name => "User", :foreign_key => :author_id
+  
+  validates :attorney_fee_type_id, :presence => true, :if => Proc.new {|invoice_line| !invoice_line.attorney_fee.nil?}
+  validates :official_fee_type_id, :presence => true, :if => Proc.new {|invoice_line| !invoice_line.official_fee.nil?}
+  validates :offering, :presence => true, :length              => {:within => 5..250}
+  validates :items, :presence => true, :numericality => true
 end

@@ -1,0 +1,10 @@
+html {
+	width:210mm;
+	padding-left: 17mm;
+	padding-right: 10mm;
+	padding-top: 57mm;
+}
+
+table, div.table {
+	width:100%;
+}

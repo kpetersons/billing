@@ -57,9 +57,15 @@ class Invoice < ActiveRecord::Base
                   :invoice_matters_attributes
   accepts_nested_attributes_for  :invoice_lines, :invoice_matters
   attr_protected :preset_id, :customer_name
+  attr_accessor :preset_id
 
   after_create :generate_registration_number
+  
   validates :discount, :numericality => true
+  validates :invoice_date, :presence => true
+  validates :customer_id, :presence => true
+  validates :payment_term, :presence => true, :numericality => true
+  validates :subject, :presence => true, :length              => {:within => 5..250}
   
   before_save :mark_as_paid
   

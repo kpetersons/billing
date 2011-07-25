@@ -15,6 +15,8 @@
 class PatentSearch < ActiveRecord::Base
   belongs_to :matter
 
+  validates :date_of_order, :presence => true
+
   after_create :generate_registration_number
   def generate_registration_number
     if matter.document.parent_id.nil?

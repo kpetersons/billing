@@ -1,0 +1,32 @@
+<table>
+	<thead>
+		<tr>
+			<th>Official fee type</th>
+			<th>Fee</th>
+			<th>Attorneys fee type</th>
+			<th>Fee</th>
+			<th>Units</th>
+			<th>Items</th>
+			<th>Action</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th>Sub total</th>
+			<th><%= @invoice.sum_official_fees%></th>
+			<th><%= @invoice.sum_attorney_fees%></th>
+			<th colspan="5"></th>
+		</tr>
+		<tr>
+			<th>Total</th>
+			<th><%= @invoice.sum_total_fees%></th>
+			<th>Total with discount</th>
+			<th colspan="4" ><%= @invoice.after_discount%></th>
+			<th></th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<%= render :partial => "line", :collection => @invoice.invoice_lines, :as => :invoice_line%>
+	</tbody>
+</table>

@@ -51,7 +51,7 @@ class Matter < ActiveRecord::Base
   has_one :domain
   
   validates :agent_id,            :presence => true
-  validates :applicant_id,        :presence => true
+  validates :applicant_id,        :presence => true, :if => :not_search
   validates :matter_type_id,      :presence => true
   validates :operating_party_id,  :presence => true
   validates :author_id,  :presence => true  
@@ -139,5 +139,11 @@ class Matter < ActiveRecord::Base
       errors[:applicant_id].clear
     end    
   end  
-  
+
+  def not_search
+    if  patent_search.nil? && search.nil?
+      return true
+    end  
+    return false
+  end
 end

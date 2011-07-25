@@ -27,6 +27,8 @@ class Trademark < ActiveRecord::Base
   
   attr_protected :classes  
 
+  validates :mark_name, :presence => true, :length              => {:within => 1..250}
+
   def classes
     clazzs.all.collect { |c| "#{c.code}" }*","
   end

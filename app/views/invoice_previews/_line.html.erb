@@ -1,0 +1,12 @@
+<tr style="page-break-after:avoid">
+	<td> <%= invoice_line.official_fee_type.name unless invoice_line.official_fee_type.nil? %> </td>
+	<td> <%= invoice_line.official_fee %> </td>
+	<td> <%= invoice_line.attorney_fee_type.name unless invoice_line.attorney_fee_type.nil? %> </td>
+	<td> <%= invoice_line.attorney_fee %> </td>
+	<td> <%= invoice_line.units %> </td>
+	<td> <%= invoice_line.items %> </td>
+	<td> <%= invoice_line.offering %> </td>
+</tr>
+<tr style="page-break-after:auto; page-break-before:avoid">
+	<td colspan="7"> <%= invoice_line.details %> </td>
+</tr>

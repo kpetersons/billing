@@ -1,6 +1,5 @@
 Billing::Application.routes.draw do
 
-
   resource :account, :controller => :activation, :only => [:show, :activate] do
     member do
       put :activate
@@ -16,11 +15,11 @@ Billing::Application.routes.draw do
 
   resources :invoices   do
     member do
-      put :save_lines
-      put :add_line
+      put :process_lines
       delete :remove_line
       put :flow
     end
+    resource :preview, :controller => "InvoicePreviews", :only => [:show]
   end
 
   resources :currencies 
@@ -55,6 +54,7 @@ Billing::Application.routes.draw do
   end
 
   resources :operating_parties, :except => [:destroy] do
+    resources :accounts    
     resources :addresses
     resources :contacts
     member do
@@ -63,7 +63,8 @@ Billing::Application.routes.draw do
     end
   end
 
-  resources :customers, :except => [:destroy] do    
+  resources :customers, :except => [:destroy] do
+    resources :accounts    
     resources :contact_persons do
       resources :addresses
       resources :contacts

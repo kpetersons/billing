@@ -1,0 +1,13 @@
+<html>
+	<head>
+		<%= stylesheet_link_tag 'print/lv-invoice', :media => 'all' %>
+	</head>
+	<body>
+		<%= render :partial => "header"%>
+		<%= render :partial => "bank_info"%>		
+		<%= render :partial => "references"%>
+		<%= render :partial => "subject"%>		
+		<%= render :partial => "lines"%>
+		<%= render :partial => "payment_terms"%>
+	</body>
+</html>
