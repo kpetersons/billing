@@ -14,6 +14,7 @@
 class Company < ActiveRecord::Base
     belongs_to :party
     has_one :operating_party
+    has_many :accounts
      
     attr_accessible :party_id, :name, :operating_party_attributes, :registration_number
     accepts_nested_attributes_for :operating_party    

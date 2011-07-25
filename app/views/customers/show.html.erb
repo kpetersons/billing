@@ -47,7 +47,11 @@
 			<%= render :partial => "/contact_persons/index", :locals => {:contact_persons => @customer.contact_persons.paginate(:per_page=> 10,:page => params[:contact_persons]), :choose => false, :param_name => 'contact_persons'} %>
 			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => new_customer_contact_person_path(@customer)} %>
 		</dd>
-		
+		<dt class="panel-header"><a href="#account"><strong><%= t('account.list')%></strong></a></dt>
+		<dd id="account">
+			<%= render :partial => "accounts/index", :locals => {:accounts => @customer.party.company.accounts.paginate(:per_page=>10, :page => params[:contacts]), :param_name => 'accounts', :path_elements => [@customer]} %>
+			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => new_customer_account_path(@customer)} %>
+		</dd>			
 		<dt class="panel-header"><a href="#matters_agent"><strong><%= t('customer.list.as_agent')%></strong></a></dt>
 		<dd id="matters_agent">
 			<%= render :partial => "/matters/index", :locals => {:matters => @customer.matters_as_agent.paginate(:per_page=> 10,:page => params[:matters_agent]), :choose => false, :param_name => 'matters_agent'} %>

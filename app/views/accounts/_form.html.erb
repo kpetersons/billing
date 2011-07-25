@@ -1,0 +1,4 @@
+<%=form_for path_elements do |a_f| %>
+	<%= render :partial => "fields", 							:locals => {:fields => a_f} %>
+	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> a_f}%>
+<%end%>

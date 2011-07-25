@@ -39,6 +39,11 @@
 			<%= render :partial => "contacts/index", :locals => {:contacts => @operating_party.company.party.contacts.paginate(:per_page=>10, :page => params[:contacts]), :param_name => 'contacts', :path_elements => [@operating_party]} %>
 			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Add new contact', :path => new_operating_party_contact_path(@operating_party)} %>
 		</dd>
+		<dt class="panel-header"><a href="#account"><strong><%= t('account.list')%></strong></a></dt>
+		<dd id="account">
+			<%= render :partial => "accounts/index", :locals => {:accounts => @operating_party.company.accounts.paginate(:per_page=>10, :page => params[:contacts]), :param_name => 'accounts', :path_elements => [@operating_party]} %>
+			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => new_operating_party_account_path(@operating_party)} %>
+		</dd>		
 		<dt class="panel-header">
 			<a href="#matter_types"><strong>Matter types</strong></a>
 		</dt>

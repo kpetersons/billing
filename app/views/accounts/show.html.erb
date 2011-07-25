@@ -1,2 +1,10 @@
-<h1>Accounts#show</h1>
-<p>Find me in app/views/accounts/show.html.erb</p>
+<div class="panel">
+	<div class="panel-header">
+		<strong><%=t("account.show")%></strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<%= render :partial => "show", :locals => {:account => @account} %>
+	<div class="show controls">
+		<%= link_to t("button.edit"), {:action => 'edit'} %>
+	</div>
+</div>

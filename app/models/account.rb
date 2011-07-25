@@ -1,2 +1,3 @@
-class Account < ActiveRecord::Base
+class Account < ActiveRecord::Base  
+  belongs_to :company
 end

@@ -153,6 +153,17 @@ en:
     patent_search_details: "Patent search details"
     search_details: "Search details"
     domain_details: "Domain details"    
+  account:
+    create: "Create account"
+    list: "Account list"
+    show: "Account"
+    edit: "Edit account"
+    fields:
+        bank: "Bank"
+        bank_code: "Bank code"
+        account_number: "Account number"
+        default_account: "Default"
+        show_on_invoice: "Show on invoice"
   matter:
     fields:
         matter_number: "Matter number"

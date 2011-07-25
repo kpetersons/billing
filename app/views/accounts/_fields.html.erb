@@ -1,0 +1,24 @@
+<%= fields.hidden_field :id %>
+<%= fields.hidden_field :company_id %>
+<ul>	
+	<li>
+		<%= fields.label :bank, t("account.fields.bank") %>
+		<%= fields.text_field :bank %>		
+	</li>
+	<li>
+		<%= fields.label :bank_code, t("account.fields.bank_code") %>
+		<%= fields.text_field :bank_code %>
+	</li>	
+	<li>
+		<%= fields.label :account_number, t("account.fields.account_number") %>
+		<%= fields.text_field :account_number %>
+	</li>
+	<li>
+		<%= fields.label :default_account, t("account.fields.default_account") %>
+		<%= fields.check_box :default_account %>
+	</li>	
+	<li>
+		<%= fields.label :show_on_invoice, t("account.fields.show_on_invoice") %>
+		<%= fields.check_box :show_on_invoice %>
+	</li>	
+</ul>

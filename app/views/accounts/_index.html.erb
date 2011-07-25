@@ -1,0 +1,36 @@
+<table style="width:100%">
+	<thead>
+		<tr>
+			<th class="col-radio"></th>
+			<th class="col-text"><%=t("account.fields.bank")%></th>
+			<th class="col-text"><%=t("account.fields.bank_code")%></th>
+			<th class="col-text"><%=t("account.fields.account_number")%></th>
+	  		<%= render :partial => "shared/ui/date_th"%>
+			<th class="col-number"></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th class="list-paginate" colspan="7"> <%= will_paginate accounts, :param_name => param_name, :params => {:anchor => param_name} %> </th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<% accounts.each do |account|%>
+		<tr>
+			<td class="col-radio"></td>
+			<td class="col-text"><%= account.bank%></td>
+			<td class="col-text"><%= account.bank_code%></td>
+			<td class="col-text"><%= account.account_number%></td>
+	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => account}%>
+			<td class="col-number"> 
+				<%=link_to t("button.show"), path_elements+[account] %> 
+			</td>
+		</tr>
+		<%end%>
+		<% if accounts.empty? %>
+		<tr>
+			<td colspan="7">&nbsp;</td>
+		</tr>
+		<%end%>
+	</tbody>
+</table>
