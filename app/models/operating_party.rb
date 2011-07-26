@@ -11,17 +11,16 @@
 #
 
 class OperatingParty < ActiveRecord::Base
-  
+
   belongs_to :company;
   belongs_to :parent_operating_party, :class_name => "OperatingParty", :foreign_key => "operating_party_id"
   has_many :operating_parties, :class_name => "OperatingParty", :foreign_key => "operating_party_id"
-  has_many :users, :foreign_key => "operating_party_id"            
+  has_many :users, :foreign_key => "operating_party_id"
   has_many :operating_party_matter_types
   has_many :matter_types, :through => :operating_party_matter_types
   has_many :matters
   has_many :official_fee_types
   has_many :attorney_fee_types
-
   def party
     company.party
   end
@@ -31,11 +30,18 @@ class OperatingParty < ActiveRecord::Base
   end
 
   def parent_name
-    parent_operating_party.company.name unless parent_operating_party.nil? 
+    parent_operating_party.company.name unless parent_operating_party.nil?
   end
-  
-  def registration_number 
+
+  def registration_number
     company.registration_number
   end
-  
+
+  def default_account
+    return company.default_account
+  end
+
+  def invoice_address
+    return company.invoice_address    
+  end
 end

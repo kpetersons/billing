@@ -48,6 +48,14 @@ class Customer < ActiveRecord::Base
     party.addresses
   end
 
+  def default_account
+    return party.company.default_account
+  end
+
+  def invoice_address
+    return party.company.invoice_address    
+  end
+
   private
 
   def trim_strings

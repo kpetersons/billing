@@ -41,3 +41,10 @@ table td a:visited, table td a {color:inherit;}
 table tbody tr:hover td {
 	background-color: rgb(202,251,228);
 }
+
+table.no-highlight tr:nth-child(odd),  
+table.no-highlight tr:nth-child(even),
+table.no-highlight tr:hover td
+{
+	background-color: #FFFFFF;
+}

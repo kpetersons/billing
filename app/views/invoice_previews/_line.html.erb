@@ -1,12 +1,14 @@
+<!-- <tr>
+	<th>Aprēķinātās izmaksas</th>
+	<th>Mērv.</th>
+	<th>Cena par 1 vien.</th>
+	<th>Skaits</th>
+	<th>Summa bez PVN</th>
+</tr> -->
 <tr style="page-break-after:avoid">
-	<td> <%= invoice_line.official_fee_type.name unless invoice_line.official_fee_type.nil? %> </td>
-	<td> <%= invoice_line.official_fee %> </td>
-	<td> <%= invoice_line.attorney_fee_type.name unless invoice_line.attorney_fee_type.nil? %> </td>
-	<td> <%= invoice_line.attorney_fee %> </td>
-	<td> <%= invoice_line.units %> </td>
-	<td> <%= invoice_line.items %> </td>
-	<td> <%= invoice_line.offering %> </td>
-</tr>
-<tr style="page-break-after:auto; page-break-before:avoid">
-	<td colspan="7"> <%= invoice_line.details %> </td>
+	<td class="col-text" style="width:40%"> <%= invoice_line_counter+1%>. <%= invoice_line.provided_fee_description %>, <%= invoice_line.provided_fee_details %></td>
+	<td class="col-text"> <%= invoice_line.units %> </td>
+	<td class="col-number"> <%= invoice_line.provided_fee_amount %> </td>
+	<td class="col-number"> <%= invoice_line.items %> </td>
+	<td class="col-number"> <%= invoice_line.provided_fee_without_vat %> </td>	
 </tr>

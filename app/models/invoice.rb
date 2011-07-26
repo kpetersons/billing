@@ -139,6 +139,30 @@ class Invoice < ActiveRecord::Base
     InvoiceStatus.where("id != ?", [invoice_status_id]).all
   end
   
+  def amount_without_vat
+    value = 0
+    invoice_lines.each do |line|
+      value = value + line.official_fee unless line.official_fee.nil?
+    end
+    return value
+  end
+
+  def amount_with_vat
+    value = 0
+    invoice_lines.each do |line|
+      value = value + line.attorney_fee unless line.attorney_fee.nil?
+    end
+    return value    
+  end  
+
+  def amount_vat
+    return amount_with_vat * 0.22
+  end
+
+  def total_amount_with_vat
+    return amount_with_vat * 1.22    
+  end
+
   private
   def mark_as_paid
     puts "invoice_status.name: #{invoice_status.name} and invoice_status.name.eql?('invoice.status.paid') #{invoice_status.name.eql?('invoice.status.paid')}"

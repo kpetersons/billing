@@ -1,0 +1,50 @@
+<div style="display:table-row">
+	<div style="display:table-cell">
+		Rēķina nosūtītājs
+	</div>
+	<div style="display:table-cell">
+		<%= t(current_user.operating_party.name) %>
+	</div>
+	<div style="display:table-cell">
+		Banka
+	</div>
+	<div style="display:table-cell">
+		<%= current_user.operating_party.default_account.bank unless current_user.operating_party.default_account.nil? %>
+	</div>
+</div>
+<div style="display:table-row">
+	<div style="display:table-cell">
+		Reģ nr.
+	</div>
+	<div style="display:table-cell">
+		<%= current_user.operating_party.company.registration_number %>
+	</div>
+	<div style="display:table-cell">
+		Bankas kods
+	</div>
+	<div style="display:table-cell">
+		<%= current_user.operating_party.default_account.bank_code unless current_user.operating_party.default_account.nil? %>
+	</div>
+</div>
+<div style="display:table-row">
+	<div style="display:table-cell">
+		PVN reģ nr
+	</div>
+	<div style="display:table-cell">
+		<%= "LV#{current_user.operating_party.company.registration_number}" %>
+	</div>
+	<div style="display:table-cell">
+		Konta numurs
+	</div>
+	<div style="display:table-cell">
+		<%= current_user.operating_party.default_account.account_number unless current_user.operating_party.default_account.nil? %>
+	</div>
+</div>
+<div style="display:table-row">
+	<div style="display:table-cell">
+		Juridiskā adrese
+	</div>
+	<div style="display:table-cell">
+		<%= current_user.operating_party.invoice_address %>
+	</div>
+</div>

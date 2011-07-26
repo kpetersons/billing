@@ -27,4 +27,46 @@ class InvoiceLine < ActiveRecord::Base
   validates :official_fee_type_id, :presence => true, :if => Proc.new {|invoice_line| !invoice_line.official_fee.nil?}
   validates :offering, :presence => true, :length              => {:within => 5..250}
   validates :items, :presence => true, :numericality => true
+  
+  def fee_without_vat
+    fee_without_vat = 0;
+    fee_without_vat += official_fee unless official_fee.nil? 
+    fee_without_vat += attorney_fee unless attorney_fee.nil?
+  end
+
+  def is_official
+    if official_fee_type_id
+      return true
+    end
+    return false
+  end
+
+  def provided_fee_description
+    if is_official
+      return official_fee_type.description
+    end
+    return attorney_fee_type.description
+  end
+  
+  def provided_fee_details
+    if is_official
+      return offering
+    end
+    return "#{offering}, #{details}"
+  end
+  
+  def provided_fee_amount
+    if is_official
+      return official_fee
+    end
+    return attorney_fee
+  end
+
+  def provided_fee_without_vat
+    if is_official
+      return official_fee * items
+    end
+    return attorney_fee * items  
+  end
+  
 end

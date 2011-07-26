@@ -1,0 +1,42 @@
+<div style="display:table-row">
+	<div style="display:table-cell">
+		Rēķina saņēmējs
+	</div>
+	<div style="display:table-cell">
+		<%= @invoice.customer.name%>
+	</div>
+	<div style="display:table-cell">
+		Banka
+	</div>
+	<div style="display:table-cell">
+		<%= @invoice.customer.default_account.bank%>
+	</div>
+</div>
+<div style="display:table-row">
+	<div style="display:table-cell">
+		Reģ nr.
+	</div>
+	<div style="display:table-cell">
+		<%= @invoice.customer.registration_number %>
+	</div>
+	<div style="display:table-cell">
+		Bankas kods
+	</div>
+	<div style="display:table-cell">
+		<%= @invoice.customer.default_account.bank_code%>
+	</div>
+</div>
+<div style="display:table-row">
+	<div style="display:table-cell">
+		PVN reģ nr
+	</div>
+	<div style="display:table-cell">
+		<%= @invoice.customer.vat_registration_number %>
+	</div>
+	<div style="display:table-cell">
+		Konta numurs
+	</div>
+	<div style="display:table-cell">
+		<%= @invoice.customer.default_account.account_number%>
+	</div>
+</div>

@@ -8,3 +8,22 @@ html {
 table, div.table {
 	width:100%;
 }
+
+table th:first-child, table td:first-child {
+	padding-left: 2px;
+}
+
+table {border-collapse: collapse;}
+
+table tfoot th {font-weight:normal;}
+table tfoot th {border-top:none;border-bottom:none;}
+
+table tbody td:first-child {border-left: #000000 solid 1px;}
+table tbody td:last-child {border-right: #000000 solid 1px;}
+table tbody tr:first-child td {border-top: #000000 solid 1px;}
+table tbody tr:last-child td {border-bottom: #000000 solid 1px;}
+
+table thead th:first-child {border-left: #000000 solid 1px;}
+table thead th:last-child {border-right: #000000 solid 1px;}
+table thead th {border-top: #000000 solid 1px; border-bottom: #000000 solid 1px;}
+

@@ -12,25 +12,35 @@
 #
 
 class Company < ActiveRecord::Base
-    belongs_to :party
-    has_one :operating_party
-    has_many :accounts
-     
-    attr_accessible :party_id, :name, :operating_party_attributes, :registration_number
-    accepts_nested_attributes_for :operating_party    
-        
-    validates :name, :presence => true
-    validates :registration_number, :uniqueness => true, :allow_nil => true
-    
-    before_validation :trim_strings
+  belongs_to :party
+  has_one :operating_party
+  has_many :accounts
+
+  attr_accessible :party_id, :name, :operating_party_attributes, :registration_number
+  accepts_nested_attributes_for :operating_party
+
+  validates :name, :presence => true
+  validates :registration_number, :uniqueness => true, :allow_nil => true
+
+  before_validation :trim_strings
+  
+  def default_account
+    return accounts.where(:default_account => :true).first unless accounts.where(:default_account => :true).first.nil?
+    return Account.new
+  end
+
+  def invoice_address
+    return party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first.name unless party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first.nil?
+    Address.new.name
+  end
 
   private
 
   def trim_strings
     self.registration_number = " #{self.registration_number} ".strip
-    if self.registration_number.empty? 
-      self.registration_number = nil      
+    if self.registration_number.empty?
+      self.registration_number = nil
     end
-  end  
+  end
 
 end
