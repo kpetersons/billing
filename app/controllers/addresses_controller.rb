@@ -102,7 +102,7 @@ class AddressesController < ApplicationController
     #
     @path_elements = [@customer, @individual, @user, @operating_party]
     Address.transaction do
-      unless @address.address_type_name.empty?
+      unless @address.address_type_name.nil? || @address.address_type_name.empty?
         if AddressType.exists?(:name => @address.address_type_name)
           @address.address_type_id = AddressType.find_by_name(@address.address_type_name)
         else

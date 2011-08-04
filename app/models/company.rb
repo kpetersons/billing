@@ -25,13 +25,11 @@ class Company < ActiveRecord::Base
   before_validation :trim_strings
   
   def default_account
-    return accounts.where(:default_account => :true).first unless accounts.where(:default_account => :true).first.nil?
-    return Account.new
+    return accounts.where(:default_account => true).first
   end
 
   def invoice_address
-    return party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first.name unless party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first.nil?
-    Address.new.name
+    return party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first.name
   end
 
   private

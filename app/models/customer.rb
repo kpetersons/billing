@@ -49,12 +49,15 @@ class Customer < ActiveRecord::Base
   end
 
   def default_account
-    return party.company.default_account
+    return party.company.default_account unless party.company.default_account.nil? 
+    return Account.new
   end
 
   def invoice_address
-    return party.company.invoice_address    
+    return party.company.invoice_address unless party.company.invoice_address.nil? 
+    return Address.new
   end
+
 
   private
 

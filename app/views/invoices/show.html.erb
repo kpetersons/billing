@@ -108,6 +108,6 @@
 	<%end%>	
 	<%= render :partial => "invoices/invoice_lines/index", 			:locals => {:document	=> @document}%>
 	<div class="show controls">
-		<%=link_to 'Preview', invoice_preview_path(@document.invoice), :target => "_blank" %>
+		<%=link_to 'Preview', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
 	</div>	
 </div>

@@ -38,10 +38,12 @@ class OperatingParty < ActiveRecord::Base
   end
 
   def default_account
-    return company.default_account
+    return company.default_account unless company.default_account.nil?
+    return Account.new
   end
 
   def invoice_address
-    return company.invoice_address    
+    return company.invoice_address unless company.invoice_address.nil?
+    return Address.new
   end
 end

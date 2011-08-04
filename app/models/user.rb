@@ -115,6 +115,10 @@ class User < ActiveRecord::Base
     @change_pwd = value
   end
 
+  def full_name
+    "#{individual.first_name} #{individual.last_name}"
+  end
+
   private
 
   def encrypt_password
