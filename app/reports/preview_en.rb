@@ -105,12 +105,12 @@ class PreviewEn < Prawn::Document
 
   def customer_info_st invoice
     cust_info = Prawn::Table.new([
-      [invoice.customer_name],
-      [invoice.customer.inv_address.line_1],
-      [invoice.customer.inv_address.line_2],
-      [invoice.customer.inv_address.line_3],
-      [invoice.customer.inv_address.line_4],
-      [invoice.customer.inv_address.country]
+      ["#{invoice.customer_name}"],
+      ["#{invoice.customer.inv_address.line_1}"],
+      ["#{invoice.customer.inv_address.line_2}"],
+      ["#{invoice.customer.inv_address.line_3}"],
+      ["#{invoice.customer.inv_address.line_4}"],
+      ["#{invoice.customer.inv_address.country.name}"]
     ], self, :column_widths => [318])
     cust_info.cells.style(:borders => [])
     return cust_info
