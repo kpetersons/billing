@@ -69,4 +69,32 @@ class InvoiceLine < ActiveRecord::Base
     return attorney_fee * items  
   end
   
+  def line_total
+    total_a = 0
+    total_a = total_a + items unless items.nil?
+    total_a = total_a * official_fee unless official_fee.nil?
+    
+    total_b = 0
+    total_b = total_b + items unless items.nil?
+    total_b = total_b * attorney_fee unless attorney_fee.nil?
+    
+    return total_a + total_b unless total_b.nil? && total_a.nil?
+    return total_a unless total_a.nil?
+    return total_b unless total_b.nil?
+    return 0
+  end
+  
+  def official_fee_total
+    total = 0
+    total = total + items unless items.nil?
+    total = total * official_fee unless official_fee.nil?
+    return total
+  end
+  
+  def attorney_fee_total
+    total = 0
+    total = total + items unless items.nil?
+    total = total * attorney_fee unless attorney_fee.nil?
+    return total
+  end  
 end

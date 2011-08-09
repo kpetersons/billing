@@ -65,3 +65,40 @@
 	float:none;
 	display:inline-block;
 }
+
+.column.elastic .show.controls.slide-out {
+	padding:0px;
+	margin:0px 0px 0px 2em;
+}
+
+.column.elastic .show.controls.slide-out ul {
+	padding:0px;
+	margin:0px;
+}
+
+.column.elastic .show.controls.slide-out ul li a {
+	min-width:0;
+	width:auto;
+	border:none;	
+}
+
+.column.elastic .show.controls.slide-out ul li a:hover {
+	background-color:inherit;
+	border:none;
+}
+
+.column.elastic .show.controls.slide-out ul, .column.elastic .show.controls.slide-out ul li {
+	min-width:0;
+	list-style: none; 
+	display:inline-block;
+	width:auto;
+	padding-left:0px;
+	font-size:.95em;
+}
+.column.elastic .show.controls.slide-out>ul>li>ul {
+	display:none;
+}
+
+.column.elastic .show.controls.slide-out>ul>li:hover>ul {
+	display:inline-block;
+}

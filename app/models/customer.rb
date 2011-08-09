@@ -58,7 +58,11 @@ class Customer < ActiveRecord::Base
     return Address.new
   end
 
-
+  def inv_address
+    return party.company.inv_address unless party.company.inv_address.nil? 
+    return Address.new
+  end  
+  
   private
 
   def trim_strings

@@ -31,4 +31,20 @@ class Address < ActiveRecord::Base
     "#{city}, #{street}, #{house_number}, #{post_code}, #{country.name}"    
   end
   
+  def line_1
+    city
+  end
+  
+  def line_2
+    street
+  end
+  
+  def line_3
+    house_number
+  end
+  
+  def line_4
+    room_number
+  end
+  
 end

@@ -123,6 +123,14 @@ class Invoice < ActiveRecord::Base
   def after_discount
     @sum_total_fees = sum_official_fees + sum_attorney_fees-sum_attorney_fees/100*discount
   end
+  
+  def sum_vat
+    (sum_total_fees + sum_official_fees) * 0.22 
+  end  
+  
+  def sum_total
+    (sum_total_fees + sum_official_fees) * 1.22 
+  end
 
   def generate_registration_number
     Document.transaction do
@@ -163,6 +171,11 @@ class Invoice < ActiveRecord::Base
     return amount_with_vat * 1.22    
   end
 
+  def contact_person
+    return individual unless individual.nil?
+    return Individual.new
+  end
+  
   private
   def mark_as_paid
     puts "invoice_status.name: #{invoice_status.name} and invoice_status.name.eql?('invoice.status.paid') #{invoice_status.name.eql?('invoice.status.paid')}"

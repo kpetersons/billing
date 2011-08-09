@@ -1,6 +1,6 @@
-class InvoicePreviewReport < Prawn::Document
+class PreviewLv < Prawn::Document
     
-  def to_pdf_lv(invoice, current_user)
+  def to_pdf(invoice, current_user)
     table_width = 520
     move_down 152
     

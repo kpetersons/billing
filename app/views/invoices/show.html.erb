@@ -3,7 +3,7 @@
 		<strong>Invoice information</strong>
 	</div>
 	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
-	<%= render :partial => "shared/error", :locals => {:obj => @document.invoice}%>	
+	<%= render :partial => "shared/error", :locals => {:obj => @document.invoice}%>
 	<dl class="panel-content">
 		<dt>
 			<label> Invoice number </label>
@@ -82,19 +82,19 @@
 		</dt>
 		<dd>
 			<%= @document.invoice.subject%>&nbsp;
-		</dd>		
+		</dd>
 		<dt>
 			<label> Apply VAT </label>
 		</dt>
 		<dd>
 			<%= (@document.invoice.apply_vat)? t('bool.t') : t('bool.f') %>&nbsp;
-		</dd>		
+		</dd>
 		<dt>
 			<label> Ending details </label>
 		</dt>
 		<dd>
 			<%= @document.invoice.ending_details%>&nbsp;
-		</dd>				
+		</dd>
 		<dt>
 			<label> Payment term </label>
 		</dt>
@@ -102,12 +102,51 @@
 			<%= @document.invoice.payment_term %>&nbsp;
 		</dd>
 	</dl>
-	<%if @document.invoice.invoice_status.editable_state %>	
-		<%= render :partial => "status_controls", 		:locals => {:invoice 	=> @document.invoice}%>	
-		<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
-	<%end%>	
+	<%if @document.invoice.invoice_status.editable_state %>
+	<%= render :partial => "status_controls", 		:locals => {:invoice 	=> @document.invoice}%>
+	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
+	<%end%>
 	<%= render :partial => "invoices/invoice_lines/index", 			:locals => {:document	=> @document}%>
-	<div class="show controls">
-		<%=link_to 'Preview', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
+	<div class="show controls slide-out">
+		<ul>
+			<li>			
+				<%= link_to 'Preview', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
+				<ul>
+					<li>
+						<%= link_to 'LV', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
+					</li>
+					<li>
+						<%= link_to 'EN', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'EN')%>
+					</li>
+					<li>
+						<%= link_to 'FR', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'FR')%>
+					</li>
+					<li>
+						<%= link_to 'DE', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'DE')%>
+					</li>								
+				</ul>				
+			</li>
+		</ul>
+	</div>
+	<div class="show controls slide-out" style="margin-bottom:2em;">
+		<ul>
+			<li>			
+				<%= link_to 'Print', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
+				<ul>
+					<li>
+						<%= link_to 'LV', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
+					</li>
+					<li>
+						<%= link_to 'EN', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'EN')%>
+					</li>
+					<li>
+						<%= link_to 'FR', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'FR')%>
+					</li>
+					<li>
+						<%= link_to 'DE', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'DE')%>
+					</li>								
+				</ul>				
+			</li>
+		</ul>
 	</div>	
 </div>

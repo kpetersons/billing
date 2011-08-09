@@ -28,8 +28,8 @@ class Company < ActiveRecord::Base
     return accounts.where(:default_account => true).first
   end
 
-  def invoice_address
-    return party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first.name
+  def inv_address
+    return party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first
   end
 
   private
