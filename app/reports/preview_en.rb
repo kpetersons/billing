@@ -38,7 +38,9 @@ class PreviewEn < Prawn::Document
       
       font_size(8) do
         (references_group invoice).draw
-        (po_number_group invoice).draw
+        if !invoice.po_billing.nil? && !invoice.po_billing.empty?
+          (po_number_group invoice).draw
+        end 
         (subject_group invoice).draw
         (invoice_line_caption_group invoice).draw
         (invoice_line_group invoice).draw
@@ -104,7 +106,7 @@ class PreviewEn < Prawn::Document
   end
   
   def po_number_group invoice
-    return make_table([["PO number: #{invoice.po_billing}"]], :width => 520, :cell_style => {:borders => [], :padding_top => 0})
+    return make_table([["PO number: #{invoice.po_billing} "]], :width => 520, :cell_style => {:borders => [], :padding_top => 0}, :column_widths => [520])
   end
   
   def subject_group invoice
