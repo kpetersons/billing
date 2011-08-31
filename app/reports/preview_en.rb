@@ -12,98 +12,53 @@ class PreviewEn < Prawn::Document
       :normal      => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif.ttf" })
 
     font("InvoiceFamily") do
-      move_down 152      
-      header invoice, current_user
-      body invoice, current_user
-      footer invoice, current_user
+
+      move_down 87
+      font_size(10) do
+        head_table = Prawn::Table.new([
+          [
+            (customer_info_group invoice), 
+            (left_side_group invoice)
+          ]
+        ], self, :cell_style => {:borders => []})
+        head_table.draw
+      end
+      
+      font_size(10) do
+        your_info_table = make_table([
+          [
+            (your_vat_group invoice), 
+            (attorney_in_charge_group invoice)
+          ]
+        ], :width => 520, :cell_style => {:borders => [], :padding_top => 5, :padding_bottom => 5})
+        your_info_table.cells[0,0].style :font_style => :bold
+        your_info_table.cells[0,1].style :font_style => :bold_italic
+        your_info_table.draw
+      end
+      
+      font_size(8) do
+        (references_group invoice).draw
+        (po_number_group invoice).draw
+        (subject_group invoice).draw
+        (invoice_line_caption_group invoice).draw
+        (invoice_line_group invoice).draw
+        group do
+            font_size(8) do
+              (invoice_line_footer_group invoice).draw
+              move_down 20
+              font_size(8) do
+                invoice_preparer_group invoice, current_user
+              end
+            end
+        end
+      end
     end
     render
   end
 
   private
 
-  def header(invoice, current_user)
-
-    head_info = make_table(
-        [
-          [
-            customer_info_st(invoice),
-            invoice_info_st(invoice)
-          ]
-        ],
-        :width => width,
-        :cell_style => {:borders =>[], :padding => 2},
-                        :column_widths => [318, 200]
-      )
-    head_info.draw
-    font_size(10) do
-      move_down 10
-      text "To the attention of: #{invoice.contact_person.name}" unless !invoice.contact_person.persisted?
-      move_down 10
-      refs_table = make_table(refs_st(invoice),
-          :width => width,
-          :cell_style=> {:borders => [], :padding => 2},
-          :column_widths => [258, 260]
-        )
-      refs_table.draw
-      move_down 10
-      text invoice.subject
-    end
-
-  end
-
-  def body(invoice, current_user)
-
-    font_size(10) do
-      move_down 5
-      lines_table = make_table(lines(invoice),
-          :width => width,
-          :cell_style=> {:borders => [], :padding => 2},
-          :column_widths => [250, 53, 53, 53, 53, 56]
-        )
-      lines_table.draw
-      subtotals_table = make_table(subtotals_line(invoice),
-          :width => width,
-          :cell_style=> {:borders => [], :padding => 2},
-          :column_widths => [356, 53, 53, 56]
-        )
-      subtotals_table.cells[0,0].style(:align => :right)
-      subtotals_table.cells[0,1].style(:align => :right)
-      subtotals_table.cells[0,2].style(:align => :right)
-      subtotals_table.cells[0,3].style(:align => :right)
-      subtotals_table.draw
-      vat_table = make_table(vat_line(invoice),
-          :width => width,
-          :cell_style=> {:borders => [], :padding => 2},
-          :column_widths => [356, 53, 53, 56]
-        )
-      vat_table.cells[0,0].style(:align => :right)
-      vat_table.cells[0,3].style(:align => :right)              
-      subtotals_table.draw
-      font_size(12) do
-        total_due_table = make_table(total_due_line(invoice),
-          :width => width,
-          :cell_style=> {:borders => [], :padding => 2},
-          :column_widths => [450, 68]
-        )
-      total_due_table.cells[0,0].style(:align => :right,:font_style => :bold)
-      total_due_table.cells[0,1].style(:align => :right,:font_style => :bold)
-      total_due_table.draw
-      end
-    end
-
-  end
-
-  def footer (invoice, current_user)
-    move_down 10
-    font_size(10) do
-      text "<b>VAT reverse charge procedure is applicable according to Art 44 of the EU Council directive 2006/112/EC and Art 41(a) of the Latvian Law on VAT</b>", :inline_format => true      
-      text "Please remit within days #{invoice.payment_term}"
-      text "Kindly refer to our Invoice number in your remittance"
-    end
-  end
-
-  def customer_info_st invoice
+  def customer_info_group invoice
     cust_info = Prawn::Table.new([
       ["#{invoice.customer_name}"],
       ["#{invoice.customer.inv_address.line_1}"],
@@ -113,74 +68,152 @@ class PreviewEn < Prawn::Document
       ["#{invoice.customer.inv_address.country.name}"]
     ], self, :column_widths => [318])
     cust_info.cells.style(:borders => [])
+    cust_info.cells[0,0].style :font_style => :bold 
     return cust_info
   end
-
-  def invoice_info_st invoice
-    inv_info = Prawn::Table.new([["Invoice Nr. #{invoice.id}"]], self, :column_widths => [200])
-    inv_info.cells.style(:borders => [:top, :right, :bottom, :left], :align => :center)
-    return inv_info
+  
+  def left_side_group invoice
+    left_side = make_table([
+                [(invoice_date_group invoice)],
+                [(invoice_number_group invoice)] 
+              ], :width => 205, :cell_style => {:borders =>[], :padding => 2})
+    left_side.cells[0,0].style :font_style => :bold
+    left_side.cells[1,0].style :borders => [:top, :right, :bottom, :left], :font_style => :bold, :align => :center
+    return left_side
+  end
+  
+  def invoice_date_group invoice
+    return "Date: #{invoice.invoice_date.to_s(:show)}"
+  end
+  
+  def invoice_number_group invoice
+    return "Invoice No. #{invoice.id}"
+  end
+  
+  def your_vat_group invoice
+    return "Your VAT No. #{invoice.customer.vat_registration_number}"
+  end
+  
+  def attorney_in_charge_group invoice
+    return "Attorney in charge: #{invoice.contact_person.name}" unless invoice.individual.nil?
+  end
+  
+  def references_group invoice
+    references = []
+    references[0] = ["Your Ref.: #{invoice.your_ref}", "Our Ref.: #{invoice.our_ref}"]
+    references_data = make_table(references, :width => 520, :cell_style => {:borders => []})
+    return references_data
+  end
+  
+  def po_number_group invoice
+    return make_table([["PO number: #{invoice.po_billing}"]], :width => 520, :cell_style => {:borders => [], :padding_top => 0})
+  end
+  
+  def subject_group invoice
+    subject = make_table([[invoice.subject]], :width => 520, :cell_style => {:borders => [], :padding_top => 5})
+    subject.cells[0,0].style :font_style => :bold
+    return subject
+  end
+  
+  def invoice_line_caption_group invoice
+    caption = make_table([["Our measures and costs specified below:"]], :width => 520, :cell_style => {:borders => [], :padding_top => 5})
+    return caption    
+  end
+  
+  def invoice_line_group invoice
+    lines_table = make_table(
+      lines(invoice),
+      :width => width,
+      :cell_style=> {:borders => [:top, :right, :bottom, :left], :padding => 2},
+      :column_widths => [409, 53, 56]
+    )
+    lines_table.columns(1).style :align => :right
+    lines_table.columns(2).style :align => :right    
+    return lines_table
+  end
+  
+  def invoice_line_footer_group invoice
+    line_footer_table = make_table(
+      [
+        subtotals_line(invoice),
+        vat_line(invoice),
+        total_due_line(invoice)
+      ],
+      :width => width,
+      :cell_style => {:borders => [:top, :right, :bottom, :left], :padding => 2},
+      :column_widths => [409, 53, 56]
+      
+    )
+    line_footer_table.cells[line_footer_table.row_length-3, 0].style :align => :right, :borders => [:left, :top]
+    line_footer_table.cells[line_footer_table.row_length-2, 0].style :align => :right, :borders => [:left, :bottom]
+    line_footer_table.cells[line_footer_table.row_length-1, 0].style :align => :right, :borders => [:left, :bottom], :font_style => :bold
+    #
+    line_footer_table.cells[line_footer_table.row_length-3, 1].style :align => :right, :borders => [:top]
+    line_footer_table.cells[line_footer_table.row_length-2, 1].style :align => :right, :borders => [:bottom]
+    line_footer_table.cells[line_footer_table.row_length-1, 1].style :align => :right, :borders => [:bottom], :font_style => :bold
+    #
+    line_footer_table.cells[line_footer_table.row_length-3, 2].style :align => :right, :borders => [:left, :top, :right]
+    line_footer_table.cells[line_footer_table.row_length-2, 2].style :align => :right, :borders => [:left, :bottom, :right]
+    line_footer_table.cells[line_footer_table.row_length-1, 2].style :align => :right, :borders => [:left, :bottom, :right], :font_style => :bold
+    #    
+    line_footer_table.columns(1).style :align => :right
+    line_footer_table.columns(2).style :align => :right
+    return line_footer_table
   end
 
-  def refs_st invoice
-    your_ref = "#{invoice.your_ref}"
-    your_date = "#{invoice.your_date}"
-    our_ref = "#{invoice.our_ref}"
-    our_date = "Riga,#{invoice.invoice_date.to_s(:show)}"
-    po_billing = "#{invoice.po_billing}"
-    rows = Array.new
-    rows<<["Our date: #{our_date}", "Our ref: #{our_ref}"]
-    rows<<["Your date: #{your_date}", "Your ref: #{your_ref}"]
-    rows<<["Po billing no.: #{po_billing}"] unless po_billing.nil?
+  def invoice_preparer_group invoice, current_user
+    group do
+      font_size(10) do
+        text "<b>VAT reverse charge procedure is applicable according to Art 44 of the EU Council directive 2006/112/EC and Art 41(a) of the Latvian Law on VAT</b>", :inline_format => true
+        move_down 20
+        text "Please remit within #{invoice.payment_term} days"
+        text "Kindly refer to our Invoice number in your remittance"
+        move_down 20
+        text current_user.individual.name
+      end
+    end
   end
 
   def lines invoice
     table = []
     table<<[
-      "Action",
-      "Unit",
-      "Items",
+      "Description",
       "Official fee #{invoice.currency.name}",
-      "Agency fee #{invoice.currency.name}",
-      "Line total #{invoice.currency.name}"
+      "Attorney's fee #{invoice.currency.name}"
     ]
     counter = 1
     invoice.invoice_lines.each do |line|
       table<<[
         "#{counter}. #{line.provided_fee_description},#{line.provided_fee_details}",
-        "#{line.units}",
-        "#{line.items}",
-        "#{line.official_fee_total}",        
-        "#{line.attorney_fee_total}",
-        "#{line.line_total}"
+        "#{line.official_fee_total}",
+        "#{line.attorney_fee_total}"
       ]
       counter = counter + 1
     end
     return table
   end
-  
+
   def subtotals_line invoice
-    return [[
-      "Subtotal #{invoice.currency.name}", 
-      "#{invoice.sum_official_fees}", 
-      "#{invoice.sum_attorney_fees}",
-      "#{invoice.sum_total_fees}" 
-    ]]
+    return [
+        "Subtotal #{invoice.currency.name}",
+        "#{invoice.sum_official_fees}",
+        "#{invoice.sum_attorney_fees}"
+    ]
   end
-  
+
   def vat_line invoice
-    return [[
-      "VAT 22%", 
-      "", 
-      "",
-      "#{invoice.sum_vat}" 
-    ]]
-  end  
-  
+    return [
+        "VAT 22%",
+        "",
+        "#{invoice.sum_vat}"
+      ]
+  end
+
   def total_due_line invoice
-    return [[
-      "Total due #{invoice.currency.name}", 
-      "#{invoice.sum_total}"
-    ]]  
+    return [
+        "Total due #{invoice.currency.name}",
+        "",
+        "#{invoice.sum_total}"
+      ]
   end
 end

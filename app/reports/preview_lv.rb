@@ -2,7 +2,7 @@ class PreviewLv < Prawn::Document
     
   def to_pdf(invoice, current_user)
     table_width = 520
-    move_down 152
+    move_down 87
     
     font_families.update(
                       "InvoiceFamily" => { 
@@ -13,7 +13,7 @@ class PreviewLv < Prawn::Document
         
     font("InvoiceFamily") do      
 
-      font_size(12) do
+      font_size(10) do
          txt = "REKINS Nr #{invoice.invoice_date.strftime("%y")}/#{invoice.number}"
          inv_number_cell = make_cell(:content =>txt)
          inv_number_cell.style(:font_style => :bold)
@@ -21,7 +21,7 @@ class PreviewLv < Prawn::Document
          inv_number_cell.draw
       end
       move_down 30
-      font_size(10) do  
+      font_size(8) do  
         party_info_data = operating_party_table(invoice, current_user)
         party_info_data.concat(empty_two_col_table)
         party_info_data.concat(customer_party_table(invoice))
@@ -158,9 +158,9 @@ class PreviewLv < Prawn::Document
     counter = 1
     invoice.invoice_lines.each do |line|           
       table<<[
-        "#{counter}. #{line.provided_fee_description},#{line.provided_fee_details}", 
-        line.units, 
-        line.provided_fee_amount, 
+        "#{counter}. #{line.provided_fee_description}", 
+        line.units,
+        line.provided_fee_amount,
         line.items, 
         line.provided_fee_without_vat
         ]

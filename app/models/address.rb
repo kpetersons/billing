@@ -32,19 +32,23 @@ class Address < ActiveRecord::Base
   end
   
   def line_1
-    city
+    return city unless city.nil? || city.empty?
+    return nil
   end
   
   def line_2
-    street
+    return street unless street.nil? || street.empty?
+    return nil
   end
   
   def line_3
-    house_number
+    return house_number unless house_number.nil? || house_number.empty?
+    return nil
   end
   
   def line_4
-    room_number
+    return room_number unless room_number.nil? || room_number.empty?
+    return nil
   end
   
 end

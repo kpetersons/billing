@@ -42,10 +42,8 @@ class InvoiceLine < ActiveRecord::Base
   end
 
   def provided_fee_description
-    if is_official
-      return official_fee_type.description
-    end
-    return attorney_fee_type.description
+     return offering if details.nil? || details.empty?
+     return "#{offering}, #{details}"
   end
   
   def provided_fee_details
