@@ -53,7 +53,7 @@ class Address < ActiveRecord::Base
   
   def line_5
     return country.name unless country.nil?
-    return Country.new
+    return Country.new.name
   end
   
 end
