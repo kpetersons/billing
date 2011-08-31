@@ -69,6 +69,10 @@ class Invoice < ActiveRecord::Base
   
   before_save :mark_as_paid
   
+  def chk_address
+    return address unless address.nil?
+    return address
+  end
   
   def number
     document.registration_number
