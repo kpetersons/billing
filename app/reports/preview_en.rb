@@ -65,7 +65,7 @@ class PreviewEn < Prawn::Document
       ["#{invoice.customer.inv_address.line_2}"],
       ["#{invoice.customer.inv_address.line_3}"],
       ["#{invoice.customer.inv_address.line_4}"],
-      ["#{invoice.customer.inv_address.country.name}"]
+      ["#{invoice.customer.inv_address.line_5.name}"]
     ], self, :column_widths => [318])
     cust_info.cells.style(:borders => [])
     cust_info.cells[0,0].style :font_style => :bold 
