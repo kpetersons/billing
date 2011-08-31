@@ -71,7 +71,7 @@ class Invoice < ActiveRecord::Base
   
   def chk_address
     return address unless address.nil?
-    return address
+    return Address.new
   end
   
   def number
