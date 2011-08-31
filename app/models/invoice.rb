@@ -120,6 +120,10 @@ class Invoice < ActiveRecord::Base
     sum_official_fees + sum_attorney_fees
   end
 
+  def sum_discount
+    sum_attorney_fees - sum_attorney_fees * discount/100 
+  end
+
   def after_discount
     @sum_total_fees = sum_official_fees + sum_attorney_fees-sum_attorney_fees/100*discount
   end
