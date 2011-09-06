@@ -34,7 +34,7 @@ class Customer < ActiveRecord::Base
   end
   
   def contact_persons
-    Individual.where(:party_id => party.target_parties_query(:relationship_type => RelationshipType.find_by_name('CONTACT_PERSON').id)).all
+    Individual.where(:party_id => party.target_parties_query(:relationship_type => RelationshipType.find_by_name('CONTACT_PERSON').id))
   end
 
   def registration_number
