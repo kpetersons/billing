@@ -14,7 +14,7 @@ class PreviewEn < Prawn::Document
     font("InvoiceFamily") do
 
       move_down 87
-      font_size(10) do
+      font_size(8) do
         head_table = Prawn::Table.new([
           [
             (customer_info_group invoice), 
@@ -22,9 +22,7 @@ class PreviewEn < Prawn::Document
           ]
         ], self, :cell_style => {:borders => []})
         head_table.draw
-      end
-      
-      font_size(10) do
+
         your_info_table = make_table([
           [
             (your_vat_group invoice), 
@@ -38,9 +36,7 @@ class PreviewEn < Prawn::Document
       
       font_size(8) do
         (references_group invoice).draw
-        if !invoice.po_billing.nil? && !invoice.po_billing.empty?
-          (po_number_group invoice).draw
-        end 
+        (po_number_group invoice).draw 
         (subject_group invoice).draw
         (invoice_line_caption_group invoice).draw
         (invoice_line_group invoice).draw
@@ -59,14 +55,15 @@ class PreviewEn < Prawn::Document
   private
 
   def customer_info_group invoice
-    cust_info = Prawn::Table.new([
-      ["#{invoice.customer_name}"],
-      ["#{invoice.chk_address.line_1}"],
-      ["#{invoice.chk_address.line_2}"],
-      ["#{invoice.chk_address.line_3}"],
-      ["#{invoice.chk_address.line_4}"],
-      ["#{invoice.chk_address.line_5}"]
-    ], self, :column_widths => [318])
+    address_data = []
+    address_data<<["#{invoice.customer_name}"]
+    address_data<<["#{invoice.chk_address.line_1}"] unless invoice.chk_address.line_1.nil?
+    address_data<<["#{invoice.chk_address.line_2}"] unless invoice.chk_address.line_2.nil?
+    address_data<<["#{invoice.chk_address.line_3}"] unless invoice.chk_address.line_3.nil?
+    address_data<<["#{invoice.chk_address.line_4}"] unless invoice.chk_address.line_4.nil?
+    address_data<<["#{invoice.chk_address.line_5}"] unless invoice.chk_address.line_5.nil?
+   
+    cust_info = make_table(address_data, :width => 318, :cell_style => {:borders => [], :padding => 0})
     cust_info.cells.style(:borders => [])
     cust_info.cells[0,0].style :font_style => :bold 
     return cust_info
@@ -83,7 +80,7 @@ class PreviewEn < Prawn::Document
   end
   
   def invoice_date_group invoice
-    return "Date: #{invoice.invoice_date.to_s(:show)}"
+    return "Date: #{invoice.invoice_date.to_s(:show_invoice)}"
   end
   
   def invoice_number_group invoice
@@ -106,7 +103,8 @@ class PreviewEn < Prawn::Document
   end
   
   def po_number_group invoice
-    return make_table([["PO number: #{invoice.po_billing} "]], :width => 520, :cell_style => {:borders => [], :padding_top => 0}, :column_widths => [520])
+    po_data = [(invoice.po_billing.nil?)? "" : "PO number: #{invoice.po_billing} ", "Your date: #{invoice.your_date.to_s(:show_invoice)}"]
+    return make_table([po_data], :width => 520, :cell_style => {:borders => [], :padding_top => 0}, :column_widths => [260, 260])
   end
   
   def subject_group invoice
@@ -154,7 +152,7 @@ class PreviewEn < Prawn::Document
           "VAT 22%",
           "",
           "#{invoice.sum_vat}"
-        ]
+        ] unless !invoice.apply_vat
         line_footer_data<<[
           "Total due #{invoice.currency.name}",
           "",
@@ -205,8 +203,23 @@ class PreviewEn < Prawn::Document
     ]
     counter = 1
     invoice.invoice_lines.each do |line|
-      table<<[
-        "#{counter}. #{line.provided_fee_description},#{line.provided_fee_details}",
+      if line.items > 1 
+        line_data = make_table([
+            ["#{counter}. #{line.provided_fee_details}"],
+            ["(#{line.items}#{line.units} x #{invoice.currency.name} #{line.attorney_fee}) #{line.provided_fee_description}"]
+          ],
+          :cell_style => {:borders => [], :padding => 0},        
+          :column_widths => [409])
+      else 
+        line_data = make_table([
+            ["#{counter}. #{line.provided_fee_details}"],
+            ["#{line.provided_fee_description}"]
+          ],
+          :cell_style => {:borders => [], :padding => 0},        
+          :column_widths => [409])
+      end
+      line_data.rows(1).style  :font_style => :italic
+      table<<[line_data,
         "#{line.official_fee_total}",
         "#{line.attorney_fee_total}"
       ]      
