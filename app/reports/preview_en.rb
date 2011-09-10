@@ -132,55 +132,82 @@ class PreviewEn < Prawn::Document
   
   def invoice_line_footer_group invoice
     line_footer_data = []
-        if !invoice.discount.nil? && invoice.discount > 0
-          line_footer_data<< [
-            "
-            
-            Discount to our fees #{invoice.discount}%",
-            "",
-            "
-            
-            -#{invoice.sum_discount}"
-          ]
-        end
-        line_footer_data<<[
-          "Subtotal #{invoice.currency.name}",
-          "#{invoice.sum_official_fees}",
-          "#{invoice.sum_attorney_fees}"
-        ]
-        line_footer_data<<[
-          "VAT 22%",
-          "",
-          "#{invoice.sum_vat}"
-        ] unless !invoice.apply_vat
-        line_footer_data<<[
-          "Total due #{invoice.currency.name}",
-          "",
-          "#{invoice.sum_total}"
-        ]
+    if !invoice.discount.nil? && invoice.discount > 0
+      line_footer_data<< [
+        "
+        
+        Discount to our fees #{invoice.discount}%",
+        "",
+        "
+        
+        -#{invoice.sum_discount}"
+      ]
+    end
+    line_footer_data<<[
+      "Subtotal #{invoice.currency.name}",
+      "#{invoice.sum_official_fees}",
+      "#{invoice.sum_attorney_fees}"
+    ]
+    line_footer_data<<[
+      "VAT 22%",
+      "",
+      "#{invoice.sum_vat}"
+    ] unless !invoice.apply_vat
+        
     line_footer_table = make_table(
       line_footer_data,
-      :width => width,
-      :cell_style => {:borders => [:top, :right, :bottom, :left], :padding => 2},
-      :column_widths => [409, 53, 56]
-      
+      :width => 220,
+      :cell_style => {:borders => [:top, :right, :left], :padding => 2},
+      :column_widths => [111, 53, 56]
     )
+       
+    line_footer_table.cells[line_footer_table.row_length-3, 0].style :align => :right, :borders => []
+    line_footer_table.cells[line_footer_table.row_length-3, 1].style :align => :right, :borders => [:right]
+    line_footer_table.cells[line_footer_table.row_length-3, 2].style :align => :right, :borders => []
     
-    line_footer_table.cells[line_footer_table.row_length-3, 0].style :align => :right, :borders => [:left, :top]
-    line_footer_table.cells[line_footer_table.row_length-2, 0].style :align => :right, :borders => [:left, :bottom]
-    line_footer_table.cells[line_footer_table.row_length-1, 0].style :align => :right, :borders => [:left, :bottom], :font_style => :bold
+    line_footer_table.cells[line_footer_table.row_length-2, 0].style :align => :right, :borders => []
+    line_footer_table.cells[line_footer_table.row_length-2, 1].style :align => :right, :borders => [:right]
+    line_footer_table.cells[line_footer_table.row_length-2, 2].style :align => :right, :borders => []
     #
-    line_footer_table.cells[line_footer_table.row_length-3, 1].style :align => :right, :borders => [:top]
-    line_footer_table.cells[line_footer_table.row_length-2, 1].style :align => :right, :borders => [:bottom]
-    line_footer_table.cells[line_footer_table.row_length-1, 1].style :align => :right, :borders => [:bottom], :font_style => :bold
+    line_footer_table.cells[line_footer_table.row_length-1, 0].style :align => :right, :borders => [], :font_style => :bold
+    line_footer_table.cells[line_footer_table.row_length-1, 1].style :align => :right, :borders => [:right], :font_style => :bold
+    line_footer_table.cells[line_footer_table.row_length-1, 2].style :align => :right, :borders => [], :font_style => :bold
     #
-    line_footer_table.cells[line_footer_table.row_length-3, 2].style :align => :right, :borders => [:left, :top, :right]
-    line_footer_table.cells[line_footer_table.row_length-2, 2].style :align => :right, :borders => [:left, :bottom, :right]
-    line_footer_table.cells[line_footer_table.row_length-1, 2].style :align => :right, :borders => [:left, :bottom, :right], :font_style => :bold
+
+
+
     #    
     line_footer_table.columns(1).style :align => :right
     line_footer_table.columns(2).style :align => :right
-    return line_footer_table
+    
+    line_footer = make_table(
+      [
+        [invoice.ending_details, line_footer_table],
+      ],
+      :width => 520, :column_widths => [300, 220], :cell_style => {:borders => []}
+    )
+    
+    totals = make_table(
+      [
+        ["Total due #{invoice.currency.name}","#{invoice.sum_total}"]
+      ],
+      :width => 520, 
+      :column_widths => [411, 109],
+      :cell_style => {:borders => []}
+    )
+    
+    totals.cells[0,0].style :align => :right, :font_style => :bold
+    totals.cells[0,1].style :align => :right, :font_style => :bold
+    
+    footer = make_table(
+        [
+          [line_footer],
+          [totals]          
+        ],
+        :width => 520, :column_widths => [520]
+    )
+    
+    return footer
   end
 
   def invoice_preparer_group invoice, current_user
