@@ -79,6 +79,7 @@ class CustomersController < ApplicationController
 
   def list_contact_persons
     @result = Customer.find(params[:customer]).contact_persons.collect { |tt| [tt.id, tt.name] }
+    @result.unshift(['', ''])
     render :json => @result
   end
 
