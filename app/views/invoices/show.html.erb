@@ -103,8 +103,8 @@
 		</dd>
 	</dl>
 	<%if @document.invoice.invoice_status.editable_state %>
-	<%= render :partial => "status_controls", 		:locals => {:invoice 	=> @document.invoice}%>
-	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
+		<%= render :partial => "status_controls", 		:locals => {:invoice 	=> @document.invoice}%>
+		<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
 	<%end%>
 	<%= render :partial => "invoices/invoice_lines/index", 			:locals => {:document	=> @document}%>
 	<div class="show controls slide-out">

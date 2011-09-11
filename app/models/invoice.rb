@@ -72,11 +72,11 @@ class Invoice < ActiveRecord::Base
   before_save :mark_as_paid
   
   def self.new_foreign_reg_number
-    return Invoice.where(:invoice_type=> 1).count+1
+    return Invoice.where(:invoice_type=> 1).count
   end
   
   def self.new_local_reg_number
-    return Invoice.where(:invoice_type=> 0).count+1
+    return Invoice.where(:invoice_type=> 0).count
   end  
   
   def chk_address

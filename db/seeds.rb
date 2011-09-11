@@ -591,7 +591,7 @@ InvoiceStatus.transaction do
   invoice_statuses = [
     ["open", true],
     ["approved", true],
-    ["issued", false],
+    ["issued", true],
     ["canceled", false],
     ["awaiting", false],
     ["paid", false]
