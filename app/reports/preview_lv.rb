@@ -202,9 +202,16 @@ class PreviewLv < Prawn::Document
     table = []
     table<<invoice_line_table_header
     counter = 1
-    invoice.invoice_lines.each do |line|           
+    invoice.invoice_lines.each do |line|
+      line_data = make_table([
+          ["#{counter}. #{line.provided_fee_details}"],
+          ["#{line.provided_fee_description}"]
+        ],
+        :cell_style => {:borders => [], :padding => 0},        
+        :column_widths => [310])      
+      line_data.rows(1).style  :font_style => :italic      
       table<<[
-        "#{counter}. #{line.provided_fee_description}", 
+        line_data, 
         line.units,
         line.provided_fee_amount,
         line.items, 
@@ -242,7 +249,7 @@ class PreviewLv < Prawn::Document
     text "* Ar PVN neapliekamie pakalpojumi"
     move_down 10
     text "Ludzam veikt parskaitijumu #{invoice.payment_term} dienu laika."
-    text "Maksajuma uzdevuma obligati noradiet musu rekina numuru!"
+    text "<u>Maksajuma uzdevuma obligati noradiet musu rekina numuru!</u>", :inline_format => true
     move_down 20
     text current_user.full_name
   end

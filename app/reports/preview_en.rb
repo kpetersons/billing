@@ -41,11 +41,11 @@ class PreviewEn < Prawn::Document
         (invoice_line_caption_group invoice).draw
         (invoice_line_group invoice).draw
         group do
-            font_size(8) do
+              discount = invoice_line_discound_group invoice
+              discount.draw unless discount.nil? 
               (invoice_line_footer_group invoice).draw
               move_down 20
               invoice_preparer_group invoice, current_user
-            end
         end
       end
     end
@@ -129,20 +129,26 @@ class PreviewEn < Prawn::Document
     lines_table.columns(2).style :align => :right
     return lines_table
   end
-  
-  def invoice_line_footer_group invoice
-    line_footer_data = []
+
+  def invoice_line_discound_group invoice
     if !invoice.discount.nil? && invoice.discount > 0
-      line_footer_data<< [
+      discount = make_table([[
         "
-        
         Discount to our fees #{invoice.discount}%",
         "",
         "
-        
         -#{invoice.sum_discount}"
-      ]
+      ]],       :width => width,
+      :cell_style => {:padding => 2},
+      :column_widths => [409, 53, 56])
+      discount.cells[0,2].style :align => :right
+      return discount 
     end
+    return nil
+  end
+  
+  def invoice_line_footer_group invoice
+    line_footer_data = []
     line_footer_data<<[
       "Subtotal #{invoice.currency.name}",
       "#{invoice.sum_official_fees}",
@@ -161,10 +167,6 @@ class PreviewEn < Prawn::Document
       :column_widths => [111, 53, 56]
     )
        
-    line_footer_table.cells[line_footer_table.row_length-3, 0].style :align => :right, :borders => []
-    line_footer_table.cells[line_footer_table.row_length-3, 1].style :align => :right, :borders => [:right]
-    line_footer_table.cells[line_footer_table.row_length-3, 2].style :align => :right, :borders => []
-    
     line_footer_table.cells[line_footer_table.row_length-2, 0].style :align => :right, :borders => []
     line_footer_table.cells[line_footer_table.row_length-2, 1].style :align => :right, :borders => [:right]
     line_footer_table.cells[line_footer_table.row_length-2, 2].style :align => :right, :borders => []
@@ -173,9 +175,6 @@ class PreviewEn < Prawn::Document
     line_footer_table.cells[line_footer_table.row_length-1, 1].style :align => :right, :borders => [:right], :font_style => :bold
     line_footer_table.cells[line_footer_table.row_length-1, 2].style :align => :right, :borders => [], :font_style => :bold
     #
-
-
-
     #    
     line_footer_table.columns(1).style :align => :right
     line_footer_table.columns(2).style :align => :right
@@ -184,15 +183,15 @@ class PreviewEn < Prawn::Document
       [
         [invoice.ending_details, line_footer_table],
       ],
-      :width => 520, :column_widths => [300, 220], :cell_style => {:borders => []}
+      :width => width, :column_widths => [298, 220], :cell_style => {:borders => []}
     )
     
     totals = make_table(
       [
         ["Total due #{invoice.currency.name}","#{invoice.sum_total}"]
       ],
-      :width => 520, 
-      :column_widths => [411, 109],
+      :width => width, 
+      :column_widths => [410, 108],
       :cell_style => {:borders => []}
     )
     
@@ -204,7 +203,7 @@ class PreviewEn < Prawn::Document
           [line_footer],
           [totals]          
         ],
-        :width => 520, :column_widths => [520]
+        :width => width, :column_widths => [width]
     )
     
     return footer
