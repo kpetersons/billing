@@ -906,9 +906,8 @@ Customer.transaction do
       }      
    })
     puts @result.errors unless @result.errors.empty?
-    if @result.save
-      puts "AddressType.find_by_name('BILL_TO').id #{AddressType.find_by_name('BILL_TO').id}"      
-      unless !Address.where(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country_id => Country.find_by_name(company[6]).id, :city => company[3], :street => company[4], :house_number => company[5]).first.nil?
+    if @result.save      
+      unless !Address.where(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country_id => Country.find_by_name(company[6].capitalize).id, :city => company[3], :street => company[4], :house_number => company[5]).first.nil?
         @address = Address.new(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country_id => Country.find_by_name(company[6]).id, :city => company[3], :street => company[4], :house_number => company[5])
         puts @address.errors unless @address.errors.empty?
         @address.save
