@@ -42,8 +42,7 @@ class InvoiceLine < ActiveRecord::Base
   end
 
   def provided_fee_description
-     return offering if details.nil? || details.empty?
-     return "#{offering}, #{details}"
+     return "#{details}"
   end
   
   def provided_fee_details
