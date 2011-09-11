@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110725183852) do
+ActiveRecord::Schema.define(:version => 20110911091217) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -262,6 +262,9 @@ ActiveRecord::Schema.define(:version => 20110725183852) do
     t.boolean  "apply_vat"
     t.integer  "invoice_status_id"
     t.date     "date_paid"
+    t.integer  "foreign_number"
+    t.integer  "local_number"
+    t.integer  "invoice_type"
   end
 
   create_table "legal_types", :force => true do |t|

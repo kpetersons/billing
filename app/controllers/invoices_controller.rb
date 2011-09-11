@@ -25,7 +25,7 @@ class InvoicesController < ApplicationController
 
   def create
     Document.transaction do
-      @document = Document.new(params[:document])
+      @document = Document.new(params[:document])      
       if @document.save
         @invoice = @document.invoice
         redirect_to @invoice

@@ -2,11 +2,18 @@
 <%= fields.hidden_field :parent_id %>
 <%= fields.hidden_field :user_id %>
 <ul>
-	<li>
-		<%= fields.label :registration_number, "Invoice number" %>
-		<%= fields.object.registration_number %>&nbsp;
-	</li>
 	<%= fields.fields_for :invoice do |i_f| %>
+	<%if fields.object.persisted? %>
+	<li style="margin-bottom: 1em;">
+		<%= fields.label :registration_number, "Invoice number", :style => "font-size: 1.2em;" %>
+		<span style="color:black; font-size:1.2em; line-height: 1.8em;"><%= fields.object.registration_number %>&nbsp;</span>
+	</li>
+	<%else%>
+	<li style="margin-bottom: 1em;">
+		<%= i_f.label :invoice_type, "Foreign invoice" %>
+		<%= i_f.check_box :invoice_type, :style => "width:auto;" %>
+	</li>
+	<%end%>	
 	<li>
 		<%= i_f.hidden_field :invoice_status_id %>		
 		<%= i_f.hidden_field :author_id %>
@@ -36,8 +43,8 @@
 			</li>
 			<li>
 				<%= i_f.label :individual_id, "Person" %>
-				<%= i_f.select :individual_id, i_f.object.customer_contact_persons,
-          {},
+				<%= i_f.select :individual_id, i_f.object.customer_contact_persons, 
+          {:include_blank => true},
           {:class => 'wide', :disabled => false || i_f.object.customer.nil?} %>
 			</li>
 		</ul>
@@ -96,11 +103,11 @@
 		</li>
 			<li>
 				<%= i_f.label :subject %>
-				<%= i_f.text_area :subject %>
+				<%= i_f.text_area :subject, :size => "80x5", :style => "width:auto;" %>
 			</li>
 			<li>
 				<%= i_f.label :ending_details, 'Ending' %>
-				<%= i_f.text_area :ending_details %>
+				<%= i_f.text_area :ending_details, :size => "80x5", :style => "width:auto;" %>
 			</li>
 			</ul>
 	</li>

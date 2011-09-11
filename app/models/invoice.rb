@@ -41,7 +41,8 @@ class Invoice < ActiveRecord::Base
   has_many   :invoice_matters
   has_many   :matters, :through => :invoice_matters
 
-  attr_accessible :document_id,
+  attr_accessible :invoice_type,
+                  :document_id,
                   :customer_id,
                   :address_id,
                   :author_id,
@@ -54,7 +55,7 @@ class Invoice < ActiveRecord::Base
                   :finishing_details,
                   :invoice_date,
                   :invoice_lines_attributes,
-                  :invoice_matters_attributes
+                  :invoice_matters_attributes                  
   accepts_nested_attributes_for  :invoice_lines, :invoice_matters
   attr_protected :preset_id, :customer_name
   attr_accessor :preset_id
@@ -63,15 +64,20 @@ class Invoice < ActiveRecord::Base
   
   validates :discount, :numericality => true
   validates :invoice_date, :presence => true
+  validates :invoice_type, :presence => true  
   validates :customer_id, :presence => true
   validates :payment_term, :presence => true, :numericality => true
   validates :subject, :presence => true, :length              => {:within => 5..250}
   
   before_save :mark_as_paid
   
-  def address_array
-    
+  def self.new_foreign_reg_number
+    return Invoice.where(:invoice_type=> 1).count+1
   end
+  
+  def self.new_local_reg_number
+    return Invoice.where(:invoice_type=> 0).count+1
+  end  
   
   def chk_address
     return address unless address.nil?
@@ -146,8 +152,13 @@ class Invoice < ActiveRecord::Base
 
   def generate_registration_number
     Document.transaction do
-      @reg_nr = "#{id}"
-      document.update_attribute(:registration_number, @reg_nr)
+      if invoice_type.eql?("1")
+        foreign_number = Invoice.new_foreign_reg_number
+        document.update_attribute(:registration_number, foreign_number)
+      else
+        local_number = Invoice.new_local_reg_number
+        document.update_attribute(:registration_number, local_number)
+      end
     end
   end
 
@@ -194,6 +205,6 @@ class Invoice < ActiveRecord::Base
     if invoice_status.name.eql?('invoice.status.paid') && date_paid.nil?
       self.date_paid = Date.today
     end
-  end
+  end 
   
 end
