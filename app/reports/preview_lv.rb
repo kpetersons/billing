@@ -23,12 +23,50 @@ class PreviewLv < Prawn::Document
       move_down 30
       font_size(8) do  
         party_info_data = operating_party_table(invoice, current_user)
-        party_info_data.concat(empty_two_col_table)
-        party_info_data.concat(customer_party_table(invoice))
-            
-        party_info_table = make_table(party_info_data, :width => table_width, :cell_style => {:borders =>[], :padding => 2})
-        party_info_table.draw    
+           
+        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120] , :cell_style => {:borders => [], :padding => 1})
         
+        party_info_table.cells[0, 0].style :borders => [:left, :top]
+        party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
+        party_info_table.cells[0, 2].style :borders => [:top]
+        party_info_table.cells[0, 3].style :borders => [:top, :right], :font_style => :bold
+                
+        party_info_table.cells[1, 0].style :borders => [:left]
+        party_info_table.cells[1, 1].style :font_style => :bold        
+        party_info_table.cells[1, 3].style :borders => [:right], :font_style => :bold
+        party_info_table.cells[2, 0].style :borders => [:left]
+        party_info_table.cells[2, 1].style :font_style => :bold        
+        party_info_table.cells[2, 3].style :borders => [:right], :font_style => :bold
+                                                        
+        party_info_table.cells[3, 0].style :borders => [:left, :bottom]
+        party_info_table.cells[3, 1].style :borders => [:bottom], :font_style => :bold
+        party_info_table.cells[3, 2].style :borders => [:bottom]
+        party_info_table.cells[3, 3].style :borders => [:bottom, :right], :font_style => :bold
+        party_info_table.draw            
+        
+        move_down 10
+        
+        party_info_data = customer_party_table(invoice)
+        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120] , :cell_style => {:borders => [], :padding => 1})
+        
+        party_info_table.cells[0, 0].style :borders => [:left, :top]
+        party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
+        party_info_table.cells[0, 2].style :borders => [:top]
+        party_info_table.cells[0, 3].style :borders => [:top, :right], :font_style => :bold
+                
+        party_info_table.cells[1, 0].style :borders => [:left]
+        party_info_table.cells[1, 1].style :font_style => :bold        
+        party_info_table.cells[1, 3].style :borders => [:right], :font_style => :bold
+        party_info_table.cells[2, 0].style :borders => [:left]
+        party_info_table.cells[2, 1].style :font_style => :bold        
+        party_info_table.cells[2, 3].style :borders => [:right], :font_style => :bold
+                                                        
+        party_info_table.cells[3, 0].style :borders => [:left, :bottom]
+        party_info_table.cells[3, 1].style :borders => [:bottom], :font_style => :bold
+        party_info_table.cells[3, 2].style :borders => [:bottom]
+        party_info_table.cells[3, 3].style :borders => [:bottom, :right], :font_style => :bold
+        party_info_table.draw
+                
         move_down 10
         ref_table = make_table(invoice_refs_table(invoice), :width => table_width, :cell_style => {:borders =>[], :padding => 3})
         ref_table.draw     
@@ -117,7 +155,9 @@ class PreviewLv < Prawn::Document
     ],
     [
       "Juridiska adrese",
-      current_user.operating_party.invoice_address      
+      current_user.operating_party.invoice_address,
+      "",
+      ""      
     ]
   end  
   
@@ -139,7 +179,13 @@ class PreviewLv < Prawn::Document
       "LV#{invoice.customer.registration_number}",  
       "Konta numurs",
       (invoice.customer.default_account.account_number)
-    ]
+    ],
+    [
+      "Juridiska adrese",
+      invoice.customer.invoice_address,  
+      "",
+      ""
+    ]    
   end
   
   def invoice_line_table_header
@@ -195,7 +241,7 @@ class PreviewLv < Prawn::Document
   def draw_invoice_footer (invoice, current_user)
     text "* Ar PVN neapliekamie pakalpojumi"
     move_down 10
-    text "Ludzam veikt parskaitijumu 12 dienu laika."
+    text "Ludzam veikt parskaitijumu #{invoice.payment_term} dienu laika."
     text "Maksajuma uzdevuma obligati noradiet musu rekina numuru!"
     move_down 20
     text current_user.full_name

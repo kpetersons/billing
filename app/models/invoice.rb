@@ -67,7 +67,7 @@ class Invoice < ActiveRecord::Base
   validates :invoice_type, :presence => true  
   validates :customer_id, :presence => true
   validates :payment_term, :presence => true, :numericality => true
-  validates :subject, :presence => true, :length              => {:within => 5..250}
+  validates :subject, :presence => true, :length              => {:within => 5..500}
   
   before_save :mark_as_paid
   
