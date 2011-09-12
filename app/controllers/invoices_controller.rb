@@ -1,6 +1,8 @@
 class InvoicesController < ApplicationController
 
   layout "invoices"
+
+  before_filter :show_column_filter, :only => :index
   def index
     @invoices = Invoice.joins(:document).where(:documents => {:user_id => current_user.id}).paginate(:per_page => 10, :page => params[:my_invoices_page])
     @other_invoices = Invoice.joins(:document).where("user_id != #{current_user.id}").paginate(:per_page => 10, :page => params[:other_invoices_page])
@@ -15,9 +17,9 @@ class InvoicesController < ApplicationController
     @matter_task = MatterTask.find(params[:task_id]) unless params[:task_id].nil?
     @matter = Matter.find(params[:matter_id]) unless params[:matter_id].nil?
     if !@matter.nil? || !@matter_task.nil?
-      @document.invoice.invoice_matters<<InvoiceMatter.new(
-      :matter_id => (@matter.id unless @matter.nil?),
-      :matter_task_id => (@matter_task.id unless @matter_task.nil?))
+    @document.invoice.invoice_matters<<InvoiceMatter.new(
+    :matter_id => (@matter.id unless @matter.nil?),
+    :matter_task_id => (@matter_task.id unless @matter_task.nil?))
     end
     @document.invoice.customer = @matter.agent unless @matter.nil?
     @document.invoice.our_ref = "#{current_user.initials}/#{@matter.full_reg_nr_for_invoice}" unless @matter.nil?
@@ -25,12 +27,12 @@ class InvoicesController < ApplicationController
 
   def create
     Document.transaction do
-      @document = Document.new(params[:document])      
+      @document = Document.new(params[:document])
       if @document.save
-        @invoice = @document.invoice
-        redirect_to @invoice
+      @invoice = @document.invoice
+      redirect_to @invoice
       else
-        render 'new'
+      render 'new'
       end
     end
   end
@@ -45,10 +47,10 @@ class InvoicesController < ApplicationController
     @document = Document.find(params[:document][:id])
     Document.transaction do
       if @document.update_attributes(params[:document])
-        @invoice = @document.invoice
-        redirect_to invoice_path(@invoice)
+      @invoice = @document.invoice
+      redirect_to invoice_path(@invoice)
       else
-        render 'edit'
+      render 'edit'
       end
     end
   end
@@ -71,16 +73,16 @@ class InvoicesController < ApplicationController
     @invoice = @document.invoice
     if params[:save_lines]
       if do_save_lines
-        redirect_to invoice_path(@invoice)
+      redirect_to invoice_path(@invoice)
       else
-        flash[:error] = "Could not save lines"
-        render 'show' and return
+      flash[:error] = "Could not save lines"
+      render 'show' and return
       end
     end
     if params[:add_line]
-      do_add_line
-      flash.now[:success] = "Added a new line"
-      render 'show'      
+    do_add_line
+    flash.now[:success] = "Added a new line"
+    render 'show'
     end
   end
 
@@ -88,9 +90,9 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     Invoice.transaction do
       if @invoice.update_attribute(:invoice_status_id, params[:invoice_status][:id])
-        redirect_to invoice_path(@invoice) and return
+      redirect_to invoice_path(@invoice) and return
       else
-        redirect_to invoice_path(@invoice) and return
+      redirect_to invoice_path(@invoice) and return
       end
     end
   end
@@ -100,9 +102,9 @@ class InvoicesController < ApplicationController
   def do_save_lines
     @invoice.update_attributes(params[:invoice])
     if @invoice.save
-      return true
+    return true
     else
-      return false
+    return false
     end
   end
 
@@ -119,7 +121,39 @@ class InvoicesController < ApplicationController
     )
     else
       @invoice_line = @invoice.invoice_lines.build({:items => "1"})
-    end    
+    end
+  end
+
+  def show_column_filter
+    @apply_filter = true
+    @columns = ["id",
+      "registration_number",
+      "description",
+      "customer_id",
+      "address_id",
+      "individual_id",
+      "currency_id",
+      "exchange_rate_id",
+      "discount",
+      "our_ref",
+      "your_ref",
+      "your_date",
+      "po_billing",
+      "finishing_details",
+      "invoice_date",
+      "created_at",
+      "updated_at",
+      "author_id",
+      "exchange_rate",
+      "subject",
+      "ending_details",
+      "payment_term",
+      "apply_vat",
+      "invoice_status_id",
+      "date_paid",
+      "foreign_number",
+      "local_number",
+      "invoice_type"]
   end
 
 end

@@ -112,9 +112,11 @@
 			<li>			
 				<%= link_to 'Preview', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
 				<ul>
+					<%if @document.invoice.invoice_type == 0%>
 					<li>
 						<%= link_to 'LV', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
 					</li>
+					<%end%>
 					<li>
 						<%= link_to 'EN', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'EN')%>
 					</li>

@@ -1,0 +1,19 @@
+<ul style="list-style: none; margin:5px; padding:5px;width:100%;box-sizing:border-box;">
+	<li style="width:100%;box-sizing:border-box;">
+		<select style="width:280px;">
+			<% @columns.each do |c| %>
+				<option><%=c%></option>
+			<% end %>
+		</select>
+		<button onclick="function(){}">Add</button>
+	</li>
+	<li>
+		
+	</li>
+	<li style="width:280px;box-sizing:border-box;">
+		<select size="5" style="width:100%;"></select>
+		<div class="panel-footer controls">
+		<button>Remove</button>
+		</div>
+	</li>
+</ul>
