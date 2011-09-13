@@ -1,0 +1,24 @@
+<ul style="list-style: none; margin:5px; padding:5px;width:100%;box-sizing:border-box;">
+	<li style="width:100%;box-sizing:border-box;">
+		<select style="width:200px;">
+			<% @columns.each do |c| %>
+				<option><%=c%></option>
+			<% end %>
+		</select>
+		<select style="width:120px;">
+			<option>Any</option>
+			<option>Exact</option>			
+		</select>
+		<input type="text" style="width:94">
+		<div style="width:4px;display:inline-block;"></div>
+		<input type="text" style="width:94">
+		<select style="width:120px;">
+			<option>And</option>
+			<option>Or</option>			
+		</select>
+	</li>
+	<li style="padding:0 5px;clear:both;">
+			<button style="float:left">Add</button>&nbsp;<button style="float:right">Clear</button>
+			<button style="clear:both; display:block; margin-top:5px;">Search</button>			
+	</li>
+</ul>
