@@ -166,15 +166,16 @@ class PreviewEn < Prawn::Document
       :cell_style => {:borders => [:top, :right, :left], :padding => 2},
       :column_widths => [111, 53, 56]
     )
-       
-    line_footer_table.cells[line_footer_table.row_length-2, 0].style :align => :right, :borders => []
-    line_footer_table.cells[line_footer_table.row_length-2, 1].style :align => :right, :borders => [:right]
-    line_footer_table.cells[line_footer_table.row_length-2, 2].style :align => :right, :borders => []
-    #
-    line_footer_table.cells[line_footer_table.row_length-1, 0].style :align => :right, :borders => [], :font_style => :bold
-    line_footer_table.cells[line_footer_table.row_length-1, 1].style :align => :right, :borders => [:right], :font_style => :bold
-    line_footer_table.cells[line_footer_table.row_length-1, 2].style :align => :right, :borders => [], :font_style => :bold
-    #
+    unless line_footer_table.cells[line_footer_table.row_length-2, 0].nil?
+      line_footer_table.cells[line_footer_table.row_length-2, 0].style :align => :right, :borders => [] 
+      line_footer_table.cells[line_footer_table.row_length-2, 1].style :align => :right, :borders => [:right]
+      line_footer_table.cells[line_footer_table.row_length-2, 2].style :align => :right, :borders => []
+    end
+    unless line_footer_table.cells[line_footer_table.row_length-1, 0].nil?
+      line_footer_table.cells[line_footer_table.row_length-1, 0].style :align => :right, :borders => [], :font_style => :bold
+      line_footer_table.cells[line_footer_table.row_length-1, 1].style :align => :right, :borders => [:right], :font_style => :bold
+      line_footer_table.cells[line_footer_table.row_length-1, 2].style :align => :right, :borders => [], :font_style => :bold
+    end
     #    
     line_footer_table.columns(1).style :align => :right
     line_footer_table.columns(2).style :align => :right
