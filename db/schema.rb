@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110918112422) do
+ActiveRecord::Schema.define(:version => 20110918195424) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -400,6 +400,14 @@ ActiveRecord::Schema.define(:version => 20110918112422) do
     t.integer  "matter_type_id"
     t.integer  "operating_party_id"
     t.integer  "matter_status_id"
+  end
+
+  create_table "messages", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "official_fee_types", :force => true do |t|

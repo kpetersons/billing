@@ -74,7 +74,9 @@ end
   ["funct.block.user", true],
   ["funct.create.role", true],
   ["funct.add.role", true],
-  ["funct.add.function", true]
+  ["funct.add.function", true],
+  ["funct.create.message", true],
+  ["funct.edit.message", true],
 ]
 
 @minimal_functions = [

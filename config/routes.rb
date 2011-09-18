@@ -1,5 +1,7 @@
 Billing::Application.routes.draw do
 
+  resources :messages
+
   resource :account, :controller => :activation, :only => [:show, :activate] do
     member do
       put :activate
@@ -85,9 +87,12 @@ Billing::Application.routes.draw do
 
   root :to => 'sessions#new'
 
-  resources :dashboard, :only => [:show] do
+  resources :dashboard, :only => [:show, :message] do
     collection do
       get :show
+    end
+    member do
+      get :message
     end
   end
 

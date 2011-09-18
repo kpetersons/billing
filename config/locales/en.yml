@@ -299,3 +299,7 @@ en:
   apply_vat: "Apply VAT"
   invoice_status: "Status"
   date_paid: "Date paid"
+  edit:
+    message: "Edit message"
+  new:
+    message: "New Message"

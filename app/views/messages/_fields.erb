@@ -1,0 +1,12 @@
+<%= fields.hidden_field :id %>
+<%= fields.hidden_field :user_id %>
+<ul>
+	<li>
+		<%= fields.label :title %>
+		<%= fields.text_field :title, :style => "width:30em;" %>
+	</li>
+	<li>
+		<%= fields.label :content %>
+		<%= fields.text_area :content, {:rows => 6, :style => "resizeable:false; width:60em;"} %>
+	</li>
+</ul>

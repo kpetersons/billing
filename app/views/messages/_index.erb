@@ -1,0 +1,18 @@
+<% unless @message.nil?%>
+<div>
+  <% unless @message.id == 0 %>
+  <%= link_to '<<', message_dashboard_path(@message.id - 1), :style => "text-decoration:none; color:rgb(0,0,0)" %>
+  <%end%>
+  <h4 style="display:inline-block;"><%=@message.title%></h4>
+  <% unless @message.id == Message.last.id %>
+  <%= link_to '>>', message_dashboard_path(@message.id+1), :style => "text-decoration:none; color:rgb(0,0,0)" %>
+  <%end%>
+  <div style="margin: 5px;">
+    <%=@message.content%>
+    <% if (!@message.nil? && has_function(:name => 'funct.edit.message')) %><%=link_to t('edit.message'), edit_message_path(@message), :style=> "font-size:.85em;" %><%end%>
+  </div>
+</div>
+<%end%>
+<% if has_function :name => 'funct.create.message'%>
+<%=link_to t('new.message'), new_message_path, :style => "font-size: .85em;"%>
+<%end%>

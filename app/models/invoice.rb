@@ -76,7 +76,8 @@ class Invoice < ActiveRecord::Base
 
   #start column filter 
   def ind_registration_number
-    document.registration_number
+    return "#{invoice_date.strftime("%y")}/#{document.registration_number}" if invoice_type == 0
+    return document.registration_number
   end
 
   def ind_customer_name

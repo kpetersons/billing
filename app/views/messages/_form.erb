@@ -1,0 +1,4 @@
+<%=form_for @message do |m_f| %>
+	<%= render :partial => "fields", 							:locals => {:fields 	=> m_f}%>
+	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> m_f}%>
+<%end%>

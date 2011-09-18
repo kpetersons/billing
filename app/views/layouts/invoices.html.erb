@@ -1,3 +1,4 @@
+<html>
 <head>
 	<%= render :partial => "shared/head" %>
 </head>
@@ -39,22 +40,22 @@
 				<%if @apply_filter %>				
 				<div class="panel">
 					<div class="panel-header">
-						<strong>Column filters</strong>
-					</div>
-					<div class="panel-content">
-						<%=form_tag :controller=> :invoices, :action => :filter do |a_f| %>						
-							<%= render :partial => "shared/column_filter" %>
-						<%end%>
-					</div>
-				</div>				
-				<%end%>
-				<%if @apply_filter %>				
-				<div class="panel">
-					<div class="panel-header">
 						<strong>Search</strong>
 					</div>
 					<div class="panel-content">
 						<%= render :partial => "shared/search/search_form" %>
+					</div>
+				</div>
+				<%end%>
+				<%if @apply_filter %>
+				<div class="panel">
+					<div class="panel-header">
+						<strong>Column filters</strong>
+					</div>
+					<div class="panel-content">
+						<%=form_tag :controller=> :invoices, :action => :filter do |a_f| %>
+							<%= render :partial => "shared/column_filter" %>
+						<%end%>
 					</div>
 				</div>
 				<%end%>

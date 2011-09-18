@@ -2,20 +2,10 @@
 	<div class="panel-header">
 		<strong>Dashboard</strong>
 	</div>
-	<dl class="panel-content">
-		<dt>
-			<label>Previous login date:</label>
-		</dt>
-		<dd>
-		 	<%=Date.today.to_s(:show)%>
-		</dd>
-		<dt>
-			<label>Total assigned matters</label>
-		</dt>
-		<dd>
-			12
-		</dd>
-	</dl>
+	<%= render :partial => "shared/flash", 	:locals => {:flash 	=> flash}%>
+	<div class="panel-content">
+        <%= render :partial => "/messages/index"%>
+	</div>
 	<dl class="nested-panel accordion">
 		<dt class="panel-header">
 			<strong><a href="#deadlines">Matters with approaching deadlines</a></strong>			
