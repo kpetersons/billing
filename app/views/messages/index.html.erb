@@ -1,0 +1,7 @@
+<div>
+  <span><%=@message.title%></span>
+  <div>
+    <%=@message.content%>
+  </div>
+</div>
+<%=link_to "Add message", new_message_path %> <%=link_to "Edit", edit_message_path(@message) %>

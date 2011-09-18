@@ -17,6 +17,9 @@ class DashboardController < ApplicationController
   private
 
   def get_message id
+    if id.nil?
+      return Message.last
+    end
     return Message.find(id)
   rescue ActiveRecord::RecordNotFound
     flash[:error] = "Message not found! Showing last."
