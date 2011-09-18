@@ -2,12 +2,10 @@
 <%= fields.label :client_all_ip_name, t('matter.custom.fields.client_all_ip') %>
 <%= fields.text_field :client_all_ip_name %>
 <script>
-	new Autocomplete('document_matter_attributes_custom_attributes_client_all_ip_name', 
-	{
-		serviceUrl:'/customers/applicant_find_ajax'
-		,minChars:2
-		,onSelect: function(value, data){
-	    	$('document_matter_attributes_custom_attributes_client_all_ip_id').setValue(data)
-	  	}
-	});
+	$(document).ready(function(){
+		$('#document_matter_attributes_custom_attributes_client_all_ip_name').	({
+			source: '/customers/applicant_find_ajax',
+			minLength: 2
+		});	
+	})
 </script>

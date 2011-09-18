@@ -21,6 +21,7 @@ Billing::Application.routes.draw do
     end
     collection do
       post :filter 
+      delete :reset
     end
     resource :preview, :controller => "InvoicePreviews", :only => [:show]
   end

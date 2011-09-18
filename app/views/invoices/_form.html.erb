@@ -3,41 +3,29 @@
 <%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> d_f}%>
 <%end%>
 <script>
-	autocomplete('#document_invoice_attributes_customer_name', '/customers/applicant_find_ajax')
-	new Autocomplete('document_invoice_attributes_customer_name', {
-		serviceUrl : '/customers/applicant_find_ajax',
-		minChars : 2,
-		onSelect : function(value, data) {
-			$('document_invoice_attributes_customer_id').setValue(data) 			
-			new Ajax.Request('/customers/list_addresses?customer='+data, {
-				method:'get',
-				onSuccess : function(response) {				
-					$select = $('document_invoice_attributes_address_id')
-					$select.options.length = 0															
-					var json = response.responseText.evalJSON();
-					for (var i=0; i < json.length; i++) {
-					  	$select.options.add(
-							new Option(json[i][1], json[i][0])
-						)
-					}
-					$select.removeAttribute("disabled")					
+$(document).ready(function(){
+	$('#document_invoice_attributes_customer_name').autocomplete({
+		source: '/customers/applicant_find_ajax',
+		minLength: 2,
+		select: function( event, ui ) {
+			$.get('/customers/list_addresses', {customer: ui.item.id}, function (data) {
+				$select = $('#document_invoice_attributes_address_id')
+				$select.find('option').remove().end()
+				for (var i=0; i < data.length; i++) {
+					$select.append('<option value="'+data[i][0]+'">'+data[i][1]+'</option>')
 				}
+				$select.removeAttr("disabled")		
 			});
-			new Ajax.Request('/customers/list_contact_persons?customer='+data, {
-				method:'get',
-				onSuccess : function(response) {
-					$select = $('document_invoice_attributes_individual_id')
-					$select.options.length = 0
-					var json = response.responseText.evalJSON();
-					for (var i=0; i < json.length; i++) {
-					  	$select.options.add(
-							new Option(json[i][1], json[i][0])
-						)
-					}
-					$select.removeAttribute("disabled")					
+			$.get('/customers/list_contact_persons', {customer: ui.item.id}, function (data) {
+				$select = $('#document_invoice_attributes_individual_id')
+				$select.find('option').remove().end()
+				for (var i=0; i < data.length; i++) {
+					$select.append('<option value="'+data[i][0]+'">'+data[i][1]+'</option>')
 				}
-			});			
+				$select.removeAttr("disabled")
+			});
+			$('#document_invoice_attributes_customer_id').attr('value', ui.item.id)
 		}
-	});
-
+	});	
+})
 </script>

@@ -43,30 +43,22 @@ class CustomersController < ApplicationController
   end
 
   def agent_find_ajax
-    @result = Hash.new
-    @result[:query] =  params[:query]
-    @result[:suggestions] = Array.new
-    @result[:data] = Array.new
+    @result = []
     index = 0
-    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ?', "%#{params[:query]}%"])
+    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ?', "%#{params[:term]}%"])
     @customers.each do |customer|
-      @result[:suggestions][index] = customer.name
-      @result[:data][index] = customer.id
+      @result<<{:id => customer.id, :label => customer.name, :value => customer.name}
       index += 1
     end
     render :json => @result
   end
 
   def applicant_find_ajax
-    @result = Hash.new
-    @result[:query] =  params[:query]
-    @result[:suggestions] = Array.new
-    @result[:data] = Array.new
+    @result = []
     index = 0
-    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ?', "%#{params[:query]}%"])
+    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ?', "%#{params[:term]}%"])
     @customers.each do |customer|
-      @result[:suggestions][index] = customer.name
-      @result[:data][index] = customer.id
+      @result<<{:id => customer.id, :label => customer.name, :value => customer.name}
       index += 1
     end
     render :json => @result

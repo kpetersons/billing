@@ -2,14 +2,9 @@
 	<thead>
 		<tr>
 			<th class="col-radio"></th>	
-			<th class="col-text">Invoice number</th>
-			<th class="col-text">Customer name</th>
-			<th class="col-text">Our ref</th>
-			<th class="col-text">Your ref</th>
-			<th class="col-date">Your date</th>
-			<th class="col-text">PO billing</th>
-			<th class="col-text">Status</th>
-	  		<%= render :partial => "shared/ui/date_th"%>						
+			<% current_user.column_names('invoices').each do |column|%>
+				<th class="<%=column.column_type%>"><%=t(column.column_name)%></th>	
+			<%end%>						
 			<th></th>
 		</tr>
 	</thead>
@@ -28,14 +23,11 @@
 					<%= fields.radio_button :id, invoice.document_id%>								
 				<%end%>
 			</td>
-			<td class="col-text"><%= invoice.number%></td>
-			<td class="col-text"><%= invoice.customer_name %></td>
-			<td class="col-text"><%= invoice.our_ref%></td>
-			<td class="col-text"><%= invoice.your_ref %></td>
-			<td class="col-date"><%= invoice.your_date.to_s(:show) unless invoice.your_date.nil?%></td>
-			<td class="col-text"><%= invoice.po_billing %></td>
-			<td class="col-text"><%= t(invoice.status_name) %></td>
-	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => invoice}%>			
+			<% current_user.column_names('invoices').each do |column|%>
+				<td class="<%=column.column_type%>">
+					<%= invoice.try(column.column_query)%>
+				</td>	
+			<%end%>
 			<td class="col-number"><%= link_to "Show", invoice_path(invoice)%></td>
 		</tr>
 		<% end %>

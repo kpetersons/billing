@@ -1,13 +1,15 @@
 <%= fields.hidden_field :agent_id %>
 <%= fields.label :agent_name %>
 <%= fields.text_field :agent_name %>
+
 <script>
-	new Autocomplete('document_matter_attributes_agent_name', 
-	{
-		serviceUrl:'/customers/agent_find_ajax'
-		,minChars:2
-		,onSelect: function(value, data){
-        	$('document_matter_attributes_agent_id').setValue(data)
-      	}
-	});	
+	$(document).ready(function(){
+		$('#document_matter_attributes_agent_name').autocomplete({
+			source: '/customers/agent_find_ajax',
+			minLength: 2,
+			select: function( event, ui ) {
+				$('#document_matter_attributes_agent_id').attr('value', ui.item.id)
+			}
+		});
+	})
 </script>

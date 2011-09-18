@@ -2,12 +2,13 @@
 <%= fields.label :applicant_name %>
 <%= fields.text_field :applicant_name %>
 <script>
-	new Autocomplete('document_matter_attributes_applicant_name', 
-	{
-		serviceUrl:'/customers/applicant_find_ajax'
-		,minChars:2
-		,onSelect: function(value, data){
-	    	$('document_matter_attributes_applicant_id').setValue(data)
-	  	}
-	});
+	$(document).ready(function(){
+		$('#document_matter_attributes_applicant_name').autocomplete({
+			source: '/customers/applicant_find_ajax',
+			minLength: 2,
+			select: function( event, ui ) {
+				$('#document_matter_attributes_applicant_id').attr('value', ui.item.id)
+			}
+		});
+	})
 </script>

@@ -119,6 +119,19 @@ class User < ActiveRecord::Base
     "#{individual.first_name} #{individual.last_name}"
   end
 
+  def column_names table
+    default_filter = DefaultFilter.where(:table_name => table).first    
+    filter = UserFilter.where(:user_id => id, :table_name => table).first
+    if filter.nil?
+      filter = default_filter
+    end
+    chosen_columns = UserFilterColumn.where(:user_filter_id => filter.id ).all
+    if chosen_columns.empty?
+      chosen_columns = DefaultFilterColumn.where(:default_filter_id => filter.id, :is_default => true).all
+    end
+    return chosen_columns    
+  end
+
   private
 
   def encrypt_password

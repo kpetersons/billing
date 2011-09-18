@@ -26,6 +26,9 @@
 #  apply_vat         :boolean(1)
 #  invoice_status_id :integer(4)
 #  date_paid         :date
+#  foreign_number    :integer(4)
+#  local_number      :integer(4)
+#  invoice_type      :integer(4)
 #
 
 class Invoice < ActiveRecord::Base
@@ -70,12 +73,102 @@ class Invoice < ActiveRecord::Base
   validates :subject, :presence => true, :length              => {:within => 5..500}
   
   before_save :mark_as_paid
+
+  #start column filter 
+  def ind_registration_number
+    document.registration_number
+  end
+
+  def ind_customer_name
+    customer.name unless customer.nil?
+  end
+
+  def ind_individual_name
+    return individual.name unless individual.nil?
+    return Individual.new.name
+  end
+  
+  def ind_currency_name
+    currency.name unless currency.nil?
+  end  
+  
+  def ind_author_name
+    author.individual.name unless author.nil?
+  end
+  
+  def ind_invoice_status_name
+    invoice_status.name unless invoice_status.nil?
+  end
+  
+  def ind_our_ref
+    our_ref
+  end
+  
+  def ind_your_ref
+    your_ref
+  end
+  
+  def ind_invoice_date
+    invoice_date.to_s(:show) unless invoice_date.nil?
+  end
+  
+  def ind_payment_term
+    payment_term
+  end
+  
+  def ind_address_name
+    address_name
+  end
+  
+  def ind_discount
+    discount
+  end
+  
+  def ind_your_date
+    your_date.to_s(:show) unless your_date.nil?
+  end
+  
+  def ind_po_billing
+    po_billing
+  end
+  
+  def ind_ending_details
+    ending_details
+  end
+  
+  def ind_created_at
+    created_at.to_s(:show) unless created_at.nil?
+  end
+  
+  def ind_updated_at
+    updated_at.to_s(:show) unless updated_at.nil?
+  end
+  
+  def ind_exchange_rate
+    exchange_rate
+  end
+  
+  def ind_subject
+    subject
+  end
+  
+  def ind_apply_vat
+    apply_vat
+  end
+  
+  def ind_date_paid
+    date_paid.to_s(:show) unless date_paid.nil?
+  end
+  
+  #end column filter  
   
   def self.new_foreign_reg_number
+    puts "Invoice.where(:invoice_type=> foreign).count #{Invoice.where(:invoice_type=> 1).count}"
     return Invoice.where(:invoice_type=> 1).count
   end
   
   def self.new_local_reg_number
+    puts "Invoice.where(:invoice_type=> local).count #{Invoice.where(:invoice_type=> 0).count}"
     return Invoice.where(:invoice_type=> 0).count
   end  
   
@@ -150,18 +243,6 @@ class Invoice < ActiveRecord::Base
     (sum_total_fees + sum_official_fees) * 1.22 
   end
 
-  def generate_registration_number
-    Document.transaction do
-      if invoice_type.eql?("1")
-        foreign_number = Invoice.new_foreign_reg_number
-        document.update_attribute(:registration_number, foreign_number)
-      else
-        local_number = Invoice.new_local_reg_number
-        document.update_attribute(:registration_number, local_number)
-      end
-    end
-  end
-
   def status_name
     invoice_status.name unless invoice_status.nil?
   end
@@ -207,4 +288,16 @@ class Invoice < ActiveRecord::Base
     end
   end 
   
+  def generate_registration_number
+    Document.transaction do
+      puts "invoice_type: #{invoice_type} #{invoice_type.class}"
+      if invoice_type == 1
+        foreign_number = Invoice.new_foreign_reg_number
+        document.update_attribute(:registration_number, foreign_number)
+      else
+        local_number = Invoice.new_local_reg_number
+        document.update_attribute(:registration_number, local_number)
+      end
+    end
+  end
 end

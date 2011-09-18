@@ -2,12 +2,13 @@
 <%= fields.label :opposite_party_name, t('matter.legal.fields.opposite_party') %>
 <%= fields.text_field :opposite_party_name %>
 <script>
-	new Autocomplete('document_matter_attributes_legal_attributes_opposite_party_name', 
-	{
-		serviceUrl:'/customers/applicant_find_ajax'
-		,minChars:2
-		,onSelect: function(value, data){
-	    	$('document_matter_attributes_legal_attributes_opposite_party_id').setValue(data)
-	  	}
-	});
+	$(document).ready(function(){
+		$('#document_matter_attributes_legal_attributes_opposite_party_name').autocomplete({
+			source: '/customers/applicant_find_ajax',
+			minLength: 2,
+			select: function( event, ui ) {
+				$('#document_matter_attributes_legal_attributes_opposite_party_id').attr('value', ui.item.id)
+			}
+		});
+	})
 </script>

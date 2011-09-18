@@ -915,3 +915,56 @@ Customer.transaction do
     end    
   end    
 end
+
+
+DefaultFilter.transaction do
+  tables = [
+    "invoices",
+    "matters",
+    "customers"
+  ]
+  
+  columns = {
+    "matters" => [],
+    "customers" => [],
+    "invoices" => [
+      {:column_name => 'registration_number', :column_type => 'col-text',   :column_query => 'ind_registration_number', :column_position => 1, :is_default => true},
+      {:column_name => 'customer_name',       :column_type => 'col-text',   :column_query => 'ind_customer_name',       :column_position => 3, :is_default => true},
+      {:column_name => 'address',             :column_type => 'col-text',   :column_query => 'ind_address_name',        :column_position => 4, :is_default => false},
+      {:column_name => 'contact_person',      :column_type => 'col-text',   :column_query => 'ind_individual_name',     :column_position => 5, :is_default => false},
+      {:column_name => 'currency',            :column_type => 'col-text',   :column_query => 'ind_currency_name',       :column_position => 6, :is_default => false},
+      {:column_name => 'discount',            :column_type => 'col-number', :column_query => 'ind_discount',            :column_position => 7, :is_default => false},
+      {:column_name => 'our_ref',             :column_type => 'col-text',   :column_query => 'ind_our_ref',             :column_position => 8, :is_default => true},
+      {:column_name => 'your_ref',            :column_type => 'col-text',   :column_query => 'ind_your_ref',            :column_position => 9, :is_default => true},
+      {:column_name => 'your_date',           :column_type => 'col-date',   :column_query => 'ind_your_date',           :column_position => 10, :is_default => false},
+      {:column_name => 'po_billing',          :column_type => 'col-text',   :column_query => 'ind_po_billing',          :column_position => 11, :is_default => false},
+      {:column_name => 'ending_details',      :column_type => 'col-text',   :column_query => 'ind_ending_details',      :column_position => 12, :is_default => false},
+      {:column_name => 'invoice_date',        :column_type => 'col-date',   :column_query => 'ind_invoice_date',        :column_position => 13, :is_default => true},
+      {:column_name => 'created_at',          :column_type => 'col-date',   :column_query => 'ind_created_at',          :column_position => 14, :is_default => false},
+      {:column_name => 'updated_at',          :column_type => 'col-date',   :column_query => 'ind_updated_at',          :column_position => 15, :is_default => false},
+      {:column_name => 'author',              :column_type => 'col-text',   :column_query => 'ind_author_name',         :column_position => 16, :is_default => false},
+      {:column_name => 'exchange_rate',       :column_type => 'col-number', :column_query => 'ind_exchange_rate',       :column_position => 17, :is_default => false},
+      {:column_name => 'subject',             :column_type => 'col-text',   :column_query => 'ind_subject',             :column_position => 18, :is_default => false},
+      {:column_name => 'payment_term',        :column_type => 'col-number', :column_query => 'ind_payment_term',        :column_position => 19, :is_default => true},
+      {:column_name => 'apply_vat',           :column_type => 'col-bool',   :column_query => 'ind_apply_vat',           :column_position => 20, :is_default => false},
+      {:column_name => 'invoice_status',      :column_type => 'col-text',   :column_query => 'ind_invoice_status_name', :column_position => 21, :is_default => false},
+      {:column_name => 'date_paid',           :column_type => 'col-date',   :column_query => 'ind_date_paid',           :column_position => 22, :is_default => false}
+    ]
+  }
+  
+  tables.each do |table|
+    default_filter = DefaultFilter.new(:table_name => table)
+    if default_filter.save()
+      DefaultFilterColumn.transaction do
+        columns[table].each do |column|
+          filter_column = DefaultFilterColumn.new(column.merge(:default_filter_id => default_filter.id)) 
+          unless filter_column.save
+            puts "filter_column.errors: #{filter_column.errors}"
+          end
+        end
+      end
+    else
+      puts "default_filter.errors: #{default_filter.errors}"
+    end
+  end
+end

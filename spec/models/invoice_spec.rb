@@ -26,6 +26,9 @@
 #  apply_vat         :boolean(1)
 #  invoice_status_id :integer(4)
 #  date_paid         :date
+#  foreign_number    :integer(4)
+#  local_number      :integer(4)
+#  invoice_type      :integer(4)
 #
 
 require 'spec_helper'

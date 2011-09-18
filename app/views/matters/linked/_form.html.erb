@@ -4,12 +4,13 @@
 	<%= render :partial => "shared/ui/form-submit-controls_name", 	:locals => {:fields 	=> lm_f, :name => "Link"}%>
 <%end%>			
 <script>
-	new Autocomplete('linked_matter_linked_matter_registration_number', 
-	{
-		serviceUrl:'<%=url_for find_ajax_matter_path(@matter) %>'
-		,minChars:1
-		,onSelect: function(value, data){
-        	$('linked_matter_linked_matter_id').setValue(data)
-      	}
-	});
+	$(document).ready(function(){
+		$('#linked_matter_linked_matter_registration_number').autocomplete({
+			source: '<%=url_for find_ajax_matter_path(@matter) %>',
+			minLength: 2,
+			select: function( event, ui ) {
+				$('#linked_matter_linked_matter_id').attr('value', ui.item.id)
+			}
+		});
+	})
 </script>

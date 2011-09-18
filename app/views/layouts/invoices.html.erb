@@ -42,7 +42,9 @@
 						<strong>Column filters</strong>
 					</div>
 					<div class="panel-content">
-						<%= render :partial => "shared/column_filter" %>
+						<%=form_tag :controller=> :invoices, :action => :filter do |a_f| %>						
+							<%= render :partial => "shared/column_filter" %>
+						<%end%>
 					</div>
 				</div>				
 				<%end%>

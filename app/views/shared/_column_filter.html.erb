@@ -1,22 +1,40 @@
-<%=form_for filter_invoices_path do |a_f| %>
 <ul style="list-style: none; margin:5px; padding:5px;width:100%;box-sizing:border-box;">
 	<li style="width:100%;box-sizing:border-box;">
-		<select style="width:280px;">
-			<% @columns.each do |c| %>
-				<option><%=c%></option>
+		<select style="width:280px;" id="filter" name="filter">
+			<% @columns.each do |column| %>
+				<option value="<%=column.column_query%>" ><%=t(column.column_name)%></option>
 			<% end %>
 		</select>
-		<button onclick="function(){}">Add</button>
-	</li>
-	<li>
-		
+		<a href="#filter" onclick="add_field('#filter', '#filter_selected')">Add</a>
 	</li>
 	<li style="width:280px;box-sizing:border-box;">
-		<select size="5" style="width:100%;"></select>
-		<div class="panel-footer controls">
-		<button>Reset</button>
-		<button>Apply</button>
-		</div>
+		<select size="5" style="width:100%;" id="filter_selected" name="filter_selected" multiple="true">
+			<% @chosen_columns.each do |column| %>
+				<option value="<%=column.column_query%>" ><%=t(column.column_name)%></option>
+			<% end %>				
+		</select>
+		<input type="hidden" id="filter_selected_id" name="filter_selected_id", value="<%=@chosen_columns.collect{|c| c.column_query}.join(',')%>">
+		<%=link_to "Reset", {:action => :reset}, :method => :delete%>
+		<button type="submit">Apply</button>
 	</li>
 </ul>
-<%end%>
+<script>
+	function add_field(source, target){
+		selected = $(source+' :selected');
+		$(target).append('<option value="'+selected.attr('value')+'">'+selected.text()+'</option>')
+		$(target).find('option').attr('selected', 'selected')
+		$hidden_target = $(target+'_id') 
+		hidden_target_val = $hidden_target.val()
+		if (hidden_target_val.length < 1) {
+			hidden_target_val = selected.attr('value')
+		} else {
+			hidden_target_val = hidden_target_val + ',' + selected.attr('value')
+		}
+		$hidden_target.val(hidden_target_val)
+		return false;
+	}
+	
+	function reset_filter(target) {
+		$(target).find('option').remove().end()
+	}
+</script>

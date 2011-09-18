@@ -10,10 +10,10 @@ function setDropDown(field, data, method) {
 
 function autocomplete(source, url) {
 	$(source).autocomplete({
-			source: url,
-			minLength: 2,
-			select: function( event, ui ) {
-				alert('this')
-			}
-		});
+		source: url,
+		minLength: 2,
+		select: function( event, ui ) {
+			alert(this)
+		}
+	});
 }

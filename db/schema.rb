@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110911091217) do
+ActiveRecord::Schema.define(:version => 20110918112422) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -112,6 +112,23 @@ ActiveRecord::Schema.define(:version => 20110911091217) do
     t.date     "ca_application_date"
     t.string   "ca_application_number"
     t.integer  "client_all_ip_id"
+  end
+
+  create_table "default_filter_columns", :force => true do |t|
+    t.string   "column_name"
+    t.string   "column_type"
+    t.string   "column_query"
+    t.integer  "column_position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "default_filter_id"
+    t.boolean  "is_default"
+  end
+
+  create_table "default_filters", :force => true do |t|
+    t.string   "table_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "designs", :force => true do |t|
@@ -510,6 +527,23 @@ ActiveRecord::Schema.define(:version => 20110911091217) do
     t.string   "ctm_number"
     t.string   "wipo_number"
     t.string   "reg_number"
+  end
+
+  create_table "user_filter_columns", :force => true do |t|
+    t.integer  "user_filter_id"
+    t.string   "column_name"
+    t.string   "column_type"
+    t.string   "column_query"
+    t.integer  "column_position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_filters", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "table_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "user_roles", :force => true do |t|
