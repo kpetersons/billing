@@ -116,7 +116,6 @@ Role.transaction do
       @r = Role.create(:name => role, :description => "#{role}.descr")
     end
     @role_functions[role].each do |functions|
-#      puts "functions #{functions}"
       @functions.each do |function|
         if function[1]
           unless @r.functions.exists?(:name => function[0])
@@ -965,6 +964,27 @@ DefaultFilter.transaction do
       end
     else
       puts "default_filter.errors: #{default_filter.errors}"
+    end
+  end
+end
+
+MatterTaskType.transaction do
+  matter_task_types = [
+    {:name => 'TRAN', :description => 'Translation'},
+    {:name => 'RENW', :description => 'Renewal, annuitie'},
+    {:name => 'OPP', :description => 'Opposition'},
+    {:name => 'PREG', :description => 'Publication, registration'},
+    {:name => 'OOFF', :description => 'Other official'},
+    {:name => 'CREQ', :description => 'Client requested'},
+    {:name => 'CUST', :description => 'Customs'},
+    {:name => 'MISC', :description => 'Miscellaneous'}
+  ]
+  matter_task_types.each do |matter_task_type|
+    type = MatterTaskType.new(matter_task_type)
+    unless MatterTaskType.find_by_name(matter_task_type[:name])
+      unless type.save
+        puts "matter_task_type errors #{type.errors}"
+      end
     end
   end
 end

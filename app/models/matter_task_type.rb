@@ -11,4 +11,6 @@
 
 class MatterTaskType < ActiveRecord::Base
   has_many :matter_tasks
+
+  attr_accessible :name, :description
 end
