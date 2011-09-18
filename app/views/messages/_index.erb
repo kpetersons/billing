@@ -1,6 +1,6 @@
 <% unless @message.nil?%>
 <div>
-  <% unless @message.id == 0 %>
+  <% unless @message.id <= 1 %>
   <%= link_to '<<', message_dashboard_path(@message.id - 1), :style => "text-decoration:none; color:rgb(0,0,0)" %>
   <%end%>
   <h4 style="display:inline-block;"><%=@message.title%></h4>

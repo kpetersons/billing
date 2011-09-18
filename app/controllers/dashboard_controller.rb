@@ -22,7 +22,7 @@ class DashboardController < ApplicationController
     end
     return Message.find(id)
   rescue ActiveRecord::RecordNotFound
-    flash[:error] = "Message not found! Showing last."
+    flash.now[:error] = "Message not found! Showing last."
     return Message.last
   end
 
