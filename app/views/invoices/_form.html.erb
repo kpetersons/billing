@@ -3,6 +3,7 @@
 <%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> d_f}%>
 <%end%>
 <script>
+	autocomplete('#document_invoice_attributes_customer_name', '/customers/applicant_find_ajax')
 	new Autocomplete('document_invoice_attributes_customer_name', {
 		serviceUrl : '/customers/applicant_find_ajax',
 		minChars : 2,

@@ -7,6 +7,7 @@ gem 'will_paginate', '~>3.0.pre2'
 gem 'uuidtools'
 gem 'paperclip', '~> 2.3'
 gem 'prawn', :submodules => true
+gem "jquery-rails"
 
 group :development do
   gem 'rspec-rails', '2.5.0'

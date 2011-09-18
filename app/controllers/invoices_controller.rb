@@ -155,5 +155,9 @@ class InvoicesController < ApplicationController
       "local_number",
       "invoice_type"]
   end
-
+  
+  def filter 
+    
+  end
+  
 end

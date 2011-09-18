@@ -19,6 +19,9 @@ Billing::Application.routes.draw do
       delete :remove_line
       put :flow
     end
+    collection do
+      post :filter 
+    end
     resource :preview, :controller => "InvoicePreviews", :only => [:show]
   end
 

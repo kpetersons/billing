@@ -8,6 +8,12 @@ function setDropDown(field, data, method) {
 	});
 }
 
-Event.observe($('document_matter_attributes_legal_attributes_date_of_closure'), 'blur', function(evt) {
-	alert(evt);
-})
+function autocomplete(source, url) {
+	$(source).autocomplete({
+			source: url,
+			minLength: 2,
+			select: function( event, ui ) {
+				alert('this')
+			}
+		});
+}
