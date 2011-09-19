@@ -16,5 +16,5 @@
 class DefaultFilterColumn < ActiveRecord::Base
   
     validates :column_name, :presence => true, 
-              :uniqueness       => {:case_sensitive => false},
+              :uniqueness       => {:case_sensitive => false, :scope => :default_filter_id}
 end

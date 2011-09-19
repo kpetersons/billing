@@ -4,7 +4,7 @@
 				<strong>Choose a matter</strong>
 		</div>	
 		<div id="matters">
-			<%= render :partial => "/matters/index", :locals => {:matters => @matters, :table_title => "Matter list", :choose => true, :fields => m_f, :param_name => 'choose_matters_page'} %>
+			<%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matters, :table_title => "Matter list", :choose => true, :fields => m_f, :param_name => 'choose_matters_page'} %>
 			<div class="buttons">
 				<span class="button"><%= m_f.submit "Add" %></span>
 			</div>

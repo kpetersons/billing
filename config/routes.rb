@@ -40,7 +40,11 @@ Billing::Application.routes.draw do
       post  :link
       post   :add_image
       put :flow
-    end    
+    end
+    collection do
+      post :filter
+      delete :reset
+    end
     resources :invoices, :only => [:new]
     resources :tasks, :controller => "MatterTasks" do
       member do
@@ -90,6 +94,8 @@ Billing::Application.routes.draw do
   resources :dashboard, :only => [:show, :message] do
     collection do
       get :show
+      post :filter
+      delete :reset
     end
     member do
       get :message

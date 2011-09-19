@@ -60,7 +60,213 @@ class Matter < ActiveRecord::Base
   
   accepts_nested_attributes_for :trademark, :patent, :design, :legal, :custom, :linked_matters, :matter_images, :patent_search, :search, :domain
   attr_protected :applicant_name, :agent_name, :classes, :prefix
-  
+
+  #start column filter
+  def	ind_agent
+    agent.name
+  end
+  def	ind_applicant
+    applicant.name
+  end
+  def	ind_matter_type
+    matter_type.name
+  end
+  def	ind_operating_party
+    operating_party.name
+  end
+  def	ind_matter_status
+    status_name
+  end
+  def	ind_created_at
+    created_at.to_s(:show)
+  end
+  def	ind_updated_at
+    updated_at.to_s(:show)
+  end
+  def	ind_author
+    author.individual.name
+  end
+  def	ind_application_date
+    unless trademark.nil?
+      trademark.appl_date.to_s(:show) unless trademark.appl_date.nil?
+    end
+    unless patent.nil?
+      patent.application_date.to_s(:show) unless patent.application_date.nil?
+    end
+    unless design.nil?
+      design.application_date.to_s(:show) unless design.application_date.nil?
+    end
+  end
+  def	ind_application_number
+    unless trademark.nil?
+      trademark.appl_number
+    end
+    unless patent.nil?
+      patent.application_number
+    end
+    unless design.nil?
+      design.application_number
+    end
+  end
+  def	ind_notes
+    unless trademark.nil?
+      trademark.notes
+    end
+  end
+  def	ind_mark_name
+    unless trademark.nil?
+      trademark.mark_name
+    end
+  end
+  def	ind_cfe_index
+    unless trademark.nil?
+      trademark.cfe_index
+    end
+  end
+  def	ind_priority_date
+    unless trademark.nil?
+      trademark.priority_date.to_s(:show) unless trademark.priority_date.nil?
+    end
+  end
+  def	ind_ctm_number
+    unless trademark.nil?
+      trademark.ctm_number
+    end
+  end
+  def	ind_wipo_number
+    unless trademark.nil?
+      trademark.wipo_number
+    end
+  end
+  def	ind_reg_number
+    unless trademark.nil?
+      trademark.reg_number
+    end
+  end
+  def	ind_patent_number
+    unless patent.nil?
+      patent.patent_number
+    end
+  end
+  def	ind_patent_grant_date
+    unless patent.nil?
+      patent.patent_grant_date.to_s(:show) unless patent.patent_grant_date.nil?
+    end
+  end
+  def	ind_ep_appl_number
+    unless patent.nil?
+      patent.ep_appl_number
+    end
+  end
+  def	ind_ep_number
+    unless patent.nil?
+      patent.ep_number
+    end
+  end
+  def	ind_design_number
+    unless design.nil?
+      design.design_number
+    end
+  end
+  def	ind_rdc_appl_number
+    unless design.nil?
+      design.rdc_appl_number
+    end
+  end
+  def	ind_rdc_number
+    unless design.nil?
+      design.rdc_number
+    end
+  end
+  def	ind_opposed_marks
+    unless legal.nil?
+      legal.opposed_marks
+    end
+  end
+  def	ind_instance
+    unless legal.nil?
+      legal.instance
+    end
+  end
+  def	ind_date_of_closure
+    unless legal.nil?
+      legal.date_of_closure.to_s(:show) unless legal.date_of_closure.nil?
+    end
+  end
+  def	ind_opposite_party
+    unless legal.nil?
+      legal.opposite_party.name unless legal.opposite_party.nil?
+    end
+  end
+  def	ind_opposite_party_agent
+    unless legal.nil?
+      legal.opposite_party_agent.name unless legal.opposite_party_agent.nil?
+    end
+  end
+  def	ind_legal_type
+    unless legal.nil?
+      legal.legal_type.name unless legal.legal_type.nil?
+    end
+  end
+  def	ind_date_of_order_alert
+    unless custom.nil?
+      custom.date_of_order_alert.to_s(:show) unless custom.date_of_order_alert.nil?
+    end
+  end
+  def	ind_ca_application_date
+    unless custom.nil?
+      custom.ca_application_date.to_s(:show) unless custom.ca_application_date.nil?
+    end
+  end
+  def	ind_ca_application_number
+    unless custom.nil?
+      custom.ca_application_number
+    end
+  end
+  def	ind_client_all_ip
+    unless custom.nil?
+      custom.client_all_ip.name unless custom.client_all_ip.nil?
+    end
+  end
+  def	ind_description
+    unless patent_search.nil?
+      patent_search.description
+    end
+  end
+  def	ind_patent_eq_numbers
+    unless patent_search.nil?
+      patent_search.patent_eq_numbers
+    end
+  end
+  def	ind_no_of_patents
+    unless patent_search.nil?
+      patent_search.no_of_patents
+    end
+  end
+  def	ind_search_for
+    unless search.nil?
+      search.search_for
+    end
+  end
+  def	ind_no_of_objects
+    unless search.nil?
+      search.no_of_objects
+    end
+  end
+  def	ind_express_search
+    unless search.nil?
+      search.express_search?
+    end
+  end
+  def	ind_date_of_order
+    unless patent_search.nil?
+      patent_search.date_of_order.to_s(:show) unless patent_search.date_of_order.nil?
+    end
+    unless search.nil?
+      search.date_of_order.to_s(:show) unless search.date_of_order.nil?
+    end
+  end
+  #end column filter
   def number
     document.registration_number
   end

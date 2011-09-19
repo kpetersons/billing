@@ -1,19 +1,16 @@
 <table style="width: 100%;">
 	<thead>
 		<tr>
-			<th class="col-radio"></th>	
-			<th class="col-text">Registration number</th>
-			<th class="col-text">Agent</th>			
-			<th class="col-text">Applicant</th>
-			<th class="col-text">Notes</th>
-			<th class="col-text">Status</th>			
-	  		<%= render :partial => "shared/ui/date_th"%>
+			<th class="col-radio"></th>
+			<% current_user.column_names(column_names).each do |column|%>
+				<th class="<%=column.column_type%>"><%=t(column.column_name)%></th>
+			<%end%>
 			<th></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="9">
+			<th class="list-paginate" colspan="<%=current_user.column_names(column_names).length + 2%>">
 				<%= will_paginate matters, :param_name => param_name %>
 			</th>
 		</tr>
@@ -26,18 +23,17 @@
 					<%= fields.radio_button :id, matter.document_id%>								
 				<%end%>
 			</td>
-			<td class="col-text"><%= matter.number%></td>
-			<td class="col-text"><%= matter.agent_name %></td>			
-			<td class="col-text"><%= matter.applicant_name %></td>
-			<td class="col-text"><%= matter.notes %></td>
-			<td class="col-text"><%= t(matter.status_name) %></td>
-	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => matter}%>			
+			<% current_user.column_names(column_names).each do |column|%>
+				<td class="<%=column.column_type%>">
+					<%= matter.try(column.column_query)%>
+				</td>
+			<%end%>
 			<td class="col-number"><%= link_to "Show", matter_path(matter, :anchor => :tasks)%></td>
 		</tr>
 		<% end %>
 		<% if matters.empty? %>
 		<tr>
-			<td colspan="9">&nbsp;</td>
+			<td colspan="<%=current_user.column_names(column_names).length + 2%>">&nbsp;</td>
 		</tr>
 		<% end %>
 	</tbody>

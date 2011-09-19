@@ -3,6 +3,7 @@ class InvoicesController < ApplicationController
   layout "invoices"
 
   before_filter :show_column_filter, :only => :index
+
   def index
     @invoices = Invoice.joins(:document).where(:documents => {:user_id => current_user.id}).paginate(:per_page => 10, :page => params[:my_invoices_page])
     @other_invoices = Invoice.joins(:document).where("user_id != #{current_user.id}").paginate(:per_page => 10, :page => params[:other_invoices_page])

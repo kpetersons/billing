@@ -3,13 +3,13 @@
 		<strong>My matters</strong>
 	</div>
 	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
-	<%= render :partial => "/matters/index", :locals => {:matters => @matters, :choose => false, :param_name => 'my_matters_page'} %>		
+	<%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matters, :choose => false, :param_name => 'my_matters_page'} %>
 </div>
 <%unless @other_matters.empty?%>
 <div class="nested-panel">
 	<div class="panel-header">
 		<strong>Other matters</strong>
 	</div>		
-	<%= render :partial => "/matters/index", :locals => {:matters => @other_matters, :choose => false, :param_name => 'other_matters_page'} %>	
+	<%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :column_names => 'invoices', :matters => @other_matters, :choose => false, :param_name => 'other_matters_page'} %>
 </div>
 <%end%>

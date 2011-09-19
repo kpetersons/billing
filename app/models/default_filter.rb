@@ -9,4 +9,6 @@
 #
 
 class DefaultFilter < ActiveRecord::Base
+    validates :table_name, :presence => true,
+              :uniqueness       => {:case_sensitive => false},
 end

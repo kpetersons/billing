@@ -919,16 +919,59 @@ end
 
 
 DefaultFilter.transaction do
-  tables = [
-    "invoices",
-    "matters",
-    "customers"
+
+  matter_columns = [
+        {:column_query=> 'ind_agent', :column_position=> 1, :is_default=> true, :column_name=> 'ma_agent_id', :column_type=> 'col-text'},
+        {:column_query=> 'ind_applicant', :column_position=> 2, :is_default=> true, :column_name=> 'ma_applicant_id', :column_type=> 'col-text'},
+        {:column_query=> 'ind_matter_type', :column_position=> 3, :is_default=> true, :column_name=> 'ma_matter_type_id', :column_type=> 'col-text'},
+        {:column_query=> 'ind_operating_party', :column_position=> 4, :is_default=> true, :column_name=> 'ma_operating_party_id', :column_type=> 'col-text'},
+        {:column_query=> 'ind_matter_status', :column_position=> 5, :is_default=> true, :column_name=> 'ma_matter_status_id', :column_type=> 'col-text'},
+        {:column_query=> 'ind_created_at', :column_position=> 6, :is_default=> true, :column_name=> 'ma_created_at', :column_type=> 'col-date'},
+        {:column_query=> 'ind_updated_at', :column_position=> 7, :is_default=> true, :column_name=> 'ma_updated_at', :column_type=> 'col-date'},
+        {:column_query=> 'ind_author', :column_position=> 8, :is_default=> true, :column_name=> 'ma_author', :column_type=> 'col-text'},
+        {:column_query=> 'ind_application_date', :column_position=> 21, :is_default=> false, :column_name=> 'tr_application_date', :column_type=> 'col-date'},
+        {:column_query=> 'ind_application_number', :column_position=> 22, :is_default=> false, :column_name=> 'tr_application_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_notes', :column_position=> 23, :is_default=> false, :column_name=> 'tr_notes', :column_type=> 'col-text'},
+        {:column_query=> 'ind_mark_name', :column_position=> 24, :is_default=> false, :column_name=> 'tr_mark_name', :column_type=> 'col-text'},
+        {:column_query=> 'ind_cfe_index', :column_position=> 25, :is_default=> false, :column_name=> 'tr_cfe_index', :column_type=> 'col-text'},
+        {:column_query=> 'ind_application_date', :column_position=> 26, :is_default=> false, :column_name=> 'tr_application_date', :column_type=> 'col-date'},
+        {:column_query=> 'ind_application_number', :column_position=> 27, :is_default=> false, :column_name=> 'tr_application_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_priority_date', :column_position=> 28, :is_default=> false, :column_name=> 'tr_priority_date', :column_type=> 'col-date'},
+        {:column_query=> 'ind_ctm_number', :column_position=> 29, :is_default=> false, :column_name=> 'tr_ctm_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_wipo_number', :column_position=> 30, :is_default=> false, :column_name=> 'tr_wipo_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_reg_number', :column_position=> 31, :is_default=> false, :column_name=> 'tr_reg_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_application_date', :column_position=> 21, :is_default=> false, :column_name=> 'p_application_date', :column_type=> 'col-date'},
+        {:column_query=> 'ind_application_number', :column_position=> 22, :is_default=> false, :column_name=> 'p_application_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_patent_number', :column_position=> 23, :is_default=> false, :column_name=> 'p_patent_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_patent_grant_date', :column_position=> 24, :is_default=> false, :column_name=> 'p_patent_grant_date', :column_type=> 'col-date'},
+        {:column_query=> 'ind_ep_application_number', :column_position=> 25, :is_default=> false, :column_name=> 'p_ep_application_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_ep_number', :column_position=> 26, :is_default=> false, :column_name=> 'p_ep_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_application_date', :column_position=> 21, :is_default=> false, :column_name=> 'de_application_date', :column_type=> 'col-date'},
+        {:column_query=> 'ind_application_number', :column_position=> 22, :is_default=> false, :column_name=> 'de_application_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_design_number', :column_position=> 23, :is_default=> false, :column_name=> 'de_design_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_rdc_application_number', :column_position=> 24, :is_default=> false, :column_name=> 'de_rdc_application_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_rdc_number', :column_position=> 25, :is_default=> false, :column_name=> 'de_rdc_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_opposed_marks', :column_position=> 21, :is_default=> false, :column_name=> 'le_opposed_marks', :column_type=> 'col-text'},
+        {:column_query=> 'ind_instance', :column_position=> 22, :is_default=> false, :column_name=> 'le_instance', :column_type=> 'col-text'},
+        {:column_query=> 'ind_date_of_closure', :column_position=> 23, :is_default=> false, :column_name=> 'le_date_of_closure', :column_type=> 'col-date'},
+        {:column_query=> 'ind_opposite_party', :column_position=> 24, :is_default=> false, :column_name=> 'le_opposite_party', :column_type=> 'col-text'},
+        {:column_query=> 'ind_opposite_party_agent', :column_position=> 25, :is_default=> false, :column_name=> 'le_opposite_party_agent', :column_type=> 'col-text'},
+        {:column_query=> 'ind_legal_type', :column_position=> 26, :is_default=> false, :column_name=> 'le_legal_type', :column_type=> 'col-text'},
+        {:column_query=> 'ind_date_of_order_alert', :column_position=> 21, :is_default=> false, :column_name=> 'cu_date_of_order_alert', :column_type=> 'col-text'},
+        {:column_query=> 'ind_ca_application_date', :column_position=> 22, :is_default=> false, :column_name=> 'cu_ca_application_date', :column_type=> 'col-date'},
+        {:column_query=> 'ind_ca_application_number', :column_position=> 23, :is_default=> false, :column_name=> 'cu_ca_application_number', :column_type=> 'col-text'},
+        {:column_query=> 'ind_client_all_ip', :column_position=> 24, :is_default=> false, :column_name=> 'cu_client_all_ip', :column_type=> 'col-text'},
+        {:column_query=> 'ind_description', :column_position=> 21, :is_default=> false, :column_name=> 'pa_description', :column_type=> 'col-text'},
+        {:column_query=> 'ind_patent_eq_numbers', :column_position=> 22, :is_default=> false, :column_name=> 'pa_patent_eq_numbers', :column_type=> 'col-text'},
+        {:column_query=> 'ind_no_of_patents', :column_position=> 23, :is_default=> false, :column_name=> 'pa_no_of_patents', :column_type=> 'col-text'},
+        {:column_query=> 'ind_date_of_order', :column_position=> 24, :is_default=> false, :column_name=> 'pa_date_of_order', :column_type=> 'col-text'},
+        {:column_query=> 'ind_search_for', :column_position=> 21, :is_default=> false, :column_name=> 'tr_search_for', :column_type=> 'col-bool'},
+        {:column_query=> 'ind_no_of_objects', :column_position=> 22, :is_default=> false, :column_name=> 'tr_no_of_objects', :column_type=> 'col-text'},
+        {:column_query=> 'ind_express_search', :column_position=> 23, :is_default=> false, :column_name=> 'tr_express_search', :column_type=> 'col-text'},
+        {:column_query=> 'ind_date_of_order', :column_position=> 24, :is_default=> false, :column_name=> 'tr_date_of_order', :column_type=> 'col-date'}
   ]
-  
-  columns = {
-    "matters" => [],
-    "customers" => [],
-    "invoices" => [
+
+  invoice_columns = [
       {:column_name => 'registration_number', :column_type => 'col-text',   :column_query => 'ind_registration_number', :column_position => 1, :is_default => true},
       {:column_name => 'customer_name',       :column_type => 'col-text',   :column_query => 'ind_customer_name',       :column_position => 3, :is_default => true},
       {:column_name => 'address',             :column_type => 'col-text',   :column_query => 'ind_address_name',        :column_position => 4, :is_default => false},
@@ -951,21 +994,33 @@ DefaultFilter.transaction do
       {:column_name => 'invoice_status',      :column_type => 'col-text',   :column_query => 'ind_invoice_status_name', :column_position => 21, :is_default => false},
       {:column_name => 'date_paid',           :column_type => 'col-date',   :column_query => 'ind_date_paid',           :column_position => 22, :is_default => false}
     ]
+
+  tables = [
+    "invoices",
+    "matters",
+    "matters_deadlines",
+    "customers"
+  ]
+  
+  columns = {
+    "matters" => matter_columns,
+    "matters_deadlines" => matter_columns,
+    "customers" => [],
+    "invoices" => invoice_columns
   }
   
   tables.each do |table|
     default_filter = DefaultFilter.new(:table_name => table)
-    if default_filter.save()
-      DefaultFilterColumn.transaction do
-        columns[table].each do |column|
-          filter_column = DefaultFilterColumn.new(column.merge(:default_filter_id => default_filter.id)) 
-          unless filter_column.save
-            puts "filter_column.errors: #{filter_column.errors}"
-          end
+    if !default_filter.save()
+      default_filter = DefaultFilter.find_by_table_name(table)
+    end
+    DefaultFilterColumn.transaction do
+      columns[table].each do |column|
+        filter_column = DefaultFilterColumn.new(column.merge(:default_filter_id => default_filter.id))
+        unless filter_column.save
+          puts "filter_column.errors: #{filter_column.errors}"
         end
       end
-    else
-      puts "default_filter.errors: #{default_filter.errors}"
     end
   end
 end
