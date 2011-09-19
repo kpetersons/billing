@@ -88,7 +88,8 @@ class User < ActiveRecord::Base
 
   def last_or_current_session_date
     return last_login_date.to_s(:show_full) unless last_login_date.nil?
-    return login_date.to_s(:show_full)
+    return login_date.to_s(:show_full) unless login_date.nil?
+    return DateTime.now
   end
 
   def has_function name
