@@ -69,13 +69,13 @@ class Matter < ActiveRecord::Base
     applicant.name
   end
   def	ind_matter_type
-    matter_type.name
+    I18n.t matter_type.name
   end
   def	ind_operating_party
-    operating_party.name
+    I18n.t operating_party.name
   end
   def	ind_matter_status
-    status_name
+    I18n.t status_name
   end
   def	ind_created_at
     created_at.to_s(:show)
@@ -88,24 +88,24 @@ class Matter < ActiveRecord::Base
   end
   def	ind_application_date
     unless trademark.nil?
-      trademark.appl_date.to_s(:show) unless trademark.appl_date.nil?
+      return trademark.appl_date.to_s(:show) unless trademark.appl_date.nil?
     end
     unless patent.nil?
-      patent.application_date.to_s(:show) unless patent.application_date.nil?
+      return patent.application_date.to_s(:show) unless patent.application_date.nil?
     end
     unless design.nil?
-      design.application_date.to_s(:show) unless design.application_date.nil?
+      return design.application_date.to_s(:show) unless design.application_date.nil?
     end
   end
   def	ind_application_number
     unless trademark.nil?
-      trademark.appl_number
+      return trademark.appl_number
     end
     unless patent.nil?
-      patent.application_number
+      return patent.application_number
     end
     unless design.nil?
-      design.application_number
+      return design.application_number
     end
   end
   def	ind_notes
@@ -260,10 +260,10 @@ class Matter < ActiveRecord::Base
   end
   def	ind_date_of_order
     unless patent_search.nil?
-      patent_search.date_of_order.to_s(:show) unless patent_search.date_of_order.nil?
+      return patent_search.date_of_order.to_s(:show) unless patent_search.date_of_order.nil?
     end
     unless search.nil?
-      search.date_of_order.to_s(:show) unless search.date_of_order.nil?
+      return search.date_of_order.to_s(:show) unless search.date_of_order.nil?
     end
   end
   #end column filter

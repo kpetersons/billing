@@ -103,6 +103,7 @@ class InvoicesController < ApplicationController
       filter = UserFilter.where(:user_id => current_user.id, :table_name => 'invoices').first
       unless filter.nil?
         UserFilterColumn.delete(UserFilterColumn.where(:user_filter_id => filter.id).all)
+        UserFilter.delete(filter)
       end
     end
     redirect_to invoices_path    

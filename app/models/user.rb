@@ -124,11 +124,10 @@ class User < ActiveRecord::Base
     filter = UserFilter.where(:user_id => id, :table_name => table).first
     if filter.nil?
       filter = default_filter
+      chosen_columns = DefaultFilterColumn.where(:default_filter_id => filter.id, :is_default => true).all
+      return chosen_columns
     end
     chosen_columns = UserFilterColumn.where(:user_filter_id => filter.id ).all
-    if chosen_columns.empty?
-      chosen_columns = DefaultFilterColumn.where(:default_filter_id => filter.id, :is_default => true).all
-    end
     return chosen_columns    
   end
 
