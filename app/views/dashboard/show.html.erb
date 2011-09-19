@@ -6,6 +6,12 @@
 	<div class="panel-content">
         <%= render :partial => "/messages/index"%>
 	</div>
+    <div class="nested-panel">
+      <div class="panel-header"><strong>Summary information</strong></div>
+      <div class="panel-content">
+        <label>Last login date:</label> <%=current_user.last_or_current_session_date%>
+      </div>
+    </div>
 	<dl class="nested-panel accordion">
 		<dt class="panel-header">
 			<strong><a href="#deadlines">Matters with approaching deadlines</a></strong>			

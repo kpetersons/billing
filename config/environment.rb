@@ -19,6 +19,7 @@ Date::DATE_FORMATS[:show_invoice] = "%d-%b-%Y"
 Date::DATE_FORMATS[:check] = "%d.%b.%Y"
 Time::DATE_FORMATS[:default] = "%d.%m.%Y"
 Time::DATE_FORMATS[:show] = "%d.%b.%Y"
+Time::DATE_FORMATS[:show_full] = "%d.%b.%Y %H:%M"
 Time::DATE_FORMATS[:check] = "%d.%b.%Y"
 Time::DATE_FORMATS[:yr] = "%y"
 

@@ -80,7 +80,17 @@ class User < ActiveRecord::Base
     user = find_by_id(id)
     (user && user.salt == cookie_salt) ? user : nil
   end
-  
+
+  def self.switch_login_dates user
+    user.update_attribute(:last_login_date,  user.login_date)
+    user.update_attribute(:login_date, DateTime.now)
+  end
+
+  def last_or_current_session_date
+    return last_login_date.to_s(:show_full) unless last_login_date.nil?
+    return login_date.to_s(:show_full)
+  end
+
   def has_function name
     !User.where(:id => self.id).joins(:roles => [:functions]).where(:functions => {:name => name[:name]}).first.nil?
   end
@@ -129,8 +139,8 @@ class User < ActiveRecord::Base
     end
     chosen_columns = UserFilterColumn.where(:user_filter_id => filter.id ).all
     return chosen_columns    
-  end
-
+  end  
+  
   private
 
   def encrypt_password
