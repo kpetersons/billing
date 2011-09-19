@@ -2,7 +2,7 @@
 	<li style="width:100%;box-sizing:border-box;">
 		<select style="width:280px;" id="filter" name="filter">
 			<% @columns.each do |column| %>
-				<option value="<%=column.column_query%>" ><%=t(column.column_name)%></option>
+				<option value="<%=column.column_name%>" ><%=t(column.column_name)%></option>
 			<% end %>
 		</select>
 		<a href="#filter" onclick="add_field('#filter', '#filter_selected')">Add</a>
@@ -13,7 +13,7 @@
 				<option value="<%=column.column_query%>" ><%=t(column.column_name)%></option>
 			<% end %>				
 		</select>
-		<input type="hidden" id="filter_selected_id" name="filter_selected_id", value="<%=@chosen_columns.collect{|c| c.column_query}.join(',')%>">
+		<input type="hidden" id="filter_selected_id" name="filter_selected_id" value="<%=@chosen_columns.collect{|c| c.column_name}.join(',')%>">
 		<%=link_to "Reset", {:action => :reset}, :method => :delete%>
 		<button type="submit">Apply</button>
 	</li>

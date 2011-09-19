@@ -192,34 +192,19 @@ class MattersController < ApplicationController
 
   def reset
     UserFilterColumn.transaction do
-      filter = UserFilter.where(:user_id => current_user.id, :table_name => 'matters').first
-      unless filter.nil?
-        UserFilterColumn.delete(UserFilterColumn.where(:user_filter_id => filter.id).all)
-      end
+      UserFilter.reset_filter current_user, 'matters'
     end
     redirect_to matters_path
   end
 
   def filter
-    UserFilterColumn.transaction do
-      columns = params[:filter_selected_id].split(',')
-      unless columns.empty?
-        filter = UserFilter.where(:user_id => current_user.id, :table_name => 'matters').first
-        if filter.nil?
-          filter = UserFilter.new(:user_id => current_user.id, :table_name => 'matters')
-          filter.save
-        end
+    #params to array
+    columns = params[:filter_selected_id].split(',')
+    unless columns.empty?
+      UserFilterColumn.transaction do
+        # defaults
         default_filter = DefaultFilter.where(:table_name => 'matters').first
-        UserFilterColumn.delete(UserFilterColumn.where(:user_filter_id => filter.id).all)
-        columns.each do |column|
-          default_column = DefaultFilterColumn.where(:column_query => column, :default_filter_id => default_filter.id).first
-          UserFilterColumn.new(
-            :user_filter_id => filter.id,
-            :column_name => default_column.column_name,
-            :column_type => default_column.column_type,
-            :column_query => default_column.column_query,
-            :column_position => default_column.column_position).save
-        end
+        UserFilter.create_modified current_user, default_filter, columns
       end
     end
     redirect_to matters_path

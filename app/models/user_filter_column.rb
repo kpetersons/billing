@@ -13,4 +13,5 @@
 #
 
 class UserFilterColumn < ActiveRecord::Base
+  belongs_to :user_filter
 end
