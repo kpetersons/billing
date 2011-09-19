@@ -2,7 +2,7 @@ class DashboardController < ApplicationController
 
   layout "dashboard"
 
-  before_filter :show_column_filter, :only => :show
+  before_filter :show_column_filter, :only => [:show, :message]
 
   def show
     @recent_activity_matters = Matter.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:page => params[:param_name])
