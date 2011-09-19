@@ -191,7 +191,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def address_name
-    address.name
+    address.name unless address.nil?
   end
 
   def preset_id
