@@ -143,7 +143,7 @@ Billing::Application.routes.draw do
     collection do
       get :new
       post :signin
-      delete :signout
+      get :signout
     end
   end
 
