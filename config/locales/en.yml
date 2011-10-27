@@ -75,6 +75,7 @@ en:
     design:    "design matter"
     legal:      "legal matter"
     custom:     "custom matter"
+    trademark_search: "trademark matter search"
     link:
       success: "Matters successfully linked."    
     task:

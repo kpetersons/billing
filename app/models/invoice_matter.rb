@@ -2,10 +2,10 @@
 #
 # Table name: invoice_matters
 #
-#  id             :integer(4)      not null, primary key
-#  invoice_id     :integer(4)
-#  matter_id      :integer(4)
-#  matter_task_id :integer(4)
+#  id             :integer         not null, primary key
+#  invoice_id     :integer
+#  matter_id      :integer
+#  matter_task_id :integer
 #  created_at     :datetime
 #  updated_at     :datetime
 #

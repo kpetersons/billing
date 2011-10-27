@@ -2,9 +2,9 @@
 #
 # Table name: linked_matters
 #
-#  id               :integer(4)      not null, primary key
-#  matter_id        :integer(4)
-#  linked_matter_id :integer(4)
+#  id               :integer         not null, primary key
+#  matter_id        :integer
+#  linked_matter_id :integer
 #  created_at       :datetime
 #  updated_at       :datetime
 #

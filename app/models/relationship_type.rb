@@ -1,11 +1,10 @@
 # == Schema Information
-# Schema version: 20110609074500
 #
 # Table name: relationship_types
 #
-#  id         :integer(4)      not null, primary key
+#  id         :integer         not null, primary key
 #  name       :string(255)
-#  built_in   :boolean(1)
+#  built_in   :boolean
 #  created_at :datetime
 #  updated_at :datetime
 #

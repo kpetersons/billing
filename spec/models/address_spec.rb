@@ -2,9 +2,9 @@
 #
 # Table name: addresses
 #
-#  id              :integer(4)      not null, primary key
-#  party_id        :integer(4)
-#  address_type_id :integer(4)
+#  id              :integer         not null, primary key
+#  party_id        :integer
+#  address_type_id :integer
 #  city            :string(255)
 #  street          :string(255)
 #  house_number    :string(255)
@@ -13,7 +13,7 @@
 #  po_box          :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime
-#  country_id      :integer(4)
+#  country_id      :integer
 #
 
 require 'spec_helper'

@@ -2,9 +2,9 @@
 #
 # Table name: operating_party_matter_types
 #
-#  id                 :integer(4)      not null, primary key
-#  operating_party_id :integer(4)
-#  matter_type_id     :integer(4)
+#  id                 :integer         not null, primary key
+#  operating_party_id :integer
+#  matter_type_id     :integer
 #  created_at         :datetime
 #  updated_at         :datetime
 #

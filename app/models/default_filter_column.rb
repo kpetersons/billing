@@ -2,15 +2,15 @@
 #
 # Table name: default_filter_columns
 #
-#  id                :integer(4)      not null, primary key
+#  id                :integer         not null, primary key
 #  column_name       :string(255)
 #  column_type       :string(255)
 #  column_query      :string(255)
-#  column_position   :integer(4)
+#  column_position   :integer
 #  created_at        :datetime
 #  updated_at        :datetime
-#  default_filter_id :integer(4)
-#  is_default        :boolean(1)
+#  default_filter_id :integer
+#  is_default        :boolean
 #
 
 class DefaultFilterColumn < ActiveRecord::Base

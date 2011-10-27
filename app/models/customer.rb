@@ -2,8 +2,8 @@
 #
 # Table name: customers
 #
-#  id                      :integer(4)      not null, primary key
-#  party_id                :integer(4)
+#  id                      :integer         not null, primary key
+#  party_id                :integer
 #  created_at              :datetime
 #  updated_at              :datetime
 #  customer_type           :string(255)

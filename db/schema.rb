@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110919202124) do
+ActiveRecord::Schema.define(:version => 20111027152036) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -275,7 +275,7 @@ ActiveRecord::Schema.define(:version => 20110919202124) do
     t.decimal  "exchange_rate",                     :precision => 7, :scale => 4
     t.string   "subject",           :limit => 2000
     t.string   "ending_details",    :limit => 2000
-    t.integer  "payment_term",      :limit => 1
+    t.integer  "payment_term",      :limit => 2
     t.boolean  "apply_vat"
     t.integer  "invoice_status_id"
     t.date     "date_paid"
@@ -306,6 +306,13 @@ ActiveRecord::Schema.define(:version => 20110919202124) do
   create_table "linked_matters", :force => true do |t|
     t.integer  "matter_id"
     t.integer  "linked_matter_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "matter_clazzs", :force => true do |t|
+    t.integer  "matter_id"
+    t.integer  "clazz_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -450,7 +457,7 @@ ActiveRecord::Schema.define(:version => 20110919202124) do
     t.integer  "matter_id"
     t.string   "description"
     t.string   "patent_eq_numbers"
-    t.integer  "no_of_patents",     :limit => 1
+    t.integer  "no_of_patents",     :limit => 2
     t.date     "date_of_order"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -465,7 +472,7 @@ ActiveRecord::Schema.define(:version => 20110919202124) do
     t.string   "patent_number"
     t.date     "patent_grant_date"
     t.string   "ep_appl_number"
-    t.string   "ep_number"
+    t.integer  "ep_number"
   end
 
   create_table "relationship_types", :force => true do |t|
@@ -500,7 +507,7 @@ ActiveRecord::Schema.define(:version => 20110919202124) do
   create_table "searches", :force => true do |t|
     t.integer  "matter_id"
     t.string   "search_for"
-    t.integer  "no_of_objects",  :limit => 1
+    t.integer  "no_of_objects",  :limit => 2
     t.boolean  "express_search"
     t.date     "date_of_order"
     t.datetime "created_at"
@@ -509,13 +516,6 @@ ActiveRecord::Schema.define(:version => 20110919202124) do
 
   create_table "tags", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "trademark_clazzs", :force => true do |t|
-    t.integer  "trademark_id"
-    t.integer  "clazz_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -2,10 +2,10 @@
 #
 # Table name: designs
 #
-#  id                 :integer(4)      not null, primary key
+#  id                 :integer         not null, primary key
 #  created_at         :datetime
 #  updated_at         :datetime
-#  matter_id          :integer(4)
+#  matter_id          :integer
 #  application_number :string(255)
 #  application_date   :date
 #  design_number      :string(255)
@@ -15,6 +15,8 @@
 
 class Design < ActiveRecord::Base
   belongs_to :matter
+
+  validates :design_number, :numericality => true
 
   after_create :generate_registration_number
   def generate_registration_number

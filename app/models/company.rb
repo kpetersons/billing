@@ -1,10 +1,9 @@
 # == Schema Information
-# Schema version: 20110704183314
 #
 # Table name: companies
 #
-#  id                  :integer(4)      not null, primary key
-#  party_id            :integer(4)
+#  id                  :integer         not null, primary key
+#  party_id            :integer
 #  name                :string(255)
 #  created_at          :datetime
 #  updated_at          :datetime

@@ -11,6 +11,6 @@
 
 require 'spec_helper'
 
-describe TrademarkClazz do
+describe MatterClazz do
   pending "add some examples to (or delete) #{__FILE__}"
 end

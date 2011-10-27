@@ -2,8 +2,8 @@
 #
 # Table name: clazzs
 #
-#  id         :integer(4)      not null, primary key
-#  code       :integer(4)
+#  id         :integer         not null, primary key
+#  code       :integer
 #  name       :string(255)
 #  created_at :datetime
 #  updated_at :datetime

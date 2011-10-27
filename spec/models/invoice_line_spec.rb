@@ -2,18 +2,18 @@
 #
 # Table name: invoice_lines
 #
-#  id                   :integer(4)      not null, primary key
-#  invoice_id           :integer(4)
-#  official_fee_type_id :integer(4)
+#  id                   :integer         not null, primary key
+#  invoice_id           :integer
+#  official_fee_type_id :integer
 #  details              :string(255)
 #  created_at           :datetime
 #  updated_at           :datetime
-#  attorney_fee_type_id :integer(4)
+#  attorney_fee_type_id :integer
 #  official_fee         :decimal(8, 2)
 #  attorney_fee         :decimal(8, 2)
-#  author_id            :integer(4)
+#  author_id            :integer
 #  offering             :string(255)
-#  items                :integer(4)
+#  items                :integer
 #  units                :string(255)
 #
 

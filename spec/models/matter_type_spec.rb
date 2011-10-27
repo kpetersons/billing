@@ -2,12 +2,12 @@
 #
 # Table name: matter_types
 #
-#  id          :integer(4)      not null, primary key
+#  id          :integer         not null, primary key
 #  name        :string(255)
 #  description :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime
-#  function_id :integer(4)
+#  function_id :integer
 #
 
 require 'spec_helper'

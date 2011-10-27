@@ -2,9 +2,9 @@
 #
 # Table name: operating_party_users
 #
-#  id                 :integer(4)      not null, primary key
-#  user_id            :integer(4)
-#  operating_party_id :integer(4)
+#  id                 :integer         not null, primary key
+#  user_id            :integer
+#  operating_party_id :integer
 #  created_at         :datetime
 #  updated_at         :datetime
 #

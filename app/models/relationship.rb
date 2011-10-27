@@ -1,12 +1,11 @@
 # == Schema Information
-# Schema version: 20110609074500
 #
 # Table name: relationships
 #
-#  id                   :integer(4)      not null, primary key
-#  source_party_id      :integer(4)
-#  target_party_id      :integer(4)
-#  relationship_type_id :integer(4)
+#  id                   :integer         not null, primary key
+#  source_party_id      :integer
+#  target_party_id      :integer
+#  relationship_type_id :integer
 #  created_at           :datetime
 #  updated_at           :datetime
 #

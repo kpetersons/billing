@@ -2,7 +2,7 @@
 #
 # Table name: legal_types
 #
-#  id          :integer(4)      not null, primary key
+#  id          :integer         not null, primary key
 #  created_at  :datetime
 #  updated_at  :datetime
 #  name        :string(255)

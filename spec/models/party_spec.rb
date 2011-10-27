@@ -2,7 +2,7 @@
 #
 # Table name: parties
 #
-#  id         :integer(4)      not null, primary key
+#  id         :integer         not null, primary key
 #  identifier :string(255)
 #  party_type :string(255)
 #  created_at :datetime

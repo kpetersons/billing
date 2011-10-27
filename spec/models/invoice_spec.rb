@@ -2,14 +2,14 @@
 #
 # Table name: invoices
 #
-#  id                :integer(4)      not null, primary key
-#  document_id       :integer(4)
-#  customer_id       :integer(4)
-#  address_id        :integer(4)
-#  individual_id     :integer(4)
-#  currency_id       :integer(4)
-#  exchange_rate_id  :integer(4)
-#  discount          :integer(4)
+#  id                :integer         not null, primary key
+#  document_id       :integer
+#  customer_id       :integer
+#  address_id        :integer
+#  individual_id     :integer
+#  currency_id       :integer
+#  exchange_rate_id  :integer
+#  discount          :integer
 #  our_ref           :string(255)
 #  your_ref          :string(255)
 #  your_date         :date
@@ -18,17 +18,17 @@
 #  invoice_date      :date
 #  created_at        :datetime
 #  updated_at        :datetime
-#  author_id         :integer(4)
+#  author_id         :integer
 #  exchange_rate     :decimal(7, 4)
 #  subject           :string(2000)
 #  ending_details    :string(2000)
-#  payment_term      :integer(1)
-#  apply_vat         :boolean(1)
-#  invoice_status_id :integer(4)
+#  payment_term      :integer(2)
+#  apply_vat         :boolean
+#  invoice_status_id :integer
 #  date_paid         :date
-#  foreign_number    :integer(4)
-#  local_number      :integer(4)
-#  invoice_type      :integer(4)
+#  foreign_number    :integer
+#  local_number      :integer
+#  invoice_type      :integer
 #
 
 require 'spec_helper'

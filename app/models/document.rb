@@ -2,13 +2,13 @@
 #
 # Table name: documents
 #
-#  id                  :integer(4)      not null, primary key
-#  user_id             :integer(4)
+#  id                  :integer         not null, primary key
+#  user_id             :integer
 #  registration_number :string(255)
 #  description         :string(255)
 #  created_at          :datetime
 #  updated_at          :datetime
-#  parent_id           :integer(4)
+#  parent_id           :integer
 #  notes               :string(255)
 #
 

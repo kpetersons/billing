@@ -2,10 +2,10 @@
 #
 # Table name: designs
 #
-#  id                 :integer(4)      not null, primary key
+#  id                 :integer         not null, primary key
 #  created_at         :datetime
 #  updated_at         :datetime
-#  matter_id          :integer(4)
+#  matter_id          :integer
 #  application_number :string(255)
 #  application_date   :date
 #  design_number      :string(255)

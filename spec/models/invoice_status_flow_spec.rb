@@ -2,13 +2,13 @@
 #
 # Table name: invoice_status_flows
 #
-#  id                    :integer(4)      not null, primary key
-#  revert_to_step_id     :integer(4)
-#  current_step_id       :integer(4)
-#  pass_to_step_id       :integer(4)
-#  pass_to_function_id   :integer(4)
-#  revert_to_function_id :integer(4)
-#  start_state           :boolean(1)      default(FALSE)
+#  id                    :integer         not null, primary key
+#  revert_to_step_id     :integer
+#  current_step_id       :integer
+#  pass_to_step_id       :integer
+#  pass_to_function_id   :integer
+#  revert_to_function_id :integer
+#  start_state           :boolean         default(FALSE)
 #  created_at            :datetime
 #  updated_at            :datetime
 #

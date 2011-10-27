@@ -2,11 +2,11 @@
 #
 # Table name: searches
 #
-#  id             :integer(4)      not null, primary key
-#  matter_id      :integer(4)
+#  id             :integer         not null, primary key
+#  matter_id      :integer
 #  search_for     :string(255)
-#  no_of_objects  :integer(1)
-#  express_search :boolean(1)
+#  no_of_objects  :integer(2)
+#  express_search :boolean
 #  date_of_order  :date
 #  created_at     :datetime
 #  updated_at     :datetime

@@ -2,9 +2,9 @@
 #
 # Table name: individuals
 #
-#  id          :integer(4)      not null, primary key
-#  party_id    :integer(4)
-#  gender_id   :integer(4)
+#  id          :integer         not null, primary key
+#  party_id    :integer
+#  gender_id   :integer
 #  first_name  :string(255)
 #  middle_name :string(255)
 #  last_name   :string(255)

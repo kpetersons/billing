@@ -1,11 +1,10 @@
 # == Schema Information
-# Schema version: 20110615122529
 #
 # Table name: contacts
 #
-#  id              :integer(4)      not null, primary key
-#  party_id        :integer(4)
-#  contact_type_id :integer(4)
+#  id              :integer         not null, primary key
+#  party_id        :integer
+#  contact_type_id :integer
 #  contact_value   :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime

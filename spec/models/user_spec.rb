@@ -2,19 +2,21 @@
 #
 # Table name: users
 #
-#  id                 :integer(4)      not null, primary key
-#  individual_id      :integer(4)
+#  id                 :integer         not null, primary key
+#  individual_id      :integer
 #  email              :string(255)
 #  encrypted_password :string(255)
 #  salt               :string(255)
-#  active             :boolean(1)
-#  blocked            :boolean(1)
+#  active             :boolean
+#  blocked            :boolean
 #  registration_date  :date
 #  activation_key     :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
-#  operating_party_id :integer(4)
+#  operating_party_id :integer
 #  initials           :string(255)
+#  login_date         :datetime
+#  last_login_date    :datetime
 #
 
 require 'spec_helper'

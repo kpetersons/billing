@@ -2,15 +2,15 @@
 #
 # Table name: invoice_line_presets
 #
-#  id                   :integer(4)      not null, primary key
-#  operating_party_id   :integer(4)
-#  official_fee_type_id :integer(4)
-#  attorney_fee_type_id :integer(4)
+#  id                   :integer         not null, primary key
+#  operating_party_id   :integer
+#  official_fee_type_id :integer
+#  attorney_fee_type_id :integer
 #  name                 :string(255)
 #  created_at           :datetime
 #  updated_at           :datetime
-#  author_id            :integer(4)
-#  private_preset       :boolean(1)
+#  author_id            :integer
+#  private_preset       :boolean
 #  official_fee         :decimal(8, 2)
 #  attorney_fee         :decimal(8, 2)
 #

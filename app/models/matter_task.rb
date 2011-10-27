@@ -2,15 +2,15 @@
 #
 # Table name: matter_tasks
 #
-#  id                    :integer(4)      not null, primary key
-#  matter_id             :integer(4)
-#  matter_task_status_id :integer(4)
+#  id                    :integer         not null, primary key
+#  matter_id             :integer
+#  matter_task_status_id :integer
 #  description           :string(255)
 #  proposed_deadline     :date
 #  created_at            :datetime
 #  updated_at            :datetime
-#  author_id             :integer(4)
-#  matter_task_type_id   :integer(4)
+#  author_id             :integer
+#  matter_task_type_id   :integer
 #
 
 class MatterTask < ActiveRecord::Base

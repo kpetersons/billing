@@ -2,8 +2,8 @@
 #
 # Table name: domains
 #
-#  id                :integer(4)      not null, primary key
-#  matter_id         :integer(4)
+#  id                :integer         not null, primary key
+#  matter_id         :integer
 #  domain_name       :string(255)
 #  registration_date :date
 #  created_at        :datetime

@@ -1,11 +1,10 @@
 # == Schema Information
-# Schema version: 20110704183314
 #
 # Table name: operating_parties
 #
-#  id                 :integer(4)      not null, primary key
-#  company_id         :integer(4)
-#  operating_party_id :integer(4)
+#  id                 :integer         not null, primary key
+#  company_id         :integer
+#  operating_party_id :integer
 #  created_at         :datetime
 #  updated_at         :datetime
 #

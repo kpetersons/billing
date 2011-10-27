@@ -2,12 +2,12 @@
 #
 # Table name: address_types
 #
-#  id         :integer(4)      not null, primary key
+#  id         :integer         not null, primary key
 #  name       :string(255)
-#  built_in   :boolean(1)
+#  built_in   :boolean
 #  created_at :datetime
 #  updated_at :datetime
-#  party_id   :integer(4)
+#  party_id   :integer
 #
 
 require 'spec_helper'

@@ -2,19 +2,21 @@
 #
 # Table name: users
 #
-#  id                 :integer(4)      not null, primary key
-#  individual_id      :integer(4)
+#  id                 :integer         not null, primary key
+#  individual_id      :integer
 #  email              :string(255)
 #  encrypted_password :string(255)
 #  salt               :string(255)
-#  active             :boolean(1)
-#  blocked            :boolean(1)
+#  active             :boolean
+#  blocked            :boolean
 #  registration_date  :date
 #  activation_key     :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
-#  operating_party_id :integer(4)
+#  operating_party_id :integer
 #  initials           :string(255)
+#  login_date         :datetime
+#  last_login_date    :datetime
 #
 
 # == Schema Information
@@ -82,14 +84,13 @@ class User < ActiveRecord::Base
   end
 
   def self.switch_login_dates user
-    user.update_attribute(:last_login_date,  user.login_date)
+    user.update_attribute(:last_login_date, DateTime.now(user.login_date)) unless user.login_date.nil?
     user.update_attribute(:login_date, DateTime.now)
   end
 
   def last_or_current_session_date
-    return last_login_date.to_s(:show_full) unless last_login_date.nil?
-    return login_date.to_s(:show_full) unless login_date.nil?
-    return DateTime.now
+    return last_login_date unless last_login_date.nil?
+    return login_date unless login_date.nil?
   end
 
   def has_function name

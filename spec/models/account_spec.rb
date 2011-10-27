@@ -2,15 +2,15 @@
 #
 # Table name: accounts
 #
-#  id              :integer(4)      not null, primary key
+#  id              :integer         not null, primary key
 #  bank            :string(255)
 #  bank_code       :string(255)
 #  account_number  :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime
-#  company_id      :integer(4)
-#  default_account :boolean(1)
-#  show_on_invoice :boolean(1)
+#  company_id      :integer
+#  default_account :boolean
+#  show_on_invoice :boolean
 #
 
 require 'spec_helper'

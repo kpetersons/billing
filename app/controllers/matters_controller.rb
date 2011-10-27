@@ -55,14 +55,14 @@ class MattersController < ApplicationController
       @document = Document.new(params[:document].merge(:user_id => current_user.id))
       if @document.save
         @matter = @document.matter
-        unless params[:document][:matter_attributes][:trademark_attributes].nil?
-          trademark_clazzs = params[:document][:matter_attributes][:trademark_attributes][:classes]
-          unless trademark_clazzs.nil?
-            trademark_clazzs.split(',').each do |name|
+        unless params[:document][:matter_attributes][:classes].nil?
+          matter_clazzs = params[:document][:matter_attributes][:classes]
+          unless matter_clazzs.nil?
+            matter_clazzs.split(',').each do |name|
               clazz = Clazz.find_by_code(name)
               unless clazz.nil?
-                if TrademarkClazz.where(:trademark_id => @matter.trademark.id, :clazz_id => clazz.id).first.nil?
-                  @matter.trademark.trademark_clazzs<<TrademarkClazz.new(:clazz_id => clazz.id, :trademark_id => @matter.trademark.id)
+                if MatterClazz.where(:matter_id => @matter.id, :clazz_id => clazz.id).first.nil?
+                  @matter.matter_clazzs<<MatterClazz.new(:clazz_id => clazz.id, :matter_id => @matter.id)
                 end
               end
             end
@@ -85,14 +85,15 @@ class MattersController < ApplicationController
     Document.transaction do
       if @document.update_attributes(params[:document])
         @matter = @document.matter
-        unless params[:document][:matter_attributes][:trademark_attributes].nil?
-          trademark_clazzs = params[:document][:matter_attributes][:trademark_attributes][:classes]
-          unless trademark_clazzs.nil?
-            trademark_clazzs.split(',').each do |name|
+        unless params[:document][:matter_attributes][:classes].nil?
+          matter_clazzs = params[:document][:matter_attributes][:classes]
+          unless matter_clazzs.nil?
+            @matter.matter_clazzs.delete_all
+            matter_clazzs.split(',').each do |name|
               clazz = Clazz.find_by_code(name)
               unless clazz.nil?
-                if TrademarkClazz.where(:trademark_id => @matter.trademark.id, :clazz_id => clazz.id).first.nil?
-                  @matter.trademark.trademark_clazzs<<TrademarkClazz.new(:clazz_id => clazz.id, :trademark_id => @matter.trademark.id)
+                if MatterClazz.where(:matter_id => @matter.id, :clazz_id => clazz.id).first.nil?
+                  @matter.matter_clazzs<<MatterClazz.new(:clazz_id => clazz.id, :matter_id => @matter.id)
                 end
               end
             end

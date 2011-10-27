@@ -2,14 +2,14 @@
 #
 # Table name: customs
 #
-#  id                    :integer(4)      not null, primary key
+#  id                    :integer         not null, primary key
 #  created_at            :datetime
 #  updated_at            :datetime
-#  matter_id             :integer(4)
+#  matter_id             :integer
 #  date_of_order_alert   :date
 #  ca_application_date   :date
 #  ca_application_number :string(255)
-#  client_all_ip_id      :integer(4)
+#  client_all_ip_id      :integer
 #
 
 class Custom < ActiveRecord::Base

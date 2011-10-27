@@ -1,11 +1,10 @@
 # == Schema Information
-# Schema version: 20110615122529
 #
 # Table name: role_functions
 #
-#  id          :integer(4)      not null, primary key
-#  role_id     :integer(4)
-#  function_id :integer(4)
+#  id          :integer         not null, primary key
+#  role_id     :integer
+#  function_id :integer
 #  created_at  :datetime
 #  updated_at  :datetime
 #

@@ -1,10 +1,9 @@
 # == Schema Information
-# Schema version: 20110619083917
 #
 # Table name: clazzs
 #
-#  id         :integer(4)      not null, primary key
-#  code       :integer(4)
+#  id         :integer         not null, primary key
+#  code       :integer
 #  name       :string(255)
 #  created_at :datetime
 #  updated_at :datetime
@@ -12,7 +11,7 @@
 
 class Clazz < ActiveRecord::Base
   
-  has_many :trademark_clazzs
-  has_many :trademakrs, :through => :trademark_clazzs
+  has_many :matter_clazzs
+  has_many :matter, :through => :matter_clazzs
     
 end
