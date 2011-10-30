@@ -28,7 +28,7 @@ class PreviewEn < Prawn::Document
             (your_vat_group invoice), 
             (attorney_in_charge_group invoice)
           ]
-        ], :width => 520, :cell_style => {:borders => [], :padding_top => 5, :padding_bottom => 5})
+        ], :width => 520, :cell_style => {:borders => [], :padding_top => 5, :padding_bottom => 5, :padding_left => 0})
         your_info_table.cells[0,0].style :font_style => :bold
         your_info_table.cells[0,1].style :font_style => :bold_italic
         your_info_table.draw
@@ -41,7 +41,7 @@ class PreviewEn < Prawn::Document
         (invoice_line_caption_group invoice).draw
         (invoice_line_group invoice).draw
         group do
-              discount = invoice_line_discound_group invoice
+              discount = invoice_line_discount_group invoice
               discount.draw unless discount.nil? 
               (invoice_line_footer_group invoice).draw
               move_down 20
@@ -98,23 +98,23 @@ class PreviewEn < Prawn::Document
   def references_group invoice
     references = []
     references[0] = ["Your Ref.: #{invoice.your_ref}", "Our Ref.: #{invoice.our_ref}"]
-    references_data = make_table(references, :width => 520, :cell_style => {:borders => []})
+    references_data = make_table(references, :width => 520, :cell_style => {:borders => [], :padding_left => 0})
     return references_data
   end
   
   def po_number_group invoice
     po_data = [(invoice.po_billing.nil?)? "" : "PO number: #{invoice.po_billing} ", "Your date: #{invoice.your_date.to_s(:show_invoice)}"]
-    return make_table([po_data], :width => 520, :cell_style => {:borders => [], :padding_top => 0}, :column_widths => [260, 260])
+    return make_table([po_data], :width => 520, :cell_style => {:borders => [], :padding_top => 0, :padding_left => 0}, :column_widths => [260, 260])
   end
   
   def subject_group invoice
-    subject = make_table([[invoice.subject]], :width => 520, :cell_style => {:borders => [], :padding_top => 5})
+    subject = make_table([[invoice.subject]], :width => 520, :cell_style => {:borders => [], :padding_top => 5, :padding_left => 0})
     subject.cells[0,0].style :font_style => :bold
     return subject
   end
   
   def invoice_line_caption_group invoice
-    caption = make_table([["Our measures and costs specified below:"]], :width => 520, :cell_style => {:borders => [], :padding_top => 5})
+    caption = make_table([["Our measures and costs specified below:"]], :width => 520, :cell_style => {:borders => [], :padding_top => 5, :padding_left => 0})
     return caption    
   end
   
@@ -122,7 +122,7 @@ class PreviewEn < Prawn::Document
     lines_table = make_table(
       lines(invoice),
       :width => width,
-      :cell_style=> {:borders => [:top, :right, :bottom, :left], :padding => 2},
+      :cell_style=> {:borders => [:top, :right, :bottom, :left], :padding => 5},
       :column_widths => [409, 53, 56]
     )
     lines_table.columns(1).style :align => :right
@@ -130,7 +130,7 @@ class PreviewEn < Prawn::Document
     return lines_table
   end
 
-  def invoice_line_discound_group invoice
+  def invoice_line_discount_group invoice
     if !invoice.discount.nil? && invoice.discount > 0
       discount = make_table([[
         "
@@ -139,7 +139,7 @@ class PreviewEn < Prawn::Document
         "
         -#{invoice.sum_discount}"
       ]],       :width => width,
-      :cell_style => {:padding => 2},
+      :cell_style => {:padding => 5},
       :column_widths => [409, 53, 56])
       discount.cells[0,2].style :align => :right
       return discount 
@@ -152,7 +152,7 @@ class PreviewEn < Prawn::Document
     line_footer_data<<[
       "Subtotal #{invoice.currency.name}",
       "#{invoice.sum_official_fees}",
-      "#{invoice.sum_attorney_fees}"
+      "#{invoice.sum_attorney_fees - invoice.sum_discount}"
     ]
     line_footer_data<<[
       "VAT 22%",
@@ -163,7 +163,7 @@ class PreviewEn < Prawn::Document
     line_footer_table = make_table(
       line_footer_data,
       :width => 220,
-      :cell_style => {:borders => [:top, :right, :left], :padding => 2},
+      :cell_style => {:borders => [:top, :right, :left], :padding => 5},
       :column_widths => [111, 53, 56]
     )
     unless line_footer_table.cells[line_footer_table.row_length-2, 0].nil?

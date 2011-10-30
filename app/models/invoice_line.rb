@@ -82,16 +82,10 @@ class InvoiceLine < ActiveRecord::Base
   end
   
   def official_fee_total
-    total = 0
-    total = total + items unless items.nil?
-    total = total * official_fee unless official_fee.nil?
-    return total
+    return items * official_fee if !items.nil? && !official_fee.nil?
   end
   
   def attorney_fee_total
-    total = 0
-    total = total + items unless items.nil?
-    total = total * attorney_fee unless attorney_fee.nil?
-    return total
+    return items * attorney_fee if !items.nil? && !attorney_fee.nil?
   end  
 end

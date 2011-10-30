@@ -1,47 +1,49 @@
-<%=form_for document.invoice, :url => {:action => 'process_lines'}  do |i_f| %>
-<table style="clear:left; height:auto; width: 100%;">
-	<thead>
-		<tr>
-			<th class="col-text" style="width:1em">Official fee type</th>
-			<th class="col-number" style="width:1em">Fee</th>
-			<th class="col-text" style="width:1em">Attorneys fee type</th>
-			<th class="col-number" style="width:1em">Fee</th>			
-			<th class="col-text" style="width:1em">Units</th>
-			<th class="col-number" style="width:1em">Quantity</th>			
-			<th class="col-text" style="width:1em">Action</th>
-			<th class="col-text" style="width:1em"></th>
-		</tr>
-	</thead>
-	<tfoot>
-		<tr>
-			<th class="col-text">Sub total</th>
-			<th class="col-number"><%= document.invoice.sum_official_fees%></th>
-			<th class="col-number"><%= document.invoice.sum_attorney_fees%></th>
-			<th colspan="5"></th>
-		</tr>
-		<tr>
-			<th class="col-text">Total</th>
-			<th class="col-number"><%= document.invoice.sum_total_fees%></th>
-			<th class="col-text">Total with discount</th>
-			<th colspan="4" class="col-number"><%= document.invoice.after_discount%></th>
-			<th class="col-text"></th>
-		</tr>
-		<tr>
-			<th colspan="8">
-			<div class="panel-footer controls" style="margin-top:1em;">
-				<%if (has_function :name=>i_f.object.invoice_status.function.name) && (document.invoice.invoice_status.editable_state) %>				
-					<%= i_f.submit 'Save lines', :name => "save_lines", :style => "display:inline-block; float:none;"%>
-					<%= i_f.select :preset_id, InvoiceLinePreset.all.collect { |tt| [t(tt.name), tt.id] }, {}, {:style => "display:inline-block; float:none; margin-left:5em;"}%>
-					<%= i_f.submit 'Add line', :name => "add_line", :style => "display:inline-block; float:none;" %>
-				<% end %>				
-			</div>
-			</th>
-		</tr>
-	</tfoot>
-	<tbody>
-		<%= i_f.fields_for :invoice_lines do |il_f|%>
-			<%= render :partial => "invoices/invoice_lines/fields", :locals => {:fields 	=> il_f}%>
-		<% end %>
-	</tbody>
-</table>
-<%end%>
+<%= form_for document.invoice, :url => {:action => 'process_lines'} do |i_f| %>
+    <table style="clear:left; height:auto; width: 100%;">
+      <thead>
+      <tr>
+        <th class="col-text" style="width:1em">Official fee type</th>
+        <th class="col-number" style="width:1em">Fee</th>
+        <th class="col-text" style="width:1em">Attorneys fee type</th>
+        <th class="col-number" style="width:1em">Fee</th>
+        <th class="col-text" style="width:1em">Units</th>
+        <th class="col-number" style="width:1em">Quantity</th>
+        <th class="col-text" style="width:1em">Action</th>
+        <th class="col-text" style="width:1em"></th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <th class="col-text">Sub total</th>
+        <th class="col-number"><%= document.invoice.sum_official_fees %></th>
+        <th class="col-number"><%= document.invoice.sum_attorney_fees %></th>
+        <th colspan="5"></th>
+      </tr>
+      <tr>
+        <th class="col-text">Total</th>
+        <th class="col-number"><%= document.invoice.sum_total_fees %></th>
+        <th class="col-text">Total with discount</th>
+        <th colspan="4" class="col-number"><%= document.invoice.after_discount %></th>
+        <th class="col-text"></th>
+      </tr>
+      <tr>
+        <th colspan="8">
+          <div class="panel-footer controls" style="margin-top:1em;">
+            <% if (has_function :name=>i_f.object.invoice_status.function.name) && (document.invoice.invoice_status.editable_state) %>
+                <%= i_f.submit 'Save lines', :name => "save_lines", :style => "display:inline-block; float:none;" %>
+                <%= i_f.select :preset_id, InvoiceLinePreset.all.collect { |tt| [t(tt.name), tt.id] }, {}, {:style => "display:inline-block; float:none; margin-left:5em;"} %>
+                <% if !InvoiceLinePreset.all.empty? %>
+                    <%= i_f.submit 'Add line', :name => "add_line", :style => "display:inline-block; float:none;" %>
+                <% end %>
+            <% end %>
+          </div>
+        </th>
+      </tr>
+      </tfoot>
+      <tbody>
+      <%= i_f.fields_for :invoice_lines do |il_f| %>
+          <%= render :partial => "invoices/invoice_lines/fields", :locals => {:fields => il_f} %>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>

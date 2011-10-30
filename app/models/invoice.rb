@@ -217,11 +217,11 @@ class Invoice < ActiveRecord::Base
   end
 
   def sum_official_fees
-    invoice_lines.sum('official_fee')
+    invoice_lines.sum(:official_fee)
   end
 
   def sum_attorney_fees
-    invoice_lines.sum('attorney_fee')
+    invoice_lines.sum(:attorney_fee)
   end
 
   def sum_total_fees
@@ -229,7 +229,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def sum_discount
-    sum_attorney_fees - sum_attorney_fees * discount/100 
+    return sum_attorney_fees/discount
   end
 
   def after_discount
@@ -237,11 +237,11 @@ class Invoice < ActiveRecord::Base
   end
   
   def sum_vat
-    (sum_total_fees + sum_official_fees) * 0.22 
+    (sum_attorney_fees - sum_discount + sum_official_fees) * 0.22
   end  
   
   def sum_total
-    (sum_total_fees + sum_official_fees) * 1.22 
+    (sum_attorney_fees - sum_discount + sum_official_fees) * 1.22
   end
 
   def status_name
@@ -280,7 +280,11 @@ class Invoice < ActiveRecord::Base
     return individual unless individual.nil?
     return Individual.new
   end
-  
+
+  def has_lines?
+    return !invoice_lines.empty?
+  end
+
   private
   def mark_as_paid
     puts "invoice_status.name: #{invoice_status.name} and invoice_status.name.eql?('invoice.status.paid') #{invoice_status.name.eql?('invoice.status.paid')}"
