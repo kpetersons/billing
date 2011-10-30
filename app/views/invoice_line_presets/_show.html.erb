@@ -9,7 +9,7 @@
 		<label> <%=t('invoice_line_preset.fields.operating_party')%> </label>
 	</dt>
 	<dd>
-		<%=link_to @invoice_line_preset.operating_party_name, operating_party_path(@invoice_line_preset.operating_party) %>&nbsp;
+		<%=link_to t(@invoice_line_preset.operating_party_name), operating_party_path(@invoice_line_preset.operating_party) %>&nbsp;
 	</dd>
 	<dt>
 		<label> <%=t('invoice_line_preset.fields.official_fee_type')%> </label>

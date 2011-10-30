@@ -1,154 +1,160 @@
 <div class="panel">
-	<div class="panel-header">
-		<strong>Invoice information</strong>
-	</div>
-	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
-	<%= render :partial => "shared/error", :locals => {:obj => @document.invoice}%>
-	<dl class="panel-content">
-		<dt>
-			<label> Invoice number </label>
-		</dt>
-		<dd>
-			<%= @document.registration_number%>&nbsp;
-		</dd>
-		<dt>
-			<label> Date paid </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.date_paid.to_s(:show) unless @document.invoice.date_paid.nil?%>&nbsp;
-		</dd>
-		<dt>
-			<label> Invoice date </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.invoice_date.to_s(:show) unless @document.invoice.invoice_date.nil?%>&nbsp;
-		</dd>
-		<dt>
-			<label> Customer </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.customer.name unless @document.invoice.customer.nil? %>&nbsp;
-		</dd>
-		<dt>
-			<label> Address </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.address.name unless @document.invoice.address.nil? %>&nbsp;
-		</dd>
-		<dt>
-			<label> Contact person </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.individual.name unless @document.invoice.individual.nil? %>&nbsp;
-		</dd>
-		<dt>
-			<label> Currency </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.currency.name%>&nbsp;
-		</dd>
-		<dt>
-			<label> Discount </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.discount%>&nbsp;
-		</dd>
-		<dt>
-			<label> Our ref </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.our_ref%>&nbsp;
-		</dd>
-		<dt>
-			<label> Your ref </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.your_ref%>&nbsp;
-		</dd>
-		<dt>
-			<label> Your date </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.your_date.to_s(:show) unless @document.invoice.your_date.nil?%>&nbsp;
-		</dd>
-		<dt>
-			<label> PO Billing </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.po_billing%>&nbsp;
-		</dd>
-		<dt>
-			<label> Subject </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.subject%>&nbsp;
-		</dd>
-		<dt>
-			<label> Apply VAT </label>
-		</dt>
-		<dd>
-			<%= (@document.invoice.apply_vat)? t('bool.t') : t('bool.f') %>&nbsp;
-		</dd>
-		<dt>
-			<label> Ending details </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.ending_details%>&nbsp;
-		</dd>
-		<dt>
-			<label> Payment term </label>
-		</dt>
-		<dd>
-			<%= @document.invoice.payment_term %>&nbsp;
-		</dd>
-	</dl>
-	<%if @document.invoice.invoice_status.editable_state %>
-		<%= render :partial => "status_controls", 		:locals => {:invoice 	=> @document.invoice}%>
-		<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
-	<%end%>
-	<%= render :partial => "invoices/invoice_lines/index", 			:locals => {:document	=> @document}%>
-	<div class="show controls slide-out">
-		<ul>
-			<li>			
-				<%= link_to 'Preview', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
-				<ul>
-					<%if @document.invoice.invoice_type == 0%>
-					<li>
-						<%= link_to 'LV', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
-					</li>
-					<%end%>
-					<li>
-						<%= link_to 'EN', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'EN')%>
-					</li>
-					<li>
-						<%= link_to 'FR', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'FR')%>
-					</li>
-					<li>
-						<%= link_to 'DE', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'DE')%>
-					</li>								
-				</ul>				
-			</li>
-		</ul>
-	</div>
-	<div class="show controls slide-out" style="margin-bottom:2em;">
-		<ul>
-			<li>			
-				<%= link_to 'Print', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
-				<ul>
-					<li>
-						<%= link_to 'LV', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'LV')%>
-					</li>
-					<li>
-						<%= link_to 'EN', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'EN')%>
-					</li>
-					<li>
-						<%= link_to 'FR', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'FR')%>
-					</li>
-					<li>
-						<%= link_to 'DE', invoice_preview_path(@document.invoice, :format => 'pdf', :language => 'DE')%>
-					</li>								
-				</ul>				
-			</li>
-		</ul>
-	</div>	
+  <div class="panel-header">
+    <strong>Invoice information</strong>
+  </div>
+  <%= render :partial => "shared/flash", :locals => {:flash => flash} %>
+  <%= render :partial => "shared/error", :locals => {:obj => @document.invoice} %>
+  <dl class="panel-content">
+    <dt>
+      <label> Invoice number </label>
+    </dt>
+    <dd>
+      <%= @document.registration_number %>&nbsp;
+    </dd>
+    <dt>
+      <label>Foreign invoice</label>
+    </dt>
+    <dd>
+      <%= (@document.invoice.invoice_type == 1) ? 'Yes' : 'No' %>
+    </dd>
+    <dt>
+      <label> Date paid </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.date_paid.to_s(:show) unless @document.invoice.date_paid.nil? %>&nbsp;
+    </dd>
+    <dt>
+      <label> Invoice date </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.invoice_date.to_s(:show) unless @document.invoice.invoice_date.nil? %>&nbsp;
+    </dd>
+    <dt>
+      <label> Customer </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.customer.name unless @document.invoice.customer.nil? %>&nbsp;
+    </dd>
+    <dt>
+      <label> Address </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.address.name unless @document.invoice.address.nil? %>&nbsp;
+    </dd>
+    <dt>
+      <label> Contact person </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.individual.name unless @document.invoice.individual.nil? %>&nbsp;
+    </dd>
+    <dt>
+      <label> Currency </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.currency.name %>&nbsp;
+    </dd>
+    <dt>
+      <label> Discount </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.discount %>%&nbsp;
+    </dd>
+    <dt>
+      <label> Our ref </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.our_ref %>&nbsp;
+    </dd>
+    <dt>
+      <label> Your ref </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.your_ref %>&nbsp;
+    </dd>
+    <dt>
+      <label> Your date </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.your_date.to_s(:show) unless @document.invoice.your_date.nil? %>&nbsp;
+    </dd>
+    <dt>
+      <label> PO Billing </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.po_billing %>&nbsp;
+    </dd>
+    <dt>
+      <label> Subject </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.subject %>&nbsp;
+    </dd>
+    <dt>
+      <label> Apply VAT </label>
+    </dt>
+    <dd>
+      <%= (@document.invoice.apply_vat) ? t('bool.t') : t('bool.f') %>&nbsp;
+    </dd>
+    <dt>
+      <label> Ending details </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.ending_details %>&nbsp;
+    </dd>
+    <dt>
+      <label> Payment term </label>
+    </dt>
+    <dd>
+      <%= @document.invoice.payment_term %>&nbsp;
+    </dd>
+  </dl>
+  <% if @document.invoice.invoice_status.editable_state %>
+      <%= render :partial => "status_controls", :locals => {:invoice => @document.invoice} %>
+      <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
+  <% end %>
+  <%= render :partial => "invoices/invoice_lines/index", :locals => {:document => @document} %>
+  <% unless @document.invoice.invoice_lines.empty? %>
+      <div class="show controls slide-out">
+        <ul>
+          <li>
+            <%= link_to 'Preview', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'lv', :preview => true) %>
+            <ul>
+              <li>
+                <%= link_to 'LV', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'lv', :preview => true) %>
+              </li>
+              <li>
+                <%= link_to 'EN', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'en', :preview => true) %>
+              </li>
+              <li>
+                <%= link_to 'FR', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'fr', :preview => true) %>
+              </li>
+              <li>
+                <%= link_to 'DE', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'de', :preview => true) %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="show controls slide-out" style="margin-bottom:2em;">
+        <ul>
+          <li>
+            <%= link_to 'Print', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'lv', :preview => false) %>
+            <ul>
+              <li>
+                <%= link_to 'LV', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'lv', :preview => false) %>
+              </li>
+              <li>
+                <%= link_to 'EN', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'en', :preview => false) %>
+              </li>
+              <li>
+                <%= link_to 'FR', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'fr', :preview => false) %>
+              </li>
+              <li>
+                <%= link_to 'DE', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'de', :preview => false) %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+  <% end %>
 </div>

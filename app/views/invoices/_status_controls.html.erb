@@ -2,7 +2,7 @@
 	<% invoice.available_statuses.each do |status|%>
 		<% if has_function :name => "funct.#{status.name}"%>
 		<div class="status-control">
-			<%=form_for status, :url => flow_invoice_path(invoice), do |f| %>
+			<%=form_for status, :url => flow_invoice_path(invoice) do |f| %>
 				<%=f.hidden_field :id%>				
 				<%= render :partial => "shared/ui/form-submit-controls_name", :locals => {:name=>  t(status.name), :fields => f} %>				
 			<%end%>

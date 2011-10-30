@@ -217,32 +217,37 @@ class Invoice < ActiveRecord::Base
   end
 
   def sum_official_fees
-    invoice_lines.sum(:official_fee)
+    (invoice_lines.sum(:official_fee)).round(2)
+  end
+
+  def sum_official_fees_ex_vat
+    #invoice_lines.joins(:official_fee_type).where(:official_fee_types => {:apply_vat => true}).sum(:official_fee)
+    (invoice_lines.sum(:official_fee)).round(2)
   end
 
   def sum_attorney_fees
-    invoice_lines.sum(:attorney_fee)
+    (invoice_lines.sum(:attorney_fee)).round(2)
   end
 
   def sum_total_fees
-    sum_official_fees + sum_attorney_fees
+    (sum_official_fees + sum_attorney_fees).round(2)
   end
 
   def sum_discount
-    return sum_attorney_fees/discount if !discount.nil? && discount > 0
+    return (sum_attorney_fees/discount if !discount.nil? && discount > 0).round(2)
     return 0
   end
 
   def after_discount
-    @sum_total_fees = sum_official_fees + sum_attorney_fees-sum_attorney_fees/100*discount
+    @sum_total_fees = (sum_official_fees + sum_attorney_fees-sum_attorney_fees/100*discount).round(2)
   end
   
   def sum_vat
-    (sum_attorney_fees - sum_discount + sum_official_fees) * 0.22
+    ((sum_attorney_fees - sum_discount + sum_official_fees_ex_vat) * 0.22).round(2)
   end  
   
   def sum_total
-    (sum_attorney_fees - sum_discount + sum_official_fees) * 1.22
+    ((sum_attorney_fees - sum_discount + sum_official_fees) * 1.22).round(2)
   end
 
   def status_name

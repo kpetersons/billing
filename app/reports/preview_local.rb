@@ -1,4 +1,4 @@
-class PreviewLv < Prawn::Document
+class PreviewLocal < Prawn::Document
     
   def to_pdf(invoice, current_user)
     table_width = 520

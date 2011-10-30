@@ -1,9 +1,9 @@
-class PreviewEn < Prawn::Document
+class PreviewForeign < Prawn::Document
   def width
     518
   end
 
-  def to_pdf(invoice, current_user)
+  def to_pdf(invoice, current_user, lang)
     font_families.update(
     "InvoiceFamily" => {
       :bold        => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif-Bold.ttf",
@@ -80,30 +80,37 @@ class PreviewEn < Prawn::Document
   end
   
   def invoice_date_group invoice
-    return "Date: #{invoice.invoice_date.to_s(:show_invoice)}"
+    return I18n.t('foreign.print.invoice.head.date', :date => invoice.invoice_date.to_s(:show_invoice))
   end
-  
+
+
+  #
   def invoice_number_group invoice
-    return "Invoice No. #{invoice.id}"
+    return I18n.t('foreign.print.invoice.head.invoice_no', :no => invoice.id)
   end
   
   def your_vat_group invoice
-    return "Your VAT No. #{invoice.customer.vat_registration_number}"
+    return I18n.t('foreign.print.invoice.refs.your_vat', :no=> invoice.customer.vat_registration_number)
   end
   
   def attorney_in_charge_group invoice
-    return "Attorney in charge: #{invoice.contact_person.name}" unless invoice.individual.nil?
+    return I18n.t('foreign.print.invoice.refs.attorney_charge', :name=> invoice.contact_person.name) unless invoice.individual.nil?
   end
   
   def references_group invoice
     references = []
-    references[0] = ["Your Ref.: #{invoice.your_ref}", "Our Ref.: #{invoice.our_ref}"]
+    references[0] = [
+        I18n.t('foreign.print.invoice.refs.your_ref', :ref => invoice.your_ref),
+        I18n.t('foreign.print.invoice.refs.our_ref', :ref => invoice.our_ref)
+    ]
     references_data = make_table(references, :width => 520, :cell_style => {:borders => [], :padding_left => 0})
     return references_data
   end
   
   def po_number_group invoice
-    po_data = [(invoice.po_billing.nil? || invoice.po_billing.gsub(" ", "").empty?)? "" : "PO number: #{invoice.po_billing} ", (invoice.your_date.nil?)? "" : "Your date: #{invoice.your_date.to_s(:show_invoice)}"]
+    po_data = [
+        (invoice.po_billing.nil? || invoice.po_billing.gsub(" ", "").empty?)? "" : I18n.t('foreign.print.invoice.refs.po_number', :po => invoice.po_billing),
+        (invoice.your_date.nil?)? "" : I18n.t('foreign.print.invoice.refs.your_date', :date => invoice.your_date.to_s(:show_invoice))]
     return make_table([po_data], :width => 520, :cell_style => {:borders => [], :padding_top => 0, :padding_left => 0}, :column_widths => [260, 260])
   end
   
@@ -114,7 +121,9 @@ class PreviewEn < Prawn::Document
   end
   
   def invoice_line_caption_group invoice
-    caption = make_table([["Our measures and costs specified below:"]], :width => 520, :cell_style => {:borders => [], :padding_top => 5, :padding_left => 0})
+    caption = make_table([[
+        I18n.t('foreign.print.invoice.lines.caption')
+                          ]], :width => 520, :cell_style => {:borders => [], :padding_top => 5, :padding_left => 0})
     return caption    
   end
   
@@ -134,7 +143,7 @@ class PreviewEn < Prawn::Document
     if !invoice.discount.nil? && invoice.discount > 0
       discount = make_table([[
         "
-        Discount to our fees #{invoice.discount}%",
+        #{I18n.t('foreign.print.invoice.lines.discount', :discount => invoice.discount)}",
         "",
         "
         -#{invoice.sum_discount}"
@@ -150,12 +159,12 @@ class PreviewEn < Prawn::Document
   def invoice_line_footer_group invoice
     line_footer_data = []
     line_footer_data<<[
-      "Subtotal #{invoice.currency.name}",
+      I18n.t('foreign.print.invoice.lines.subtotal', :curr => invoice.currency.name),
       "#{invoice.sum_official_fees}",
       "#{invoice.sum_attorney_fees - invoice.sum_discount}"
     ]
     line_footer_data<<[
-      "VAT 22%",
+      I18n.t('foreign.print.invoice.lines.vat'),
       "",
       "#{invoice.sum_vat}"
     ] unless !invoice.apply_vat
@@ -189,7 +198,7 @@ class PreviewEn < Prawn::Document
     
     totals = make_table(
       [
-        ["Total due #{invoice.currency.name}","#{invoice.sum_total}"]
+        [I18n.t('foreign.print.invoice.lines.total_due', :curr => invoice.currency.name),"#{invoice.sum_total}"]
       ],
       :width => width, 
       :column_widths => [410, 108],
@@ -206,16 +215,15 @@ class PreviewEn < Prawn::Document
         ],
         :width => width, :column_widths => [width]
     )
-    
     return footer
   end
 
   def invoice_preparer_group invoice, current_user
     group do
-      text "<b>VAT reverse charge procedure is applicable according to Art 44 of the EU Council directive 2006/112/EC and Art 41(a) of the Latvian Law on VAT</b>", :inline_format => true
+      text I18n.t('foreign.print.invoice.footer.var_reverse_disclaimer'), :inline_format => true
       move_down 20
-      text "Please remit within #{invoice.payment_term} days"
-      text "Kindly refer to our Invoice number in your remittance"
+      text I18n.t('foreign.print.invoice.footer.remit_disclaimer', :date => invoice.payment_term)
+      text I18n.t('foreign.print.invoice.footer.ask_for_reference')
       move_down 20
       text current_user.individual.name
     end
@@ -224,9 +232,9 @@ class PreviewEn < Prawn::Document
   def lines invoice
     table = []
     table<<[
-      "Description",
-      "Official fee #{invoice.currency.name}",
-      "Attorney's fee #{invoice.currency.name}"
+      I18n.t('foreign.print.invoice.lines.description'),
+      I18n.t('foreign.print.invoice.lines.official_fee', :curr => invoice.currency.name),
+      I18n.t('foreign.print.invoice.lines.attorneys_fee', :curr => invoice.currency.name)
     ]
     counter = 1
     invoice.invoice_lines.each do |line|

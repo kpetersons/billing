@@ -35,7 +35,7 @@ class InvoiceLine < ActiveRecord::Base
   end
 
   def is_official
-    if official_fee_type_id
+    if !official_fee_type_id.nil?
       return true
     end
     return false
@@ -49,7 +49,7 @@ class InvoiceLine < ActiveRecord::Base
     if is_official
       return offering
     end
-    return "#{offering}, #{details}"
+    return "#{offering}"
   end
   
   def provided_fee_amount
