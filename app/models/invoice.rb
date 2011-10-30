@@ -229,7 +229,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def sum_discount
-    return sum_attorney_fees/discount if discount.nil? && discount > 0
+    return sum_attorney_fees/discount if !discount.nil? && discount > 0
     return 0
   end
 
