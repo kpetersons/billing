@@ -103,7 +103,7 @@ class PreviewEn < Prawn::Document
   end
   
   def po_number_group invoice
-    po_data = [(invoice.po_billing.nil?)? "" : "PO number: #{invoice.po_billing} ", "Your date: #{invoice.your_date.to_s(:show_invoice)}"]
+    po_data = [(invoice.po_billing.nil?)? "" : "PO number: #{invoice.po_billing} ", (invoice.your_date.nil?)? "" : "Your date: #{invoice.your_date.to_s(:show_invoice)}"]
     return make_table([po_data], :width => 520, :cell_style => {:borders => [], :padding_top => 0, :padding_left => 0}, :column_widths => [260, 260])
   end
   
