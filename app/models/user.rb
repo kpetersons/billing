@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
 
   def self.switch_login_dates user
     unless user.login_date.nil?
-      user.update_attribute(:last_login_date, DateTime.now(user.login_date))
+      user.update_attribute(:last_login_date, user.login_date)
     end
     user.update_attribute(:login_date, DateTime.now)
   end
