@@ -41,8 +41,10 @@ class PreviewForeign < Prawn::Document
         (invoice_line_caption_group invoice).draw
         (invoice_line_group invoice).draw
         group do
-              discount = invoice_line_discount_group invoice
-              discount.draw unless discount.nil?
+              if !invoice.discount.nil? && invoice.discount > 0
+                discount = invoice_line_discount_group invoice
+                discount.draw
+              end
               #
               footer_group = invoice_line_footer_group invoice
               footer_group.draw
