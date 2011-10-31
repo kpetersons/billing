@@ -247,7 +247,8 @@ class Invoice < ActiveRecord::Base
   end  
   
   def sum_total
-    ((sum_attorney_fees - sum_discount + sum_official_fees) * 1.22).round(2)
+    return ((sum_attorney_fees - sum_discount + sum_official_fees) * 1.22).round(2) if apply_vat
+    return ((sum_attorney_fees - sum_discount + sum_official_fees)).round(2)
   end
 
   def status_name
