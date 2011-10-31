@@ -21,18 +21,14 @@ class InvoiceLine < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :official_fee_type
   belongs_to :attorney_fee_type
-  belongs_to  :author, :class_name => "User", :foreign_key => :author_id
-  
-  validates :attorney_fee_type_id, :presence => true, :if => Proc.new {|invoice_line| !invoice_line.attorney_fee.nil?}
-  validates :official_fee_type_id, :presence => true, :if => Proc.new {|invoice_line| !invoice_line.official_fee.nil?}
-  validates :offering, :presence => true, :length              => {:within => 5..250}
+  belongs_to :author, :class_name => "User", :foreign_key => :author_id
+
+  validates :attorney_fee_type_id, :presence => true, :if => Proc.new { |invoice_line| !invoice_line.attorney_fee.nil? }
+  validates :official_fee_type_id, :presence => true, :if => Proc.new { |invoice_line| !invoice_line.official_fee.nil? }
+  validates :offering, :presence => true, :length => {:within => 5..250}
   validates :items, :presence => true, :numericality => true
-  
-  def fee_without_vat
-    fee_without_vat = 0;
-    fee_without_vat += official_fee unless official_fee.nil? 
-    fee_without_vat += attorney_fee unless attorney_fee.nil?
-  end
+
+  before_save :calculate_totals
 
   def is_official
     if !official_fee_type_id.nil?
@@ -41,51 +37,19 @@ class InvoiceLine < ActiveRecord::Base
     return false
   end
 
-  def provided_fee_description
-     return "#{details}"
-  end
-  
-  def provided_fee_details
-    if is_official
-      return offering
-    end
-    return "#{offering}"
-  end
-  
-  def provided_fee_amount
-    if is_official
-      return official_fee
-    end
-    return attorney_fee
+  private
+
+  def calculate_totals
+    #update_attribute(:total_attorney_fee, (((attorney_fee.nil?) ? 0 : attorney_fee) * ((items.nil?) ? 0 : items)))
+    #update_attribute(:total_official_fee, (((official_fee.nil?) ? 0 : official_fee) * ((items.nil?) ? 0 : items)))
+    #update_attribute(:total_discount, (total_attorney_fee * ((invoice.discount.nil?) ? 0 : invoice.discount) / 100))
+    #update_attribute(:total, (total_attorney_fee + total_official_fee - total_discount))
+    #
+    self.total_attorney_fee= (((attorney_fee.nil?) ? 0 : attorney_fee) * ((items.nil?) ? 0 : items))
+    self.total_official_fee= (((official_fee.nil?) ? 0 : official_fee) * ((items.nil?) ? 0 : items))
+    self.total_discount= (total_attorney_fee * ((invoice.discount.nil?) ? 0 : invoice.discount) / 100)
+    self.total= (total_attorney_fee + total_official_fee - total_discount)
+    puts "invoice_discount.nil? no? #{invoice.discount}"
   end
 
-  def provided_fee_without_vat
-    if is_official
-      return official_fee * items
-    end
-    return attorney_fee * items  
-  end
-  
-  def line_total
-    total_a = 0
-    total_a = total_a + items unless items.nil?
-    total_a = total_a * official_fee unless official_fee.nil?
-    
-    total_b = 0
-    total_b = total_b + items unless items.nil?
-    total_b = total_b * attorney_fee unless attorney_fee.nil?
-    
-    return total_a + total_b unless total_b.nil? && total_a.nil?
-    return total_a unless total_a.nil?
-    return total_b unless total_b.nil?
-    return 0
-  end
-  
-  def official_fee_total
-    return items * official_fee if !items.nil? && !official_fee.nil?
-  end
-  
-  def attorney_fee_total
-    return items * attorney_fee if !items.nil? && !attorney_fee.nil?
-  end  
 end

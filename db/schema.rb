@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111030162027) do
+ActiveRecord::Schema.define(:version => 20111031194036) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -220,12 +220,16 @@ ActiveRecord::Schema.define(:version => 20111030162027) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "attorney_fee_type_id"
-    t.decimal  "official_fee",         :precision => 8, :scale => 2
-    t.decimal  "attorney_fee",         :precision => 8, :scale => 2
+    t.decimal  "official_fee",         :precision => 8,  :scale => 2
+    t.decimal  "attorney_fee",         :precision => 8,  :scale => 2
     t.integer  "author_id"
     t.string   "offering"
     t.integer  "items"
     t.string   "units"
+    t.decimal  "total",                :precision => 10, :scale => 2
+    t.decimal  "total_attorney_fee",   :precision => 10, :scale => 2
+    t.decimal  "total_official_fee",   :precision => 10, :scale => 2
+    t.decimal  "total_discount",       :precision => 10, :scale => 2
   end
 
   create_table "invoice_matters", :force => true do |t|
