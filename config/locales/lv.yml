@@ -25,3 +25,43 @@ lv:
           var_reverse_disclaimer: "<b>VAT reverse charge procedure is applicable according to Art 44 of the EU Council directive 2006/112/EC and Art 41(a) of the Latvian Law on VAT.</b>"
           remit_disclaimer: "Please remit within %{date} days."
           ask_for_reference: "Kindly refer to our Invoice number in your remittance"
+  local:
+    print:
+      invoice:
+        head:
+          invoice_no_small: "<b>Rēķina nr.</b>%{no}%"
+          invoice_page_small: "<font size='9'>Lapa nr. %{from}% no %{of}%</font>"
+          invoice_no: "Rēķins Nr. %{no}%"
+          created_place: "Rīga, %{place}%"
+        refs:
+          our_ref: "Mūsu ref.: %{our_ref}%"
+          your_ref: "Jūsu ref.: %{your_ref}%"
+          sender: "Rēķina nosūtītājs"
+          bank: "Banka"
+          sender_reg: "Reģ nr."
+          sender_bank_code: "Bankas kods"
+          sender_vat: "PVN reģ. nr."
+          sender_bank_acc: "Konta numurs"
+          sender_address: "Juridiskā adrese"
+          receiver: "Rēķina saņēmējs"
+          receiver_reg: "Reģ nr."
+          receiver_bank_code: "Bankas kods"
+          receiver_vat: "PVN reģ. nr."
+          receiver_bank_acc: "Konta numurs"
+          receiver_address: "Juridiskā adrese"
+        lines:
+          calc_costs: "Aprēķinātās izmaksas"
+          measurement: "Mērv."
+          cost_one_unit: "Cena par 1 vien."
+          unit_count: "Skaits"
+          cost_without_vat: "Summa bez PVN"
+          sum_vat_exempt: "Ar PVN neapliekamā summa"
+          sum_vat_taxable: "Ar PVN 22% apliekamā summa"
+          vat_22: "PVN 22%"
+          sum_to_pay: "Kopā summa apmaksai"
+          curr: "LVL"
+        footer:
+          disclaimer: "* Ar PVN neapliekamie pakalpojumi"
+          payment_term: "Lūdzam veikt parskaitījumu %{term}% dienu laika."
+          disclaimer1: "<u>Maksājuma uzdevumā obligāti norādiet mūsu rēķina numuru!</u>"
+
