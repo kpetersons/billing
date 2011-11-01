@@ -47,6 +47,9 @@ class InvoicesController < ApplicationController
   def update
     @document = Document.find(params[:document][:id])
     Document.transaction do
+      if params[:document][:invoice_attributes][:address_id].nil?
+        @document.invoice.address_id = nil
+      end
       if @document.update_attributes(params[:document])
       @invoice = @document.invoice
       redirect_to invoice_path(@invoice)
