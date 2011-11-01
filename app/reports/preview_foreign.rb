@@ -32,6 +32,7 @@ class PreviewForeign < Prawn::Document
         your_info_table.cells[0,0].style :font_style => :bold
         your_info_table.cells[0,1].style :font_style => :bold_italic
         your_info_table.draw
+        move_down 10
       end
 
       font_size(8) do
@@ -79,7 +80,7 @@ class PreviewForeign < Prawn::Document
                 [(invoice_number_group invoice)]
               ], :width => 205, :cell_style => {:borders =>[], :padding => 2})
     left_side.cells[0,0].style :font_style => :bold
-    left_side.cells[1,0].style :borders => [:top, :right, :bottom, :left], :font_style => :bold, :align => :center
+    left_side.cells[1,0].style :borders => [:top, :right, :bottom, :left], :font_style => :bold, :align => :center, :size => 10
     return left_side
   end
 
@@ -90,7 +91,7 @@ class PreviewForeign < Prawn::Document
 
   #
   def invoice_number_group invoice
-    return I18n.t('foreign.print.invoice.head.invoice_no', :no => invoice.id)
+    return I18n.t('foreign.print.invoice.head.invoice_no', :no => invoice.document.registration_number)
   end
 
   def your_vat_group invoice
@@ -105,9 +106,9 @@ class PreviewForeign < Prawn::Document
     references = []
     references[0] = [
         I18n.t('foreign.print.invoice.refs.your_ref', :ref => invoice.your_ref),
-        I18n.t('foreign.print.invoice.refs.our_ref', :ref => invoice.our_ref)
+        I18n.t('foreign.print.invoice.refs.our_ref', :initials => invoice.author.initials, :ref => invoice.our_ref)
     ]
-    references_data = make_table(references, :width => 520, :cell_style => {:borders => [], :padding_left => 0})
+    references_data = make_table(references, :width => 520, :cell_style => {:borders => [], :padding_left => 0}, :column_widths => [260, 260])
     return references_data
   end
 
@@ -202,7 +203,7 @@ class PreviewForeign < Prawn::Document
       ],
       :width => width,
       :column_widths => [410, 108],
-      :cell_style => {:borders => []}
+      :cell_style => {:borders => [], :size => 10}
     )
 
     totals.cells[0,0].style :align => :right, :font_style => :bold
@@ -223,8 +224,8 @@ class PreviewForeign < Prawn::Document
       text I18n.t('foreign.print.invoice.footer.var_reverse_disclaimer'), :inline_format => true
       move_down 20
       text I18n.t('foreign.print.invoice.footer.remit_disclaimer', :date => invoice.payment_term)
-      text I18n.t('foreign.print.invoice.footer.ask_for_reference')
-      move_down 20
+      text I18n.t('foreign.print.invoice.footer.ask_for_reference'), :inline_format => true
+      move_down 30
       text current_user.individual.name
     end
   end
@@ -241,7 +242,7 @@ class PreviewForeign < Prawn::Document
       if line.items > 1
         line_data = make_table([
             ["#{counter}. #{line.offering}"],
-            ["(#{line.items}#{line.units} x #{invoice.currency.name} #{line.attorney_fee}) #{line.details}"]
+            ["#{line.details} (#{line.items} #{line.units} x #{invoice.currency.name} #{line.attorney_fee})"]
           ],
           :cell_style => {:borders => [], :padding => 0},
           :column_widths => [409])

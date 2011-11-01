@@ -10,13 +10,13 @@ fr:
           attorney_charge: "Attorney in charge: %{name}"
           your_ref: "Your Ref.: %{ref}"
           po_number: "PO number: %{po}"
-          our_ref: "Our Ref.: %{ref}"
+          our_ref: "Our Ref.: %{initials}/%{ref}"
           your_date: "Your date: %{date}"
         lines:
           caption: "Our measures and costs specified below:"
           description: "Description"
           official_fee: "Official fee %{curr}"
-          attorneys_fee: "Attorneys fee %{curr}"
+          attorneys_fee: "Attorney's fee %{curr}"
           discount: "Discount to our fees %{discount}%"
           subtotal: "Subtotal %{curr}"
           vat: "VAT 22%"
@@ -24,7 +24,7 @@ fr:
         footer:
           var_reverse_disclaimer: "<b>VAT reverse charge procedure is applicable according to Art 44 of the EU Council directive 2006/112/EC and Art 41(a) of the Latvian Law on VAT.</b>"
           remit_disclaimer: "Please remit within %{date} days."
-          ask_for_reference: "Kindly refer to our Invoice number in your remittance"
+          ask_for_reference: "<i>Kindly refer to our Invoice number in your remittance</i>"
   local:
     print:
       invoice:
