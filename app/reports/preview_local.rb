@@ -178,7 +178,7 @@ class PreviewLocal < Prawn::Document
     ],
     [
       I18n.t('local.print.invoice.refs.receiver_vat'),
-      "LV#{invoice.customer.registration_number}",
+      invoice.customer.registration_number,
       I18n.t('local.print.invoice.refs.receiver_bank_acc'),
       (invoice.customer.default_account.account_number)
     ],
