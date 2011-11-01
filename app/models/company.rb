@@ -28,11 +28,7 @@ class Company < ActiveRecord::Base
   end
 
   def invoice_address
-    addr = party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first
-    unless addr.nil?
-       return "#{addr.city}, #{addr.street}, #{addr.house_number}, #{addr.room_number}"
-    end 
-    return Address.new
+    return party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first || Address.new
   end
 
   def inv_address

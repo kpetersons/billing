@@ -247,6 +247,25 @@ class Invoice < ActiveRecord::Base
 
   #end foreign invoice print
 
+  #start local invoice print
+  def local_sum_exempt_vat
+    invoice_lines.joins(:official_fee_type).where(:official_fee_types => {:apply_vat => false}).sum('official_fee')
+  end
+
+  def local_sum_taxable_vat
+    official_taxable = invoice_lines.joins(:official_fee_type).where(:official_fee_types => {:apply_vat => true}).sum('total_official_fee')
+    attorney_taxable = invoice_lines.sum('total_attorney_fee')
+    return official_taxable + attorney_taxable
+  end
+
+  def local_sum_vat
+    local_sum_taxable_vat * 0.22
+  end
+
+  def local_sum_total
+    local_sum_exempt_vat + local_sum_taxable_vat + local_sum_vat
+  end
+  #end local invoice print
 
   def status_name
     invoice_status.name unless invoice_status.nil?

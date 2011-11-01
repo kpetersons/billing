@@ -55,5 +55,16 @@ class Address < ActiveRecord::Base
     return country.name unless country.nil?
     return Country.new.name
   end
-  
+
+  def to_local_s
+    address_data = []
+    address_data<<[line_1] unless line_1.nil?
+    address_data<<[line_2] unless line_2.nil?
+    address_data<<[line_3] unless line_3.nil?
+    address_data<<[line_4] unless line_4.nil?
+    address_data<<[line_5] unless line_5.nil?
+    address_data.reject{|n| n.nil? && n.empty?}.join(', ')
+    return
+  end
+
 end

@@ -157,7 +157,7 @@ class PreviewLocal < Prawn::Document
     ],
     [
       I18n.t('local.print.invoice.refs.sender_address'),
-      current_user.operating_party.invoice_address,
+      current_user.operating_party.invoice_address.to_local_s,
       "",
       ""
     ]
@@ -184,7 +184,7 @@ class PreviewLocal < Prawn::Document
     ],
     [
       I18n.t('local.print.invoice.refs.receiver_address'),
-      invoice.customer.invoice_address,
+      invoice.customer.invoice_address.to_local_s,
       "",
       ""
     ]
@@ -206,8 +206,8 @@ class PreviewLocal < Prawn::Document
     counter = 1
     invoice.invoice_lines.each do |line|
       line_data = make_table([
-          ["#{counter}. #{line.provided_fee_details}"],
-          ["#{line.provided_fee_description}"]
+          ["#{counter}.#{(!line.official_fee_type_id.nil?)? " * " : " "}#{line.offering}"],
+          [line.details]
         ],
         :cell_style => {:borders => [], :padding => 0},
         :column_widths => [310])
@@ -215,9 +215,9 @@ class PreviewLocal < Prawn::Document
       table<<[
         line_data,
         line.units,
-        line.provided_fee_amount,
+        (line.official_fee_type_id.nil?)? line.attorney_fee : line.official_fee,
         line.items,
-        line.provided_fee_without_vat
+        (line.official_fee_type_id.nil?)? line.total_attorney_fee : line.total_official_fee
         ]
         counter = counter + 1
     end
@@ -228,22 +228,22 @@ class PreviewLocal < Prawn::Document
     return [
       I18n.t('local.print.invoice.lines.sum_vat_exempt'),
       "",
-      invoice.amount_without_vat
+      invoice.local_sum_exempt_vat
     ],
     [
       I18n.t('local.print.invoice.lines.sum_vat_taxable'),
       "",
-      invoice.amount_with_vat
+      invoice.local_sum_taxable_vat
     ],
     [
       I18n.t('local.print.invoice.lines.vat_22'),
       "",
-      invoice.amount_vat
+      invoice.local_sum_vat
     ],
     [
       I18n.t('local.print.invoice.lines.sum_to_pay'),
       I18n.t('local.print.invoice.lines.curr'),
-      invoice.total_amount_with_vat
+      invoice.local_sum_total
     ]
   end
 

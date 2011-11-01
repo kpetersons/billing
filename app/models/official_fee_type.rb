@@ -13,6 +13,7 @@
 class OfficialFeeType < ActiveRecord::Base
   
   belongs_to :operating_party
+  has_many :invoice_lines
   
   validates :operating_party_id, :presence => true
   validates :name, :presence => true

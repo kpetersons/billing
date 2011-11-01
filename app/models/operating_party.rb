@@ -42,7 +42,6 @@ class OperatingParty < ActiveRecord::Base
   end
 
   def invoice_address
-    return company.invoice_address unless company.invoice_address.nil?
-    return Address.new
+    return company.invoice_address
   end
 end

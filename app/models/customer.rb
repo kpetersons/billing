@@ -54,8 +54,7 @@ class Customer < ActiveRecord::Base
   end
 
   def invoice_address
-    return party.company.invoice_address unless party.company.invoice_address.nil? 
-    return Address.new
+    return party.company.invoice_address
   end
 
   def inv_address
