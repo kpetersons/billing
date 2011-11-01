@@ -126,7 +126,7 @@ class PreviewLocal < Prawn::Document
 
   def invoice_refs_table invoice
     return [
-      I18n.t('local.print.invoice.head.created_where', :place => invoice.invoice_date.to_s(:show)),
+      I18n.t('local.print.invoice.head.created_place', :place => invoice.invoice_date.to_s(:show)),
       ""
     ],
     [
@@ -151,7 +151,7 @@ class PreviewLocal < Prawn::Document
     ],
     [
       I18n.t('local.print.invoice.refs.sender_vat'),
-      "LV#{current_user.operating_party.company.registration_number}",
+      current_user.operating_party.company.registration_number,
       I18n.t('local.print.invoice.refs.sender_bank_acc'),
       (current_user.operating_party.default_account.account_number)
     ],

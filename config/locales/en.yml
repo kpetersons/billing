@@ -379,13 +379,13 @@ en:
     print:
       invoice:
         head:
-          invoice_no_small: "<b>Rēķina nr.</b>%{no}%"
-          invoice_page_small: "<font size='9'>Lapa nr. %{from}% no %{of}%</font>"
-          invoice_no: "Rēķins Nr. %{no}%"
-          created_place: "Rīga, %{place}%"
+          invoice_no_small: "<b>Rēķina nr.</b>%{no}"
+          invoice_page_small: "<font size='9'>Lapa nr. %{from}% no %{of}</font>"
+          invoice_no: "Rēķins Nr. %{no}"
+          created_place: "Rīga, %{place}"
         refs:
-          our_ref: "Mūsu ref.: %{ref}%"
-          your_ref: "Jūsu ref.: %{ref}%"
+          our_ref: "Mūsu ref.: %{ref}"
+          your_ref: "Jūsu ref.: %{ref}"
           sender: "Rēķina nosūtītājs"
           bank: "Banka"
           sender_reg: "Reģ nr."
@@ -412,6 +412,6 @@ en:
           curr: "LVL"
         footer:
           disclaimer: "* Ar PVN neapliekamie pakalpojumi"
-          payment_term: "Lūdzam veikt parskaitījumu %{term}% dienu laika."
+          payment_term: "Lūdzam veikt parskaitījumu %{term} dienu laika."
           disclaimer1: "<u>Maksājuma uzdevumā obligāti norādiet mūsu rēķina numuru!</u>"
 
