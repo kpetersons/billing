@@ -1,4 +1,14 @@
 class PreviewForeign < Prawn::Document
+  include ActionView::Helpers::NumberHelper
+
+  def curr dec
+    number_to_currency(dec, {:unit => "", :delimiter => ''})
+  end
+
+  def currd dec
+    number_to_currency(dec, {:unit => ""})
+  end
+
   def width
     518
   end
@@ -88,14 +98,14 @@ class PreviewForeign < Prawn::Document
     return I18n.t('foreign.print.invoice.head.date', :date => invoice.invoice_date.to_s(:show_invoice))
   end
 
-
   #
   def invoice_number_group invoice
     return I18n.t('foreign.print.invoice.head.invoice_no', :no => invoice.document.registration_number)
   end
 
   def your_vat_group invoice
-    return I18n.t('foreign.print.invoice.refs.your_vat', :no=> invoice.customer.vat_registration_number)
+    return I18n.t('foreign.print.invoice.refs.your_vat', :no=> invoice.customer.vat_registration_number) unless invoice.customer.vat_registration_number.nil?
+    return ""
   end
 
   def attorney_in_charge_group invoice
@@ -149,7 +159,7 @@ class PreviewForeign < Prawn::Document
         "
         #{I18n.t('foreign.print.invoice.lines.discount', :discount => invoice.discount)}",
         "",
-        "-#{invoice.sum_discount}"
+        (invoice.sum_discount == 0)? '-' : "-#{(curr invoice.sum_discount)}"
       ]],       :width => width,
       :cell_style => {:padding => 5},
       :column_widths => [409, 53, 56])
@@ -161,13 +171,13 @@ class PreviewForeign < Prawn::Document
     line_footer_data = []
     line_footer_data<<[
       I18n.t('foreign.print.invoice.lines.subtotal', :curr => invoice.currency.name),
-      invoice.sum_official_fees,
-      invoice.sum_attorney_fees - invoice.sum_discount
+      (invoice.sum_official_fees == 0)? '-' : (curr invoice.sum_official_fees),
+      (invoice.sum_attorney_fees - invoice.sum_discount == 0)? '-' : (curr invoice.sum_attorney_fees - invoice.sum_discount)
     ]
     line_footer_data<<[
       I18n.t('foreign.print.invoice.lines.vat'),
       "",
-      "#{invoice.sum_vat}"
+      "#{(invoice.sum_vat == 0)? '-' : (curr invoice.sum_vat)}"
     ] unless !invoice.apply_vat
 
     line_footer_table = make_table(
@@ -196,10 +206,11 @@ class PreviewForeign < Prawn::Document
       ],
       :width => width, :column_widths => [298, 220], :cell_style => {:borders => []}
     )
+    line_footer.cells[0,0].style :font_style => :italic
 
     totals = make_table(
       [
-        [I18n.t('foreign.print.invoice.lines.total_due', :curr => invoice.currency.name),"#{invoice.sum_total}"]
+        [I18n.t('foreign.print.invoice.lines.total_due', :curr => invoice.currency.name),"#{(invoice.sum_total == 0)? '-' : (currd invoice.sum_total)}"]
       ],
       :width => width,
       :column_widths => [410, 108],
@@ -256,8 +267,8 @@ class PreviewForeign < Prawn::Document
       end
       line_data.rows(1).style  :font_style => :italic
       table<<[line_data,
-        "#{line.total_official_fee}",
-        "#{line.total_attorney_fee}"
+        "#{(line.total_official_fee == 0)? '-' : (curr line.total_official_fee)}",
+        "#{(line.total_attorney_fee == 0)? '-' : (curr line.total_attorney_fee)}"
       ]
       counter = counter + 1
     end

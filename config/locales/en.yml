@@ -374,7 +374,7 @@ en:
         footer:
           var_reverse_disclaimer: "<b>VAT reverse charge procedure is applicable according to Art 44 of the EU Council directive 2006/112/EC and Art 41(a) of the Latvian Law on VAT.</b>"
           remit_disclaimer: "Please remit within %{date} days."
-          ask_for_reference: "<i>Kindly refer to our Invoice number in your remittance</i>"
+          ask_for_reference: "Kindly refer to our Invoice number in your remittance"
   local:
     print:
       invoice:

@@ -52,4 +52,5 @@ class InvoiceLine < ActiveRecord::Base
     puts "invoice_discount.nil? no? #{invoice.discount}"
   end
 
+
 end
