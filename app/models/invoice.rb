@@ -71,10 +71,16 @@ class Invoice < ActiveRecord::Base
   validates :customer_id, :presence => true
   validates :payment_term, :presence => true, :numericality => true
   validates :subject, :presence => true, :length => {:within => 5..500}
-
+  validate :not_future
   before_save :mark_as_paid
   #
   after_update :update_lines
+
+  def not_future
+    if invoice_date.future?
+      errors.add(:invoice_date, 'may not be in future')
+    end
+  end
 
   #start column filter 
   def ind_registration_number
@@ -265,6 +271,7 @@ class Invoice < ActiveRecord::Base
   def local_sum_total
     local_sum_exempt_vat + local_sum_taxable_vat + local_sum_vat
   end
+
   #end local invoice print
 
   def status_name
@@ -310,4 +317,5 @@ class Invoice < ActiveRecord::Base
       line.save
     end
   end
+
 end

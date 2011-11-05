@@ -206,7 +206,7 @@ class PreviewLocal < Prawn::Document
     counter = 1
     invoice.invoice_lines.each do |line|
       line_data = make_table([
-          ["#{counter}.#{(!line.official_fee_type_id.nil?)? " * " : " "}#{line.offering}"],
+          ["#{counter}.#{(!line.official_fee_type_id.nil? && !line.official_fee_type.apply_vat?)? " * " : " "}#{line.offering}"],
           [line.details]
         ],
         :cell_style => {:borders => [], :padding => 0},

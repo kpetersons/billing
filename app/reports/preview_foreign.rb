@@ -253,7 +253,7 @@ class PreviewForeign < Prawn::Document
       if line.items > 1
         line_data = make_table([
             ["#{counter}. #{line.offering}"],
-            ["#{line.details} (#{line.items} #{line.units} x #{invoice.currency.name} #{line.attorney_fee})"]
+            [line.line_details]
           ],
           :cell_style => {:borders => [], :padding => 0},
           :column_widths => [409])

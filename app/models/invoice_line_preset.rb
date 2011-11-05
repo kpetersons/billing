@@ -36,4 +36,12 @@ class InvoiceLinePreset < ActiveRecord::Base
     attorney_fee_type.name unless attorney_fee_type.nil?
   end
 
+  def official_fee
+    super
+  end
+
+  def attorney_fee
+    super
+  end
+
 end

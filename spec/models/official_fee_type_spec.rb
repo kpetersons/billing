@@ -8,6 +8,8 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #  operating_party_id :integer
+#  apply_vat          :boolean
+#  apply_discount     :boolean
 #
 
 require 'spec_helper'

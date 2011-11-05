@@ -1,50 +1,131 @@
-table {font-size:1em;}
+table {
+    font-size: 1em;
+}
 
 tfoot div.pagination, tfoot div.pagination em {
-	font-size:1em;
-	font-weight:normal;
-	text-decoration: none;
-	font-style: normal;
+    font-size: 1em;
+    font-weight: normal;
+    text-decoration: none;
+    font-style: normal;
 }
+
 tfoot div.pagination em {
-	font-size:1.1em;
-	font-weight:bold;
+    font-size: 1.1em;
+    font-weight: bold;
 }
 
-table {height:240px;}
-table tbody tr, table tbody tr td {height:1.5em; max-height: 1.4em; vertical-align: text-top;}
-table tbody tr:last-child, table tbody tr:last-child td{height:auto;}
-table tbody tr td>* {:height:inherit; padding: 2px 0; vertical-align: middle;}
+table {
+    height: 240px;
+}
 
-.col-radio, .col-checkbox, .col-check {width:1em;}
-.col-check {text-align:right;}
-.col-text {text-align:left;}
-.col-date, .col-bool {text-align:center;}
-.col-bool>input[type=checkbox]{color:black;border:2px solid;}
-.col-number {text-align:right;}
-.col-number>input[type="text"] {width: 5em;text-align: right;}
+table tbody tr, table tbody tr td {
+    height: 1.5em;
+    max-height: 1.4em;
+    vertical-align: text-top;
+}
 
+table tbody tr:last-child, table tbody tr:last-child td {
+    height: auto;
+}
 
-table th:first-child, table td:first-child{padding-left:2em;}
-table th:last-child, table td:last-child{padding-right:2em;}
-table th, table td { padding: 5px}
-table {border-spacing: 0px;}
-table thead th {border-bottom:1px black solid;}
-table tfoot th {border-top:1px black solid;}
+table tbody tr td>* {
+: height : inherit;
+    padding: 2px 0;
+    vertical-align: middle;
+}
+
+.col-radio, .col-checkbox, .col-check {
+    width: 1em;
+}
+
+.col-check {
+    text-align: right;
+}
+
+.col-text {
+    text-align: left;
+}
+
+.col-date, .col-bool {
+    text-align: center;
+}
+
+.col-bool>input[type=checkbox] {
+    color: black;
+    border: 2px solid;
+}
+
+.col-number {
+    text-align: right;
+}
+
+.col-number>input[type="text"] {
+    width: 5em;
+    text-align: right;
+}
+
+table th:first-child, table td:first-child {
+    /*padding-left: 2em;*/
+}
+
+table th:last-child, table td:last-child {
+    padding-right: 2em;
+}
+
+table th, table td {
+    padding: 5px
+}
+
+table {
+    border-spacing: 0px;
+}
+
+table thead th {
+    border-bottom: 1px black solid;
+}
+
+table tfoot th {
+    border-top: 1px black solid;
+}
 
 table tbody tr:nth-child(odd) {
-	background-color: rgb(239,255,248);
+    background-color: rgb(239, 255, 248);
 }
 
-table td a:visited, table td a {color:inherit;}
+table td a:visited, table td a {
+    color: inherit;
+}
 
 table tbody tr:hover td {
-	background-color: rgb(202,251,228);
+    background-color: rgb(202, 251, 228);
 }
 
-table.no-highlight tr:nth-child(odd),  
+table.no-highlight tr:nth-child(odd),
 table.no-highlight tr:nth-child(even),
-table.no-highlight tr:hover td
-{
-	background-color: #FFFFFF;
+table.no-highlight tr:hover td {
+    background-color: #FFFFFF;
+}
+
+table.lines td {
+    width: 1em;
+}
+
+table.lines th.narrow, table.lines td.narrow input, table lines td.narrow select {
+    width: 5em;
+}
+
+table.lines th.medium, table.lines td.medium input, table lines td.medium select, table td.medium select.wide {
+    width: 10em;
+}
+
+table.lines th.wide, table.lines td.wide input, table lines td.wide select {
+    width: 15em;
+}
+
+table.lines td:last-child {
+    padding-right: 0px;
+}
+
+table.lines td {
+    padding:  5px 0;
 }

@@ -12,15 +12,15 @@ class InvoicesController < ApplicationController
   def new
     @document = Document.new(:user_id => current_user.id)
     @document.invoice = Invoice.new(
-    :discount => 0,
-    :invoice_status_id => InvoiceStatus.first.id,
-    :author_id => current_user.id)
+        :discount => 0,
+        :invoice_status_id => InvoiceStatus.first.id,
+        :author_id => current_user.id)
     @matter_task = MatterTask.find(params[:task_id]) unless params[:task_id].nil?
     @matter = Matter.find(params[:matter_id]) unless params[:matter_id].nil?
     if !@matter.nil? || !@matter_task.nil?
-    @document.invoice.invoice_matters<<InvoiceMatter.new(
-    :matter_id => (@matter.id unless @matter.nil?),
-    :matter_task_id => (@matter_task.id unless @matter_task.nil?))
+      @document.invoice.invoice_matters<<InvoiceMatter.new(
+          :matter_id => (@matter.id unless @matter.nil?),
+          :matter_task_id => (@matter_task.id unless @matter_task.nil?))
     end
     @document.invoice.customer = @matter.agent unless @matter.nil?
     @document.invoice.our_ref = "#{current_user.initials}/#{@matter.full_reg_nr_for_invoice}" unless @matter.nil?
@@ -30,10 +30,10 @@ class InvoicesController < ApplicationController
     Document.transaction do
       @document = Document.new(params[:document])
       if @document.save
-      @invoice = @document.invoice
-      redirect_to @invoice
+        @invoice = @document.invoice
+        redirect_to @invoice
       else
-      render 'new'
+        render 'new'
       end
     end
   end
@@ -51,10 +51,10 @@ class InvoicesController < ApplicationController
         @document.invoice.address_id = nil
       end
       if @document.update_attributes(params[:document])
-      @invoice = @document.invoice
-      redirect_to invoice_path(@invoice)
+        @invoice = @document.invoice
+        redirect_to invoice_path(@invoice)
       else
-      render 'edit'
+        render 'edit'
       end
     end
   end
@@ -62,12 +62,14 @@ class InvoicesController < ApplicationController
   def show
     @document = Invoice.find(params[:id]).document
     @invoice_lines = Array.new
-  #    @document.invoice.invoice_lines<<InvoiceLine.new if @document.invoice.invoice_lines.empty?
+    #    @document.invoice.invoice_lines<<InvoiceLine.new if @document.invoice.invoice_lines.empty?
   end
 
   def remove_line
-    @invoice = Invoice.find(params[:id])
-    @invoice.invoice_lines.delete(InvoiceLine.find(params[:invoice_line_id]))
+    if !params[:invoice_line_id].nil?
+      @invoice = Invoice.find(params[:id])
+      @invoice.invoice_lines.delete(InvoiceLine.find(params[:invoice_line_id]))
+    end
     redirect_to invoice_path(@invoice)
     flash[:success] = "Removed a line"
   end
@@ -77,16 +79,16 @@ class InvoicesController < ApplicationController
     @invoice = @document.invoice
     if params[:save_lines]
       if do_save_lines
-      redirect_to invoice_path(@invoice)
+        redirect_to invoice_path(@invoice)
       else
-      flash[:error] = "Could not save lines"
-      render 'show' and return
+        flash[:error] = "Could not save lines"
+        render 'show' and return
       end
     end
     if params[:add_line]
-    do_add_line
-    flash.now[:success] = "Added a new line"
-    render 'show'
+      do_add_line
+      flash.now[:success] = "Added a new line"
+      render 'show'
     end
   end
 
@@ -94,9 +96,9 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     Invoice.transaction do
       if @invoice.update_attribute(:invoice_status_id, params[:invoice_status][:id])
-      redirect_to invoice_path(@invoice) and return
+        redirect_to invoice_path(@invoice) and return
       else
-      redirect_to invoice_path(@invoice) and return
+        redirect_to invoice_path(@invoice) and return
       end
     end
   end
@@ -105,7 +107,7 @@ class InvoicesController < ApplicationController
     UserFilterColumn.transaction do
       UserFilter.reset_filter current_user, 'invoices'
     end
-    redirect_to invoices_path    
+    redirect_to invoices_path
   end
 
   def filter
@@ -124,11 +126,11 @@ class InvoicesController < ApplicationController
   private
 
   def do_save_lines
-    @invoice.update_attributes(params[:invoice])
-    if @invoice.save
-    return true
+
+    if @invoice.update_attributes(params[:invoice])
+      return true
     else
-    return false
+      return false
     end
   end
 
@@ -136,13 +138,13 @@ class InvoicesController < ApplicationController
     if !params[:invoice][:preset_id].empty?
       @preset = InvoiceLinePreset.find(params[:invoice][:preset_id])
       @invoice_line = @invoice.invoice_lines.build({
-        :official_fee_type_id => @preset.official_fee_type_id,
-        :attorney_fee_type_id => @preset.attorney_fee_type_id,
-        :official_fee => @preset.official_fee,
-        :attorney_fee => @preset.attorney_fee,
-        :offering => @preset.name,
-        :items => "1"}
-    )
+                                                       :official_fee_type_id => @preset.official_fee_type_id,
+                                                       :attorney_fee_type_id => @preset.attorney_fee_type_id,
+                                                       :official_fee => @preset.official_fee,
+                                                       :attorney_fee => @preset.attorney_fee,
+                                                       :offering => @preset.name,
+                                                       :items => "1"}
+      )
     else
       @invoice_line = @invoice.invoice_lines.build({:items => "1"})
     end
@@ -150,17 +152,17 @@ class InvoicesController < ApplicationController
 
   def show_column_filter
     @apply_filter = true
-    default_filter = DefaultFilter.where(:table_name => 'invoices').first    
+    default_filter = DefaultFilter.where(:table_name => 'invoices').first
     @columns = DefaultFilterColumn.where(:default_filter_id => default_filter.id).all
     # 
     filter = UserFilter.where(:user_id => current_user.id, :table_name => 'invoices').first
     if filter.nil?
       filter = default_filter
     end
-    @chosen_columns = UserFilterColumn.where(:user_filter_id => filter.id ).all
+    @chosen_columns = UserFilterColumn.where(:user_filter_id => filter.id).all
     if @chosen_columns.empty?
       @chosen_columns = DefaultFilterColumn.where(:default_filter_id => filter.id, :is_default => true).all
     end
   end
-    
+
 end

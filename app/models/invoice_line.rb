@@ -13,8 +13,12 @@
 #  attorney_fee         :decimal(8, 2)
 #  author_id            :integer
 #  offering             :string(255)
-#  items                :integer
+#  items                :decimal(10, 3)
 #  units                :string(255)
+#  total                :decimal(10, 2)
+#  total_attorney_fee   :decimal(10, 2)
+#  total_official_fee   :decimal(10, 2)
+#  total_discount       :decimal(10, 2)
 #
 
 class InvoiceLine < ActiveRecord::Base
@@ -25,31 +29,53 @@ class InvoiceLine < ActiveRecord::Base
 
   validates :attorney_fee_type_id, :presence => true, :if => Proc.new { |invoice_line| !invoice_line.attorney_fee.nil? }
   validates :official_fee_type_id, :presence => true, :if => Proc.new { |invoice_line| !invoice_line.official_fee.nil? }
+  #
   validates :offering, :presence => true, :length => {:within => 5..250}
   validates :items, :presence => true, :numericality => true
 
   before_save :calculate_totals
 
-  def is_official
-    if !official_fee_type_id.nil?
-      return true
+  validate :local_fees_exclusion
+
+  def local_fees_exclusion
+    if invoice.invoice_type == 0 &&
+        (
+          (!official_fee.nil? && !attorney_fee.nil?) ||
+          (!official_fee_type_id.nil? && !attorney_fee_type_id.nil?)
+        )
+      errors.add(:official_fee_type_id, "Local invoices may no have Official fee AND Attorney's fee on the same line ")
     end
     return false
+  end
+
+  def is_official
+    !official_fee_type_id.nil?
+  end
+
+  def both_official_and_attorney?
+    !official_fee_type_id.nil? && !attorney_fee_type_id.nil?
+  end
+
+  def line_details
+    brackets_tmp = (items.nil?)? "" : " (#{items} #{units} x #{invoice.currency.name} #{attorney_fee})"
+    details_tmp = "#{details}#{brackets_tmp}"
+    return (both_official_and_attorney?)? details : details_tmp
   end
 
   private
 
   def calculate_totals
-    #update_attribute(:total_attorney_fee, (((attorney_fee.nil?) ? 0 : attorney_fee) * ((items.nil?) ? 0 : items)))
-    #update_attribute(:total_official_fee, (((official_fee.nil?) ? 0 : official_fee) * ((items.nil?) ? 0 : items)))
-    #update_attribute(:total_discount, (total_attorney_fee * ((invoice.discount.nil?) ? 0 : invoice.discount) / 100))
-    #update_attribute(:total, (total_attorney_fee + total_official_fee - total_discount))
-    #
     self.total_attorney_fee= (((attorney_fee.nil?) ? 0 : attorney_fee) * ((items.nil?) ? 0 : items))
     self.total_official_fee= (((official_fee.nil?) ? 0 : official_fee) * ((items.nil?) ? 0 : items))
-    self.total_discount= (total_attorney_fee * ((invoice.discount.nil?) ? 0 : invoice.discount) / 100)
+    puts "!!!.attorney_fee_type_id #{self.attorney_fee_type_id}"
+    if !self.attorney_fee_type_id.nil? && AttorneyFeeType.find(self.attorney_fee_type_id).apply_discount?
+      puts "CCC.attorney_fee_type_id #{self.attorney_fee_type_id}"
+      self.total_discount= (total_attorney_fee * ((invoice.discount.nil?) ? 0 : invoice.discount) / 100)
+    else
+      self.total_discount= 0
+    end
     self.total= (total_attorney_fee + total_official_fee - total_discount)
-    puts "invoice_discount.nil? no? #{invoice.discount}"
+    puts ""
   end
 
 

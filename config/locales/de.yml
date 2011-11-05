@@ -32,7 +32,7 @@ de:
           invoice_no_small: "<b>Rēķina nr.</b>%{no}"
           invoice_page_small: "<font size='9'>Lapa nr. %{from}% no %{of}</font>"
           invoice_no: "Rēķins Nr. %{no}"
-          created_place: "Rīga, %{place}"
+          created_place: "Rēķina datums: %{place}"
         refs:
           our_ref: "Mūsu ref.: %{ref}"
           your_ref: "Jūsu ref.: %{ref}"
@@ -55,13 +55,13 @@ de:
           cost_one_unit: "Cena par 1 vien."
           unit_count: "Skaits"
           cost_without_vat: "Summa bez PVN"
-          sum_vat_exempt: "Ar PVN neapliekamā summa"
+          sum_vat_exempt: "Valsts nodevas"
           sum_vat_taxable: "Ar PVN 22% apliekamā summa"
           vat_22: "PVN 22%"
           sum_to_pay: "Kopā summa apmaksai"
           curr: "LVL"
         footer:
-          disclaimer: "* Ar PVN neapliekamie pakalpojumi"
+          disclaimer: "* Valsts nodevas"
           payment_term: "Lūdzam veikt parskaitījumu %{term} dienu laika."
           disclaimer1: "<u>Maksājuma uzdevumā obligāti norādiet mūsu rēķina numuru!</u>"
 

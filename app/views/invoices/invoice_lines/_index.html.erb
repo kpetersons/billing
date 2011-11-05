@@ -1,20 +1,19 @@
 <%= form_for document.invoice, :url => {:action => 'process_lines'} do |i_f| %>
-    <table style="clear:left; height:auto; width: 100%;">
+    <table style="clear:left; height:auto; width: 100%;" class="lines">
       <thead>
       <tr>
-        <th class="col-text" style="width:1em">Official fee type</th>
-        <th class="col-number" style="width:1em">Fee</th>
-        <th class="col-text" style="width:1em">Attorneys fee type</th>
-        <th class="col-number" style="width:1em">Fee</th>
-        <th class="col-text" style="width:1em">Units</th>
-        <th class="col-number" style="width:1em">Quantity</th>
-        <th class="col-text" style="width:1em">Action</th>
-        <th class="col-text" style="width:1em"></th>
+        <th class="col-text wide" style="width:1em">Action</th>
+        <th class="col-text medium" style="width:1em">Official fee type</th>
+        <th class="col-number narrow" style="width:1em">Fee</th>
+        <th class="col-text medium" style="width:1em">Attorneys fee type</th>
+        <th class="col-number narrow" style="width:1em">Fee</th>
+        <th class="col-text narrow" style="width:1em">Units</th>
+        <th class="col-number narrow" style="width:1em">Quantity</th>
       </tr>
       </thead>
       <tfoot>
       <tr>
-        <th colspan="8">
+        <th colspan="7">
           <div class="panel-footer controls" style="margin-top:1em;">
             <% if (has_function :name=>i_f.object.invoice_status.function.name) && (document.invoice.invoice_status.editable_state) %>
                 <%= i_f.submit 'Save lines', :name => "save_lines", :style => "display:inline-block; float:none;" %>

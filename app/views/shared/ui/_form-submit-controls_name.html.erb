@@ -1,3 +1,7 @@
 <div class="panel-footer controls">
-	<%= fields.submit name %>
+  <% if name.eql?('Issued') %>
+      <%= fields.submit name, :confirm => 'Are you sure?' %>
+  <% else %>
+      <%= fields.submit name %>
+  <% end %>
 </div>

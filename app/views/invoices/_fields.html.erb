@@ -6,7 +6,7 @@
 	<%if fields.object.persisted? %>
 	<li style="margin-bottom: 1em;">
 		<%= fields.label :registration_number, "Invoice number", :style => "font-size: 1.2em;" %>
-		<span style="color:black; font-size:1.2em; line-height: 1.8em;"><%= fields.object.registration_number %>&nbsp;</span>
+		<span style="color:black; font-size:1.2em; line-height: 1.8em;"><%= fields.object.invoice.ind_registration_number %>&nbsp;</span>
 	</li>
 	<%else%>
 	<li style="margin-bottom: 1em;">
@@ -18,7 +18,7 @@
 		<%= i_f.hidden_field :invoice_status_id %>		
 		<%= i_f.hidden_field :author_id %>
 		<%= i_f.label :invoice_date %>
-		<%= i_f.text_field :invoice_date %>
+		<%= i_f.text_field :invoice_date, :value => (i_f.object.invoice_date.nil?)? DateTime.now : i_f.object.invoice_date %>
 	</li>
 	<li>
 		<ul>

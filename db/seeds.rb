@@ -641,10 +641,8 @@ OfficialFeeType.transaction do
     else
       OfficialFeeType.where(:name => 'WIPO, OHIM, EPO', :operating_party_id => op.id).first.update_attributes(:apply_vat => true, :apply_discount => false)
     end
-    if OfficialFeeType.where(:name => 'OUTSOURCING', :operating_party_id => op.id).first.nil?
-      OfficialFeeType.create(:apply_vat => true, :apply_discount => false, :name => 'OUTSOURCING', :description => 'OUTSOURCING', :operating_party_id => op.id)
-    else
-      OfficialFeeType.where(:name => 'OUTSOURCING', :operating_party_id => op.id).first.update_attributes(:apply_vat => true, :apply_discount => false)
+    unless OfficialFeeType.where(:name => 'OUTSOURCING', :operating_party_id => op.id).first.nil?
+      OfficialFeeType.where(:name => 'OUTSOURCING', :operating_party_id => op.id).first.delete
     end
   end
 end
@@ -652,31 +650,121 @@ end
 AttorneyFeeType.transaction do
 
   OperatingParty.where(:id => [Company.find_by_name("party.operating.patent").operating_party.id]).all.each do |op|
-    AttorneyFeeType.create(:name => "P-Application,", :description => "Our fee for patent application, validation", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'P-Application', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "P-Maintenance,", :description => "Our fee for patent annuities, assignment, etc.", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'P-Maintenance', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "P-Search,", :description => "Our fee for patent searches", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'P-Search', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "P-Other,", :description => "Other fees regarding patent matters", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'P-Other', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "D-Application,", :description => "Our fee for design application", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'D-Application', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "D-Maintenance,", :description => "Our fee for design renewal and other maintenance", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'D-Maintenance', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "D-Search,", :description => "Our fee for design searches", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'D-Search', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "D-Other,", :description => "Other fees regarding design matters", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'D-Other', :operating_party_id => op.id).first.nil?
+    aft = AttorneyFeeType.where(:name => 'P-Application', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "P-Application", :description => "Our fee for patent application, validation", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "P-Application", :description => "Our fee for patent application, validation", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'P-Maintenance', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "P-Maintenance", :description => "Our fee for patent annuities, assignment, etc.", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "P-Maintenance", :description => "Our fee for patent annuities, assignment, etc.", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'P-Search', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "P-Search", :description => "Our fee for patent searches", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "P-Search", :description => "Our fee for patent searches", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'P-Other', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "P-Other", :description => "Other fees regarding patent matters", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "P-Other", :description => "Other fees regarding patent matters", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'D-Application', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "D-Application", :description => "Our fee for design application", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "D-Application", :description => "Our fee for design application", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'D-Maintenance', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "D-Maintenance", :description => "Our fee for design renewal and other maintenance", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "D-Maintenance", :description => "Our fee for design renewal and other maintenance", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'D-Search', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "D-Search", :description => "Our fee for design searches", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "D-Search", :description => "Our fee for design searches", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'D-Other', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "D-Other", :description => "Other fees regarding design matters", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "D-Other", :description => "Other fees regarding design matters", :operating_party_id => op.id)
+    end
   end
 
   OperatingParty.where(:id => [Company.find_by_name("party.operating.legal").operating_party.id, Company.find_by_name("party.operating.trademark").operating_party.id]).all.each do |op|
-    AttorneyFeeType.create(:name => "T-Application,", :description => "Our fee for trademark application, coversation", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'T-Application', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "T-Maintenance,", :description => "Our fee for trademark renewal, assignment, etc.", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'T-Maintenance', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "T-Search,", :description => "Our fee for trademark, company name, unregistered rights searches", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'T-Search', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "T-Other,", :description => "Other fees regarding trademark matters", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'T-Other', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "Legal,", :description => "All work regarding, oppositions and other legal matters", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'Legal', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "Domain,", :description => "All work regarding domain name matters, except legal services", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'Domain', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "Customs,", :description => "All work regarding customs, communication, destroying goods, etc.", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'Customs', :operating_party_id => op.id).first.nil?
+    aft = AttorneyFeeType.where(:name => 'T-Application', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "T-Application", :description => "Our fee for trademark application, coversation", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "T-Application", :description => "Our fee for trademark application, coversation", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'T-Maintenance', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "T-Maintenance", :description => "Our fee for trademark renewal, assignment, etc.", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "T-Maintenance", :description => "Our fee for trademark renewal, assignment, etc.", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'T-Search', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "T-Search", :description => "Our fee for trademark, company name, unregistered rights searches", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "T-Search", :description => "Our fee for trademark, company name, unregistered rights searches", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'T-Other', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "T-Other", :description => "Other fees regarding trademark matters", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "T-Other", :description => "Other fees regarding trademark matters", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'Legal', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "Legal", :description => "All work regarding, oppositions and other legal matters", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "Legal", :description => "All work regarding, oppositions and other legal matters", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'Domain', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "Domain", :description => "All work regarding domain name matters, except legal services", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "Domain", :description => "All work regarding domain name matters, except legal services", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'Customs', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "Customs", :description => "All work regarding customs, communication, destroying goods, etc.", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "Customs", :description => "All work regarding customs, communication, destroying goods, etc.", :operating_party_id => op.id)
+    end
   end
 
 
   OperatingParty.all.each do |op|
-    AttorneyFeeType.create(:name => "Translations,", :description => "Translations performed by us", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'Translations', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "Postal, banking,", :description => "Postal, banking, courier, copying, etc.", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'Postal, banking', :operating_party_id => op.id).first.nil?
-    AttorneyFeeType.create(:name => "OUTSOURCING,", :description => "All work done by our colleagues, except official fees", :operating_party_id => op.id) unless !AttorneyFeeType.where(:name => 'OUTSOURCING', :operating_party_id => op.id).first.nil?
+    aft = AttorneyFeeType.where(:name => 'Translations', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "Translations", :description => "Translations performed by us", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "Translations", :description => "Translations performed by us", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'Postal, banking', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => true, :apply_vat => true, :name => "Postal, banking", :description => "Postal, banking, courier, copying, etc.", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => true, :apply_vat => true, :name => "Postal, banking", :description => "Postal, banking, courier, copying, etc.", :operating_party_id => op.id)
+    end
+    aft = AttorneyFeeType.where(:name => 'OUTSOURCING', :operating_party_id => op.id).first
+    if aft.nil?
+      AttorneyFeeType.create(:apply_discount => false, :apply_vat => true, :name => "OUTSOURCING", :description => "All work done by our colleagues, except official fees", :operating_party_id => op.id)
+    else
+      aft.update_attributes(:apply_discount => false, :apply_vat => true, :name => "OUTSOURCING", :description => "All work done by our colleagues, except official fees", :operating_party_id => op.id)
+    end
   end
 end
 
@@ -699,6 +787,7 @@ Country.transaction do
 
   countries.each do |country|
     Country.create(:name => country.capitalize) unless !Country.find_by_name(country.capitalize).nil?
+    Country.find_by_name(country.capitalize).update_attribute(:name, country.upcase)
   end
 end
 
@@ -924,8 +1013,9 @@ Customer.transaction do
                         })
     puts @result.errors unless @result.errors.empty?
     if @result.save
-      unless !Address.where(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country_id => Country.find_by_name(company[6].capitalize).id, :city => company[3], :street => company[4], :house_number => company[5]).first.nil?
-        @address = Address.new(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country_id => Country.find_by_name(company[6].capitalize).id, :city => company[3], :street => company[4], :house_number => company[5])
+
+      unless !Address.where(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country_id => Country.find_by_name(company[6].upcase).id, :city => company[3], :street => company[4], :house_number => company[5]).first.nil?
+        @address = Address.new(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country_id => Country.find_by_name(company[6].upcase).id, :city => company[3], :street => company[4], :house_number => company[5])
         puts @address.errors unless @address.errors.empty?
         @address.save
       end
