@@ -1,10 +1,11 @@
 <html>
 <head>
+  <title>Invoice <%=@invoice.ind_registration_number %></title>
 </head>
 <body>
 <OBJECT height="100%" width="100%">
-  <PARAM NAME="SRC" VALUE="<%= url_for preview_invoice_pdf_path(@invoice, :lang => @lang) %>">
-  <EMBED SRC="<%=url_for preview_invoice_pdf_path(@invoice, :lang => @lang)%>.pdf" height="100%" width="100%">
+  <PARAM NAME="SRC" VALUE="<%=url_for ainline_invoice_pdf_path(@invoice, :language => @lang, :watermark => @watermark, :images => @images)%>">
+  <EMBED SRC="<%=url_for ainline_invoice_pdf_path(@invoice, :language => @lang, :watermark => @watermark, :images => @images)%>" height="100%" width="100%">
     <NOEMBED> Your browser does not support embedded PDF files.</NOEMBED>
   </EMBED>
 </OBJECT>

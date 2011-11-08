@@ -1,6 +1,15 @@
 class InvoicePdfLocal < Prawn::Document
 
-  def to_pdf(invoice, current_user)
+  def to_pdf(invoice, current_user, watermark, images)
+    if watermark
+      for i in 0..page_count
+        go_to_page i
+        font_size(60)
+        fill_color "eaeaea"
+        text "<b>Preview</b>", :valign => :center, :align => :center, :rotate => 45, :inline_format => true
+         fill_color "000000"
+      end
+    end
     table_width = 520
     move_down 87
 
@@ -113,7 +122,6 @@ class InvoicePdfLocal < Prawn::Document
         end
       end
     end
-
     render
   end
 

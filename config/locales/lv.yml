@@ -64,3 +64,10 @@ lv:
           disclaimer: "* Valsts nodevas"
           payment_term: "Lūdzam veikt parskaitījumu %{term} dienu laika."
           disclaimer1: "<u>Maksājuma uzdevumā obligāti norādiet mūsu rēķina numuru!</u>"
+  party:
+    operating:
+      petpat: "Pētersona patents"
+      administration: "Administrācija"
+      trademark: "Preču zīmju nodaļa"
+      patent: "Patentu nodaļa"
+      legal:  "Juridiskā nodaļa"

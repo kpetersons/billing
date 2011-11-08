@@ -13,7 +13,16 @@ class InvoicePdfForeign < Prawn::Document
     518
   end
 
-  def to_pdf(invoice, current_user)
+  def to_pdf(invoice, current_user, watermark, images)
+    if watermark
+      for i in 0..page_count
+        go_to_page i
+        font_size(60)
+        fill_color "eaeaea"
+        text "<b>Preview</b>", :valign => :center, :align => :center, :rotate => 45, :inline_format => true
+         fill_color "000000"
+      end
+    end
     font_families.update(
     "InvoiceFamily" => {
       :bold        => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif-Bold.ttf",

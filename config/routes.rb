@@ -25,10 +25,12 @@ Billing::Application.routes.draw do
       post :filter 
       delete :reset
     end
-    resource :pdf, :controller => "InvoicePreviews", :only => [:show, :preview] do
+    resource :pdf, :controller => "InvoicePreviews", :only => [:show, :preview, :print] do
       collection do
-        get :show
-        get :preview
+        get :apreview
+        get :aprint
+        get :asave
+        get :ainline
       end
     end
   end

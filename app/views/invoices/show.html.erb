@@ -117,19 +117,40 @@
       <div class="show controls slide-out">
         <ul>
           <li>
-            <%= link_to 'Preview', invoice_pdf_path(@document.invoice, :language => 'lv', :preview => true), :target => :_blank %>
+            <%= link_to 'Preview', apreview_invoice_pdf_path(@document.invoice, :language => 'lv'), :target => :_blank %>
             <ul>
               <li>
-                <%= link_to 'LV', invoice_pdf_path(@document.invoice, :language => 'lv', :preview => true), :target => :_blank %>
+                <%= link_to 'LV', apreview_invoice_pdf_path(@document.invoice, :language => 'lv'), :target => :_blank %>
               </li>
               <li>
-                <%= link_to 'EN', invoice_pdf_path(@document.invoice, :language => 'en', :preview => true), :target => :_blank %>
+                <%= link_to 'EN', apreview_invoice_pdf_path(@document.invoice, :language => 'en'), :target => :_blank %>
               </li>
               <li>
-                <%= link_to 'FR', invoice_pdf_path(@document.invoice, :language => 'fr', :preview => true), :target => :_blank %>
+                <%= link_to 'FR', apreview_invoice_pdf_path(@document.invoice, :language => 'fr'), :target => :_blank %>
               </li>
               <li>
-                <%= link_to 'DE', invoice_pdf_path(@document.invoice, :language => 'de', :preview => true), :target => :_blank,  %>
+                <%= link_to 'DE', apreview_invoice_pdf_path(@document.invoice, :language => 'de'), :target => :_blank  %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="show controls slide-out">
+        <ul>
+          <li>
+            <%= link_to 'Print', aprint_invoice_pdf_path(@document.invoice, :language => 'lv'), :target => :_blank %>
+            <ul>
+              <li>
+                <%= link_to 'LV', aprint_invoice_pdf_path(@document.invoice, :language => 'lv'), :target => :_blank %>
+              </li>
+              <li>
+                <%= link_to 'EN', aprint_invoice_pdf_path(@document.invoice, :language => 'en'), :target => :_blank %>
+              </li>
+              <li>
+                <%= link_to 'FR', aprint_invoice_pdf_path(@document.invoice, :language => 'fr'), :target => :_blank %>
+              </li>
+              <li>
+                <%= link_to 'DE', aprint_invoice_pdf_path(@document.invoice, :language => 'de'), :target => :_blank %>
               </li>
             </ul>
           </li>
@@ -138,19 +159,19 @@
       <div class="show controls slide-out" style="margin-bottom:2em;">
         <ul>
           <li>
-            <%= link_to 'Print', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'lv', :preview => false) %>
+            <%= link_to 'Save as PDF', asave_invoice_pdf_path(@document.invoice, :language => 'lv') %>
             <ul>
               <li>
-                <%= link_to 'LV', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'lv', :preview => false) %>
+                <%= link_to 'LV', asave_invoice_pdf_path(@document.invoice, :language => 'lv') %>
               </li>
               <li>
-                <%= link_to 'EN', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'en', :preview => false) %>
+                <%= link_to 'EN', asave_invoice_pdf_path(@document.invoice, :language => 'en') %>
               </li>
               <li>
-                <%= link_to 'FR', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'fr', :preview => false) %>
+                <%= link_to 'FR', asave_invoice_pdf_path(@document.invoice, :language => 'fr') %>
               </li>
               <li>
-                <%= link_to 'DE', invoice_pdf_path(@document.invoice, :format => 'pdf', :language => 'de', :preview => false) %>
+                <%= link_to 'DE', asave_invoice_pdf_path(@document.invoice, :language => 'de') %>
               </li>
             </ul>
           </li>
