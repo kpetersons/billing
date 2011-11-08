@@ -25,7 +25,12 @@ Billing::Application.routes.draw do
       post :filter 
       delete :reset
     end
-    resource :pdf, :controller => "InvoicePreviews", :only => [:show]
+    resource :pdf, :controller => "InvoicePreviews", :only => [:show, :preview] do
+      collection do
+        get :show
+        get :preview
+      end
+    end
   end
 
   resources :currencies 

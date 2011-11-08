@@ -1,4 +1,4 @@
-class PreviewLocal < Prawn::Document
+class InvoicePdfLocal < Prawn::Document
 
   def to_pdf(invoice, current_user)
     table_width = 520
@@ -68,7 +68,7 @@ class PreviewLocal < Prawn::Document
         party_info_table.draw
 
         move_down 10
-        ref_table = make_table(invoice_refs_table(invoice), :width => table_width, :cell_style => {:borders =>[], :padding => 3})
+        ref_table = make_table(invoice_refs_table(invoice), :width => table_width, :cell_style => {:borders =>[], :padding_left => -2})
         ref_table.draw
 
         move_down 10

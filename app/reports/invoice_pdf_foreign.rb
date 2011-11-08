@@ -1,4 +1,4 @@
-class PreviewForeign < Prawn::Document
+class InvoicePdfForeign < Prawn::Document
   include ActionView::Helpers::NumberHelper
 
   def curr dec
@@ -13,7 +13,7 @@ class PreviewForeign < Prawn::Document
     518
   end
 
-  def to_pdf(invoice, current_user, lang)
+  def to_pdf(invoice, current_user)
     font_families.update(
     "InvoiceFamily" => {
       :bold        => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif-Bold.ttf",

@@ -1,15 +1,12 @@
 <html>
-	<head>
-		<%= stylesheet_link_tag 'table', :media => 'all' %>		
-		<%= stylesheet_link_tag 'print/lv-invoice', :media => 'all' %>		
-	</head>
-	<body>
-		<%= render :partial => "header"%>
-		<%= render :partial => "bank_info"%>		
-		<%= render :partial => "references"%>
-		<%= render :partial => "subject"%>		
-		<%= render :partial => "lines"%>		
-		<%= render :partial => "payment_terms"%>
-		<%= render :partial => "signature"%>
-	</body>
+<head>
+</head>
+<body>
+<OBJECT height="100%" width="100%">
+  <PARAM NAME="SRC" VALUE="<%= url_for preview_invoice_pdf_path(@invoice, :lang => @lang) %>">
+  <EMBED SRC="<%=url_for preview_invoice_pdf_path(@invoice, :lang => @lang)%>.pdf" height="100%" width="100%">
+    <NOEMBED> Your browser does not support embedded PDF files.</NOEMBED>
+  </EMBED>
+</OBJECT>
+</body>
 </html>
