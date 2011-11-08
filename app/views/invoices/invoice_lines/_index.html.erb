@@ -20,6 +20,8 @@
                 <%= i_f.select :preset_id, InvoiceLinePreset.all.collect { |tt| [t(tt.name), tt.id] }, {}, {:style => "display:inline-block; float:none; margin-left:5em;"} %>
                 <% if !InvoiceLinePreset.all.empty? %>
                     <%= i_f.submit 'Add line', :name => "add_line", :style => "display:inline-block; float:none;" %>
+                <%else%>
+                   <strong style="font-size: 1.2em"> Before adding new lines to invoice, create at least one preset</strong>
                 <% end %>
             <% end %>
           </div>
