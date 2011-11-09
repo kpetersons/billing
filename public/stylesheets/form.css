@@ -72,3 +72,8 @@ form table tbody tr:nth-child(1n+1) {
 form table tbody tr:nth-child(4n+1), form table tbody tr:nth-child(4n+2) {
 	background-color: rgb(239,255,248);	
 }
+
+.invisible {
+    display:none;
+    visibility: hidden;
+}

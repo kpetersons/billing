@@ -1,22 +1,64 @@
+<form style="display:inline-block">
+  <ul style="list-style: none; margin: 5px; padding: 5px;box-sizing:border-box;" id="search-box">
+    <li style="box-sizing:border-box;" data-index="0">
+        <select style="width:200px;" class="column-rows">
+          <% @columns.each do |c| %>
+              <option data-type="<%= c.column_type %>" value="<%= c.column_name %>"><%= t(c.column_name) %></option>
+          <% end %>
+        </select>
+        Match case: <input type="checkbox" name="match_case" style="width:auto;"/>
 
-<ul style="list-style: none; margin:5px; padding:5px;width:100%;box-sizing:border-box;">
-	<li style="width:100%;box-sizing:border-box;">
-		<select style="width:200px;">
-			<% @columns.each do |c| %>
-				<option><%=c%></option>
-			<% end %>
-		</select>
-		<label>Match case</label><input type="checkbox" />
-		<input type="text" style="width:94">
-		<div style="width:4px;display:inline-block;"></div>
-		<input type="text" style="width:94">
-		<select style="width:120px;">
-			<option>And</option>
-			<option>Or</option>			
-		</select>
-	</li>
-	<li style="padding:0 5px;clear:both;">
-			<button style="float:left">Add</button>&nbsp;<button style="float:right">Clear</button>
-			<button style="clear:both; display:block; margin-top:5px;">Search</button>			
-	</li>
-</ul>
+        <div class="values range invisible">
+          <input type="text" style="width:94" name="range_from">
+
+          <div style="width:4px;display:inline-block;"></div>
+          <input type="text" style="width:94" name="range_to">
+        </div>
+        <div class="values regular">
+          <input type="text" style="width:200" name="regular">
+        </div>
+      <select style="width:120px;" name="conjunction">
+        <option value="AND">And</option>
+        <option value="OR">Or</option>
+      </select>
+    </li>
+    <li style="padding:0 5px;clear:both;">
+      <a href="#" style="float:left; width:auto;" id="add">Add</a>
+      <a href="#" style="float:right; width:auto;" id="clear">Clear</a>
+      <button style="clear:both; display:block; margin-top:5px;" id="search" type="submit">Search</button>
+    </li>
+  </ul>
+</form>
+<script>
+    $('#add').click(function() {
+        $clone = $('#search-box li:first-child').clone()
+        $clone.css('padding-top','5px').css('margin-top', '5px').css('border-top', '1px solid #d3d3d3')
+        $clone.attr('data-index', $('#search-box li:not(:last-child)').length)
+        $target = $('#search-box li:last-child')
+        $target.before($clone)
+        return false;
+    })
+
+    $('#clear').click(function() {
+        $('#search-box li:not(:first-child):not(:last-child)').detach()
+        return false
+    })
+
+    $('.column-rows').live('change', function() {
+        $this = $(this)
+        $selected = $this.find(':selected')
+        if ($selected.length > 0) {
+            if ($selected.attr('data-type') == 'col-date') {
+                $this.siblings('.range').removeClass('invisible')
+                $this.siblings('.regular').addClass('invisible')
+            } else {
+                $this.siblings('.regular').removeClass('invisible')
+                $this.siblings('.range').addClass('invisible')
+            }
+        }
+    })
+
+    $('#search').click(function() {
+        return false;
+    })
+</script>
