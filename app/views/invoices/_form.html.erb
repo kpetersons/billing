@@ -8,13 +8,15 @@ $(document).ready(function(){
 		source: '/customers/applicant_find_ajax',
 		minLength: 2,
 		select: function( event, ui ) {
+            $(this).after("<span style='color:black; padding-left: 5px;'>VAT number:  "+ ui.item.vat_number +"</span>")
 			$.get('/customers/list_addresses', {customer: ui.item.id}, function (data) {
 				$select = $('#document_invoice_attributes_address_id')
 				$select.find('option').remove().end()
 				for (var i=0; i < data.length; i++) {
 					$select.append('<option value="'+data[i][0]+'">'+data[i][1]+'</option>')
 				}
-				$select.removeAttr("disabled")		
+				$select.removeAttr("disabled")
+                $select.after()
 			});
 			$.get('/customers/list_contact_persons', {customer: ui.item.id}, function (data) {
 				$select = $('#document_invoice_attributes_individual_id')

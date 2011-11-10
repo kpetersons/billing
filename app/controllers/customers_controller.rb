@@ -58,7 +58,7 @@ class CustomersController < ApplicationController
     index = 0
     @customers = Customer.joins(:party => :company).all(:conditions => ['name like ?', "%#{params[:term]}%"])
     @customers.each do |customer|
-      @result<<{:id => customer.id, :label => customer.name, :value => customer.name}
+      @result<<{:id => customer.id, :label => customer.name, :value => customer.name, :vat_number => customer.vat_registration_number}
       index += 1
     end
     render :json => @result
