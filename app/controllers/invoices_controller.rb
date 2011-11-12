@@ -31,6 +31,7 @@ class InvoicesController < ApplicationController
       @document = Document.new(params[:document])
       if @document.save
         @invoice = @document.invoice
+        do_save_refs @invoice, @invoice.our_ref
         redirect_to @invoice
       else
         render 'new'
@@ -52,6 +53,7 @@ class InvoicesController < ApplicationController
       end
       if @document.update_attributes(params[:document])
         @invoice = @document.invoice
+        do_save_refs @invoice, @invoice.our_ref
         redirect_to invoice_path(@invoice)
       else
         render 'edit'
@@ -125,6 +127,44 @@ class InvoicesController < ApplicationController
 
   private
 
+  def do_save_refs invoice, value
+    result = []
+    errors = []
+    value.split(/;/).each do |item|
+      items = item.split('-')
+      if items.length < 2
+        result << item
+      else
+        str_prefix = items[0].gsub(/[0-9]/, '')
+        str_start = items[0].gsub(/[a-zA-Z]/, '')
+        str_end = items[1].gsub(/[a-zA-Z]/, '')
+        begin
+          (Integer(str_start)..Integer(str_end)).each do |c_item|
+            result<<"#{str_prefix}#{c_item}"
+          end
+        rescue ArgumentError
+          errors<<"#{str_prefix}#{str_start}"
+          errors<<"#{str_prefix}#{str_end}"
+        end
+      end
+    end
+    Invoice.transaction do
+      invoice.invoice_matters.delete_all
+      result.each do |item|
+        #puts "Item: #{item}"
+        doc = Document.find_by_registration_number(item)
+        unless doc.nil?
+          matter = doc.matter
+          unless matter.nil?
+            invoice.matters<<matter
+          end
+        end
+      end
+    end
+    refs = {:success => result, :error => errors}
+    return refs
+  end
+
   def do_save_lines
 
     if @invoice.update_attributes(params[:invoice])
@@ -154,7 +194,7 @@ class InvoicesController < ApplicationController
     @apply_filter = true
     default_filter = DefaultFilter.where(:table_name => 'invoices').first
     @columns = DefaultFilterColumn.where(:default_filter_id => default_filter.id).all
-    # 
+    #
     filter = UserFilter.where(:user_id => current_user.id, :table_name => 'invoices').first
     if filter.nil?
       filter = default_filter
