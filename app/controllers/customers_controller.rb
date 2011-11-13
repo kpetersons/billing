@@ -1,8 +1,16 @@
 class CustomersController < ApplicationController
 
   layout "customers"
+
   def index
-    @customers = Customer.paginate(:page =>  params[:customers_page])
+    @apply_filter = true
+    @customers = Customer.paginate(:page => params[:customers_page])
+  end
+
+  def quick_search
+    @apply_filter = true
+    @customers = Customer.quick_search(params[:search], params[:customers_page])
+    render 'index'
   end
 
   def new

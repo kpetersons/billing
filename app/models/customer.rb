@@ -61,7 +61,13 @@ class Customer < ActiveRecord::Base
     return party.company.inv_address unless party.company.inv_address.nil? 
     return Address.new
   end  
-  
+
+  def self.quick_search query, page
+    joins(:party => [:company]).paginate :per_page => 10, :page => page,
+             :conditions => ['vat_registration_number like :q or name like :q',
+                             {:q => "%#{query}%", :gi => query}]
+  end
+
   private
 
   def trim_strings

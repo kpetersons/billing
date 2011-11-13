@@ -95,6 +95,7 @@ Billing::Application.routes.draw do
       get :agent_find_ajax
       get :list_addresses
       get :list_contact_persons
+      get :quick_search
     end
   end
 
