@@ -280,7 +280,7 @@ en:
   matter_task:
     fields:
       type: "Type"
-  registration_number: "Registration number"
+  registration_number: "Invoice number"
   customer_name: "Customer name"
   address: "Address"
   contact_person: "Contact person"

@@ -154,16 +154,12 @@ class MattersController < ApplicationController
   end
 
   def find_ajax
-    @matter = Matter.find(params[:id])
-    @result = Hash.new
-    @result[:query] =  params[:query]
-    @result[:suggestions] = Array.new
-    @result[:data] = Array.new
+    @result = []
     index = 0
+    @matter = Matter.find(params[:id])
     @matters = Matter.where(['matters.id != ?', "#{@matter.id}"]).joins(:document).where(:matter_type_id => @matter.matter_type_id).all(:conditions => ['registration_number like ?', "%#{params[:query]}%"])
     @matters.each do |matter|
-      @result[:suggestions][index] = matter.document.registration_number
-      @result[:data][index] = matter.id
+      @result<<{:id => matter.id, :label => matter.document.registration_number, :value => matter.document.registration_number}
       index += 1
     end
     render :json => @result

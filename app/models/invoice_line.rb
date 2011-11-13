@@ -57,7 +57,8 @@ class InvoiceLine < ActiveRecord::Base
   end
 
   def line_details
-    brackets_tmp = (items.nil?)? "" : " (#{items} #{units} x #{invoice.currency.name} #{attorney_fee})"
+    attorney_fee_print = attorney_fee.to_s.gsub('.00', '').gsub('.0', '')
+    brackets_tmp = (items.nil?)? "" : " (#{items} #{units} x #{invoice.currency.name} #{attorney_fee_print})"
     details_tmp = "#{details}#{brackets_tmp}"
     return (both_official_and_attorney?)? details : details_tmp
   end
@@ -67,9 +68,7 @@ class InvoiceLine < ActiveRecord::Base
   def calculate_totals
     self.total_attorney_fee= (((attorney_fee.nil?) ? 0 : attorney_fee) * ((items.nil?) ? 0 : items))
     self.total_official_fee= (((official_fee.nil?) ? 0 : official_fee) * ((items.nil?) ? 0 : items))
-    puts "!!!.attorney_fee_type_id #{self.attorney_fee_type_id}"
     if !self.attorney_fee_type_id.nil? && AttorneyFeeType.find(self.attorney_fee_type_id).apply_discount?
-      puts "CCC.attorney_fee_type_id #{self.attorney_fee_type_id}"
       self.total_discount= (total_attorney_fee * ((invoice.discount.nil?) ? 0 : invoice.discount) / 100)
     else
       self.total_discount= 0
