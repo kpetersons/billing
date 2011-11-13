@@ -87,6 +87,29 @@ class InvoicesController < ApplicationController
     #    @document.invoice.invoice_lines<<InvoiceLine.new if @document.invoice.invoice_lines.empty?
   end
 
+  def copy
+    Document.transaction do
+      original = Invoice.find(params[:id]).document
+      @document = Document.new(original.attributes)
+      if @document.save
+        @document.invoice = Invoice.new(original.invoice.attributes)
+        if @document.invoice.save
+          original.invoice.invoice_lines.each do |line|
+            @document.invoice.invoice_lines<<InvoiceLine.new(line.attributes)
+          end
+          @invoice_lines = Array.new
+          render 'show'
+        else
+          flash[:error] = "Could not copy invoice. Try again."
+          redirect_to original.invoice
+        end
+      else
+        flash[:error] = "Could not copy invoice. Try again."
+        redirect_to original.invoice
+      end
+    end
+  end
+
   def remove_line
     if !params[:invoice_line_id].nil?
       @invoice = Invoice.find(params[:id])

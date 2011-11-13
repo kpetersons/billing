@@ -20,6 +20,7 @@ Billing::Application.routes.draw do
       put :process_lines
       delete :remove_line
       put :flow
+      get :copy
     end
     collection do
       post :filter 
