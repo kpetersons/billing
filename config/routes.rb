@@ -1,5 +1,11 @@
 Billing::Application.routes.draw do
 
+  resources :application, :only => [:check_date] do
+    collection do
+      get :check_date
+    end
+  end
+
   resources :messages
 
   resource :account, :controller => :activation, :only => [:show, :activate] do
