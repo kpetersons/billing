@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+
+  #I18n.locale = 'en'
+
   protect_from_forgery
   include SessionsHelper
 

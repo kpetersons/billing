@@ -140,16 +140,13 @@ class MattersController < ApplicationController
     Matter.transaction do
       @matter = Matter.find(params[:id])
       link_to = params[:linked_matter][:linked_matter_id]
-      if @matter.linked_matters.exists?(:linked_matter_id => link_to) && @matter.linked_matters.exists?(:matter_id => link_to)
-        flash[:warning] = t("error.matter.link_exists")
-        redirect_to @matter and return
-      end
       if @matter.linked_matters<<LinkedMatter.new(params[:linked_matter])
-        flash[:success] = t("matter.link.success")
+        flash[:success] = t("success.matters.link")
+        redirect_to @matter and return
+      else
+        flash[:error] = t("error.matters.link")
         redirect_to @matter and return
       end
-      flash[:error] = t("error.matter.link")
-      redirect_to @matter and return
     end
   end
 

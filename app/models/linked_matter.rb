@@ -18,5 +18,20 @@ class LinkedMatter < ActiveRecord::Base
  
   validates :matter_id, :presence => true
   validates :linked_matter_id, :presence => true
- 
+
+  validate :duplication
+
+  private
+  def duplication
+    unless LinkedMatter.where(:matter_id => matter_id, :linked_matter_id => linked_matter_id).first.nil?
+      errors.add(:matter_id, "Matters already linked")
+    end
+    unless LinkedMatter.where(:matter_id => linked_matter_id, :linked_matter_id => matter_id).first.nil?
+      errors.add(:matter_id, "Matters already linked")
+    end
+    if matter_id == linked_patter_id
+      errors.add(:matter_id, "Can not link matter with itself")
+    end
+  end
+
 end

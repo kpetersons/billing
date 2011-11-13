@@ -76,8 +76,6 @@ en:
     legal:      "legal matter"
     custom:     "custom matter"
     trademark_search: "trademark matter search"
-    link:
-      success: "Matters successfully linked."    
     task:
       status:
         change:
@@ -109,9 +107,8 @@ en:
         created_at: "Created at"
         updated_at: "Updated_at"        
   error:
-    matters:    
-      link_exists: "Matters already linked"    
-      link: "Could not link matters. Check if you actualy chose a matter!"
+    matters:
+      link: "Could not link matters. Probably already linked."
     invalid:
       matters:
         type: "Invalid matter type"
@@ -227,7 +224,7 @@ en:
     domain:
       fields:
         domain_name: "Domain name"
-        registration_date: "Registration date"        
+        registration_date: "Registration date"
   contact:
       create: "Create contact"
       show: "Contact"

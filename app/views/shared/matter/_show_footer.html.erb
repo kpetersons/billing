@@ -4,16 +4,17 @@
 	</dt>
 	<dd>
 		<%unless matter.document.parent_document.nil? %>
-		<%= link_to matter.document.parent_document_registration_number, matter_path(matter.document.parent_document.matter)%>&nbsp;
+		<%= link_to matter.document.parent_document_registration_number, matter_path(matter.document.parent_document.matter)%>
 		<%end%>
+        &nbsp;
 	</dd>
 	<dt>
 		<label> Linked matters </label>
 	</dt>
 	<dd>
-		<%= render :partial => "/matters/linked/item", :as => :matter, :collection => matter.all_linked(:parent => nil), :spacer_template => "shared/ui/comma_spacer" %>
+		<%= render :partial => "/matters/linked/item", :as => :matter, :collection => matter.all_linked(:parent => nil), :spacer_template => "shared/ui/comma_spacer" %>&nbsp;
 	</dd>
 	<dd class="show">
-		<%= render :partial => "/matters/linked/form" %>
+		<%= render :partial => "/matters/linked/form" %>&nbsp;
 	</dd>
 </dl>
