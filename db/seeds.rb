@@ -1027,8 +1027,8 @@ end
 DefaultFilter.transaction do
 
   matter_columns = [
-      {:column_query=> 'ind_agent', :column_position=> 1, :is_default=> true, :column_name=> 'ma_agent_id', :column_type=> 'col-text'},
-      {:column_query=> 'ind_applicant', :column_position=> 2, :is_default=> true, :column_name=> 'ma_applicant_id', :column_type=> 'col-text'},
+      {:column_query=> 'ind_agent', :column_position=> 1, :is_default=> true, :column_name=> 'ma_agent_id', :column_type=> 'col-text', :column_order_query => 'agent'},
+      {:column_query=> 'ind_applicant', :column_position=> 2, :is_default=> true, :column_name=> 'ma_applicant_id', :column_type=> 'col-text', :column_order_query => 'applicant_id'},
       {:column_query=> 'ind_matter_type', :column_position=> 3, :is_default=> true, :column_name=> 'ma_matter_type_id', :column_type=> 'col-text'},
       {:column_query=> 'ind_operating_party', :column_position=> 4, :is_default=> true, :column_name=> 'ma_operating_party_id', :column_type=> 'col-text'},
       {:column_query=> 'ind_matter_status', :column_position=> 5, :is_default=> true, :column_name=> 'ma_matter_status_id', :column_type=> 'col-text'},

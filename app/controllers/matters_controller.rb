@@ -2,11 +2,17 @@ class MattersController < ApplicationController
 
   layout "matters"
 
-  before_filter :show_column_filter, :only => :index
+  before_filter :show_column_filter, :only => [:index, :quick_search]
 
   def index
     @matters = Matter.joins(:document).where(:documents => {:parent_id => nil, :user_id => current_user.id}).paginate(:page => params[:param_name])
     @other_matters = Matter.joins(:document).where(:documents => {:parent_id => nil}).where("user_id != #{current_user.id}").paginate(:page => params[:param_name])
+  end
+
+  def quick_search
+    @matters = Matter.quick_search(params[:search], params[:param_name])
+    @other_matters = []
+    render 'index'
   end
 
   def new

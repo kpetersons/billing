@@ -380,6 +380,12 @@ class Matter < ActiveRecord::Base
     "#{document.parent_document.registration_number}/#{document.registration_number}"
   end
 
+  def self.quick_search query, page
+    joins(:agent => [:party => [:company]]).joins(:applicant => [:party => [:company]]).paginate :per_page => 10, :page => page,
+             :conditions => ['companies.name like :q or "companies_parties".name like :q',
+                             {:q => "%#{query}%", :gi => query}]
+  end
+
   private
   def prepare_ajax_fields
     unless errors[:agent_id].empty?

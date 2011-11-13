@@ -3,7 +3,9 @@
 		<tr>
 			<th class="col-radio"></th>
 			<% current_user.column_names(column_names).each do |column|%>
-				<th class="<%=column.column_type%>"><%=t(column.column_name)%></th>
+				<th class="<%=column.column_type%>">
+                  <%=link_to t(column.column_name), matters_path(:param_name => params[param_name])%>
+                </th>
 			<%end%>
 			<th></th>
 		</tr>

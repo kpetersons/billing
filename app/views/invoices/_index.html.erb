@@ -3,7 +3,9 @@
 		<tr>
 			<th class="col-radio"></th>	
 			<% current_user.column_names('invoices').each do |column|%>
-				<th class="<%=column.column_type%>"><%=t(column.column_name)%></th>	
+				<th class="<%=column.column_type%>">
+                  <%=link_to t(column.column_name), invoices_path(:page => params[:param_name], :order => column.column_order_query)%>
+                </th>
 			<%end%>						
 			<th></th>
 		</tr>

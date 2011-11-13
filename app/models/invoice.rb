@@ -291,6 +291,12 @@ class Invoice < ActiveRecord::Base
     return !invoice_lines.empty?
   end
 
+  def self.quick_search query, page
+    joins(:customer => [:party => [:company]]).paginate :per_page => 10, :page => page,
+             :conditions => ['our_ref like :q or companies.name like :q or your_ref like :q',
+                             {:q => "%#{query}%", :gi => query}]
+  end
+
   private
   def mark_as_paid
     puts "invoice_status.name: #{invoice_status.name} and invoice_status.name.eql?('invoice.status.paid') #{invoice_status.name.eql?('invoice.status.paid')}"

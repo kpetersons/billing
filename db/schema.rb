@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111105095812) do
+ActiveRecord::Schema.define(:version => 20111113094613) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(:version => 20111105095812) do
     t.datetime "updated_at"
     t.integer  "default_filter_id"
     t.boolean  "is_default"
+    t.string   "column_order_query"
   end
 
   create_table "default_filters", :force => true do |t|
@@ -553,6 +554,7 @@ ActiveRecord::Schema.define(:version => 20111105095812) do
     t.integer  "column_position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "column_order_query"
   end
 
   create_table "user_filters", :force => true do |t|
