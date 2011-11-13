@@ -299,7 +299,6 @@ class Invoice < ActiveRecord::Base
 
   private
   def mark_as_paid
-    puts "invoice_status.name: #{invoice_status.name} and invoice_status.name.eql?('invoice.status.paid') #{invoice_status.name.eql?('invoice.status.paid')}"
     if invoice_status.name.eql?('invoice.status.paid') && date_paid.nil?
       self.date_paid = Date.today
     end
@@ -307,7 +306,6 @@ class Invoice < ActiveRecord::Base
 
   def generate_registration_number
     Document.transaction do
-      puts "invoice_type: #{invoice_type} #{invoice_type.class}"
       if invoice_type == 1
         foreign_number = Invoice.new_foreign_reg_number
         document.update_attribute(:registration_number, foreign_number)

@@ -14,6 +14,9 @@ class InvoiceMatter < ActiveRecord::Base
   
   belongs_to :matter
   belongs_to :matter_task  
-  belongs_to :invoice   
+  belongs_to :invoice
+
+  validates :matter_id, :presence => true
+  validates :invoice_id, :presence => true
   
 end

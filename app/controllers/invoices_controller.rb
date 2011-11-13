@@ -37,12 +37,21 @@ class InvoicesController < ApplicationController
       @document = Document.new(params[:document])
       if @document.save
         @invoice = @document.invoice
-        do_save_refs @invoice, @invoice.our_ref
-        redirect_to @invoice
+
+        if do_save_refs @invoice, @invoice.our_ref
+          redirect_to @invoice
+        else
+          @document = Document.new(params[:document])
+          @document.errors.add('', "One or more references are invalid")
+          @document.invoice.errors.add(:our_ref, "One or more references are invalid")
+          render 'new' and return
+        end
       else
-        render 'new'
+        render 'new' and return
       end
     end
+  rescue ActiveRecord::Rollback
+    render 'new' and return
   end
 
   def edit
@@ -59,8 +68,13 @@ class InvoicesController < ApplicationController
       end
       if @document.update_attributes(params[:document])
         @invoice = @document.invoice
-        do_save_refs @invoice, @invoice.our_ref
-        redirect_to invoice_path(@invoice)
+        if do_save_refs @invoice, @invoice.our_ref
+          redirect_to @invoice
+        else
+          @document.errors.add('', "One or more references are invalid")
+          @document.invoice.errors.add(:our_ref, "One or more references are invalid")
+          render 'edit'
+        end
       else
         render 'edit'
       end
@@ -164,6 +178,9 @@ class InvoicesController < ApplicationController
           unless matter.nil?
             invoice.matters<<matter
           end
+        else
+          invoice.document.errors.add(:our_ref, "Could not find matter with registration number: #{item}")
+          return false
         end
       end
     end
