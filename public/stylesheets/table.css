@@ -129,3 +129,7 @@ table.lines td:last-child {
 table.lines td {
     padding:  5px 0;
 }
+
+#search-box table tr, #search-box table tr:hover, #search-box table td:hover, #search-box table tr:hover td {
+    background: inherit;
+}
