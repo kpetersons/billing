@@ -1,15 +1,21 @@
 <div class="panel">
-	<div class="panel-header">
-		<strong>My matters</strong>
-	</div>
-	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
-	<%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matters, :choose => false, :param_name => 'my_matters_page'} %>
+  <div class="panel-header">
+    <strong>Find</strong>
+  </div>
+  <%= render :partial => "shared/search/search_form" %>
 </div>
-<%unless @other_matters.empty?%>
-<div class="nested-panel">
-	<div class="panel-header">
-		<strong>Other matters</strong>
-	</div>		
-	<%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :column_names => 'invoices', :matters => @other_matters, :choose => false, :param_name => 'other_matters_page'} %>
+<div class="panel" style="border-radius:0;">
+  <div class="panel-header" style="border-radius:0;">
+    <strong>My matters</strong>
+  </div>
+  <%= render :partial => "shared/flash", :locals => {:flash => flash} %>
+  <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matters, :choose => false, :param_name => 'my_matters_page'} %>
 </div>
-<%end%>
+<% unless @other_matters.empty? %>
+    <div class="nested-panel">
+      <div class="panel-header">
+        <strong>Other matters</strong>
+      </div>
+      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :column_names => 'invoices', :matters => @other_matters, :choose => false, :param_name => 'other_matters_page'} %>
+    </div>
+<% end %>

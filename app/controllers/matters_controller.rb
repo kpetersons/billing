@@ -142,18 +142,10 @@ class MattersController < ApplicationController
   end
 
   def link
-    #    puts split_to_arry :value => params[:linked_matter][:linked_matter_registration_number]
-    Matter.transaction do
-      @matter = Matter.find(params[:id])
-      link_to = params[:linked_matter][:linked_matter_id]
-      if @matter.linked_matters<<LinkedMatter.new(params[:linked_matter])
-        flash[:success] = t("success.matters.link")
-        redirect_to @matter and return
-      else
-        flash[:error] = t("error.matters.link")
-        redirect_to @matter and return
-      end
-    end
+    @matter = Matter.find(params[:id])
+    @document = @matter.document
+    do_save_refs @matter, params[:linked_matter][:linked_matter_registration_number]
+    redirect_to matter_path(@matter)
   end
 
   def find_ajax
@@ -211,6 +203,49 @@ class MattersController < ApplicationController
   end
 
   private
+  def do_save_refs source_matter, value
+    result = []
+    errors = []
+    value.split(/;/).each do |item|
+      items = item.split('-')
+      if items.length < 2
+        result << item
+      else
+        str_prefix = items[0].gsub(/[0-9]/, '')
+        str_start = items[0].gsub(/[a-zA-Z]/, '')
+        str_end = items[1].gsub(/[a-zA-Z]/, '')
+        begin
+          (Integer(str_start)..Integer(str_end)).each do |c_item|
+            result<<"#{str_prefix}#{c_item}"
+          end
+        rescue ArgumentError
+          errors<<"#{str_prefix}#{str_start}"
+          errors<<"#{str_prefix}#{str_end}"
+        end
+      end
+    end
+    Matter.transaction do
+      result.each do |item|
+        puts "From result Array: #{item}"
+        #puts "Item: #{item}"
+        doc = Document.find_by_registration_number(item)
+        unless doc.nil?
+          matter = doc.matter
+          if !matter.nil?
+            puts "source_matter: #{source_matter} matter #{matter}"
+            source_matter.linked_matters<<LinkedMatter.new(:linked_matter_id => matter.id)
+          end
+        else
+          source_matter.document.errors.add(:our_ref, "Could not find matter with registration number: #{item}")
+          return false
+        end
+      end
+    end
+    refs = {:success => result, :error => errors}
+    return refs
+  end
+
+
   def show_column_filter
     @apply_filter = true
     default_filter = DefaultFilter.where(:table_name => 'matters').first

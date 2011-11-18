@@ -12,7 +12,7 @@
 		<label> Linked matters </label>
 	</dt>
 	<dd>
-		<%= render :partial => "/matters/linked/item", :as => :matter, :collection => matter.all_linked(:parent => nil), :spacer_template => "shared/ui/comma_spacer" %>&nbsp;
+		<%= render :partial => "/matters/linked/item", :as => :linked_matter, :collection => matter.linked_matters, :spacer_template => "shared/ui/comma_spacer" %>&nbsp;
 	</dd>
 	<dd class="show">
 		<%= render :partial => "/matters/linked/form" %>&nbsp;

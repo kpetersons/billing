@@ -29,7 +29,7 @@ class LinkedMatter < ActiveRecord::Base
     unless LinkedMatter.where(:matter_id => linked_matter_id, :linked_matter_id => matter_id).first.nil?
       errors.add(:matter_id, "Matters already linked")
     end
-    if matter_id == linked_patter_id
+    if matter_id == linked_matter_id
       errors.add(:matter_id, "Can not link matter with itself")
     end
   end
