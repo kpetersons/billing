@@ -3,9 +3,13 @@
 <%= fields.text_field :client_all_ip_name %>
 <script>
 	$(document).ready(function(){
-		$('#document_matter_attributes_custom_attributes_client_all_ip_name').	({
+		$('#document_matter_attributes_custom_attributes_client_all_ip_name').autocomplete({
 			source: '/customers/applicant_find_ajax',
-			minLength: 2
-		});	
+			minLength: 2,
+			select: function( event, ui ) {
+                $(this).after("<span style='color:black; padding-left: 5px;'>VAT number:  "+ ui.item.vat_number +"</span>")
+				$('#document_matter_attributes_custom_attributes_client_all_ip_id').attr('value', ui.item.id)
+			}
+		});
 	})
 </script>

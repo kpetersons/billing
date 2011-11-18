@@ -98,7 +98,7 @@ class InvoicesController < ApplicationController
             @document.invoice.invoice_lines<<InvoiceLine.new(line.attributes)
           end
           @invoice_lines = Array.new
-          render 'show'
+          render 'edit'
         else
           flash[:error] = "Could not copy invoice. Try again."
           redirect_to original.invoice

@@ -18,7 +18,7 @@ class InvoicePdfForeign < Prawn::Document
       for i in 0..page_count
         go_to_page i
         font_size(60)
-        fill_color "eaeaea"
+        fill_color "c1c1c1"
         text "<b>Preview</b>", :valign => :center, :align => :center, :rotate => 45, :inline_format => true
          fill_color "000000"
       end
@@ -259,7 +259,7 @@ class InvoicePdfForeign < Prawn::Document
     ]
     counter = 1
     invoice.invoice_lines.each do |line|
-      if line.items > 1
+      if line.items > 1 || (line.items < 1 && line.items > 0)
         line_data = make_table([
             ["#{counter}. #{line.offering}"],
             [line.line_details]

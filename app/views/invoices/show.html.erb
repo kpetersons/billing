@@ -111,7 +111,7 @@
   <% if @document.invoice.invoice_status.editable_state %>
       <%= render :partial => "status_controls", :locals => {:invoice => @document.invoice} %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
-      <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Copy", :path => copy_invoice_path(@invoice)} %>
+      <%= render :partial => "shared/ui/show_edit_controls_confirm", :locals => {:name=> "Copy", :path => copy_invoice_path(@invoice), :message => "Are you sure want to copy invoice details?"} %>
   <% end %>
   <%= render :partial => "invoices/invoice_lines/index", :locals => {:document => @document} %>
   <% unless @document.invoice.invoice_lines.empty? %>

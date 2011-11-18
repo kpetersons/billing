@@ -5,7 +5,7 @@ class InvoicePdfLocal < Prawn::Document
       for i in 0..page_count
         go_to_page i
         font_size(60)
-        fill_color "eaeaea"
+        fill_color "c1c1c1"
         text "<b>Preview</b>", :valign => :center, :align => :center, :rotate => 45, :inline_format => true
          fill_color "000000"
       end

@@ -7,6 +7,7 @@
 			source: '/customers/applicant_find_ajax',
 			minLength: 2,
 			select: function( event, ui ) {
+                $(this).after("<span style='color:black; padding-left: 5px;'>VAT number:  "+ ui.item.vat_number +"</span>")
 				$('#document_matter_attributes_applicant_id').attr('value', ui.item.id)
 			}
 		});
