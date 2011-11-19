@@ -33,25 +33,20 @@ class InvoicesController < ApplicationController
   end
 
   def create
+    @document = Document.new(params[:document])
     Document.transaction do
-      @document = Document.new(params[:document])
       if @document.save
         @invoice = @document.invoice
-
-        if do_save_refs @invoice, @invoice.our_ref
-          redirect_to @invoice
+        if do_save_refs @invoice, @invoice.our_ref_matters
+          redirect_to @invoice and return
         else
-          @document = Document.new(params[:document])
-          @document.errors.add('', "One or more references are invalid")
-          @document.invoice.errors.add(:our_ref, "One or more references are invalid")
           render 'new' and return
         end
       else
         render 'new' and return
       end
     end
-  rescue ActiveRecord::Rollback
-    render 'new' and return
+    render 'new'
   end
 
   def edit
@@ -71,8 +66,6 @@ class InvoicesController < ApplicationController
         if do_save_refs @invoice, @invoice.our_ref
           redirect_to @invoice
         else
-          @document.errors.add('', "One or more references are invalid")
-          @document.invoice.errors.add(:our_ref, "One or more references are invalid")
           render 'edit'
         end
       else
@@ -170,45 +163,11 @@ class InvoicesController < ApplicationController
 
   private
 
-  def do_save_refs invoice, value
-    result = []
-    errors = []
-    value.split(/;/).each do |item|
-      items = item.split('-')
-      if items.length < 2
-        result << item
-      else
-        str_prefix = items[0].gsub(/[0-9]/, '')
-        str_start = items[0].gsub(/[a-zA-Z]/, '')
-        str_end = items[1].gsub(/[a-zA-Z]/, '')
-        begin
-          (Integer(str_start)..Integer(str_end)).each do |c_item|
-            result<<"#{str_prefix}#{c_item}"
-          end
-        rescue ArgumentError
-          errors<<"#{str_prefix}#{str_start}"
-          errors<<"#{str_prefix}#{str_end}"
-        end
-      end
+  def do_save_refs invoice, matters
+    invoice.invoice_matters.delete_all
+    matters.each do |matter|
+      invoice.matters<<matter
     end
-    Invoice.transaction do
-      invoice.invoice_matters.delete_all
-      result.each do |item|
-        #puts "Item: #{item}"
-        doc = Document.find_by_registration_number(item)
-        unless doc.nil?
-          matter = doc.matter
-          unless matter.nil?
-            invoice.matters<<matter
-          end
-        else
-          invoice.document.errors.add(:our_ref, "Could not find matter with registration number: #{item}")
-          return false
-        end
-      end
-    end
-    refs = {:success => result, :error => errors}
-    return refs
   end
 
   def do_save_lines

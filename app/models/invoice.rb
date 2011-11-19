@@ -59,6 +59,7 @@ class Invoice < ActiveRecord::Base
                   :invoice_date,
                   :invoice_lines_attributes,
                   :invoice_matters_attributes
+
   accepts_nested_attributes_for :invoice_lines, :invoice_matters
   attr_protected :preset_id, :customer_name
   attr_accessor :preset_id
@@ -72,17 +73,14 @@ class Invoice < ActiveRecord::Base
   validates :payment_term, :presence => true, :numericality => true
   validates :subject, :presence => true, :length => {:within => 5..500}
   validate :not_future
+  validate :our_ref_present
+
+  before_validation :parse_our_refs
   before_save :mark_as_paid
   #
   after_update :update_lines
 
-  def not_future
-    if invoice_date.future?
-      errors.add(:invoice_date, 'may not be in future')
-    end
-  end
-
-  #start column filter 
+  #start column filter
   def ind_registration_number
     return "#{invoice_date.strftime("%y")}/#{document.registration_number}" if invoice_type == 0
     return document.registration_number
@@ -293,11 +291,66 @@ class Invoice < ActiveRecord::Base
 
   def self.quick_search query, page
     joins(:customer => [:party => [:company]]).paginate :per_page => 10, :page => page,
-             :conditions => ['our_ref like :q or companies.name like :q or your_ref like :q',
-                             {:q => "%#{query}%", :gi => query}]
+                                                        :conditions => ['our_ref like :q or companies.name like :q or your_ref like :q',
+                                                                        {:q => "%#{query}%", :gi => query}]
+  end
+
+  def our_ref_matters
+    @our_ref_matters
   end
 
   private
+
+  def parse_our_refs
+    @our_refs = []
+    @our_refs_invalid = []
+    our_ref.split(/;/).each do |item|
+      items = item.split('-')
+      if items.length < 2
+        @our_refs << item
+      else
+        str_prefix = items[0].gsub(/[0-9]/, '')
+        str_start = items[0].gsub(/[a-zA-Z]/, '')
+        str_end = items[1].gsub(/[a-zA-Z]/, '')
+        begin
+          (Integer(str_start)..Integer(str_end)).each do |c_item|
+            @our_refs<<"#{str_prefix}#{c_item}"
+          end
+        rescue ArgumentError
+          @our_refs_invalid<<"#{str_prefix}#{str_start}"
+          @our_refs_invalid<<"#{str_prefix}#{str_end}"
+        end
+      end
+    end
+  end
+
+  def our_ref_present
+    @our_ref_matters = []
+    unless @our_refs_invalid.empty?
+      @our_refs_invalid.each do |item|
+        errors.add(:our_ref, "referenced matter #{item} not found")
+      end
+    end
+    @our_refs.each do |item|
+      doc = Document.find_by_registration_number(item)
+      if doc.nil?
+        errors.add(:our_ref, "referenced matter #{item} not found")
+      else
+        if doc.matter.nil?
+          errors.add(:our_ref, "referenced matter #{item} not found")
+        else
+          @our_ref_matters<<doc.matter
+        end
+      end
+    end
+  end
+
+  def not_future
+    if invoice_date.future?
+      errors.add(:invoice_date, 'may not be in future')
+    end
+  end
+
   def mark_as_paid
     if invoice_status.name.eql?('invoice.status.paid') && date_paid.nil?
       self.date_paid = Date.today
