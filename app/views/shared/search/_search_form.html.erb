@@ -5,6 +5,14 @@
         <tbody>
         <tr>
           <td style="width:auto">
+            <select style="" name="conjunction">
+              <option value="AND">And</option>
+              <option value="OR">Or</option>
+              <option value="AND NOT">And Not</option>
+              <option value="OR NOT">Or Not</option>
+            </select>
+          </td>
+          <td style="width:auto">
             <select>
               <option></option>
               <option>(</option>
@@ -15,12 +23,6 @@
               <% @columns.each do |c| %>
                   <option data-type="<%= c.column_type %>" value="<%= c.column_name %>"><%= t(c.column_name) %></option>
               <% end %>
-            </select>
-          </td>
-          <td style="width:auto">
-            <select style="" name="conjunction">
-              <option value="AND">And</option>
-              <option value="OR">Or</option>
             </select>
           </td>
           <td style="width:auto">
