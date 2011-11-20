@@ -6,7 +6,7 @@ class CreateInvoicesView < ActiveRecord::Migration
           i.id,
           i.author_id,
           cust.name as customer_name,
-          pers.first_name || ' ' || pers.last_name) as person,
+          pers.first_name || ' ' || pers.last_name as person,
           replace(addr.country || ', ' || addr.city || ', ' || addr.street || ', ' || addr.house_number || ', ' || addr.room_number || ', ' || addr.post_code || ', ' || addr.po_box, ', ,', '') as address,
           curr.currency,
           ai.first_name || ' ' || ai.last_name as author,
