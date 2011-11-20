@@ -1,12 +1,14 @@
 <table style="width: 100%;">
 	<thead>
 		<tr>
-			<th class="col-radio"></th>	
+			<th class="col-radio"></th>
 			<% current_user.column_names('invoices').each do |column|%>
 				<th class="<%=column.column_type%>">
-                  <%=link_to t(column.column_name), invoices_path(:page => params[:param_name], :order => column.column_order_query)%>
+                  <%=t(column.column_name)%>
+                 <%=link_to "↑", invoices_path(:order_by => column.column_query, :direction => "ASC"), :style => "text-decoration:none"%>
+                 <%=link_to "↓", invoices_path(:order_by => column.column_query, :direction => "DESC"), :style => "text-decoration:none"%>
                 </th>
-			<%end%>						
+			<%end%>
 			<th></th>
 		</tr>
 	</thead>
@@ -27,8 +29,11 @@
 			</td>
 			<% current_user.column_names('invoices').each do |column|%>
 				<td class="<%=column.column_type%>">
-					<%= invoice.try(column.column_query)%>
-				</td>	
+                    <% val = invoice.try(column.column_query) %>
+                    <% val = (column.column_type.eql?('col-date') && !val.nil?)? val.to_datetime().to_s(:show) : val %>
+                    <% val = (column.translate)? t(val) : val %>
+					<%= val %>
+				</td>
 			<%end%>
 			<td class="col-number"><%= link_to "Show", invoice_path(invoice)%></td>
 		</tr>

@@ -13,8 +13,8 @@
 class Customer < ActiveRecord::Base
   
   belongs_to :party   
-  has_many :matters_as_agent,     :class_name=> 'Matter',  :foreign_key =>     :agent_id
-  has_many :matters_as_applicant, :class_name=> 'Matter',  :foreign_key => :applicant_id
+  has_many :matters_as_agent,     :class_name=> 'VMatters',  :foreign_key =>     :agent_id
+  has_many :matters_as_applicant, :class_name=> 'VMatters',  :foreign_key => :applicant_id
  
   attr_accessible :party_id, :vat_registration_number, :customer_type  
   validates :vat_registration_number, :uniqueness => true, :allow_nil => true

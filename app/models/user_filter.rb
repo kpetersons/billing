@@ -26,7 +26,8 @@ class UserFilter < ActiveRecord::Base
           :column_name => column.column_name,
           :column_type => column.column_type,
           :column_query => column.column_query,
-          :column_position => column.column_position
+          :column_position => column.column_position,
+          :translate => column.translate?
       )
     end
   end

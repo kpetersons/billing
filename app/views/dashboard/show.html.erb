@@ -7,12 +7,12 @@
         <%= render :partial => "/messages/index"%>
 	</div>
 	<dl class="nested-panel accordion">
-		<dt class="panel-header">
-			<strong><a href="#deadlines">Matters with approaching deadlines</a></strong>			
-		</dt>
-		<dd id="deadlines">
-			<%= render :partial => "/matters/index", :locals => {:column_names => 'matters_deadlines', :matters => @upcoming_deadlines_matters, :table_title => "Matters with upcoming deadlines", :choose => false, :param_name => "upcoming_deadlines_page"} %>
-		</dd>		
+		<!--<dt class="panel-header">-->
+			<!--<strong><a href="#deadlines">Matters with approaching deadlines</a></strong>			-->
+		<!--</dt>-->
+		<!--<dd id="deadlines">-->
+<%#  			<!--<%= render :partial => "/matters/index", :locals => {:column_names => 'matters_deadlines', :matters => @upcoming_deadlines_matters, :table_title => "Matters with upcoming deadlines", :choose => false, :param_name => "upcoming_deadlines_page"} %>-->%>
+		<!--</dd>		-->
 		<dt class="panel-header">
 			<strong><a href="#recent_activity">Recently updated/created matters</a></strong>
 		</dt>

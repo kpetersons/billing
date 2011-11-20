@@ -5,12 +5,15 @@ class MattersController < ApplicationController
   before_filter :show_column_filter, :only => [:index, :quick_search]
 
   def index
-    @matters = Matter.joins(:document).where(:documents => {:parent_id => nil, :user_id => current_user.id}).paginate(:page => params[:param_name])
-    @other_matters = Matter.joins(:document).where(:documents => {:parent_id => nil}).where("user_id != #{current_user.id}").paginate(:page => params[:param_name])
+    @order_by = params[:order_by]
+    @direction = params[:direction]
+    @matters = VMatters.where(:author_id => current_user.id).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
+    @direction = (@direction.eql?("ASC"))? "DESC" : "ASC"
+    @other_matters = VMatters.where("author_id != #{current_user.id}").paginate(:page => params[:param_name])
   end
 
   def quick_search
-    @matters = Matter.quick_search(params[:search], params[:param_name])
+    @matters = VMatters.quick_search(params[:search], params[:param_name])
     @other_matters = []
     render 'index'
   end

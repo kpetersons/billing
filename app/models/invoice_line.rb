@@ -13,7 +13,7 @@
 #  attorney_fee         :decimal(8, 2)
 #  author_id            :integer
 #  offering             :string(255)
-#  items                :decimal(10, 3)
+#  items                :decimal(10, 2)
 #  units                :string(255)
 #  total                :decimal(10, 2)
 #  total_attorney_fee   :decimal(10, 2)

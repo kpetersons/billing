@@ -14,7 +14,7 @@ class InvoiceMatter < ActiveRecord::Base
   
   belongs_to :matter
   belongs_to :matter_task  
-  belongs_to :invoice
+  belongs_to :invoices, :class_name => "VInvoices", :foreign_key => :invoice_id
 
   validates :matter_id, :presence => true
   validates :invoice_id, :presence => true

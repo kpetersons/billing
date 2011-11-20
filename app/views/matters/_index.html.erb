@@ -4,7 +4,9 @@
 			<th class="col-radio"></th>
 			<% current_user.column_names(column_names).each do |column|%>
 				<th class="<%=column.column_type%>">
-                  <%=link_to t(column.column_name), matters_path(:param_name => params[param_name])%>
+                  <%=t(column.column_name)%>
+                 <%=link_to "↑", matters_path(:order_by => column.column_query, :direction => "ASC"), :style => "text-decoration:none"%>
+                 <%=link_to "↓", matters_path(:order_by => column.column_query, :direction => "DESC"), :style => "text-decoration:none"%>
                 </th>
 			<%end%>
 			<th></th>
@@ -22,12 +24,15 @@
 		<tr>
 			<td>
 				<%if choose%>
-					<%= fields.radio_button :id, matter.document_id%>								
+					<%= fields.radio_button :id, matter.id%>
 				<%end%>
 			</td>
 			<% current_user.column_names(column_names).each do |column|%>
 				<td class="<%=column.column_type%>">
-					<%= matter.try(column.column_query)%>
+                    <% val = matter.try(column.column_query) %>
+                    <% val = (column.column_type.eql?('col-date') && !val.nil?)? val.to_datetime().to_s(:show) : val %>
+                    <% val = (column.translate)? t(val) : val %>
+					<%= val %>
 				</td>
 			<%end%>
 			<td class="col-number"><%= link_to "Show", matter_path(matter, :anchor => :tasks)%></td>
