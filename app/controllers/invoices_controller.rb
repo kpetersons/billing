@@ -24,12 +24,10 @@ class InvoicesController < ApplicationController
     @matter_task = MatterTask.find(params[:task_id]) unless params[:task_id].nil?
     @matter = Matter.find(params[:matter_id]) unless params[:matter_id].nil?
     if !@matter.nil? || !@matter_task.nil?
-      @document.invoice.invoice_matters<<InvoiceMatter.new(
-          :matter_id => (@matter.id unless @matter.nil?),
-          :matter_task_id => (@matter_task.id unless @matter_task.nil?))
+      @document.invoice.our_ref = @matter.document.registration_number
     end
     @document.invoice.customer = @matter.agent unless @matter.nil?
-    @document.invoice.our_ref = "#{current_user.initials}/#{@matter.full_reg_nr_for_invoice}" unless @matter.nil?
+    #@document.invoice.our_ref = "#{current_user.initials}/#{@matter.full_reg_nr_for_invoice}" unless @matter.nil?
   end
 
   def create
