@@ -15,7 +15,7 @@ class CreateMattersView < ActiveRecord::Migration
         doc.notes,
         appl_company.name as applicant,
         agent_company.name as agent,
-        concat(author_individual.first_name, ' ', author_individual.last_name) as author,
+        concat(author_individual.first_name, " ", author_individual.last_name) as author,
         op_company.name as operating_party,
         mt.name as matter_type,
         ms.name as matter_status,
