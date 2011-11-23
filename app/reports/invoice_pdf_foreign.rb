@@ -261,7 +261,7 @@ class InvoicePdfForeign < Prawn::Document
     invoice.invoice_lines.each do |line|
       if line.items > 1 || (line.items < 1 && line.items > 0)
         line_data = make_table([
-            ["#{counter}. #{line.offering}"],
+            ["#{counter}. #{line.offering_print}"],
             [line.line_details]
           ],
           :cell_style => {:borders => [], :padding => 0},

@@ -61,7 +61,7 @@ class InvoicesController < ApplicationController
       end
       if @document.update_attributes(params[:document])
         @invoice = @document.invoice
-        if do_save_refs @invoice, @invoice.our_ref
+        if do_save_refs @invoice, @invoice.our_ref_matters
           redirect_to @invoice
         else
           render 'edit'
@@ -163,8 +163,12 @@ class InvoicesController < ApplicationController
 
   def do_save_refs invoice, matters
     invoice.invoice_matters.delete_all
-    matters.each do |matter|
-      invoice.matters<<matter
+    if matters.respond_to?(:each)
+      matters.each do |matter|
+        invoice.matters<<matter
+      end
+    else
+      invoice.matters<<matters
     end
   end
 
