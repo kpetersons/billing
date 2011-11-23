@@ -53,8 +53,9 @@ Billing::Application.routes.draw do
     member do
       get   :find_ajax
       post  :link
-      post   :add_image
-      put :flow
+      post  :add_image
+      put   :flow
+      get   :unlink
     end
     collection do
       post :filter

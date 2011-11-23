@@ -1,1 +1,6 @@
-<%= link_to linked_matter.linked_matter.document.registration_number, matter_path(linked_matter.linked_matter.id) %>
+<div class="linked-matter">
+    <%= link_to item.document.registration_number, matter_path(item.id) %>
+    <div class="unlink">
+        <%= link_to 'Unlink', unlink_matter_path(@matter, :from => item.id) %>
+    </div>
+</div>

@@ -5,3 +5,17 @@
 .autocomplete .selected { background:#F0F0F0; }
 .autocomplete div { padding:2px 5px; white-space:nowrap; }
 .autocomplete strong { font-weight:normal; color:#3399FF; }
+
+
+.linked-matter {
+    display:inline-block;
+}
+
+.linked-matter .unlink {
+    display:none;
+}
+
+.linked-matter:hover .unlink {
+    display:inline-block;
+    position:absolute;
+}

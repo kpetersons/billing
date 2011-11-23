@@ -151,6 +151,17 @@ class MattersController < ApplicationController
     redirect_to matter_path(@matter)
   end
 
+  def unlink
+    @matter = Matter.find(params[:id])
+    if params[:from].nil?
+      redirect to @matter
+    end
+    @linked = Matter.find(params[:from])
+    LinkedMatter.delete_all(:matter_id => @matter.id, :linked_matter_id => @linked.id)
+    LinkedMatter.delete_all(:matter_id => @linked.id, :linked_matter_id => @matter.id)
+    redirect_to @matter
+  end
+
   def find_ajax
     @result = []
     index = 0
