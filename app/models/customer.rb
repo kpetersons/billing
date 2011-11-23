@@ -64,7 +64,7 @@ class Customer < ActiveRecord::Base
 
   def self.quick_search query, page
     joins(:party => [:company]).paginate :per_page => 10, :page => page,
-             :conditions => ['vat_registration_number like :q or name like :q',
+             :conditions => ['vat_registration_number like :q or name ilike :q',
                              {:q => "%#{query}%", :gi => query}]
   end
 
