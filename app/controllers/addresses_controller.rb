@@ -83,6 +83,11 @@ class AddressesController < ApplicationController
     @party = @user.individual.party unless user_id.nil?
     @party = @operating_party.company.party unless operating_party_id.nil?
     @path_elements = [@customer, @individual, @user, @operating_party]
+
+    unless @address.date_effective_end.nil?
+      flash.now[:warning] = "ATTENTION! You are now editing an older address version for this customer"
+    end
+
   end
 
   def update
@@ -107,8 +112,18 @@ class AddressesController < ApplicationController
 
     @test = Address.find(params[:address][:id])
     @test.attributes = params[:address]
+
     unless @test.changed?
       redirect_to @path_elements and return
+    end
+
+    unless @test.date_effective_end.nil?
+      if @test.update_attributes(params[:address])
+        redirect_to @path_elements and return
+      else
+        @address = @test
+        render 'edit'
+      end
     end
 
     Address.transaction do
