@@ -20,7 +20,11 @@ class Customer < ActiveRecord::Base
   validates :vat_registration_number, :uniqueness=>{ :scope=> :version}, :allow_nil => true
   
   before_validation :trim_strings
-  
+
+  def history
+    Customer.where(:orig_id => orig_id).where("date_effective_end is not null and date_effective < :g", {:g => date_effective})
+  end
+
   def name
     return party.try(:company).try(:name)
   end  
