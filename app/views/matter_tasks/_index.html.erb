@@ -1,46 +1,49 @@
-<table style="width: 100%;">	
-	<thead>
-		<tr>
-			<th class="col-text">Description</th>
-			<th class="col-date">Proposed deadline</th>
-			<th class="col-text"><%=t('matter_task.fields.type')%></th>			
-			<th class="col-text">Invoices</th>
-			<th class="col-text">Status</th>
-	  		<%= render :partial => "shared/ui/date_th"%>			
-			<th class="col-number"></th>
-		</tr>
-	</thead>
-	<tfoot>
-		<tr>
-			<th class="list-paginate" colspan="8">
-				<%= will_paginate matter_tasks, :param_name => param_name %>				
-			</th>
-		</tr>
-	</tfoot>
-	<tbody>
-		<% matter_tasks.each do |matter_task|%>
-			<tr>
-				<td class="col-text"><%=matter_task.description%></td>
-				<td class="col-date"><%=matter_task.proposed_deadline.to_s(:show) unless matter_task.proposed_deadline.nil?%></td>
-				<td class="col-date"><%=matter_task.type_name%></td>				
-				<td class="col-text">
-					<%= render :partial => "/invoices/number_index", :as => :invoice, :collection => (matter_task.invoices.empty?)? nil : matter_task.invoices, :spacer_template => "shared/ui/comma_spacer" %>
-					<%=", " unless matter_task.invoices.nil?%>
-					<%= link_to 'Create invoice', new_matter_task_invoice_path(matter_task.matter, matter_task)%>
-				</td>				
-				<td class="col-text">					
-					<%= t(matter_task.status_name)%>
-				</td>
-	  		 	<%= render :partial => "shared/ui/date_td", :locals => {:object => matter_task}%>				
-				<td class="col-number">
-				<%=link_to 'Show', matter_task_path(@matter, matter_task) %>				
-				</td>
-			</tr>
-		<%end%>
-		<% if matter_tasks.empty? %>
-			<tr>
-				<td colspan="8">&nbsp;</td>
-			</tr>
-		<%end%>
-	</tbody>
+<table style="width: 100%;">
+  <thead>
+  <tr>
+    <th class="col-text">Description</th>
+    <th class="col-date">Proposed deadline</th>
+    <th class="col-text"><%= t('matter_task.fields.type') %></th>
+    <th class="col-text">Invoices</th>
+    <th class="col-text">Status</th>
+    <%= render :partial => "shared/ui/date_th" %>
+    <th class="col-number"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <th class="list-paginate" colspan="8">
+      <%= will_paginate matter_tasks, :param_name => param_name %>
+    </th>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% matter_tasks.each do |matter_task| %>
+      <tr>
+        <td class="col-text"><%= matter_task.description %></td>
+        <td class="col-date"><%= matter_task.proposed_deadline.to_s(:show) unless matter_task.proposed_deadline.nil? %></td>
+        <td class="col-date"><%= matter_task.type_name %></td>
+        <td class="col-text">
+          <% invoices = matter_task.invoices %>
+          <% unless invoices.empty? %>
+              <%= render :partial => "/invoices/number_index", :as => :invoice, :collection => invoices, :spacer_template => "shared/ui/comma_spacer" %>
+              ,
+          <% end %>
+          <%= link_to 'Create invoice', new_matter_task_invoice_path(matter_task.matter, matter_task) %>
+        </td>
+        <td class="col-text">
+          <%= t(matter_task.status_name) %>
+        </td>
+        <%= render :partial => "shared/ui/date_td", :locals => {:object => matter_task} %>
+        <td class="col-number">
+          <%= link_to 'Show', matter_task_path(@matter, matter_task) %>
+        </td>
+      </tr>
+  <% end %>
+  <% if matter_tasks.empty? %>
+      <tr>
+        <td colspan="8">&nbsp;</td>
+      </tr>
+  <% end %>
+  </tbody>
 </table>
