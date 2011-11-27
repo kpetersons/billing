@@ -17,9 +17,9 @@ class InvoicePdfForeign < Prawn::Document
     if watermark
       for i in 0..page_count
         go_to_page i
-        font_size(60)
-        fill_color "c1c1c1"
-        text "<b>Preview</b>", :valign => :center, :align => :center, :rotate => 45, :inline_format => true
+        font_size(100)
+        fill_color "939393"
+        draw_text "Preview", :rotate => 45, :at => [100, 250], :font_style => :bold
          fill_color "000000"
       end
     end
