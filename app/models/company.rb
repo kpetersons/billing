@@ -19,7 +19,7 @@ class Company < ActiveRecord::Base
   accepts_nested_attributes_for :operating_party
 
   validates :name, :presence => true
-  validates :registration_number, :uniqueness => true, :allow_nil => true
+  validates :registration_number, :uniqueness => {:scope=> :version}, :allow_nil => true
 
   before_validation :trim_strings
   
@@ -43,5 +43,4 @@ class Company < ActiveRecord::Base
       self.registration_number = nil
     end
   end
-
 end

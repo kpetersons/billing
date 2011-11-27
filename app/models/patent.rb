@@ -18,10 +18,10 @@ class Patent < ActiveRecord::Base
   belongs_to :matter
   validates :ep_number, :numericality => true
 
-  after_create :generate_registration_number
+  #after_create :generate_registration_number
   def generate_registration_number
     if matter.document.parent_id.nil?
-      matter.document.update_attribute(:registration_number, "P#{id}")
+      matter.document.update_attribute(:registration_number, "P#{matter.orig_id}")
     end
   end
 end

@@ -16,7 +16,7 @@ class Custom < ActiveRecord::Base
   belongs_to :matter
   belongs_to :client_all_ip, :class_name => 'Customer', :foreign_key => :client_all_ip_id
   
-  after_create :generate_registration_number
+  #after_create :generate_registration_number
   attr_accessor :client_all_ip_name
   
   def client_all_ip_name
@@ -25,7 +25,7 @@ class Custom < ActiveRecord::Base
   
   def generate_registration_number
     if matter.document.parent_id.nil?
-      matter.document.update_attribute(:registration_number, "B#{id}")
+      matter.document.update_attribute(:registration_number, "B#{matter.orig_id}")
     end
   end
 end

@@ -58,6 +58,7 @@ class Matter < ActiveRecord::Base
   validates :author_id, :presence => true
 
   after_validation :prepare_ajax_fields
+  after_save :ensure_orig_id
 
   accepts_nested_attributes_for :trademark, :patent, :design, :legal, :custom, :linked_matters, :matter_images, :patent_search, :search, :domain
   attr_protected :applicant_name, :agent_name, :classes, :prefix
@@ -133,6 +134,52 @@ class Matter < ActiveRecord::Base
     "#{document.parent_document.registration_number}/#{document.registration_number}"
   end
 
+  def should_update? params
+    params[:document][:matter_attributes][:agent_id].eql?("#{agent_id}") && params[:document][:matter_attributes][:applicant_id].eql?("#{applicant_id}")
+  end
+
+  def save_classes params
+    mc = params[:document][:matter_attributes][:classes]
+    unless mc.nil?
+      matter_clazzs.delete_all
+      mc.split(',').each do |name|
+        clazz = Clazz.find_by_code(name)
+        unless clazz.nil?
+          if MatterClazz.where(:matter_id => id, :clazz_id => clazz.id).first.nil?
+            matter_clazzs<<MatterClazz.new(:clazz_id => clazz.id, :matter_id => id)
+          end
+        end
+      end
+    end
+  end
+
+  def generate_registration_number
+    unless trademark.nil?
+      trademark.generate_registration_number
+    end
+    unless patent.nil?
+      patent.generate_registration_number
+    end
+    unless patent.nil?
+      patent.generate_registration_number
+    end
+    unless legal.nil?
+      legal.generate_registration_number
+    end
+    unless custom.nil?
+      custom.generate_registration_number
+    end
+    unless patent_search.nil?
+      patent_search.generate_registration_number
+    end
+    unless search.nil?
+      search.generate_registration_number
+    end
+    unless domain.nil?
+      domain.generate_registration_number
+    end
+  end
+
   private
   def prepare_ajax_fields
     unless errors[:agent_id].empty?
@@ -150,5 +197,11 @@ class Matter < ActiveRecord::Base
       return true
     end
     return false
+  end
+
+  def ensure_orig_id
+    if self.orig_id.nil?
+      update_attribute(:orig_id, self.id)
+    end
   end
 end

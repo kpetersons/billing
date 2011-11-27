@@ -17,7 +17,7 @@ class Customer < ActiveRecord::Base
   has_many :matters_as_applicant, :class_name=> 'VMatters',  :foreign_key => :applicant_id
  
   attr_accessible :party_id, :vat_registration_number, :customer_type  
-  validates :vat_registration_number, :uniqueness => true, :allow_nil => true
+  validates :vat_registration_number, :uniqueness=>{ :scope=> :version}, :allow_nil => true
   
   before_validation :trim_strings
   
@@ -63,7 +63,7 @@ class Customer < ActiveRecord::Base
   end  
 
   def self.quick_search query, page
-    joins(:party => [:company]).paginate :per_page => 10, :page => page,
+    where(:date_effective_end => nil).joins(:party => [:company]).paginate :per_page => 10, :page => page,
              :conditions => ['vat_registration_number like :q or name ilike :q',
                              {:q => "%#{query}%", :gi => query}]
   end

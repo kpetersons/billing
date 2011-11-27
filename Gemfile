@@ -8,6 +8,7 @@ gem 'uuidtools'
 gem 'paperclip', '~> 2.3'
 gem 'prawn', :submodules => true
 gem "jquery-rails"
+gem 'composite_primary_keys'
 
 group :development do
   gem 'rspec-rails', '2.5.0'

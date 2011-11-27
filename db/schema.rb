@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111120154919) do
+ActiveRecord::Schema.define(:version => 20111126143920) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -43,6 +43,10 @@ ActiveRecord::Schema.define(:version => 20111120154919) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "country_id"
+    t.integer  "version"
+    t.integer  "orig_id"
+    t.datetime "date_effective"
+    t.datetime "date_effective_end"
   end
 
   create_table "attorney_fee_types", :force => true do |t|
@@ -68,6 +72,10 @@ ActiveRecord::Schema.define(:version => 20111120154919) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "registration_number"
+    t.integer  "version",             :default => 1
+    t.integer  "orig_id"
+    t.datetime "date_effective"
+    t.datetime "date_effective_end"
   end
 
   create_table "contact_types", :force => true do |t|
@@ -104,6 +112,10 @@ ActiveRecord::Schema.define(:version => 20111120154919) do
     t.datetime "updated_at"
     t.string   "customer_type"
     t.string   "vat_registration_number"
+    t.integer  "version"
+    t.integer  "orig_id"
+    t.datetime "date_effective"
+    t.datetime "date_effective_end"
   end
 
   create_table "customs", :force => true do |t|
@@ -161,6 +173,10 @@ ActiveRecord::Schema.define(:version => 20111120154919) do
     t.datetime "updated_at"
     t.integer  "parent_id"
     t.string   "notes"
+    t.integer  "version",             :default => 1
+    t.integer  "orig_id"
+    t.datetime "date_effective"
+    t.datetime "date_effective_end"
   end
 
   create_table "domains", :force => true do |t|
@@ -415,6 +431,10 @@ ActiveRecord::Schema.define(:version => 20111120154919) do
     t.integer  "matter_type_id"
     t.integer  "operating_party_id"
     t.integer  "matter_status_id"
+    t.integer  "version"
+    t.integer  "orig_id"
+    t.datetime "date_effective"
+    t.datetime "date_effective_end"
   end
 
   create_table "messages", :force => true do |t|
@@ -461,6 +481,10 @@ ActiveRecord::Schema.define(:version => 20111120154919) do
     t.string   "party_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "version",            :default => 1
+    t.integer  "orig_id"
+    t.datetime "date_effective"
+    t.datetime "date_effective_end"
   end
 
   create_table "patent_searches", :force => true do |t|

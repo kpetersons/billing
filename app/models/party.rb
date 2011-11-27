@@ -31,7 +31,11 @@ class Party < ActiveRecord::Base
   validates :identifier, :uniqueness       => {:case_sensitive => false}, :presence => true
   
   before_validation :generate_identifier, :on => :create 
-  
+
+  def active_addresses
+    addresses.where(:date_effective_end => nil).all
+  end
+
   def target_parties (relationship_type) 
     return target_parties_query(:relationship_type => relationship_type).all
   end

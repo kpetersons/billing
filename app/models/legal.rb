@@ -31,11 +31,11 @@ class Legal < ActiveRecord::Base
     opposite_party_agent.name unless opposite_party_agent.nil?
   end  
   
-  after_create :generate_registration_number
+  #after_create :generate_registration_number
   
   def generate_registration_number
     if matter.document.parent_id.nil?
-      matter.document.update_attribute(:registration_number, "L#{id}")
+      matter.document.update_attribute(:registration_number, "L#{matter.orig_id}")
     end
   end  
 end
