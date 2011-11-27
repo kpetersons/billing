@@ -10,7 +10,9 @@
 		<strong><a href="#invoices">Invoices</a></strong>
 	</dt>
 	<dd id="invoices">
-		<%= render :partial => "/invoices/index", :locals => {:invoices => @matter.invoices.paginate(:page => params[:invoices]), :choose => false, :param_name => :invoices} %>
+        <%=invoices =  @matter.invoices%>
+        <%=invoices =  invoices.paginate(:page => params[:invoices])%>
+		<%= render :partial => "/invoices/index", :locals => {:invoices => invoices, :choose => false, :param_name => :invoices} %>
 		<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Create invoice', :path => new_matter_invoice_path(@matter)} %>
 	</dd>
 	<dt class="panel-header">
