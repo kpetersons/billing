@@ -25,7 +25,7 @@
         <td class="col-date"><%= matter_task.type_name %></td>
         <td class="col-text">
           <% invoices = matter_task.invoices %>
-          <% unless invoices.empty? %>
+          <% unless invoices.nil? %>
               <%= render :partial => "/invoices/number_index", :as => :invoice, :collection => invoices, :spacer_template => "shared/ui/comma_spacer" %>
               ,
           <% end %>

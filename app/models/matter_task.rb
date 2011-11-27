@@ -27,7 +27,11 @@ class MatterTask < ActiveRecord::Base
   
   validates :description, :presence => true
   validates :proposed_deadline, :presence => true
-  
+
+  def linked_invoices
+
+  end
+
   def status_name
     matter_task_status.name unless matter_task_status.nil?
   end
