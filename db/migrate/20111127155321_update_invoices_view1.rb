@@ -1,5 +1,8 @@
-class CreateInvoicesView < ActiveRecord::Migration
+class UpdateInvoicesView1 < ActiveRecord::Migration
   def self.up
+    execute <<-SQL
+     drop view v_invoices;
+    SQL
     execute <<-SQL
       create view v_invoices as (
         select
@@ -53,6 +56,5 @@ class CreateInvoicesView < ActiveRecord::Migration
   end
 
   def self.down
-    execute "drop view v_invoices"
   end
 end

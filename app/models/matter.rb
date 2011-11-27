@@ -26,8 +26,8 @@ class Matter < ActiveRecord::Base
 
 
   belongs_to :document
-  belongs_to :applicant, :class_name => "Customer", :foreign_key => :applicant_id
-  belongs_to :agent, :class_name => "Customer", :foreign_key => :agent_id
+  belongs_to :applicant,  :class_name => "Customer", :foreign_key => :applicant_id, :primary_key => :orig_id, :conditions => "date_effective_end is null"
+  belongs_to :agent,      :class_name => "Customer", :foreign_key => :agent_id, :primary_key => :orig_id, :conditions => "date_effective_end is null"
   belongs_to :author, :class_name => "User", :foreign_key => :author_id
   belongs_to :matter_type
   belongs_to :operating_party

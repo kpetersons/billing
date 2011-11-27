@@ -28,6 +28,22 @@
     <dd>
       <%= @customer.vat_registration_number %>&nbsp;
     </dd>
+    <dt>
+      <label>
+        <%= t('customer.fields.type') %>
+      </label>
+    </dt>
+    <dd>
+      <%= @customer.customer_type %>&nbsp;
+    </dd>
+    <dt>
+      <label>
+        Date effective
+      </label>
+    </dt>
+    <dd>
+      <%= @customer.date_effective %>&nbsp;
+    </dd>
   </dl>
   <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> t("button.edit"), :path => edit_customer_path(@customer)} %>
 

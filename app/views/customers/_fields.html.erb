@@ -5,10 +5,17 @@
 	<% end %>
 	<%= fields.fields_for :customer do |cust_f| %>
 	<%= cust_f.hidden_field :id %>
-	<%= cust_f.hidden_field :customer_type %>
 	<li>
 		<%= cust_f.label :vat_registration_number,  t('customer.fields.vat_number') %>
 		<%= cust_f.text_field :vat_registration_number %>
+	</li>
+	<li>
+		<%= cust_f.label :customer_type, t("customer.fields.type") %>
+		<%= cust_f.select :customer_type, ["Agent", "Owner", "Both", "Other"].collect { |tt| [tt, tt] } %>
+	</li>
+	<li>
+		<%= cust_f.label :date_effective %>
+		<%= cust_f.text_field :date_effective, "class" => "date-field" %>
 	</li>
 	<% end %>
 </ul>
