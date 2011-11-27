@@ -22,7 +22,7 @@ class Party < ActiveRecord::Base
   has_many :source_parties, :class_name => 'Party', :through => :source_relationships
   has_many :target_parties, :class_name => 'Party', :through => :target_relationships  
   #
-  has_many :addresses
+  has_many :addresses, :conditions => "date_effective_end is null"
   has_many :contacts
   
   attr_accessible :identifier, :party_type, :individual_attributes, :contact_person_attributes, :company_attributes, :customer_attributes, :address_attributes, :user_attributes

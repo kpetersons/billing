@@ -29,7 +29,7 @@
 			<td class="col-text"><%= address.room_number%></td>
 	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => address}%>
 			<td class="col-number"> 
-				<%=link_to t("button.show"), path_elements+[address] %> 
+				<%=link_to t("button.show"), path_elements+[address] %>
 			</td>
 		</tr>
 		<%end%>
