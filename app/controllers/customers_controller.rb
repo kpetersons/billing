@@ -48,12 +48,18 @@ class CustomersController < ApplicationController
   def update
     @party = Party.find(params[:party][:id])
     Party.transaction do
+      shortnote = params[:party][:customer_attributes][:shortnote]
+      params[:party][:customer_attributes].reject!{|x| x.eql?("shortnote")}
       @test = Party.find(params[:party][:id])
       @test.attributes = params[:party]
-      @test.customer.attributes = params[:party][:customer_attributes]
-      @test.company.attributes = params[:party][:company_attributes]
       unless @test.changed? || @test.customer.changed? || @test.company.changed?
-        redirect_to customer_path(@party.customer) and return
+        params[:party][:customer_attributes][:shortnote] = shortnote
+        if @test.update_attributes(params[:party])
+          redirect_to customer_path(@test.customer) and return
+        else
+          @party = @test
+          render 'edit'
+        end
       end
 
       @date_effective =DateTime.now

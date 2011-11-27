@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111127155321) do
+ActiveRecord::Schema.define(:version => 20111127160235) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20111127155321) do
     t.integer  "orig_id"
     t.datetime "date_effective"
     t.datetime "date_effective_end"
+    t.text     "shortnote"
   end
 
   create_table "customs", :force => true do |t|
