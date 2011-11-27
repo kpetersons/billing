@@ -3,7 +3,7 @@ class CreateMattersView3 < ActiveRecord::Migration
     execute "drop view v_matters"
     execute <<-SQL
       create view v_matters as (
-select
+      select
         ma.agent_id,
         ma.applicant_id,
         ma.id,

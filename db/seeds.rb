@@ -1174,3 +1174,9 @@ Party.transaction do
     end
   end
 end
+
+User.transaction do
+  User.all.each do |x|
+    x.update_attribute(:active, true)
+  end
+end

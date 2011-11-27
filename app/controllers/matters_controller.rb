@@ -9,7 +9,7 @@ class MattersController < ApplicationController
     @direction = params[:direction]
     @matters = VMatters.where(:author_id => current_user.id).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
     @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
-    @other_matters = VMatters.where("author_id != #{current_user.id}").paginate(:page => params[:param_name])
+    @other_matters = VMatters.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).paginate(:page => params[:param_name])
   end
 
   def quick_search
