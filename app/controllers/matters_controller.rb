@@ -19,12 +19,23 @@ class MattersController < ApplicationController
   end
 
   def search
+    begin
+      @detail_search = DetailSearch.new({:columns => @columns, :details => params[:detail_search][:details]})
+      @order_by = params[:order_by]
+      @direction = params[:direction]
+      @matters = VMatters.where(@detail_search.query).where(:author_id => current_user.id).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
+      @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
+      @other_matters = VMatters.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).paginate(:page => params[:param_name])
+      render "index" and return
+    rescue Exception
+      flash[:error] = "Invalid search parameters. Check them again!"
+    end
     @order_by = params[:order_by]
     @direction = params[:direction]
     @matters = VMatters.where(:author_id => current_user.id).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
     @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
-    @other_matters = VMatters.where("author_id != #{current_user.id}").paginate(:page => params[:param_name])
-    render "index"
+    @other_matters = VMatters.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).paginate(:page => params[:param_name])
+    render"index"
   end
 
   def new
@@ -317,6 +328,7 @@ class MattersController < ApplicationController
     @apply_filter = true
     default_filter = DefaultFilter.where(:table_name => 'matters').first
     @columns = DefaultFilterColumn.where(:default_filter_id => default_filter.id).all
+    @detail_search = DetailSearch.new :columns => @columns
     #
     filter = UserFilter.where(:user_id => current_user.id, :table_name => 'matters').first
     if filter.nil?

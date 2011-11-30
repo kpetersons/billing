@@ -34,6 +34,14 @@ class Document < ActiveRecord::Base
     (parent_document.nil?)? '' : parent_document.registration_number
   end
 
+  def copy
+    @copy
+  end
+
+  def copy= copy
+    @copy = copy
+  end
+
   private 
   def is_design
     if matter.nil?

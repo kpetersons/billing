@@ -32,6 +32,7 @@ Billing::Application.routes.draw do
       post :filter 
       delete :reset
       get :quick_search
+      post :search
     end
     resource :pdf, :controller => "InvoicePreviews", :only => [:show, :preview, :print] do
       collection do
@@ -61,7 +62,7 @@ Billing::Application.routes.draw do
       post :filter
       delete :reset
       get :quick_search
-      get :search
+      post :search
     end
     resources :invoices, :only => [:new]
     resources :tasks, :controller => "MatterTasks" do
@@ -105,6 +106,7 @@ Billing::Application.routes.draw do
       get :list_addresses
       get :list_contact_persons
       get :quick_search
+      post :search
     end
   end
 

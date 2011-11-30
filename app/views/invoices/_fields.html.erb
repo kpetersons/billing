@@ -1,6 +1,7 @@
 <%= fields.hidden_field :id %>
 <%= fields.hidden_field :parent_id %>
 <%= fields.hidden_field :user_id %>
+<%= fields.hidden_field :copy %>
 <ul>
 	<%= fields.fields_for :invoice do |i_f| %>
 	<%if fields.object.persisted? %>

@@ -1,0 +1,126 @@
+<%= render :partial => "shared/flash", 	:locals => {:flash 		=> flash}%>
+<ul style="list-style: none; margin: 5px; padding: 5px;box-sizing:border-box;" id="search-box">
+  <li style="box-sizing:border-box;" data-index="0">
+    <%= fields_for "detail_search", @detail_search do |f| %>
+        <table style="width:100%; height:auto;">
+          <tbody style="color:black">
+          <%= f.fields_for "details", @detail_search.details do |fd| %>
+              <% fd.object.each_with_index do |item, idx| %>
+                  <%= fd.fields_for "#{idx}", fd.object[idx] do |fo| %>
+                      <tr class="search-field-container">
+                        <td style="width:1em">
+                          <%= fo.select :conjunction, @detail_search.all_conjunctions.collect { |tt|
+                              attrs = {}
+                              attrs[:selected] = true if tt.eql?(item[:conjunction])
+                              [tt, tt, attrs]
+                          }, {}, {"data-prefix" => "detail_search[details]", "data-name" => "[conjunction]", :style => "width:5em;"} %>
+                        </td>
+                        <td style="width:1em">
+                          <%= fo.select :opening_bracket, ["", "("].collect { |tt|
+                              attrs = {}
+                              attrs[:selected] = true if tt.eql?(item[:opening_bracket])
+                              [tt, tt, attrs]
+                          }, {}, {"data-prefix" => "detail_search[details]", "data-name" => "[opening_bracket]"} %>
+                        </td>
+                        <td style="width:1em">
+                          <%= fo.select :field, @detail_search.all_fields.collect { |tt|
+                              attrs = {"data-type" => tt.column_type}
+                              attrs[:selected] = true if tt.column_query.eql?(item[:field])
+                              [t(tt.column_name), tt.column_query, attrs]},
+                                        {},
+                                        {"data-prefix" => "detail_search[details]", "data-name" => "[field]", "class" => "column-rows"} %>
+                        </td>
+                        <td style="width:1em">
+                          <div class="values range invisible" style="width:200px">
+                            <%= fo.text_field :range_from, {"data-prefix" => "detail_search[details]", "data-name" => "[range_from]", :style=> "width:94px; display:inline-block;"} %>
+                            <div style="width:4px;display:inline-block;"></div>
+                            <%= fo.text_field :range_to, {"data-prefix" => "detail_search[details]", "data-name" => "[range_to]", :style=> "width:94px; display:inline-block;"} %>
+                          </div>
+                          <div class="values regular" style="width:200px">
+                            <%= fo.text_field :regular, {"data-prefix" => "detail_search[details]", "data-name" => "[regular]", :style=> "width:200px"} %>
+                          </div>
+                        </td>
+                        <td style="width:1em">
+                          <%= fo.select :closing_bracket, ["", ")"].collect { |tt|
+                              attrs = {}
+                              attrs[:selected] = true if tt.eql?(item[:closing_bracket])
+                              [tt, tt, attrs]
+                          }, "data-prefix" => "detail_search[details]", "data-name" => "[closing_bracket]" %>
+                        </td>
+                        <td style="width:1em">
+                          <%
+                             attrs = {"data-prefix" => "detail_search[details]", "data-name" => "[match_case]"}
+                             attrs[:checked] = true if item[:match_case].eql?("1")
+                          %>
+                          <%= fo.check_box :match_case,  attrs %>
+                        </td>
+                        <td style="width:auto">
+
+                        </td>
+                      </tr>
+                  <% end %>
+              <% end %>
+          <% end %>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="6">
+              <a href="#" style="width:auto;" id="add">Add</a>
+              <a href="#" style="width:auto;" id="clear">Clear</a>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              <button style="clear:both; display:block; margin-top:5px;" id="search" type="submit">Search</button>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+    <% end %>
+  </li>
+</ul>
+<script>
+    $('#add').click(function() {
+        $clone = $('#search-box li:first-child table tbody tr:first-child').clone()
+        $clone.css('padding-top', '5px').css('margin-top', '5px').css('border-top', '1px solid #d3d3d3')
+        $clone.attr('data-index', $('#search-box li:not(:last-child)').length)
+        $target = $('#search-box li:last-child table tbody tr:last-child')
+
+        idx = $('.search-field-container').length
+        $clone.find(':input').each(function (index, elem) {
+            $elem = $(elem)
+            $elem.attr('name', $elem.attr('data-prefix') + '[' + idx + ']' + $elem.attr('data-name'));
+        })
+
+        $target.after($clone)
+        return false;
+    })
+
+    $('#clear').click(function() {
+        $('#search-box li table tbody tr:not(:first-child)').detach()
+        return false
+    })
+
+    $('.column-rows').live('change', function() {
+        $this = $(this)
+        $selected = $this.find(':selected')
+        if ($selected.length > 0) {
+            if ($selected.attr('data-type') == 'col-date') {
+                $this.parents('tr').find('.range').removeClass('invisible')
+                $this.parents('tr').find('.regular').addClass('invisible')
+            } else {
+                $this.parents('tr').find('.regular').removeClass('invisible')
+                $this.parents('tr').find('.range').addClass('invisible')
+            }
+        }
+    })
+
+    $('#search').click(function() {
+        return false;
+    })
+</script>
+<style>
+  #search-box table tbody tr:first-child td:first-child * {
+      display: none;
+  }
+</style>
