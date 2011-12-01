@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem "rake", "0.9.2"
-gem 'rails', '3.0.7'
+gem 'rails', '3.1'
 gem 'gravatar_image_tag'
 gem 'will_paginate', '~>3.0.pre2'
 gem 'uuidtools'
@@ -14,6 +14,7 @@ group :development do
   gem 'annotate', '2.4.0'
   gem 'faker', '0.3.1'
   gem 'pg'
+  gem 'rack', '1.3.4'
 end
 
 group :test do
