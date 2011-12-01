@@ -8,7 +8,6 @@
   <div class="panel-header">
     <strong>My matters</strong>
   </div>
-  <%= render :partial => "shared/flash", :locals => {:flash => flash} %>
   <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matters, :choose => false, :param_name => 'my_matters_page'} %>
 </div>
 <% unless @other_matters.empty? %>

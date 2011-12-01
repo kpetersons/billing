@@ -28,7 +28,7 @@ class MattersController < ApplicationController
       @other_matters = VMatters.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).paginate(:page => params[:param_name])
       render "index" and return
     rescue Exception
-      flash[:error] = "Invalid search parameters. Check them again!"
+      flash.now[:error] = "Invalid search parameters. Check them again!"
     end
     @order_by = params[:order_by]
     @direction = params[:direction]
