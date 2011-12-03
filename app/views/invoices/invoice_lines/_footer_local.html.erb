@@ -1,0 +1,32 @@
+<tr>
+  <th class="col-text wide" colspan="6">
+    Ar PVN apliekamā summa
+  </th>
+  <th style="text-align: right">
+    <%= invoice.local_sum_taxable_vat %>
+  </th>
+</tr>
+<tr>
+  <th class="col-text wide" colspan="6">
+    Ar PVN neapliekamā summa (Valsts nodevas)
+  </th>
+  <th style="text-align: right">
+    <%= invoice.local_sum_exempt_vat %>
+  </th>
+</tr>
+<tr>
+  <th class="col-text wide"  colspan="6">
+    VAT
+  </th>
+  <th style="text-align: right">
+    <%=invoice.local_sum_vat%>
+  </th>
+</tr>
+<tr>
+  <th class="col-text wide" colspan="6">
+    KOPĀ pavisam
+  </th>
+  <th style="text-align: right">
+    <%=invoice.local_sum_total%>
+  </th>
+</tr>

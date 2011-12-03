@@ -28,7 +28,7 @@ class Address < ActiveRecord::Base
   attr_accessor :address_type_name
 
   def history
-    Address.where(:orig_id => orig_id).where("date_effective_end is not null")
+    Address.where(:orig_id => orig_id).where("date_effective_end is not null and date_effective < :g", {:g => date_effective})
   end
 
   def name

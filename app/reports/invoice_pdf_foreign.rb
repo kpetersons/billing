@@ -96,10 +96,10 @@ class InvoicePdfForeign < Prawn::Document
   def left_side_group invoice
     left_side = make_table([
                 [(invoice_date_group invoice)],
-                [(invoice_number_group invoice)]
-              ], :width => 205, :cell_style => {:borders =>[], :padding => 2})
+                [(invoice_number_group (invoice))]
+              ], :width => 205, :cell_style => {:borders =>[], :padding_top => 6, :padding_bottom => 6})
     left_side.cells[0,0].style :font_style => :bold
-    left_side.cells[1,0].style :borders => [:top, :right, :bottom, :left], :font_style => :bold, :align => :center, :size => 10
+    left_side.cells[1,0].style :borders => [:top, :right, :bottom, :left], :font_style => :bold, :align => :center, :size => 12, :height => 25
     return left_side
   end
 

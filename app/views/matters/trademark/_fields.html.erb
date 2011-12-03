@@ -32,7 +32,7 @@
 					</li>
 					<li>
 						<%= t_f.label :appl_date %>
-						<%= t_f.text_field :appl_date, :class => 'field-date date-field' %>
+						<%= t_f.text_field :appl_date, :class => 'field-date date-field', :value => date_format_field(t_f.object.appl_date) %>
 					</li>
 					<li>
 						<%= t_f.label :appl_number %>
@@ -42,7 +42,7 @@
 			</li>
 			<li>
 				<%= t_f.label :priority_date %>
-				<%= t_f.text_field :priority_date, 'class' => 'date-field' %>
+				<%= t_f.text_field :priority_date, 'class' => 'field-date date-field', :value => date_format_field(t_f.object.priority_date) %>
 			</li>
 			<li>
 				<ul>
@@ -71,7 +71,7 @@
 					</li>
 					<li>
 						<%= t_f.label :registration_date %>
-						<%= t_f.text_field :registration_date, :class => 'field-date date-field' %>
+						<%= t_f.text_field :registration_date, :class => 'field-date date-field', :value => date_format_field(t_f.object.registration_date) %>
 					</li>
 				</ul>
 			</li>

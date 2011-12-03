@@ -45,6 +45,7 @@ end
     ["funct.matters.status.pending", true],
     ["funct.matters.status.closed", true],
     ["funct.matters.status.appealed", true],
+    ["funct.matters.status.lapsed", true],
     ["funct.matters.task.status.open", true],
     ["funct.matters.task.status.awaiting_response", true],
     ["funct.matters.task.status.done", true],
@@ -606,7 +607,7 @@ end
 
 MatterStatus.transaction do
   prefix = "matters.status."
-  matter_statuses = ["active", "pending", "closed", "appealed"]
+  matter_statuses = ["active", "pending", "closed", "appealed", "lapsed"]
   matter_statuses.each do |name|
     unless MatterStatus.find_by_name("#{prefix}#{name}")
       MatterStatus.create(:name => "#{prefix}#{name}", :function_id => Function.find_by_name("funct.#{prefix}#{name}").id)

@@ -70,6 +70,7 @@ en:
       pending: "Pending"
       closed: "Closed"
       appealed: "Appealed"
+      lapsed: "Lapsed"
     trademark: "Trademark matter"
     patent:    "Patent matter"
     design:    "Design matter"
@@ -252,6 +253,7 @@ en:
         description: "Description"
   customer:
       show: "Customer"
+      edit: "Customer"
       list:
           default: "Customers"
           as_agent: "As agent"

@@ -26,7 +26,7 @@
 	<td colspan="6" class="col-text">
 		<%= fields.text_area :details, {:rows => 1, :style => "width: 100%; resizeable:false;"} %> 
 	</td>
-  	<td class="col-text narrow"style="width:1em;vertical-align: middle;">
-  		<%= link_to 'Remove', remove_line_invoice_path(@invoice, :invoice_line_id => fields.object), :method => :delete %>
+  	<td class="col-text narrow"style="width:1em;vertical-align: middle; text-align: right;">
+  		<%= link_to 'Remove', remove_line_invoice_path(@invoice, :invoice_line_id => fields.object), :method => :delete, :style => "margin-right: .5em;" %>
   	</td>
 </tr>

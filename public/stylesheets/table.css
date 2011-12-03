@@ -84,7 +84,11 @@ table thead th {
     border-bottom: 1px black solid;
 }
 
-table tfoot th {
+table tfoot:not(.lines-total) th {
+    border-top: 1px black solid;
+}
+
+table tfoot.lines-total tr:first-child th {
     border-top: 1px black solid;
 }
 

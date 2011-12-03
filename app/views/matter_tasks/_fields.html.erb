@@ -9,7 +9,7 @@
 	</li>
 	<li>
 		<%= fields.label :proposed_deadline %>
-		<%= fields.text_field :proposed_deadline, 'class' => 'date-field' %>
+		<%= fields.text_field :proposed_deadline, "class" => "field-date date-field", :value => date_format_field(fields.object.proposed_deadline)%>
 	</li>
 	<li>
 		<%= fields.label :matter_task_type_id, t("matter_task.fields.type") %>

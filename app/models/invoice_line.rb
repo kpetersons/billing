@@ -57,8 +57,11 @@ class InvoiceLine < ActiveRecord::Base
   end
 
   def line_details
-    attorney_fee_print = attorney_fee.to_s.gsub('.00', '').gsub('.0', '')
-    items_print = items.to_s.to_s.gsub('.00', '').gsub('.0', '')
+    attorney_fee_print = attorney_fee.to_s.gsub('.00', '')
+    if attorney_fee_print.include? "."
+      attorney_fee_print = "#{attorney_fee_print}0"
+    end
+    items_print = items.to_s.to_s.gsub('.00', '')
     brackets_tmp = (items.nil?)? "" : " (#{items_print} #{units} x #{invoice.currency.name} #{attorney_fee_print})"
     details_tmp = "#{details}#{brackets_tmp}"
     #return (both_official_and_attorney?)? "#{details} x#{items_print}" : details_tmp
@@ -67,7 +70,11 @@ class InvoiceLine < ActiveRecord::Base
 
   def offering_print
     attorney_fee_print = attorney_fee.to_s.gsub('.00', '').gsub('.0', '')
+    if attorney_fee_print.include? "."
+      attorney_fee_print = "#{attorney_fee_print}0"
+    end
     items_print = items.to_s.to_s.gsub('.00', '').gsub('.0', '')
+
     brackets_tmp = (items.nil?)? "" : " (#{items_print} #{units} x #{invoice.currency.name} #{attorney_fee_print})"
     details_tmp = "#{details}#{brackets_tmp}"
     return (both_official_and_attorney?)? "#{offering} x#{items_print}" : offering

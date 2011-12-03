@@ -15,7 +15,7 @@
 	</li>
 	<li>
 		<%= cust_f.label :date_effective %>
-		<%= cust_f.text_field :date_effective, "class" => "date-field" %>
+		<%= cust_f.text_field :date_effective, "class" => "field-date date-field", :value => date_format_field(cust_f.object.date_effective) %>
 	</li>
 	<li>
 		<%= cust_f.label :shortnote %>

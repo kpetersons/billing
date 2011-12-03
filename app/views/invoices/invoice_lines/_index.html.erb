@@ -11,7 +11,12 @@
         <th class="col-number narrow" style="width:1em">Quantity</th>
       </tr>
       </thead>
-      <tfoot>
+      <tfoot class="lines-total">
+      <% if document.invoice.invoice_type == 1 %>
+          <%= render :partial => "/invoices/invoice_lines/footer_foreign", :locals => {:invoice => document.invoice} %>
+      <% else %>
+          <%= render :partial => "/invoices/invoice_lines/footer_local", :locals => {:invoice => document.invoice} %>
+      <% end %>
       <tr>
         <th colspan="7">
           <div class="panel-footer controls" style="margin-top:1em;">
@@ -20,8 +25,9 @@
                 <%= i_f.select :preset_id, InvoiceLinePreset.all.collect { |tt| [t(tt.name), tt.id] }, {}, {:style => "display:inline-block; float:none; margin-left:5em;"} %>
                 <% if !InvoiceLinePreset.all.empty? %>
                     <%= i_f.submit 'Add line', :name => "add_line", :style => "display:inline-block; float:none;" %>
-                <%else%>
-                   <strong style="font-size: 1.2em"> Before adding new lines to invoice, create at least one preset</strong>
+                <% else %>
+                    <strong style="font-size: 1.2em"> Before adding new lines to invoice, create at least one
+                      preset</strong>
                 <% end %>
             <% end %>
           </div>

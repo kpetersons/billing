@@ -19,7 +19,7 @@
 		<%= i_f.hidden_field :invoice_status_id %>		
 		<%= i_f.hidden_field :author_id %>
 		<%= i_f.label :invoice_date %>
-		<%= i_f.text_field :invoice_date, :value => (i_f.object.invoice_date.nil?)? DateTime.now : i_f.object.invoice_date, 'class' => 'date-field' %>
+		<%= i_f.text_field :invoice_date, :value => (i_f.object.invoice_date.nil?)? date_format_field(DateTime.now) : date_format_field(i_f.object.invoice_date), 'class' => 'field-date date-field' %>
 	</li>
 	<li>
 		<ul>
@@ -66,7 +66,7 @@
 			</li>
 			<li>
 				<%= i_f.label :your_date %>
-				<%= i_f.text_field :your_date, 'class' => 'date-field' %>
+				<%= i_f.text_field :your_date, "class" => "field-date date-field", :value => date_format_field(i_f.object.your_date) %>
 			</li>
 			<li>
 				<%= i_f.label :po_billing %>
@@ -115,7 +115,7 @@
 	<%if has_function :name => 'funct.invoice.status.paid' %>
 		<li>
 			<%= i_f.label :date_paid %>
-			<%= i_f.text_field :date_paid, 'class' => 'date-field' %>
+			<%= i_f.text_field :date_paid, "class" => "field-date date-field", :value => date_format_field(i_f.object.date_paid) %>
 		</li>	
 	<%end%>
 	<%end%>	

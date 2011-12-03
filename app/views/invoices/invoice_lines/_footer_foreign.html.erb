@@ -1,0 +1,40 @@
+<tr>
+  <th class="col-text wide" colspan="6">
+    Official fee
+  </th>
+  <th style="text-align: right">
+    <%= invoice.sum_official_fees %>
+  </th>
+</tr>
+<tr>
+  <th class="col-text wide" colspan="6">
+    Attorney's fee
+  </th>
+  <th style="text-align: right">
+    <%= invoice.sum_discount %>
+  </th>
+</tr>
+<tr>
+  <th class="col-text wide" colspan="6">
+    Official fee + Attorney's fee
+  </th>
+  <th style="text-align: right">
+    <%= invoice.sum_official_fees + invoice.sum_attorney_fees - invoice.sum_discount %>
+  </th>
+</tr>
+<tr>
+  <th class="col-text wide"  colspan="6">
+    VAT
+  </th>
+  <th style="text-align: right">
+    <%=invoice.sum_vat%>
+  </th>
+</tr>
+<tr>
+  <th class="col-text wide" colspan="6">
+    Grand total
+  </th>
+  <th style="text-align: right">
+    <%=invoice.sum_total%>
+  </th>
+</tr>

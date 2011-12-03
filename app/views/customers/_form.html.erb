@@ -1,5 +1,10 @@
-<%=form_for @party, :url => (@party.persisted?) ? customer_path : {:controller => 'customers', :action => 'create'} do |p_f| %>
-	<%= p_f.hidden_field :id %>
-	<%= render :partial => "fields", 							:locals => {:fields 	=> p_f}%>
-	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> p_f}%>
-<%end%>
+<%= form_for @party, :url => (@party.persisted?) ? customer_path : {:controller => 'customers', :action => 'create'} do |p_f| %>
+    <%= p_f.hidden_field :id %>
+    <%= render :partial => "fields", :locals => {:fields => p_f} %>
+    <div class="panel-footer controls history">
+      <%= p_f.submit "Save", :name => 'save' %>
+      <% if p_f.object.persisted? %>
+          <%= p_f.submit "Save As", :name => 'save_as' %>
+      <% end %>
+    </div>
+<% end %>

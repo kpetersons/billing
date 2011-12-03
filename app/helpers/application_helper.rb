@@ -20,6 +20,13 @@ module ApplicationHelper
     return "!#{@detail_search.url_query}!"
   end
 
+  def date_format_field value
+    if value.nil?
+      return ""
+    end
+    return value.to_s(:default)
+  end
+
   private
   def reject_object data
     if data.empty?

@@ -36,7 +36,7 @@
 					</li>
 					<li>
 						<%= t_f.label :date_of_order %>
-						<%= t_f.text_field :date_of_order, :class => 'field-date date-field' %>
+						<%= t_f.text_field :date_of_order, :class => 'field-date date-field', :value => date_format_field(t_f.object.date_of_order) %>
 					</li>					
 				</ul>
 			</li>

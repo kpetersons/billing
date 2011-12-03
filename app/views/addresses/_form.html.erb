@@ -1,4 +1,9 @@
-<%=form_for path_elements do |a_f| %>
-	<%= render :partial => "fields", 							:locals => {:fields => a_f} %>
-	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> a_f}%>
-<%end%>
+<%= form_for path_elements do |a_f| %>
+    <%= render :partial => "fields", :locals => {:fields => a_f} %>
+    <div class="panel-footer controls history">
+      <%= a_f.submit "Save", :name => 'save' %>
+      <% if a_f.object.persisted? %>
+          <%= a_f.submit "Save As", :name => 'save_as' %>
+      <% end %>
+    </div>
+<% end %>

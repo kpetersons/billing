@@ -28,7 +28,7 @@
 					</li>
 					<li>
 						<%= t_f.label :application_date %>
-						<%= t_f.text_field :application_date, :class => 'field-date date-field' %>
+						<%= t_f.text_field :application_date, :class => 'field-date date-field', :value => date_format_field(t_f.object.application_date) %>
 					</li>
 					<li>
 						<%= t_f.label :application_number %>
@@ -55,7 +55,7 @@
 					</li>
 					<li>
 						<%= t_f.label :registration_date %>
-						<%= t_f.text_field :registration_date, :class => 'field-date date-field' %>
+						<%= t_f.text_field :registration_date, :class => 'field-date date-field', :value => date_format_field(t_f.object.registration_date)%>
 					</li>
 				</ul>
 			</li>
