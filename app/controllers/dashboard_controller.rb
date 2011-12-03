@@ -22,14 +22,14 @@ class DashboardController < ApplicationController
 
   def reset
     UserFilterColumn.transaction do
-      UserFilter.reset_filter current_user, 'matters_deadlines'
+      UserFilter.reset_filter current_user, 'dashboard'
     end
     redirect_to dashboard_index_path
   end
 
   def clear
     UserFilterColumn.transaction do
-      UserFilter.clear_filter current_user, 'matters_deadlines'
+      UserFilter.clear_filter current_user, 'dashboard'
     end
     redirect_to dashboard_index_path
   end
@@ -42,7 +42,7 @@ class DashboardController < ApplicationController
     unless columns.empty?
       UserFilterColumn.transaction do
         # defaults
-        default_filter = DefaultFilter.where(:table_name => 'matters_deadlines').first
+        default_filter = DefaultFilter.where(:table_name => 'dashboard').first
         UserFilter.create_modified current_user, default_filter, columns
       end
     end
@@ -53,7 +53,7 @@ class DashboardController < ApplicationController
 
   def show_column_filter
     @apply_filter = true
-    default_filter = DefaultFilter.where(:table_name => 'matters_deadlines').first
+    default_filter = DefaultFilter.where(:table_name => 'dashboard').first
     @columns = DefaultFilterColumn.where(:default_filter_id => default_filter.id).all
     #
     filter = UserFilter.where(:user_id => current_user.id, :table_name => 'matters_deadlines').first

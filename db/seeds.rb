@@ -1076,6 +1076,8 @@ DefaultFilter.transaction do
       {:column_query => 'registration_date', :column_position => 43, :is_default => false, :column_name => 'mi_registration_date', :column_type => 'col-date', :translate => false}
   ]
 
+  dashboard_columns = matter_columns
+
   invoice_columns = [
       {:column_query => 'customer_name', :column_position => 1, :is_default => true, :column_name => 'ii_customer_name', :column_type => 'col-text', :translate => false},
       {:column_query => 'person', :column_position => 2, :is_default => false, :column_name => 'ii_person', :column_type => 'col-text', :translate => false},
@@ -1102,13 +1104,13 @@ DefaultFilter.transaction do
   tables = [
       "invoices",
       "matters",
-      "matters_deadlines",
+      "dashboard",
       "customers"
   ]
 
   columns = {
       "matters" => matter_columns,
-      "matters_deadlines" => matter_columns,
+      "dashboard" => dashboard_columns,
       "customers" => [],
       "invoices" => invoice_columns
   }

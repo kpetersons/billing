@@ -17,7 +17,7 @@
 			<strong><a href="#recent_activity">Recently updated/created matters</a></strong>
 		</dt>
 		<dd id="recent_activity">
-			<%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @recent_activity_matters, :table_title => "Recently updated matters", :choose => false, :param_name => "recent_activity_page"} %>
+			<%= render :partial => "/matters/index", :locals => {:column_names => 'dashboard', :matters => @recent_activity_matters, :table_title => "Recently updated matters", :choose => false, :param_name => "recent_activity_page"} %>
 		</dd>
 
 	</dl>		
