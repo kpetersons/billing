@@ -35,9 +35,13 @@ class Matter < ActiveRecord::Base
   has_many :matter_tasks
   has_many :invoice_matters
   has_many :invoices, :through => :invoice_matters
-  has_many :linked_matters, :class_name => "LinkedMatter", :foreign_key => :matter_id
+
+  has_many :linked_matters
   has_many :matters, :through => :linked_matters
-  has_many :linked, :class_name => "Matter", :finder_sql => 'select distinct m.* from matters m join linked_matters lm on ((m.id = lm.matter_id and lm.linked_matter_id = #{id}) or (m.id = lm.linked_matter_id and lm.matter_id = #{id}))'
+
+  has_many :inverse_linked_matters, :class_name => "LinkedMatter", :foreign_key => :linked_matter_id
+  has_many :inverse_matters, :through => :inverse_linked_matters, :source => :matter
+
   has_many :matter_images
   has_many :matter_clazzs
   has_many :clazzs, :through => :matter_clazzs
@@ -69,6 +73,11 @@ class Matter < ActiveRecord::Base
 
   def number
     document.registration_number
+  end
+
+  def linked
+    Matter.joins(:linked_matters).joins(:inverse_linked_matters).all
+    #inverse_matters + matters
   end
 
   def classes

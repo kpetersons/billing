@@ -1,4 +1,4 @@
-<%= render :partial => "shared/flash", 	:locals => {:flash 		=> flash}%>
+<%= render :partial => "shared/flash", :locals => {:flash => flash} %>
 <ul style="list-style: none; margin: 5px; padding: 5px;box-sizing:border-box;" id="search-box">
   <li style="box-sizing:border-box;" data-index="0">
     <%= fields_for "detail_search", @detail_search do |f| %>
@@ -26,9 +26,16 @@
                           <%= fo.select :field, @detail_search.all_fields.collect { |tt|
                               attrs = {"data-type" => tt.column_type}
                               attrs[:selected] = true if tt.column_query.eql?(item[:field])
-                              [t(tt.column_name), tt.column_query, attrs]},
+                              [t(tt.column_name), tt.column_query, attrs] },
                                         {},
                                         {"data-prefix" => "detail_search[details]", "data-name" => "[field]", "class" => "column-rows"} %>
+                        </td>
+                        <td style="width:1em">
+                          <%= fo.select :precision, ["Is", "Contains"].collect { |tt|
+                              attrs = {}
+                              attrs[:selected] = true if tt.eql?(item[:closing_bracket])
+                              [tt, tt, attrs]
+                          }, "data-prefix" => "detail_search[details]", "data-name" => "[closing_bracket]" %>
                         </td>
                         <td style="width:1em">
                           <div class="values range invisible" style="width:200px">
@@ -52,7 +59,7 @@
                              attrs = {"data-prefix" => "detail_search[details]", "data-name" => "[match_case]"}
                              attrs[:checked] = true if item[:match_case].eql?("1")
                           %>
-                          <%= fo.check_box :match_case,  attrs %>
+                          <%= fo.check_box :match_case, attrs %>
                         </td>
                         <td style="width:auto">
 
@@ -70,7 +77,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="6">
+            <td colspan="7">
               <button style="clear:both; display:block; margin-top:5px;" id="search" type="submit">Search</button>
             </td>
           </tr>
@@ -120,7 +127,7 @@
     })
 </script>
 <style>
-  #search-box table tbody tr:first-child td:first-child * {
-      display: none;
-  }
+    #search-box table tbody tr:first-child td:first-child * {
+        display: none;
+    }
 </style>

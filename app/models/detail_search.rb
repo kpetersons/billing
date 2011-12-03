@@ -13,6 +13,14 @@ class DetailSearch
     end
   end
 
+  def url_query
+    return {
+        :detail_search => {
+            :details => @details
+        }
+    }
+  end
+
   def add_detail detail
     if @details.nil?
       @details = Array.new
@@ -57,18 +65,18 @@ class DetailSearch
   end
 
   def query_field_comparator item
-    comparator = "#{item[:field]} "
+    comparator = ""
     if @all_fields_hash[item[:field]][:data_type].eql?("col-date")
       comparator = "#{comparator} between #{upper item, item[:range_from]}..#{upper item, item[:range_to]} "
     else
       regular = "'%#{item[:regular]}%'"
-      comparator = "#{comparator} #{get_conjunction item, @all_fields_hash[item[:field]][:data_type]} #{upper item, regular}"
+      #comparator = "#{comparator} #{upper (item, item[:field])} #{get_conjunction item, @all_fields_hash[item[:field]][:data_type]} #{upper item, regular}"
     end
     return comparator
   end
 
   def get_conjunction item, type
-    if type.eql? "col-text"
+    if type.eql?("col-text") && item[:precision].eql?("Contains")
       return " like "
     else
       return " = "
@@ -76,7 +84,7 @@ class DetailSearch
   end
 
   def upper item, val
-    if item[:match_case].eql? "1"
+    if item[:match_case].eql? "0"
       return val = "upper(#{val})"
     end
     return val
@@ -95,7 +103,8 @@ class Detail
     @range_to = params[:range_to]
     @regular = params[:regular]
     @match_case = params[:match_case]
+    @precision = params[:precision]
   end
 
-  attr_accessor :conjunction, :opening_bracket, :closing_bracket, :field, :range_from, :range_to, :regular, :match_case
+  attr_accessor :conjunction, :opening_bracket, :closing_bracket, :field, :range_from, :range_to, :regular, :match_case, :precision
 end

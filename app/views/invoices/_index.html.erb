@@ -1,47 +1,47 @@
 <table style="width: 100%;">
-	<thead>
-		<tr>
-			<th class="col-radio"></th>
-			<% current_user.column_names('invoices').each do |column|%>
-				<th class="<%=column.column_type%>">
-                  <%=t(column.column_name)%>
-                 <%=link_to "↑", invoices_path(:order_by => column.column_query, :direction => "ASC"), :style => "text-decoration:none"%>
-                 <%=link_to "↓", invoices_path(:order_by => column.column_query, :direction => "DESC"), :style => "text-decoration:none"%>
-                </th>
-			<%end%>
-			<th></th>
-		</tr>
-	</thead>
-	<tfoot>
-		<tr>
-			<th class="list-paginate" colspan="<%=current_user.column_names('invoices').length + 2%>">
-				<%= will_paginate invoices, :param_name => param_name %>			
-			</th>
-		</tr>
-	</tfoot>
-	<tbody>
-		<% invoices.each do |invoice| %>
-		<tr>
-			<td>
-				<%if choose %>
-					<%= fields.radio_button :id, invoice.document_id%>								
-				<%end%>
-			</td>
-			<% current_user.column_names('invoices').each do |column|%>
-				<td class="<%=column.column_type%>">
-                    <% val = invoice.try(column.column_query) %>
-                    <% val = (column.column_type.eql?('col-date') && !val.nil?)? val.to_datetime().to_s(:show) : val %>
-                    <% val = (column.translate)? t(val) : val %>
-					<%= val %>
-				</td>
-			<%end%>
-			<td class="col-number"><%= link_to "Show", invoice_path(invoice)%></td>
-		</tr>
-		<% end %>
-		<% if invoices.empty? %>
-		<tr>
-			<td colspan="<%=current_user.column_names('invoices').length + 2%>">&nbsp;</td>
-		</tr>
-		<% end %>
-	</tbody>
+  <thead>
+  <tr>
+    <th class="col-radio"></th>
+    <% current_user.column_names('invoices').each do |column| %>
+        <th class="<%= column.column_type %>">
+          <%= t(column.column_name) %>
+          <%= link_to "↑", {:order_by => column.column_query, :direction => "ASC"}, :style => "text-decoration:none" %>
+          <%= link_to "↓", {:order_by => column.column_query, :direction => "DESC"}, :style => "text-decoration:none" %>
+        </th>
+    <% end %>
+    <th></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <th class="list-paginate" colspan="<%= current_user.column_names('invoices').length + 2 %>">
+      <%= will_paginate invoices, :param_name => param_name %>
+    </th>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% invoices.each do |invoice| %>
+      <tr>
+        <td>
+          <% if choose %>
+              <%= fields.radio_button :id, invoice.document_id %>
+          <% end %>
+        </td>
+        <% current_user.column_names('invoices').each do |column| %>
+            <td class="<%= column.column_type %>">
+              <% val = invoice.try(column.column_query) %>
+              <% val = (column.column_type.eql?('col-date') && !val.nil?) ? val.to_datetime().to_s(:show) : val %>
+              <% val = (column.translate) ? t(val) : val %>
+              <%= val %>
+            </td>
+        <% end %>
+        <td class="col-number"><%= link_to "Show", invoice_path(invoice) %></td>
+      </tr>
+  <% end %>
+  <% if invoices.empty? %>
+      <tr>
+        <td colspan="<%= current_user.column_names('invoices').length + 2 %>">&nbsp;</td>
+      </tr>
+  <% end %>
+  </tbody>
 </table>

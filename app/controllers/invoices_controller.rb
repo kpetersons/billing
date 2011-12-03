@@ -16,10 +16,13 @@ class InvoicesController < ApplicationController
   end
 
   def search
+    if params[:detail_search].nil? || params[:detail_search][:details].nil?
+      redirect_to invoices_path and return
+    end
+    @detail_search = DetailSearch.new({:columns => @columns, :details => params[:detail_search][:details]})
+    @order_by = params[:order_by]
+    @direction = params[:direction]
     begin
-      @detail_search = DetailSearch.new({:columns => @columns, :details => params[:detail_search][:details]})
-      @order_by = params[:order_by]
-      @direction = params[:direction]
       @invoices = VInvoices.where(@detail_search.query).where(:author_id => current_user.id).order(params[:order]).paginate(:per_page => 10, :page => params[:my_invoices_page])
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
       @other_invoices = VMatters.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).order(params[:order]).paginate(:per_page => 10, :page => params[:other_invoices_page])
@@ -27,7 +30,6 @@ class InvoicesController < ApplicationController
     rescue Exception => e
       flash.now[:error] = "Invalid search parameters. Check them again!"
       logger.error e.message
-      logger.error e.backtrace.join("\n")
     end
     @invoices = VInvoices.where(:author_id => current_user.id).order(params[:order]).paginate(:per_page => 10, :page => params[:my_invoices_page])
     @other_invoices = VInvoices.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).order(params[:order]).paginate(:per_page => 10, :page => params[:other_invoices_page])

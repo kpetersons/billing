@@ -58,7 +58,7 @@ class CustomersController < ApplicationController
           redirect_to customer_path(@test.customer) and return
         else
           @party = @test
-          render 'edit'
+          render 'edit' and return
         end
       end
 
@@ -113,7 +113,7 @@ class CustomersController < ApplicationController
   def agent_find_ajax
     @result = []
     index = 0
-    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ?', "%#{params[:term]}%"])
+    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ? and customers.date_effective_end is null', "%#{params[:term]}%"])
     @customers.each do |customer|
       @result<<{:id => customer.id, :label => customer.name, :value => customer.name, :vat_number => customer.vat_registration_number}
       index += 1
@@ -124,7 +124,7 @@ class CustomersController < ApplicationController
   def applicant_find_ajax
     @result = []
     index = 0
-    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ?', "%#{params[:term]}%"])
+    @customers = Customer.joins(:party => :company).all(:conditions => ['name like ? and customers.date_effective_end is null', "%#{params[:term]}%"])
     @customers.each do |customer|
       @result<<{:id => customer.id, :label => customer.name, :value => customer.name, :vat_number => customer.vat_registration_number}
       index += 1

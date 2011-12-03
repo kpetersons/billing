@@ -62,7 +62,7 @@ Billing::Application.routes.draw do
       post :filter
       delete :reset
       get :quick_search
-      post :search
+      get :search
     end
     resources :invoices, :only => [:new]
     resources :tasks, :controller => "MatterTasks" do

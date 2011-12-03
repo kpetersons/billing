@@ -304,14 +304,11 @@ class MattersController < ApplicationController
     end
     Matter.transaction do
       result.each do |item|
-        puts "From result Array: #{item}"
-        #puts "Item: #{item}"
         doc = Document.find_by_registration_number(item)
         unless doc.nil?
           matter = doc.matter
           if !matter.nil?
-            puts "source_matter: #{source_matter} matter #{matter}"
-            source_matter.linked_matters<<LinkedMatter.new(:linked_matter_id => matter.id)
+            LinkedMatter.new(:linked_matter_id => matter.id, :matter_id => source_matter.id).save
           end
         else
           source_matter.document.errors.add(:our_ref, "Could not find matter with registration number: #{item}")
