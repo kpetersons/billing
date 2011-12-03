@@ -302,7 +302,7 @@ en:
   apply_vat: "Apply VAT"
   invoice_status: "Status"
   date_paid: "Date paid"
-  mi_registration_number: "Registration number"
+  mi_registration_number: "Matter number"
   mi_description: "Description"
   mi_created_at: "Created at"
   mi_updated_at: "Updated at"
