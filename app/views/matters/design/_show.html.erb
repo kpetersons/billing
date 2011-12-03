@@ -66,6 +66,12 @@
 					<dd>
 						<%= matter.design.rdc_number %>&nbsp;
 					</dd>
+					<dt>
+						<label>Registration date</label>
+					</dt>
+					<dd>
+						<%= matter.design.registration_date.to_s(:show) unless matter.design.registration_date.nil? %>&nbsp;
+					</dd>
 				</dl>
 			</li>
 		</ul>

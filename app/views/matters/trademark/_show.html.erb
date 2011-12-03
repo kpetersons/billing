@@ -90,6 +90,12 @@
 					<dd>
 						<%= matter.trademark.reg_number %>&nbsp;
 					</dd>
+					<dt>
+						<label>Registration date</label>
+					</dt>
+					<dd>
+						<%= matter.trademark.registration_date.to_s(:show) unless matter.trademark.registration_date.nil?%>&nbsp;
+					</dd>
 				</dl>
 			</li>
 		</ul>

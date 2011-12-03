@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111127174316) do
+ActiveRecord::Schema.define(:version => 20111203094655) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -127,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20111127174316) do
     t.date     "ca_application_date"
     t.string   "ca_application_number"
     t.integer  "client_all_ip_id"
+    t.text     "vid_ref"
   end
 
   create_table "default_filter_columns", :force => true do |t|
@@ -157,6 +159,7 @@ ActiveRecord::Schema.define(:version => 20111127174316) do
     t.string   "design_number"
     t.string   "rdc_appl_number"
     t.string   "rdc_number"
+    t.date     "registration_date"
   end
 
   create_table "document_tags", :force => true do |t|
@@ -326,6 +329,8 @@ ActiveRecord::Schema.define(:version => 20111127174316) do
     t.integer  "opposite_party_id"
     t.integer  "opposite_party_agent_id"
     t.integer  "legal_type_id"
+    t.date     "date_of_order"
+    t.text     "court_ref"
   end
 
   create_table "linked_matters", :force => true do |t|
@@ -508,6 +513,7 @@ ActiveRecord::Schema.define(:version => 20111127174316) do
     t.date     "patent_grant_date"
     t.string   "ep_appl_number"
     t.integer  "ep_number"
+    t.date     "registration_date"
   end
 
   create_table "relationship_types", :force => true do |t|
@@ -570,6 +576,7 @@ ActiveRecord::Schema.define(:version => 20111127174316) do
     t.string   "ctm_number"
     t.string   "wipo_number"
     t.string   "reg_number"
+    t.date     "registration_date"
   end
 
   create_table "user_filter_columns", :force => true do |t|

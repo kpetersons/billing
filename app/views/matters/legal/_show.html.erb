@@ -50,6 +50,12 @@
 						<%= matter.legal.legal_type.name unless matter.legal.legal_type.nil? %>&nbsp;
 					</dd>
 					<dt>
+						<label>Court ref</label>
+					</dt>
+					<dd>
+						<%= matter.legal.court_ref %>&nbsp;
+					</dd>
+					<dt>
 						<label><%= t('matter.legal.fields.instance')%></label>
 					</dt>
 					<dd>
@@ -60,6 +66,12 @@
 					</dt>
 					<dd>
 						<%= matter.legal.date_of_closure.to_s(:show) unless matter.legal.date_of_closure.nil?%>&nbsp;
+					</dd>
+					<dt>
+						<label>Date of order</label>
+					</dt>
+					<dd>
+						<%= matter.legal.date_of_order.to_s(:show) unless matter.legal.date_of_order.nil?%>&nbsp;
 					</dd>
 				</dl>
 			</li>

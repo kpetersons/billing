@@ -77,6 +77,7 @@ en:
     custom:     "Custom matter"
     patent_search: "Patent search matter"
     trademark_search: "Trademark search matter"
+    domain: "Domain matter"
     task:
       status:
         change:
@@ -117,6 +118,8 @@ en:
     matters:
       link: "Matters linked."
     new:
+      matter:
+        type: "Creating %{matter_type}"
       matters:
         type: "Creating %{matter_type}"
   user:
@@ -280,8 +283,8 @@ en:
       type: "Type"
   registration_number: "Invoice number"
   customer_name: "Customer name"
-  address: "Address"
-  contact_person: "Contact person"
+  address_: "Address"
+  contact_person_: "Contact person"
   currency: "Currency"
   discount: "Discount"
   our_ref: "Our ref"

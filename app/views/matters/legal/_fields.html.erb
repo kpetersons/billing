@@ -48,13 +48,21 @@
 						<%= t_f.select :legal_type_id, LegalType.all.collect { |tt| [t(tt.name), tt.id] } %>
 					</li>
 					<li>
+						<%= t_f.label :court_ref %>
+						<%= t_f.text_field :court_ref %>
+					</li>
+					<li>
 						<%= t_f.label :instance %>
 						<%= t_f.text_field :instance %>
 					</li>
 					<li>
 						<%= t_f.label :date_of_closure %>
 						<%= t_f.text_field :date_of_closure, 'class' => 'date-field' %>
-					</li>					
+					</li>
+					<li>
+						<%= t_f.label :date_of_order %>
+						<%= t_f.text_field :date_of_order, 'class' => 'date-field' %>
+					</li>
 				</ul>
 			</li>
 			<li>
