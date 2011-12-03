@@ -1,24 +1,24 @@
 <div class="panel">
-	<div class="panel-header">
-		<strong>Dashboard</strong>
-	</div>
-	<%= render :partial => "shared/flash", 	:locals => {:flash 	=> flash}%>
-	<div class="panel-content">
-        <%= render :partial => "/messages/index"%>
-	</div>
-	<dl class="nested-panel accordion">
-		<!--<dt class="panel-header">-->
-			<!--<strong><a href="#deadlines">Matters with approaching deadlines</a></strong>			-->
-		<!--</dt>-->
-		<!--<dd id="deadlines">-->
-<%#  			<!--<%= render :partial => "/matters/index", :locals => {:column_names => 'matters_deadlines', :matters => @upcoming_deadlines_matters, :table_title => "Matters with upcoming deadlines", :choose => false, :param_name => "upcoming_deadlines_page"} %>-->%>
-		<!--</dd>		-->
-		<dt class="panel-header">
-			<strong><a href="#recent_activity">Recently updated/created matters</a></strong>
-		</dt>
-		<dd id="recent_activity">
-			<%= render :partial => "/matters/index", :locals => {:column_names => 'dashboard', :matters => @recent_activity_matters, :table_title => "Recently updated matters", :choose => false, :param_name => "recent_activity_page"} %>
-		</dd>
+  <div class="panel-header">
+    <strong>Dashboard</strong>
+  </div>
+  <%= render :partial => "shared/flash", :locals => {:flash => flash} %>
+  <div class="panel-content">
+    <%= render :partial => "/messages/index" %>
+  </div>
+  <dl class="nested-panel accordion">
+    <dt class="panel-header">
+      <strong><a href="#deadlines">Matters with approaching deadlines</a></strong>
+    </dt>
+    <dd id="deadlines">
+      <%= render :partial => "/matters/index", :locals => {:column_names => 'dashboard', :matters => @upcoming_deadlines_matters, :table_title => "Matters with upcoming deadlines", :choose => false, :param_name => "upcoming_deadlines_page"} %>
+    </dd>
+    <dt class="panel-header">
+      <strong><a href="#recent_activity">Recently updated/created matters</a></strong>
+    </dt>
+    <dd id="recent_activity">
+      <%= render :partial => "/matters/index", :locals => {:column_names => 'dashboard', :matters => @recent_activity_matters, :table_title => "Recently updated matters", :choose => false, :param_name => "recent_activity_page"} %>
+    </dd>
 
-	</dl>		
+  </dl>
 </div>		
