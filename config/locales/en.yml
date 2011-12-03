@@ -104,6 +104,18 @@ en:
           canceled: "Canceled"
           awaiting: "Awaiting"
           paid: "Paid"
+  invoice_line_preset:
+    list: "Invoice line presets"
+    show: "Invoice line preset"
+    edit: "Edit Invoice line preset"
+    create: "Create Invoice line preset"
+    fields:
+      name: "Name"
+      operating_party: "Operating party"
+      official_fee_type: "Official fee type"
+      official_fee: "Official fee"
+      attorney_fee_type: "Official fee type"
+      attorney_fee: "Official fee"
   list:
     matters: "List matters"
     column:
