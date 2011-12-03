@@ -31,6 +31,7 @@ Billing::Application.routes.draw do
     collection do
       post :filter 
       delete :reset
+      delete :clear
       get :quick_search
       get :search
     end
@@ -61,6 +62,7 @@ Billing::Application.routes.draw do
     collection do
       post :filter
       delete :reset
+      delete :clear
       get :quick_search
       get :search
     end
@@ -117,6 +119,7 @@ Billing::Application.routes.draw do
       get :show
       post :filter
       delete :reset
+      delete :clear
     end
     member do
       get :message

@@ -15,6 +15,7 @@
 		</select>
 		<input type="hidden" id="filter_selected_id" name="filter_selected_id" value="<%=@chosen_columns.collect{|c| c.column_name}.join(',')%>">
 		<%=link_to "Reset", {:action => :reset}, :method => :delete%>
+        <%=link_to "Clear", {:action => :clear}, :method => :delete%>
 		<button type="submit">Apply</button>
 	</li>
 </ul>

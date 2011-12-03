@@ -45,4 +45,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def clear
+    UserFilterColumn.transaction do
+      UserFilter.clear_filter current_user, 'invoices'
+    end
+    redirect_to invoices_path
+  end
+
 end
