@@ -27,6 +27,15 @@ class DashboardController < ApplicationController
     redirect_to dashboard_index_path
   end
 
+  def clear
+    UserFilterColumn.transaction do
+      UserFilter.clear_filter current_user, 'matters_deadlines'
+    end
+    redirect_to dashboard_index_path
+  end
+
+
+
   def filter
     #params to array
     columns = params[:filter_selected_id].split(',')

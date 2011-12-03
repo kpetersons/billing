@@ -45,7 +45,7 @@ class UserFilter < ActiveRecord::Base
     unless filter.nil?
       UserFilterColumn.delete(UserFilterColumn.where(:user_filter_id => filter.id).all)
     else
-      default_filter = DefaultFilter.where(:table_name => 'invoices').first
+      default_filter = DefaultFilter.where(:table_name => name).first
       UserFilter.create_modified user, default_filter, []
     end
   end

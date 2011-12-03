@@ -44,12 +44,4 @@ class ApplicationController < ActionController::Base
       render :text => "#{test} is invalid date"
     end
   end
-
-  def clear
-    UserFilterColumn.transaction do
-      UserFilter.clear_filter current_user, 'invoices'
-    end
-    redirect_to invoices_path
-  end
-
 end
