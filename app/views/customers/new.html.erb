@@ -1,8 +1,10 @@
 <div class="panel">
-	<div class="panel-header">
-		<strong><%= t('customer.create')%></strong>
-	</div>
-	<%= render :partial => "shared/flash", 	:locals => {:flash 		=> flash}%>
-	<%= render :partial => "shared/error", 	:locals => {:obj 		=> @party}%>	
-	<%= render :partial => "form", 			:locals => {:customer 	=> @party} %>
+  <div class="panel-header">
+    <strong><%= t('customer.create') %></strong>
+  </div>
+  <%= render :partial => "shared/flash", :locals => {:flash => flash} %>
+  <%= render :partial => "shared/error", :locals => {:obj => @party} %>
+  <%= form_for @party, :url => {:controller => :customers, :action => :create} do |p_f| %>
+      <%= render :partial => "form", :locals => {:customer => @party, :p_f => p_f} %>
+  <% end %>
 </div>

@@ -11,6 +11,7 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #  column_order_query :string(255)
+#  translate          :boolean         default(FALSE)
 #
 
 class UserFilterColumn < ActiveRecord::Base

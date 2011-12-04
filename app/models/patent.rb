@@ -12,6 +12,7 @@
 #  patent_grant_date  :date
 #  ep_appl_number     :string(255)
 #  ep_number          :integer
+#  registration_date  :date
 #
 
 class Patent < ActiveRecord::Base

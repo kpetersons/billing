@@ -10,6 +10,7 @@
 #  ca_application_date   :date
 #  ca_application_number :string(255)
 #  client_all_ip_id      :integer
+#  vid_ref               :text
 #
 
 class Custom < ActiveRecord::Base

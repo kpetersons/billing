@@ -12,6 +12,7 @@
 #  default_filter_id  :integer
 #  is_default         :boolean
 #  column_order_query :string(255)
+#  translate          :boolean         default(FALSE)
 #
 
 require 'spec_helper'

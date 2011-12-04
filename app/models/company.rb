@@ -8,6 +8,10 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #  registration_number :string(255)
+#  version             :integer         default(1)
+#  orig_id             :integer
+#  date_effective      :date            default(Sat, 03 Dec 2011)
+#  date_effective_end  :datetime
 #
 
 class Company < ActiveRecord::Base
@@ -15,14 +19,15 @@ class Company < ActiveRecord::Base
   has_one :operating_party
   has_many :accounts
 
-  attr_accessible :party_id, :name, :operating_party_attributes, :registration_number
+  attr_accessible :name, :operating_party_attributes, :registration_number, :orig_id, :party_id
   accepts_nested_attributes_for :operating_party
 
   validates :name, :presence => true
-  validates :registration_number, :uniqueness => {:scope=> :version}, :allow_nil => true
+  validate :registration_number_unique
 
   before_validation :trim_strings
-  
+  after_create :set_orig_id
+
   def default_account
     return accounts.where(:default_account => true).first
   end
@@ -43,4 +48,15 @@ class Company < ActiveRecord::Base
       self.registration_number = nil
     end
   end
+
+  def set_orig_id
+    if self.orig_id.nil?
+      update_attribute(:orig_id, self.id)
+    end
+  end
+
+  def registration_number_unique
+    return !Company.where("orig_id != ? and registration_number = ?", orig_id, registration_number).first.nil?
+  end
+
 end

@@ -2,11 +2,15 @@
 #
 # Table name: parties
 #
-#  id         :integer         not null, primary key
-#  identifier :string(255)
-#  party_type :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id                 :integer         not null, primary key
+#  identifier         :string(255)
+#  party_type         :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  version            :integer         default(1)
+#  orig_id            :integer
+#  date_effective     :date            default(Sat, 03 Dec 2011)
+#  date_effective_end :datetime
 #
 
 require 'spec_helper'

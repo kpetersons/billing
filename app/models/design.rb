@@ -11,6 +11,7 @@
 #  design_number      :string(255)
 #  rdc_appl_number    :string(255)
 #  rdc_number         :string(255)
+#  registration_date  :date
 #
 
 class Design < ActiveRecord::Base

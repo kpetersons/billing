@@ -2,6 +2,9 @@
 #
 # Table name: v_matters
 #
+#  operating_party_id    :integer
+#  agent_id              :integer
+#  applicant_id          :integer
 #  id                    :integer         primary key
 #  author_id             :integer
 #  parent_id             :integer
@@ -14,8 +17,8 @@
 #  agent                 :string(255)
 #  author                :text
 #  operating_party       :string(255)
-#  type                  :string(255)
-#  status                :string(255)
+#  matter_type           :string(255)
+#  matter_status         :string(255)
 #  wipo_number           :string(255)
 #  priority_date         :date
 #  mark_name             :string(255)

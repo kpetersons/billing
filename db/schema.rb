@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111203120843) do
+ActiveRecord::Schema.define(:version => 20111203194222) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20111203120843) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "country_id"
-    t.integer  "version"
+    t.integer  "version",            :default => 1
     t.integer  "orig_id"
     t.date     "date_effective",     :default => '2011-12-03'
     t.datetime "date_effective_end"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20111203120843) do
     t.datetime "updated_at"
     t.string   "customer_type"
     t.string   "vat_registration_number"
-    t.integer  "version"
+    t.integer  "version",                 :default => 1
     t.integer  "orig_id"
     t.date     "date_effective",          :default => '2011-12-03'
     t.datetime "date_effective_end"
@@ -437,7 +437,7 @@ ActiveRecord::Schema.define(:version => 20111203120843) do
     t.integer  "matter_type_id"
     t.integer  "operating_party_id"
     t.integer  "matter_status_id"
-    t.integer  "version"
+    t.integer  "version",            :default => 1
     t.integer  "orig_id"
     t.date     "date_effective",     :default => '2011-12-03'
     t.datetime "date_effective_end"

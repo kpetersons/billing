@@ -17,6 +17,7 @@
 #  ctm_number         :string(255)
 #  wipo_number        :string(255)
 #  reg_number         :string(255)
+#  registration_date  :date
 #
 
 require 'spec_helper'

@@ -12,6 +12,8 @@
 #  opposite_party_id       :integer
 #  opposite_party_agent_id :integer
 #  legal_type_id           :integer
+#  date_of_order           :date
+#  court_ref               :text
 #
 
 class Legal < ActiveRecord::Base

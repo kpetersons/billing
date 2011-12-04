@@ -1,25 +1,26 @@
 <ul>
-	<%= render :partial => "/shared/party/fields", :locals => {:fields => fields} %>
-	<%= fields.fields_for :company do |comp_f| %>
-		<%= render :partial => "/shared/party/company/fields", :locals => {:fields => comp_f} %>
-	<% end %>
-	<%= fields.fields_for :customer do |cust_f| %>
-	<%= cust_f.hidden_field :id %>
-	<li>
-		<%= cust_f.label :vat_registration_number,  t('customer.fields.vat_number') %>
-		<%= cust_f.text_field :vat_registration_number %>
-	</li>
-	<li>
-		<%= cust_f.label :customer_type, t("customer.fields.type") %>
-		<%= cust_f.select :customer_type, ["Agent", "Owner", "Both", "Other"].collect { |tt| [tt, tt] } %>
-	</li>
-	<li>
-		<%= cust_f.label :date_effective %>
-		<%= cust_f.text_field :date_effective, "class" => "field-date date-field", :value => date_format_field(cust_f.object.date_effective) %>
-	</li>
-	<li>
-		<%= cust_f.label :shortnote %>
-		<%= cust_f.text_field :shortnote %>
-	</li>
-	<% end %>
+  <%= render :partial => "/shared/party/fields", :locals => {:fields => fields} %>
+  <%= fields.fields_for :company do |comp_f| %>
+      <%= render :partial => "/shared/party/company/fields", :locals => {:fields => comp_f} %>
+  <% end %>
+  <%= fields.fields_for :customer do |cust_f| %>
+      <%= cust_f.hidden_field :id %>
+      <%= cust_f.hidden_field :orig_id %>
+      <li>
+        <%= cust_f.label :vat_registration_number, t('customer.fields.vat_number') %>
+        <%= cust_f.text_field :vat_registration_number %>
+      </li>
+      <li>
+        <%= cust_f.label :customer_type, t("customer.fields.type") %>
+        <%= cust_f.select :customer_type, ["Agent", "Owner", "Both", "Other"].collect { |tt| [tt, tt] } %>
+      </li>
+      <li>
+        <%= cust_f.label :date_effective %>
+        <%= cust_f.text_field :date_effective, "class" => "field-date date-field", :value => date_format_field(cust_f.object.date_effective) %>
+      </li>
+      <li>
+        <%= cust_f.label :shortnote %>
+        <%= cust_f.text_field :shortnote %>
+      </li>
+  <% end %>
 </ul>

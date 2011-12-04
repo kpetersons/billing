@@ -8,6 +8,10 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #  registration_number :string(255)
+#  version             :integer         default(1)
+#  orig_id             :integer
+#  date_effective      :date            default(Sat, 03 Dec 2011)
+#  date_effective_end  :datetime
 #
 
 require 'spec_helper'

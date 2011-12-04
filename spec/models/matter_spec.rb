@@ -20,6 +20,10 @@
 #  matter_type_id     :integer
 #  operating_party_id :integer
 #  matter_status_id   :integer
+#  version            :integer         default(1)
+#  orig_id            :integer
+#  date_effective     :date            default(Sat, 03 Dec 2011)
+#  date_effective_end :datetime
 #
 
 require 'spec_helper'

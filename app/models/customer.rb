@@ -8,6 +8,11 @@
 #  updated_at              :datetime
 #  customer_type           :string(255)
 #  vat_registration_number :string(255)
+#  version                 :integer         default(1)
+#  orig_id                 :integer
+#  date_effective          :date            default(Sat, 03 Dec 2011)
+#  date_effective_end      :datetime
+#  shortnote               :text
 #
 
 class Customer < ActiveRecord::Base
@@ -16,13 +21,14 @@ class Customer < ActiveRecord::Base
   has_many :matters_as_agent,     :class_name=> 'VMatters',  :foreign_key =>     :agent_id
   has_many :matters_as_applicant, :class_name=> 'VMatters',  :foreign_key => :applicant_id
  
-  attr_accessible :party_id, :vat_registration_number, :customer_type, :shortnote
-  validates :vat_registration_number, :uniqueness=>{:scope=> :version}, :allow_nil => true
+  attr_accessible :vat_registration_number, :customer_type, :shortnote, :orig_id, :party_id
+  validate :vat_registration_number_unique
   
   before_validation :trim_strings
+  after_create :set_orig_id
 
   def history
-    Customer.where(:orig_id => orig_id).where("date_effective_end is not null and date_effective < :g", {:g => date_effective})
+    Customer.where(:orig_id => orig_id).where("date_effective_end is not null and id < ?", id).order(:id)
   end
 
   def name
@@ -80,5 +86,15 @@ class Customer < ActiveRecord::Base
       self.vat_registration_number = nil      
     end
   end  
-  
+
+  def set_orig_id
+    if self.orig_id.nil?
+      update_attribute(:orig_id, self.id)
+    end
+  end
+
+  def vat_registration_number_unique
+    return !Customer.where("orig_id != ? and vat_registration_number = ?", orig_id, vat_registration_number).first.nil?
+  end
+
 end

@@ -23,16 +23,6 @@ class CustomersController < ApplicationController
     Party.transaction do
       @party = Party.new(params[:party])
       if @party.save
-        @date_effective =DateTime.now
-
-        @party.update_attribute(:orig_id, @party.id)
-        @party.company.update_attribute(:orig_id, @party.company.id)
-        @party.customer.update_attribute(:orig_id, @party.customer.id)
-
-        @party.update_attribute(:date_effective, @date_effective)
-        @party.company.update_attribute(:date_effective, @date_effective)
-        @party.customer.update_attribute(:date_effective, @date_effective)
-
         redirect_to customer_path(@party.customer)
       else
         @customer = @party.customer
@@ -46,64 +36,13 @@ class CustomersController < ApplicationController
   end
 
   def update
-    @party = Party.find(params[:party][:id])
-    Party.transaction do
-      shortnote = params[:party][:customer_attributes][:shortnote]
-      params[:party][:customer_attributes].reject!{|x| x.eql?("shortnote")}
-      @test = Party.find(params[:party][:id])
-      @test.attributes = params[:party]
-      unless @test.changed? || @test.customer.changed? || @test.company.changed?
-        params[:party][:customer_attributes][:shortnote] = shortnote
-        if @test.update_attributes(params[:party])
-          redirect_to customer_path(@test.customer) and return
-        else
-          @party = @test
-          render 'edit' and return
-        end
-      end
-
-      @date_effective =DateTime.now
-      @party.customer.update_attribute(:date_effective_end, @date_effective)
-      @party.company.update_attribute(:date_effective_end, @date_effective)
-      @party.update_attribute(:date_effective_end, @date_effective)
-
-      if @party.customer.version.nil?
-        @party.customer.update_attribute(:version, 1)
-      end
-      params_copy = params.reject { |x| false }
-      params_copy[:party].reject! { |x| x.eql?("id") }
-      params_copy[:party][:company_attributes].reject! { |x| x.eql?("id") }
-      params_copy[:party][:customer_attributes].reject! { |x| x.eql?("id") }
-
-      @party_new = Party.new(params[:party])
-      @party_new.orig_id = @party.orig_id || @party.id
-      @party_new.version = @party.version + 1
-      @party_new.date_effective = @date_effective
-
-      @party_new.customer.orig_id = @party.customer.orig_id || @party.customer.id
-      @party_new.customer.version = @party.customer.version + 1
-      @party_new.customer.date_effective = @date_effective
-
-      @party_new.company.orig_id = @party.company.orig_id || @party.company.id
-      @party_new.company.version = @party.company.version + 1
-      @party_new.company.date_effective = @date_effective
-
-      if @party_new.save
-        @party.active_addresses.each do |address|
-          new_address = address.clone
-          new_address.orig_id = address.orig_id || address.id
-          new_address.version = address.version + 1
-          new_address.date_effective = @date_effective
-          @party_new.addresses<<new_address
-          address.update_attribute(:date_effective_end, @date_effective)
-        end
-        redirect_to customer_path(@party_new.customer) and return
-      else
-        @customer = @party_new.customer
-      end
+    if params[:save]
+      return update_save params
     end
-    @party = @party_new
-    render 'new'
+    if params[:save_as]
+      return update_save_as params
+    end
+    redirect_to edit_customer_path params[:id] and return
   end
 
   def show
@@ -145,12 +84,50 @@ class CustomersController < ApplicationController
 
   private
 
-  def update_save
-
+  def update_save params
+    @party = Party.find(params[:party][:id])
+    Party.transaction do
+      if @party.update_attributes(params[:party])
+        redirect_to customer_path(@party.customer)
+      else
+        render 'edit' and return
+      end
+    end
   end
 
-  def update_save_as
+  def update_save_as params
+    Party.transaction do
+      original = Party.find(params[:party][:id])
+      @party = original.deep_dup
+      puts "@party #{@party.attributes}"
+      if @party.save
+        params[:party][:id] = @party.id
+        params[:party][:customer_attributes][:id]       = @party.customer.id
+        params[:party][:customer_attributes][:party_id] = @party.customer.party_id
+        params[:party][:company_attributes][:id]        = @party.company.id
+        params[:party][:company_attributes][:party_id]  = @party.company.party_id
+        if @party.update_attributes(params[:party])
+          original.no_longer_used
+          @party.addresses = original.active_addresses
+          @party.contacts = original.contacts
+          @party.company.accounts = original.company.accounts
+          redirect_to @party.customer and return
+        end
+      else
+        swap_attributes original, @party, [:id, :party_id]
+        swap_attributes original.customer, @party.customer, [:id, :party_id]
+        swap_attributes original.company, @party.company, [:id, :party_id]
+        render 'edit' and return
+      end
+      render 'edit'
+    end
+  end
 
+  private
+  def swap_attributes from, to, attrs = []
+    attrs.each do |attr|
+      to.send(attr, from.send(attr)) if to.respond_to? attr
+    end
   end
 
 end
