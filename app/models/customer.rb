@@ -16,14 +16,14 @@
 #
 
 class Customer < ActiveRecord::Base
-  
-  belongs_to :party   
-  has_many :matters_as_agent,     :class_name=> 'VMatters',  :foreign_key =>     :agent_id
-  has_many :matters_as_applicant, :class_name=> 'VMatters',  :foreign_key => :applicant_id
- 
-  attr_accessible :vat_registration_number, :customer_type, :shortnote, :orig_id, :party_id
+
+  belongs_to :party
+  has_many :matters_as_agent, :class_name=> 'VMatters', :foreign_key => :agent_id
+  has_many :matters_as_applicant, :class_name=> 'VMatters', :foreign_key => :applicant_id
+
+  attr_accessible :vat_registration_number, :customer_type, :shortnote, :orig_id, :party_id, :date_effective, :date_effective_end
   validate :vat_registration_number_unique
-  
+
   before_validation :trim_strings
   after_create :set_orig_id
 
@@ -33,16 +33,16 @@ class Customer < ActiveRecord::Base
 
   def name
     return party.try(:company).try(:name)
-  end  
-  
+  end
+
   def type
     return (party.individual.nil?) ? party.company.class : party.individual.class
-  end  
-  
+  end
+
   def identifier
     return party.identifier
   end
-  
+
   def contact_persons
     Individual.where(:party_id => party.target_parties_query(:relationship_type => RelationshipType.find_by_name('CONTACT_PERSON').id))
   end
@@ -51,7 +51,7 @@ class Customer < ActiveRecord::Base
     return party.company.registration_number unless party.company.nil?
   end
 
-  def matters        
+  def matters
   end
 
   def addresses
@@ -59,7 +59,7 @@ class Customer < ActiveRecord::Base
   end
 
   def default_account
-    return party.company.default_account unless party.company.default_account.nil? 
+    return party.company.default_account unless party.company.default_account.nil?
     return Account.new
   end
 
@@ -68,24 +68,24 @@ class Customer < ActiveRecord::Base
   end
 
   def inv_address
-    return party.company.inv_address unless party.company.inv_address.nil? 
+    return party.company.inv_address unless party.company.inv_address.nil?
     return Address.new
-  end  
+  end
 
   def self.quick_search query, page
     where(:date_effective_end => nil).joins(:party => [:company]).paginate :per_page => 10, :page => page,
-             :conditions => ['vat_registration_number like :q or name ilike :q',
-                             {:q => "%#{query}%", :gi => query}]
+                                                                           :conditions => ['vat_registration_number like :q or name ilike :q',
+                                                                                           {:q => "%#{query}%", :gi => query}]
   end
 
   private
 
   def trim_strings
     self.vat_registration_number = " #{self.vat_registration_number} ".strip
-    if self.vat_registration_number.empty? 
-      self.vat_registration_number = nil      
+    if self.vat_registration_number.empty?
+      self.vat_registration_number = nil
     end
-  end  
+  end
 
   def set_orig_id
     if self.orig_id.nil?
@@ -94,7 +94,19 @@ class Customer < ActiveRecord::Base
   end
 
   def vat_registration_number_unique
-    return !Customer.where("orig_id != ? and vat_registration_number = ?", orig_id, vat_registration_number).first.nil?
+    if persisted?
+      test =Customer.where("orig_id != ? and vat_registration_number = ? and date_effective_end is null", orig_id, vat_registration_number).first
+      if !test.nil?
+        puts "test.attributes #{test.attributes}"
+        errors.add :vat_registration_number, "should be unique!"
+      end
+    else
+      test = Customer.where("vat_registration_number = ? and date_effective_end is null", vat_registration_number).first
+      if !test.nil?
+        puts "test.attributes #{test.attributes}"
+        errors.add :vat_registration_number, "should be unique!"
+      end
+    end
   end
 
 end

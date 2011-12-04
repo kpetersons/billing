@@ -15,21 +15,21 @@
 
 class Party < ActiveRecord::Base
 
-  has_one :company, :foreign_key => :party_id, :autosave => true
-  has_one :customer, :foreign_key => :party_id, :autosave => true
-  has_one :individual, :foreign_key => :party_id, :autosave => true
-  has_one :contact_person, :foreign_key => :party_id, :autosave => true
+  has_one :company, :foreign_key => :party_id, :autosave => true, :dependent => :delete
+  has_one :customer, :foreign_key => :party_id, :autosave => true, :dependent => :delete
+  has_one :individual, :foreign_key => :party_id, :autosave => true, :dependent => :delete
+  has_one :contact_person, :foreign_key => :party_id, :autosave => true, :dependent => :delete
 
-  has_many :source_relationships, :class_name => 'Relationship', :foreign_key => :source_party_id
-  has_many :target_relationships, :class_name => 'Relationship', :foreign_key => :target_party_id
+  has_many :source_relationships, :class_name => 'Relationship', :foreign_key => :source_party_id, :dependent => :delete_all
+  has_many :target_relationships, :class_name => 'Relationship', :foreign_key => :target_party_id, :dependent => :delete_all
   #
   has_many :source_parties, :class_name => 'Party', :through => :source_relationships
   has_many :target_parties, :class_name => 'Party', :through => :target_relationships
   #
-  has_many :addresses, :conditions => "date_effective_end is null", :primary_key => :orig_id
-  has_many :contacts
+  has_many :addresses, :conditions => "date_effective_end is null", :primary_key => :orig_id, :dependent => :delete_all
+  has_many :contacts, :dependent => :delete_all
 
-  attr_accessible :identifier, :party_type, :individual_attributes, :contact_person_attributes, :company_attributes, :customer_attributes, :address_attributes, :user_attributes, :orig_id
+  attr_accessible :identifier, :party_type, :individual_attributes, :contact_person_attributes, :company_attributes, :customer_attributes, :address_attributes, :user_attributes, :orig_id, :date_effective, :date_effective_end
   accepts_nested_attributes_for :individual, :company, :customer, :addresses, :contact_person
 
   validates :identifier, :uniqueness => {:case_sensitive => false}, :presence => true
@@ -93,9 +93,9 @@ class Party < ActiveRecord::Base
   end
 
   def no_longer_used
-    update_attribute(:date_effective_end, DateTime.current)
-    customer.update_attribute(:date_effective_end, DateTime.current) unless customer.nil?
-    company.update_attribute(:date_effective_end, DateTime.current) unless customer.nil?
+    date_effective_end = DateTime.current
+    customer.date_effective_end = DateTime.current
+    company.date_effective_end = DateTime.current
   end
 
   private

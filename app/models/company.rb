@@ -19,7 +19,7 @@ class Company < ActiveRecord::Base
   has_one :operating_party
   has_many :accounts
 
-  attr_accessible :name, :operating_party_attributes, :registration_number, :orig_id, :party_id
+  attr_accessible :name, :operating_party_attributes, :registration_number, :orig_id, :party_id, :date_effective, :date_effective_end
   accepts_nested_attributes_for :operating_party
 
   validates :name, :presence => true
@@ -56,7 +56,15 @@ class Company < ActiveRecord::Base
   end
 
   def registration_number_unique
-    return !Company.where("orig_id != ? and registration_number = ?", orig_id, registration_number).first.nil?
+    if persisted?
+      if !Company.where("orig_id != ? and registration_number = ? and date_effective_end is null", orig_id, registration_number).first.nil?
+        errors.add :registration_number, "should be unique!"
+      end
+    else
+      if !Company.where("registration_number = ? and date_effective_end is null", registration_number).first.nil?
+        errors.add :registration_number, "should be unique!"
+      end
+    end
   end
 
 end

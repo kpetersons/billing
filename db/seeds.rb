@@ -1012,18 +1012,14 @@ Customer.transaction do
                                 :vat_registration_number => company[2],
                             }
                         })
-    puts @result.errors unless @result.errors.empty?
     if @result.save
-
       unless !Address.where(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country_id => Country.find_by_name(company[6].upcase).id, :city => company[3], :street => company[4], :house_number => company[5]).first.nil?
         @address = Address.new(:party_id => @result.company.party_id, :address_type_id => AddressType.find_by_name('BILL_TO').id, :country_id => Country.find_by_name(company[6].upcase).id, :city => company[3], :street => company[4], :house_number => company[5])
-        puts @address.errors unless @address.errors.empty?
         @address.save
       end
     end
   end
 end
-
 
 DefaultFilter.transaction do
   DefaultFilter.delete_all

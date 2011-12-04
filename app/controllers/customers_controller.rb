@@ -96,10 +96,13 @@ class CustomersController < ApplicationController
   end
 
   def update_save_as params
-    Party.transaction do
+    ActiveRecord::Base.transaction do
       original = Party.find(params[:party][:id])
+      original.no_longer_used
       @party = original.deep_dup
+      @party.errors.clear
       puts "@party #{@party.attributes}"
+      puts "original #{original.attributes}"
       if @party.save
         params[:party][:id] = @party.id
         params[:party][:customer_attributes][:id]       = @party.customer.id
@@ -107,7 +110,6 @@ class CustomersController < ApplicationController
         params[:party][:company_attributes][:id]        = @party.company.id
         params[:party][:company_attributes][:party_id]  = @party.company.party_id
         if @party.update_attributes(params[:party])
-          original.no_longer_used
           @party.addresses = original.active_addresses
           @party.contacts = original.contacts
           @party.company.accounts = original.company.accounts
@@ -126,7 +128,7 @@ class CustomersController < ApplicationController
   private
   def swap_attributes from, to, attrs = []
     attrs.each do |attr|
-      to.send(attr, from.send(attr)) if to.respond_to? attr
+      to.send("#{attr}=", from.send(attr)) if to.respond_to? attr
     end
   end
 

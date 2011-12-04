@@ -11,11 +11,13 @@ gem 'paperclip', '~> 2.3'
 gem 'prawn', :submodules => true
 gem "jquery-rails"
 gem 'pg'
+#gem 'rails_sql_views'
 
 group :development do
   gem 'annotate', '2.4.0'
   gem 'faker', '0.3.1'
   #gem 'rack', '1.3.4'
+
 end
 
 group :test do
