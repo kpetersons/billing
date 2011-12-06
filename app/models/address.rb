@@ -31,6 +31,8 @@ class Address < ActiveRecord::Base
 
   attr_accessor :address_type_name
 
+  before_validation :original_no_longer_used
+
   def history
     Address.where(:orig_id => orig_id).where("date_effective_end is not null and date_effective < :g", {:g => date_effective})
   end
@@ -73,6 +75,18 @@ class Address < ActiveRecord::Base
     address_data<<line_5
     puts "address array:                    #{address_data}"
     return address_data.reject { |n| n.nil? }.join(', ')
+  end
+
+  def no_longer_used
+    update_attribute(:date_effective_end, DateTime.current)
+  end
+
+  private
+  def original_no_longer_used
+    originals = Address.find_all_by_orig_id(orig_id)
+    originals.each do |original|
+      original.no_longer_used unless original.id == self.id
+    end
   end
 
 end

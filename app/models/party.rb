@@ -35,6 +35,7 @@ class Party < ActiveRecord::Base
   validates :identifier, :uniqueness => {:case_sensitive => false}, :presence => true
 
   before_validation :generate_identifier, :on => :create
+  #before_validation :original_no_longer_used
   after_create :set_orig_id
 
   def active_addresses
@@ -55,6 +56,30 @@ class Party < ActiveRecord::Base
 
   def source_parties_query(relationship_type)
     return Party.joins(:source_relationships => :relationship_type).where(:relationships => {:target_party_id => id})
+  end
+
+  def copy_addresses _addresses
+    _addresses.each do |_address|
+      copy_address _address
+    end
+  end
+
+  def copy_address _address
+    _new =_address.dup
+    _new.assign_attributes( {:orig_id => _address.id})
+    self.addresses<<_new
+  end
+
+  def copy_contacts _contacts
+    _contacts.each do |_contact|
+      copy_contact _contact
+    end
+  end
+
+  def copy_contact _contact
+    _new =_contact.dup
+    _new.assign_attributes( {:orig_id => _contact.id})
+    self.contact<< _new
   end
 
   def outer_object
@@ -80,22 +105,14 @@ class Party < ActiveRecord::Base
   end
 
   def deep_dup
-    other = Party.new
-    other.attributes = attributes
-    other.id = nil
-    other.build_company(company.attributes)
-    other.company.id = nil
-    other.company.party_id = nil
-    other.build_customer(customer.attributes)
-    other.customer.id = nil
-    other.customer.party_id = nil
+    other = self.dup
+    other.company = self.company.deep_dup
+    other.customer = self.customer.deep_dup
     return other
   end
 
   def no_longer_used
-    date_effective_end = DateTime.current
-    customer.date_effective_end = DateTime.current
-    company.date_effective_end = DateTime.current
+    update_attribute(:date_effective_end, DateTime.current)
   end
 
   private
@@ -106,6 +123,13 @@ class Party < ActiveRecord::Base
   def set_orig_id
     if self.orig_id.nil?
       update_attribute(:orig_id, self.id)
+    end
+  end
+
+  def original_no_longer_used
+    originals = Party.find_all_by_orig_id orig_id
+    originals.each do |original|
+      original.no_longer_used unless original.id == self.id
     end
   end
 

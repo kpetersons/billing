@@ -13,8 +13,21 @@
 #  show_on_invoice :boolean
 #
 
-class Account < ActiveRecord::Base  
+class Account < ActiveRecord::Base
   belongs_to :company
-  
-  
+
+  before_validation :original_no_longer_used
+
+  def no_longer_used
+    update_attribute(:date_effective_end, DateTime.current)
+  end
+
+  private
+  def original_no_longer_used
+    originals = Account.find_all_by_orig_id orig_id
+    originals.each do |original|
+      original.no_longer_used unless original.id == self.id
+    end
+  end
+
 end

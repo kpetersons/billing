@@ -26,21 +26,52 @@ class Company < ActiveRecord::Base
   validate :registration_number_unique
 
   before_validation :trim_strings
+  #before_validation :original_no_longer_used
   after_create :set_orig_id
 
   def default_account
-    return accounts.where(:default_account => true).first
+    accounts.where(:default_account => true).first
   end
 
   def invoice_address
-    return party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first || Address.new
+    party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first || Address.new
   end
 
   def inv_address
-    return party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first
+    party.addresses.where(:address_type_id => AddressType.find_by_name('BILL_TO').id).first
+  end
+
+  def copy_accounts _accounts
+    _accounts.each do |_account|
+      copy_account _account
+    end
+  end
+
+  def copy_account _account
+    _new =_account.dup
+    _new.assign_attributes({:orig_id => _account.id})
+    self.accounts<< _new
+  end
+
+  def deep_dup
+    other = self.dup
+    other.orig_id = self.id
+    other.party_id = nil
+    return other
+  end
+
+  def no_longer_used
+    update_attribute(:date_effective_end, DateTime.current)
   end
 
   private
+
+  def original_no_longer_used
+    originals = Company.find_all_by_orig_id orig_id
+    originals.each do |original|
+      original.no_longer_used unless original.id == self.id
+    end
+  end
 
   def trim_strings
     self.registration_number = " #{self.registration_number} ".strip
@@ -57,11 +88,11 @@ class Company < ActiveRecord::Base
 
   def registration_number_unique
     if persisted?
-      if !Company.where("orig_id != ? and registration_number = ? and date_effective_end is null", orig_id, registration_number).first.nil?
+      unless Company.where("registration_number = ? and date_effective_end is null and id != ?", registration_number, id).first.nil?
         errors.add :registration_number, "should be unique!"
       end
     else
-      if !Company.where("registration_number = ? and date_effective_end is null", registration_number).first.nil?
+      unless Company.where("registration_number = ? and date_effective_end is null", registration_number).first.nil?
         errors.add :registration_number, "should be unique!"
       end
     end

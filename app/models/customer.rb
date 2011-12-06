@@ -25,6 +25,7 @@ class Customer < ActiveRecord::Base
   validate :vat_registration_number_unique
 
   before_validation :trim_strings
+  #before_validation :original_no_longer_used
   after_create :set_orig_id
 
   def history
@@ -78,7 +79,25 @@ class Customer < ActiveRecord::Base
                                                                                            {:q => "%#{query}%", :gi => query}]
   end
 
+  def deep_dup
+    other = self.dup
+    other.orig_id = self.id
+    other.party_id = nil
+    return other
+  end
+
+  def no_longer_used
+    update_attribute(:date_effective_end, DateTime.current)
+  end
+
   private
+
+  def original_no_longer_used
+    originals = Customer.find_all_by_orig_id orig_id
+    originals.each do |original|
+      original.no_longer_used unless original.id == self.id
+    end
+  end
 
   def trim_strings
     self.vat_registration_number = " #{self.vat_registration_number} ".strip
@@ -95,15 +114,13 @@ class Customer < ActiveRecord::Base
 
   def vat_registration_number_unique
     if persisted?
-      test =Customer.where("orig_id != ? and vat_registration_number = ? and date_effective_end is null", orig_id, vat_registration_number).first
-      if !test.nil?
-        puts "test.attributes #{test.attributes}"
+      test =Customer.where("vat_registration_number = ? and date_effective_end is null and id != ?", vat_registration_number, id).first
+      unless test.nil?
         errors.add :vat_registration_number, "should be unique!"
       end
     else
       test = Customer.where("vat_registration_number = ? and date_effective_end is null", vat_registration_number).first
-      if !test.nil?
-        puts "test.attributes #{test.attributes}"
+      unless test.nil?
         errors.add :vat_registration_number, "should be unique!"
       end
     end

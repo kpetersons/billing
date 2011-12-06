@@ -98,21 +98,24 @@ class CustomersController < ApplicationController
   def update_save_as params
     ActiveRecord::Base.transaction do
       original = Party.find(params[:party][:id])
-      original.no_longer_used
       @party = original.deep_dup
+      original.no_longer_used
+      original.customer.no_longer_used
+      original.company.no_longer_used
       @party.errors.clear
-      puts "@party #{@party.attributes}"
-      puts "original #{original.attributes}"
       if @party.save
         params[:party][:id] = @party.id
+        params[:party][:date_effective_end] = nil
         params[:party][:customer_attributes][:id]       = @party.customer.id
+        params[:party][:customer_attributes][:date_effective_end] = nil
         params[:party][:customer_attributes][:party_id] = @party.customer.party_id
         params[:party][:company_attributes][:id]        = @party.company.id
+        params[:party][:company_attributes][:date_effective_end] = nil
         params[:party][:company_attributes][:party_id]  = @party.company.party_id
         if @party.update_attributes(params[:party])
-          @party.addresses = original.active_addresses
-          @party.contacts = original.contacts
-          @party.company.accounts = original.company.accounts
+          @party.copy_addresses(original.active_addresses)
+          @party.copy_contacts(original.contacts)
+          @party.company.copy_accounts(original.company.accounts)
           redirect_to @party.customer and return
         end
       else

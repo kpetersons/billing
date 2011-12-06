@@ -253,7 +253,7 @@ class Invoice < ActiveRecord::Base
 
   #start local invoice print
   def local_sum_exempt_vat
-    invoice_lines.joins(:official_fee_type).where(:official_fee_types => {:apply_vat => false}).sum('official_fee')
+    invoice_lines.joins(:official_fee_type).where(:official_fee_types => {:apply_vat => false}).sum('total_official_fee')
   end
 
   def local_sum_taxable_vat

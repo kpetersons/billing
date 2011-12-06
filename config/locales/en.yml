@@ -114,8 +114,8 @@ en:
       operating_party: "Operating party"
       official_fee_type: "Official fee type"
       official_fee: "Official fee"
-      attorney_fee_type: "Official fee type"
-      attorney_fee: "Official fee"
+      attorney_fee_type: "Attorney fee type"
+      attorney_fee: "Attorney fee"
   list:
     matters: "List matters"
     column:
@@ -380,6 +380,11 @@ en:
   ii_rate: "Rate"
   ii_apply_vat: "Apply vat"
   ii_date_paid: "Date paid"
+  ii_total_vat: "Total VAT"
+  ii_grand_total: "Grand total"
+  ii_total_official_fee: "Total official fee"
+  ii_total_attorney_fee: "Total attorney's fee"
+  ii_subtotal: "Subtotal"
   edit:
     message: "Edit message"
   foreign:
