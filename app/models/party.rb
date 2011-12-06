@@ -67,6 +67,7 @@ class Party < ActiveRecord::Base
   def copy_address _address
     _new =_address.dup
     _new.assign_attributes( {:orig_id => _address.id})
+    _address.update_attribute(:date_effective_end, DateTime.current)
     self.addresses<<_new
   end
 
