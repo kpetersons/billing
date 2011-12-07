@@ -34,7 +34,7 @@ class DashboardController < ApplicationController
       @to = Date.strptime('01.01.3000', '%d.%m.%Y')
       to_bkp = true
     end
-    @task_type =  (params[:task_type].eql?"All")? MatterTaskType.all.collect{|x| x.name} : params[:task_type]
+    @task_type =  (params[:task_type].eql?"ALL")? MatterTaskType.all.collect{|x| x.name} : params[:task_type]
     @matter_type = (params[:matter_type].eql?"matters.all")? MatterType.all.collect{|x| x.name} : params[:matter_type]
     @description = params[:description]
     @query = VMatterTasks.where(:task_type => @task_type, :matter_type => @matter_type).where("deadline between ? and ? and description ilike ?", @from.to_s(:db), @to.to_s(:db), "%#{@description}%")
