@@ -27,9 +27,9 @@ class InvoicesController < ApplicationController
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
       @other_invoices = VMatters.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).order(params[:order]).paginate(:per_page => 10, :page => params[:other_invoices_page])
       render "index" and return
-    rescue Exception => e
+    rescue  => ex
       flash.now[:error] = "Invalid search parameters. Check them again!"
-      logger.error e.message
+      logger.error ex.message
     end
     @invoices = VInvoices.where(:author_id => current_user.id).order(params[:order]).paginate(:per_page => 10, :page => params[:my_invoices_page])
     @other_invoices = VInvoices.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).order(params[:order]).paginate(:per_page => 10, :page => params[:other_invoices_page])

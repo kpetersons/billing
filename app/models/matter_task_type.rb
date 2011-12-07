@@ -15,6 +15,6 @@ class MatterTaskType < ActiveRecord::Base
   attr_accessible :name, :description
 
   def self.all_inclusive
-    MatterTaskType.all<<MatterTaskType.new(:name => "All", :id => -1)
+    MatterTaskType.all<<MatterTaskType.new(:name => "ALL", :id => -1)
   end
 end
