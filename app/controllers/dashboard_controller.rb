@@ -2,11 +2,12 @@ class DashboardController < ApplicationController
 
   layout "dashboard"
 
-  before_filter :show_column_filter, :only => [:show, :message]
+  before_filter :show_column_filter, :only => [:show, :message, :find]
 
   def show
     @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:page => params[:param_name])
     @upcoming_deadlines_matters = VMatters.joins(:matter_tasks).where('proposed_deadline between ? and ?', Date.today-1, Date.today + 5).paginate(:page => params[:param_name])
+    @matter_tasks = nil
     puts "@recent_activity_matters #{@recent_activity_matters}"
     puts "@upcoming_deadlines_matters #{@upcoming_deadlines_matters}"
 
@@ -16,6 +17,7 @@ class DashboardController < ApplicationController
   def message
     @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:page => params[:param_name])
     @upcoming_deadlines_matters = VMatters.joins(:matter_tasks).where('proposed_deadline between ? and ?', Date.today-1, Date.today + 5).paginate(:page => params[:param_name])
+    @matter_tasks = nil
     @message = get_message params[:id]
     render 'show'
   end
@@ -34,7 +36,13 @@ class DashboardController < ApplicationController
     redirect_to dashboard_index_path
   end
 
-
+  def find
+    @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:page => params[:param_name])
+    @upcoming_deadlines_matters = VMatters.joins(:matter_tasks).where('proposed_deadline between ? and ?', Date.today-1, Date.today + 5).paginate(:page => params[:param_name])
+    @matter_tasks = nil
+    @message = get_message params[:id]
+    render 'show'
+  end
 
   def filter
     #params to array

@@ -114,12 +114,13 @@ Billing::Application.routes.draw do
 
   root :to => 'sessions#new'
 
-  resources :dashboard, :only => [:show, :message] do
+  resources :dashboard, :only => [:show, :message, :filter, :reset, :clear, :find] do
     collection do
       get :show
       post :filter
       delete :reset
       delete :clear
+      post :find
     end
     member do
       get :message

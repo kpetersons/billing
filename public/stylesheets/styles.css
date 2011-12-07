@@ -19,3 +19,32 @@
     display:inline-block;
     position:absolute;
 }
+
+.column.fixed .panel-content form ul.dashboard-filter {
+    margin: 0;
+    padding:  0;
+}
+
+.column.fixed .panel-content form ul.dashboard-filter label:first-child,
+.column.fixed .panel-content form ul.dashboard-filter input,
+.column.fixed .panel-content form ul.dashboard-filter select {
+    margin-top:2px;
+    display:inline-block;
+    min-width: 160px;
+    max-width: 160px;
+}
+
+.column.fixed .panel-content form ul.dashboard-filter li:first-child label,
+.column.fixed .panel-content form ul.dashboard-filter input:first-child,
+.column.fixed .panel-content form ul.dashboard-filter li:not(:last-child) input:last-child {
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.column.fixed .panel-content form ul.dashboard-filter+[type="submit"] {
+    padding:  5px;
+}
+
+.column.fixed .panel-content form ul.dashboard-filter li input, .column.fixed .panel-content form ul.dashboard-filter li select {
+    margin-left: 5px;
+}

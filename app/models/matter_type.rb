@@ -15,5 +15,10 @@ class MatterType < ActiveRecord::Base
   belongs_to :function
   has_many :matters
   has_many :operating_party_matter_types
-  has_many :operating_parties, :through => :operating_party_matter_types 
+  has_many :operating_parties, :through => :operating_party_matter_types
+
+  def translated_name
+    I18n.translate(name)
+  end
+
 end
