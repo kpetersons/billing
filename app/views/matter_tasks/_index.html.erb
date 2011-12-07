@@ -20,7 +20,7 @@
   <tbody>
   <% matter_tasks.each do |matter_task| %>
       <tr>
-        <td class="col-text"><%= matter_task.description %></td>
+        <td class="col-text" style="max-width: 50%" width="50%"><%= matter_task.description %></td>
         <td class="col-date"><%= matter_task.proposed_deadline.to_s(:show) unless matter_task.proposed_deadline.nil? %></td>
         <td class="col-date"><%= matter_task.type_name %></td>
         <td class="col-text">

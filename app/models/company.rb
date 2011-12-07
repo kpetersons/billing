@@ -49,7 +49,6 @@ class Company < ActiveRecord::Base
 
   def copy_account _account
     _new =_account.dup
-    _new.assign_attributes({:orig_id => _account.id})
     self.accounts<< _new
   end
 

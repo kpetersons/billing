@@ -25,7 +25,7 @@ class MatterTask < ActiveRecord::Base
   
 #  attr_accessible :matter_id, :matter_task_status_id, :description, :proposed_deadline
   
-  validates :description, :presence => true
+  validates :description, :presence => true, :length => {:in => 1..255}
   validates :proposed_deadline, :presence => true
 
   def linked_invoices

@@ -1,0 +1,38 @@
+<table style="width: 100%;">
+  <thead>
+  <tr>
+    <th class="col-text"><%='Matter no.'%></th>
+    <th class="col-date"><%= "Description" %></th>
+    <th class="col-text"><%= t('matter_task.fields.type') %></th>
+    <th class="col-text"><%= "Deadline" %></th>
+    <%= render :partial => "shared/ui/date_th" %>
+    <th class="col-number"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <th class="list-paginate" colspan="7">
+      <%= will_paginate matter_tasks, :param_name => param_name %>
+    </th>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% matter_tasks.each do |matter_task| %>
+      <tr>
+        <td class="col-date"><%= matter_task.registration_number %></td>
+        <td class="col-text" style="max-width: 50%" width="50%"><%= matter_task.description %></td>
+        <td class="col-date"><%= matter_task.task_type %></td>
+        <td class="col-date"><%= matter_task.deadline.to_s(:show) unless matter_task.deadline.nil? %></td>
+        <%= render :partial => "shared/ui/date_td", :locals => {:object => matter_task} %>
+        <td class="col-number">
+          <%= link_to 'Show', matter_path(matter_task.matter_id) %>
+        </td>
+      </tr>
+  <% end %>
+  <% if matter_tasks.empty? %>
+      <tr>
+        <td colspan="7">&nbsp;</td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

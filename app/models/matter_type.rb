@@ -21,4 +21,8 @@ class MatterType < ActiveRecord::Base
     I18n.translate(name)
   end
 
+  def self.all_inclusive
+    MatterType.all<<MatterType.new(:name => "matters.all", :id => -1)
+  end
+
 end

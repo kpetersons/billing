@@ -79,6 +79,7 @@ en:
     patent_search: "Patent search matter"
     trademark_search: "Trademark search matter"
     domain: "Domain matter"
+    all: "All"
     task:
       status:
         change:

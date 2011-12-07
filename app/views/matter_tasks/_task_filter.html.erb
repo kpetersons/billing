@@ -1,12 +1,12 @@
-<%= form_tag :controller => :dashboard, :action => :find do |f| %>
+<%= form_tag :controller => :dashboard, :action => :find, :anchor => :deadlines do |f| %>
     <ul class="dashboard-filter">
       <li>
-        <label style="float:none">From</label><%=text_field_tag :from, "", {:style => "width:6em;min-width:5em;"}%>
-        <label style="float:none">To</label> <%=text_field_tag :to, "", {:style => "width:6em;min-width:5em;"}%>
+        <label style="float:none">From</label><%=text_field_tag :from, @from, {:style => "width:6em;min-width:5em;"}%>
+        <label style="float:none">To</label> <%=text_field_tag :to, @to, {:style => "width:6em;min-width:5em;"}%>
       </li>
-      <li><label>Task type</label><%=select_tag :task_type, options_from_collection_for_select(MatterTaskType.all, :id, :name) %></li>
-      <li><label>Matter type</label><%=select_tag :task_type, options_from_collection_for_select(MatterType.all, :id, :translated_name) %></li>
-      <li><label>Description contains</label><%=text_field_tag :description%></li>
+      <li><label>Task type</label><%=select_tag :task_type, options_from_collection_for_select(MatterTaskType.all_inclusive, :name, :name) %></li>
+      <li><label>Matter type</label><%=select_tag :matter_type, options_from_collection_for_select(MatterType.all_inclusive, :name, :translated_name) %></li>
+      <li><label>Description contains</label><%=text_field_tag :description, @description%></li>
     </ul>
     <%=submit_tag "Show"%>
 <% end %>

@@ -25,6 +25,11 @@
 #  rate               :decimal(8, 3)
 #  apply_vat          :boolean
 #  date_paid          :date
+#  total_official_fee :decimal(, )
+#  total_attorney_fee :decimal(, )
+#  subtotal           :decimal(, )
+#  total_vat          :decimal(, )
+#  grand_total        :decimal(, )
 #
 
 class VInvoices < ActiveRecord::Base
