@@ -12,7 +12,7 @@ class CreateViews04 < ActiveRecord::Migration
           m.matter_type,
           mtt.name as task_type,
           mts.name as status,
-          substring(mt.description from 1 for 150) description,
+          substring(mt.description from 1 for 150) as description,
           mt.proposed_deadline as deadline,
           mt.created_at,
           mt.updated_at
