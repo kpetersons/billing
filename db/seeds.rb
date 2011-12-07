@@ -1096,9 +1096,9 @@ DefaultFilter.transaction do
       {:column_query => 'rate', :column_position => 18, :is_default => false, :column_name => 'ii_rate', :column_type => 'col-number', :translate => false},
       {:column_query => 'apply_vat', :column_position => 19, :is_default => false, :column_name => 'ii_apply_vat', :column_type => 'col-boolean', :translate => false},
       {:column_query => 'date_paid', :column_position => 20, :is_default => false, :column_name => 'ii_date_paid', :column_type => 'col-date', :translate => false},
-      {:column_query => 'total_official_fee', :column_position => 21, :is_default => false, :column_name => 'ii_total_official_fee', :column_type => 'col-number', :translate => false},
-      {:column_query => 'total_attorney_fee', :column_position => 22, :is_default => false, :column_name => 'ii_total_attorney_fee', :column_type => 'col-number', :translate => false},
-      {:column_query => 'subtotal', :column_position => 23, :is_default => false, :column_name => 'ii_subtotal', :column_type => 'col-number', :translate => false},
+      #{:column_query => 'total_official_fee', :column_position => 21, :is_default => false, :column_name => 'ii_total_official_fee', :column_type => 'col-number', :translate => false},
+      #{:column_query => 'total_attorney_fee', :column_position => 22, :is_default => false, :column_name => 'ii_total_attorney_fee', :column_type => 'col-number', :translate => false},
+      #{:column_query => 'subtotal', :column_position => 23, :is_default => false, :column_name => 'ii_subtotal', :column_type => 'col-number', :translate => false},
       {:column_query => 'total_vat', :column_position => 22, :is_default => true, :column_name => 'ii_total_vat', :column_type => 'col-number', :translate => false},
       {:column_query => 'grand_total', :column_position => 23, :is_default => true, :column_name => 'ii_grand_total', :column_type => 'col-number', :translate => false}
   ]
