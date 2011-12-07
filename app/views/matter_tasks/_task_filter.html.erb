@@ -4,8 +4,8 @@
         <label style="float:none">From</label><%=text_field_tag :from, @from, {:style => "width:6em;min-width:5em;"}%>
         <label style="float:none">To</label> <%=text_field_tag :to, @to, {:style => "width:6em;min-width:5em;"}%>
       </li>
-      <li><label>Task type</label><%=select_tag :task_type, options_from_collection_for_select(MatterTaskType.all_inclusive, :name, :name) %></li>
-      <li><label>Matter type</label><%=select_tag :matter_type, options_from_collection_for_select(MatterType.all_inclusive, :name, :translated_name) %></li>
+      <li><label>Task type</label><%=select_tag :task_type, options_from_collection_for_select(MatterTaskType.all_inclusive, :name, :name, @task_type) %></li>
+      <li><label>Matter type</label><%=select_tag :matter_type, options_from_collection_for_select(MatterType.all_inclusive, :name, :translated_name, @matter_type) %></li>
       <li><label>Description contains</label><%=text_field_tag :description, @description%></li>
     </ul>
     <%=submit_tag "Show"%>
