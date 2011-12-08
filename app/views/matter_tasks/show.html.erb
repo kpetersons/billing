@@ -2,8 +2,12 @@
 	<div class="panel-header">
 		<strong>User information</strong>
 	</div>
-	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
 	<dl class="panel-content">
+        <dt style="font-size: 1em; line-height:2em;">
+            <span><%=link_to "< Back to Matter", matter_path(@matter_task.matter_id)%></span>
+        </dt>
+        <dd style="font-size: 1em; line-height:2em;">&nbsp;</dd>
 		<dt>
 			<label>
 				Description

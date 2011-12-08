@@ -3,16 +3,19 @@
 <%= fields.hidden_field :matter_task_status_id %>
 <%= fields.hidden_field :author_id %>
 <ul>
-	<li>
-		<%= fields.label :description %>
-		<%= fields.text_field :description %>
-	</li>
-	<li>
-		<%= fields.label :proposed_deadline %>
-		<%= fields.text_field :proposed_deadline, "class" => "field-date date-field", :value => date_format_field(fields.object.proposed_deadline)%>
-	</li>
-	<li>
-		<%= fields.label :matter_task_type_id, t("matter_task.fields.type") %>
-		<%= fields.select :matter_task_type_id, MatterTaskType.all.collect { |tt| [t(tt.name), tt.id] } %>
-	</li>	
+  <li>
+    <span><%= link_to "< Back to Matter", matter_path(@matter_task.matter_id) %></span>
+  </li>
+  <li>
+    <%= fields.label :description %>
+    <%= fields.text_field :description %>
+  </li>
+  <li>
+    <%= fields.label :proposed_deadline %>
+    <%= fields.text_field :proposed_deadline, "class" => "field-date date-field", :value => date_format_field(fields.object.proposed_deadline) %>
+  </li>
+  <li>
+    <%= fields.label :matter_task_type_id, t("matter_task.fields.type") %>
+    <%= fields.select :matter_task_type_id, MatterTaskType.all.collect { |tt| [t(tt.name), tt.id] } %>
+  </li>
 </ul>
