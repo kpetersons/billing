@@ -19,6 +19,10 @@ class Patent < ActiveRecord::Base
   belongs_to :matter
   validates :ep_number, :numericality => true
 
+  validates :application_date, :date_not_far_future => :true
+  validates :patent_grant_date, :date_not_far_future => :true
+  validates :registration_date, :date_not_far_future => :true
+
   #after_create :generate_registration_number
   def generate_registration_number
     if matter.document.parent_id.nil?

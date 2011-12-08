@@ -16,7 +16,7 @@ class PatentSearch < ActiveRecord::Base
   belongs_to :matter
 
   validates :date_of_order, :presence => true
-
+  validates :date_of_order, :date_not_far_future => true
   #after_create :generate_registration_number
 
   def generate_registration_number

@@ -47,6 +47,11 @@ class Trademark < ActiveRecord::Base
 
   validates :mark_name, :presence => true, :length => {:within => 1..250}
 
+  validates :appl_date, :date_not_far_future => true
+  validates :application_date, :date_not_far_future => true
+  validates :priority_date, :date_not_far_future => true
+  validates :registration_date, :date_not_far_future => true
+
   before_save :replace_spaces
   before_update :replace_spaces
 

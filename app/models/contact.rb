@@ -19,7 +19,7 @@ class Contact < ActiveRecord::Base
   before_validation :original_no_longer_used
 
   def no_longer_used
-    update_attribute(:date_effective_end, DateTime.current)
+    #update_attribute(:date_effective_end, DateTime.current)
   end
 
   private

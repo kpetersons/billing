@@ -11,6 +11,7 @@ class ActiveRecord::Base
   def self.per_page
     10
   end
+
 end
 
 Date::DATE_FORMATS[:default] = "%d.%m.%Y"

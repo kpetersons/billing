@@ -23,6 +23,8 @@ class Customer < ActiveRecord::Base
 
   attr_accessible :vat_registration_number, :customer_type, :shortnote, :orig_id, :party_id, :date_effective, :date_effective_end
   validate :vat_registration_number_unique
+  validates :date_effective, :date_not_far_future => true
+  validates :date_effective_end, :date_not_far_future => true
 
   before_validation :trim_strings
   #before_validation :original_no_longer_used

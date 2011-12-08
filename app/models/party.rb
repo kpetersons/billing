@@ -33,6 +33,8 @@ class Party < ActiveRecord::Base
   accepts_nested_attributes_for :individual, :company, :customer, :addresses, :contact_person
 
   validates :identifier, :uniqueness => {:case_sensitive => false}, :presence => true
+  validates :date_effective, :date_not_far_future => true
+  validates :date_effective_end, :date_not_far_future => true
 
   before_validation :generate_identifier, :on => :create
   #before_validation :original_no_longer_used

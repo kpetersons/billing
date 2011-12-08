@@ -17,7 +17,9 @@ class Custom < ActiveRecord::Base
   belongs_to :matter
   belongs_to :client_all_ip, :class_name => 'Customer', :foreign_key => :client_all_ip_id
   
-  #after_create :generate_registration_number
+  validates :date_of_order_alert, :date_not_far_future => true
+  validates :ca_application_date, :date_not_far_future => true
+
   attr_accessor :client_all_ip_name
   
   def client_all_ip_name

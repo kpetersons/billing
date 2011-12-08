@@ -25,6 +25,7 @@ class ContactPerson < ActiveRecord::Base
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   validates :birth_date, :presence => true
+  validates :birth_date, :date_not_far_future => true
 
   def gender_name
     unless gender.nil?

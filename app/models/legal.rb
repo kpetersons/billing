@@ -24,7 +24,10 @@ class Legal < ActiveRecord::Base
   belongs_to :opposite_party_agent, :class_name => 'Customer', :foreign_key => :opposite_party_agent_id
   
   attr_accessor :opposite_party_name, :opposite_party_agent_name
-  
+
+  validates :date_of_closure, :date_not_far_future => true
+  validates :date_of_order, :date_not_far_future => true
+
   def opposite_party_name
     opposite_party.name unless opposite_party.nil?
   end

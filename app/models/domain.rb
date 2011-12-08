@@ -13,7 +13,7 @@
 class Domain < ActiveRecord::Base
   belongs_to :matter
 
-  #after_create :generate_registration_number
+  validates :registration_date, :date_not_far_future => true
 
   def generate_registration_number
     if matter.document.parent_id.nil?

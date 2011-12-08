@@ -28,6 +28,8 @@ class Address < ActiveRecord::Base
   validates :country_id, :presence => true
   validates :city, :presence => true
   validates :street, :presence => true
+  validates :date_effective, :date_not_far_future => true
+  validates :date_effective_end, :date_not_far_future => true
 
   attr_accessor :address_type_name
 

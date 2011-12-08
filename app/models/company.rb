@@ -23,6 +23,9 @@ class Company < ActiveRecord::Base
   accepts_nested_attributes_for :operating_party
 
   validates :name, :presence => true
+  validates :date_effective, :date_not_far_future => true
+  validates :date_effective_end, :date_not_far_future => true
+
   validate :registration_number_unique
 
   before_validation :trim_strings

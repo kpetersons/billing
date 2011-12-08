@@ -18,6 +18,7 @@ class Search < ActiveRecord::Base
   validates :search_for, :presence => true
   validates :date_of_order, :presence => true
   validates :no_of_objects, :presence => true
+  validates :date_of_order, :date_not_far_future => true
 
   attr_protected :classes
 

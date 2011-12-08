@@ -27,6 +27,7 @@ class MatterTask < ActiveRecord::Base
   
   validates :description, :presence => true, :length => {:in => 1..255}
   validates :proposed_deadline, :presence => true
+  validates :proposed_deadline, :date_not_far_future => true
 
   def linked_invoices
 
