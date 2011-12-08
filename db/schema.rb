@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(:version => 20111208141632) do
     t.integer  "country_id"
     t.integer  "version",            :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",     :default => '2011-12-03'
+    t.date     "date_effective"
     t.datetime "date_effective_end"
   end
 

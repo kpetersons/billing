@@ -166,34 +166,36 @@ class Matter < ActiveRecord::Base
     end
   end
 
+  def get_matter_count type
+    return Matter.where(:matter_type_id => type).count
+  end
+
+  def get_matter_count_per_year type, year
+    return PatentSearch.where("to_char(date_of_order, 'YYYY') = ?", year).count
+  end
+
   def generate_registration_number
-    unless trademark.nil?
-      trademark.generate_registration_number
+    unless matter_prefixes[matter_type_id].length > 1
+      document.update_attribute(:registration_number, "#{matter_prefixes[matter_type_id]}#{get_matter_count (matter_type_id)}") and return
     end
-    unless patent.nil?
-      patent.generate_registration_number
-    end
-    unless patent.nil?
-      patent.generate_registration_number
-    end
-    unless legal.nil?
-      legal.generate_registration_number
-    end
-    unless custom.nil?
-      custom.generate_registration_number
-    end
-    unless patent_search.nil?
-      patent_search.generate_registration_number
-    end
-    unless search.nil?
-      search.generate_registration_number
-    end
-    unless domain.nil?
-      domain.generate_registration_number
-    end
+    document.update_attribute(:registration_number, "#{matter_prefixes[matter_type_id]}#{get_matter_count_per_year matter_type_id, Time.new.strftime('%Y')}#{Time.new.strftime('%y')}")
   end
 
   private
+  def matter_prefixes
+    return {
+        1 => 'M',
+        2 => 'P',
+        3 => 'L',
+        4 => 'D',
+        5 => 'B',
+        6 => 'PS',
+        7 => 'S',
+        8 => 'N'
+    }
+  end
+
+
   def prepare_ajax_fields
     unless errors[:agent_id].empty?
       errors[:agent_name] = Array.new(errors[:agent_id])
