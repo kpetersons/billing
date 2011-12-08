@@ -22,11 +22,4 @@ class Search < ActiveRecord::Base
 
   attr_protected :classes
 
-  #after_create :generate_registration_number
-
-  def generate_registration_number
-    if matter.document.parent_id.nil?
-      matter.document.update_attribute(:registration_number, "S#{matter.orig_id}")
-    end
-  end  
 end

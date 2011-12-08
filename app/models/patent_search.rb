@@ -17,11 +17,5 @@ class PatentSearch < ActiveRecord::Base
 
   validates :date_of_order, :presence => true
   validates :date_of_order, :date_not_far_future => true
-  #after_create :generate_registration_number
 
-  def generate_registration_number
-    if matter.document.parent_id.nil?
-      matter.document.update_attribute(:registration_number, "PS#{matter.orig_id}#{Time.new.strftime('%y')}")
-    end
-  end
 end

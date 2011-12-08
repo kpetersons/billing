@@ -25,10 +25,5 @@ class Custom < ActiveRecord::Base
   def client_all_ip_name
     client_all_ip.name unless client_all_ip.nil?
   end
-  
-  def generate_registration_number
-    if matter.document.parent_id.nil?
-      matter.document.update_attribute(:registration_number, "B#{matter.orig_id}")
-    end
-  end
+
 end

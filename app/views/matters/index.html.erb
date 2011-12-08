@@ -6,15 +6,7 @@
 </div>
 <div class="nested-panel">
   <div class="panel-header">
-    <strong>My matters</strong>
+    <strong>Matter list</strong>
   </div>
   <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matters, :choose => false, :param_name => 'my_matters_page'} %>
 </div>
-<% unless @other_matters.empty? %>
-    <div class="nested-panel">
-      <div class="panel-header">
-        <strong>Other matters</strong>
-      </div>
-      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @other_matters, :choose => false, :param_name => 'other_matters_page'} %>
-    </div>
-<% end %>

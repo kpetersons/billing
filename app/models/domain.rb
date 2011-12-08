@@ -15,9 +15,4 @@ class Domain < ActiveRecord::Base
 
   validates :registration_date, :date_not_far_future => true
 
-  def generate_registration_number
-    if matter.document.parent_id.nil?
-      matter.document.update_attribute(:registration_number, "N#{matter.orig_id}")
-    end
-  end
 end

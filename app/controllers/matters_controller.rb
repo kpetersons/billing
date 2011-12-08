@@ -7,13 +7,12 @@ class MattersController < ApplicationController
   def index
     @order_by = params[:order_by]
     @direction = params[:direction]
-    @matters = VMatters.where(:author_id => current_user.id).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
+    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
     @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
-    @other_matters = VMatters.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).paginate(:page => params[:param_name])
   end
 
   def quick_search
-    @matters = VMatters.quick_search(params[:search], params[:param_name])
+    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).quick_search(params[:search], params[:param_name])
     @other_matters = []
     render 'index'
   end
@@ -23,9 +22,8 @@ class MattersController < ApplicationController
       @detail_search = DetailSearch.new({:columns => @columns, :details => params[:detail_search][:details]})
       @order_by = params[:order_by]
       @direction = params[:direction]
-      @matters = VMatters.where(@detail_search.query).where(:author_id => current_user.id).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
+      @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
-      @other_matters = VMatters.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).paginate(:page => params[:param_name])
       render "index" and return
     rescue => ex
       flash.now[:error] = "Invalid search parameters. Check them again!"
@@ -33,9 +31,8 @@ class MattersController < ApplicationController
     end
     @order_by = params[:order_by]
     @direction = params[:direction]
-    @matters = VMatters.where(:author_id => current_user.id).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
+    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
     @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
-    @other_matters = VMatters.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).paginate(:page => params[:param_name])
     render"index"
   end
 
@@ -94,7 +91,7 @@ class MattersController < ApplicationController
         @document.update_attribute(:date_effective, @date_effective)
         @matter.update_attribute(:date_effective, @date_effective)
 
-        @matter.generate_registration_number
+        @matter.generate_registration_number if @matter.document.parent_id.nil?
 
         unless params[:document][:matter_attributes][:classes].nil?
           @matter.save_classes params
@@ -127,7 +124,7 @@ class MattersController < ApplicationController
           @matter.update_attribute(:date_effective, @date_effective)
 
           unless params[:document][:matter_attributes][:classes].nil?
-            @matter.generate_registration_number
+            #@matter.generate_registration_number
             @matter.save_classes params
           end
           redirect_to matter_path(@matter)
@@ -170,7 +167,7 @@ class MattersController < ApplicationController
         @document_new.matter.date_effective = @date_effective
 
         if @document_new.save
-          @document_new.matter.generate_registration_number
+          @document_new.matter.generate_registration_number if @document_new.parent_id.nil?
           redirect_to matter_path(@document_new.matter) and return
         else
           @document = @document_new
