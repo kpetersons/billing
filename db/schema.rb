@@ -13,6 +13,18 @@
 
 ActiveRecord::Schema.define(:version => 20111208141632) do
 
+    execute <<-SQL
+      drop view if exists v_invoices;
+    SQL
+
+    execute <<-SQL
+      drop view if exists v_matters;
+    SQL
+
+    execute <<-SQL
+      drop view if exists v_matter_tasks;
+    SQL
+
   create_table "accounts", :force => true do |t|
     t.string   "bank"
     t.string   "bank_code"
@@ -622,9 +634,7 @@ ActiveRecord::Schema.define(:version => 20111208141632) do
     t.datetime "last_login_date"
   end
 
-    execute <<-SQL
-      drop view if exists v_invoices;
-    SQL
+
     execute <<-SQL
       create view v_invoices as (
 select
@@ -722,9 +732,7 @@ from (
 );
     SQL
 
-    execute <<-SQL
-      drop view if exists v_matters;
-    SQL
+
     execute <<-SQL
       create view v_matters as (
       select
@@ -844,9 +852,7 @@ from (
       );
     SQL
 
-    execute <<-SQL
-      drop view if exists v_matter_tasks;
-    SQL
+
     execute <<-SQL
       create view v_matter_tasks as (
         select
