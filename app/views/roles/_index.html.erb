@@ -28,6 +28,10 @@
 	  		<%= render :partial => "shared/ui/date_td", :locals => {:object => role}%>			
 			<td class="col-number">
 				<%= link_to "Show", role_path(role, :anchor => "functions")%>
+                <%= if @user
+                        link_to "Remove", remove_user_role_path(@user, role), :method => :delete
+                    end
+                %>
 			</td>
 		</tr>
 		<% end %>

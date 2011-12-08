@@ -25,6 +25,13 @@ class RolesController < ApplicationController
     end    
   end
 
+  def remove
+    @user = User.find(params[:user_id])
+    @role = Role.find(params[:id])
+    @user.roles.delete(@role)
+    redirect_to user_path(@user, :anchor => "roles")
+  end
+
   def new
     @role = Role.new  
   end
