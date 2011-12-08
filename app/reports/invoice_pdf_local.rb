@@ -1,4 +1,5 @@
 class InvoicePdfLocal < Prawn::Document
+  include ActionView::Helpers::NumberHelper
 
   def to_pdf(invoice, current_user, watermark, images)
     if watermark
@@ -89,6 +90,7 @@ class InvoicePdfLocal < Prawn::Document
         line_table.rows(0).style(:borders => [:top, :bottom], :font_style => :bold)
         line_table.rows(line_table_data.length-1).style(:borders => [:bottom])
         line_table.columns(0).style(:borders => [:left])
+        line_table.columns(2..4).style(:align => :right)
         line_table.columns(line_table_data[0].length-1).style(:borders => [:right])
         line_table.cells[0,0].style(:borders => [:left, :top, :bottom])
         line_table.cells[0,line_table_data[0].length-1].style(:borders => [:right, :top, :bottom])
@@ -110,6 +112,7 @@ class InvoicePdfLocal < Prawn::Document
             line_table_totals = make_table(line_table_totals_data, :width => table_width, :cell_style => {:borders => [], :padding => 3}, :column_widths => [415, 40, 65])
             line_table_totals.row(line_table_totals_data.length-1).style(:font_style => :bold)
             line_table_totals.columns(0).style(:align => :right)
+            line_table_totals.columns(2).style(:align => :right)
             line_table_totals.draw
             move_down 10
             draw_invoice_footer invoice, current_user
@@ -223,9 +226,9 @@ class InvoicePdfLocal < Prawn::Document
       table<<[
         line_data,
         line.units,
-        (line.official_fee_type_id.nil?)? line.attorney_fee : line.official_fee,
+        number_to_currency((line.official_fee_type_id.nil?)? line.attorney_fee : line.official_fee, :unit => "", :delimiter  => ""),
         line.items,
-        (line.official_fee_type_id.nil?)? line.total_attorney_fee : line.total_official_fee
+        number_to_currency((line.official_fee_type_id.nil?)? line.total_attorney_fee : line.total_official_fee, :unit => "", :delimiter  => "")
         ]
         counter = counter + 1
     end
@@ -236,22 +239,22 @@ class InvoicePdfLocal < Prawn::Document
     return [
       I18n.t('local.print.invoice.lines.sum_vat_exempt'),
       "",
-      invoice.local_sum_exempt_vat
+      number_to_currency(invoice.local_sum_exempt_vat, :unit => "", :delimiter  => "")
     ],
     [
       I18n.t('local.print.invoice.lines.sum_vat_taxable'),
       "",
-      invoice.local_sum_taxable_vat
+      number_to_currency(invoice.local_sum_taxable_vat, :unit => "", :delimiter  => "")
     ],
     [
       I18n.t('local.print.invoice.lines.vat_22'),
       "",
-      invoice.local_sum_vat
+      number_to_currency(invoice.local_sum_vat, :unit => "", :delimiter  => "")
     ],
     [
       I18n.t('local.print.invoice.lines.sum_to_pay'),
       I18n.t('local.print.invoice.lines.curr'),
-      invoice.local_sum_total
+      number_to_currency(invoice.local_sum_total, :unit => "", :delimiter  => "")
     ]
   end
 

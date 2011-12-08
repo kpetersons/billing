@@ -3,7 +3,7 @@
     Official fee
   </th>
   <th style="text-align: right">
-    <%= invoice.sum_official_fees %>
+    <%= number_to_currency(invoice.sum_official_fees, :unit => "", :delimiter  => "")%>
   </th>
 </tr>
 <tr>
@@ -11,7 +11,7 @@
     Attorney's fee
   </th>
   <th style="text-align: right">
-    <%= invoice.sum_attorney_fees - invoice.sum_discount %>
+    <%= number_to_currency(invoice.sum_attorney_fees - invoice.sum_discount , :unit => "", :delimiter  => "")%>
   </th>
 </tr>
 <tr>
@@ -19,7 +19,7 @@
     Official fee + Attorney's fee
   </th>
   <th style="text-align: right">
-    <%= invoice.sum_official_fees + invoice.sum_attorney_fees - invoice.sum_discount %>
+    <%= number_to_currency(invoice.sum_official_fees + invoice.sum_attorney_fees - invoice.sum_discount , :unit => "", :delimiter  => "")%>
   </th>
 </tr>
 <tr>
@@ -27,7 +27,7 @@
     VAT
   </th>
   <th style="text-align: right">
-    <%=invoice.sum_vat%>
+    <%= number_to_currency(invoice.sum_vat, :unit => "", :delimiter  => "")%>
   </th>
 </tr>
 <tr>
@@ -35,6 +35,6 @@
     Grand total
   </th>
   <th style="text-align: right">
-    <%=invoice.sum_total%>
+    <%= number_to_currency(invoice.sum_total, :unit => "", :delimiter  => "")%>
   </th>
 </tr>

@@ -30,7 +30,7 @@
         <% current_user.column_names('invoices').each do |column| %>
             <td class="<%= column.column_type %>">
               <% val = invoice.try(column.column_query) %>
-              <% val = (column.column_type.eql?('col-date') && !val.nil?) ? val.to_datetime().to_s(:show) : val %>
+              <% val = (column.column_type.eql?('col-date') && !val.nil?) ? val.to_datetime().to_s(:show) : ((column.column_type.eql?('col-number') && !val.nil?)? number_to_currency(val, :unit => "", :delimiter  => "") : val) %>
               <% val = (column.translate) ? t(val) : val %>
               <%= val %>
             </td>

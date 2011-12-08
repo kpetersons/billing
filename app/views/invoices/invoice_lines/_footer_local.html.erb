@@ -3,7 +3,7 @@
     Ar PVN apliekamā summa
   </th>
   <th style="text-align: right">
-    <%= invoice.local_sum_taxable_vat %>
+    <%= number_to_currency(invoice.local_sum_taxable_vat, :unit => "", :delimiter  => "")%>
   </th>
 </tr>
 <tr>
@@ -11,7 +11,7 @@
     Ar PVN neapliekamā summa (Valsts nodevas)
   </th>
   <th style="text-align: right">
-    <%= invoice.local_sum_exempt_vat %>
+    <%= number_to_currency(invoice.local_sum_exempt_vat , :unit => "", :delimiter  => "")%>
   </th>
 </tr>
 <tr>
@@ -19,7 +19,7 @@
     VAT
   </th>
   <th style="text-align: right">
-    <%=invoice.local_sum_vat%>
+    <%= number_to_currency(invoice.local_sum_vat, :unit => "", :delimiter  => "")%>
   </th>
 </tr>
 <tr>
@@ -27,6 +27,6 @@
     KOPĀ pavisam
   </th>
   <th style="text-align: right">
-    <%=invoice.local_sum_total%>
+    <%= number_to_currency(invoice.local_sum_total, :unit => "", :delimiter  => "")%>
   </th>
 </tr>

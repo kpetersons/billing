@@ -170,13 +170,11 @@ class Invoice < ActiveRecord::Base
   #end column filter  
 
   def self.new_foreign_reg_number
-    puts "Invoice.where(:invoice_type=> foreign).count #{Invoice.where(:invoice_type=> 1).count}"
     return Invoice.where(:invoice_type=> 1).count
   end
 
   def self.new_local_reg_number
-    puts "Invoice.where(:invoice_type=> local).count #{Invoice.where(:invoice_type=> 0).count}"
-    return Invoice.where(:invoice_type=> 0).count
+    return Invoice.where(:invoice_type=> 0).where("to_char(invoice_date, 'YYYY') = to_char(now(), 'YYYY')").count
   end
 
   def chk_address

@@ -1076,6 +1076,7 @@ DefaultFilter.transaction do
   dashboard_columns = matter_columns
 
   invoice_columns = [
+      {:column_query => 'registration_number', :column_position => 0, :is_default => true, :column_name => 'ii_registration_number', :column_type => 'col-text', :translate => false},
       {:column_query => 'customer_name', :column_position => 1, :is_default => true, :column_name => 'ii_customer_name', :column_type => 'col-text', :translate => false},
       {:column_query => 'person', :column_position => 2, :is_default => false, :column_name => 'ii_person', :column_type => 'col-text', :translate => false},
       {:column_query => 'address', :column_position => 3, :is_default => false, :column_name => 'ii_address', :column_type => 'col-text', :translate => false},
