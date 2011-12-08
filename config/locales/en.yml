@@ -35,6 +35,7 @@ en:
     create: "Create"
     change: "Change"
     confirm: "Confirm"
+    add: "Add"
   address:
     create: "Create address"
     show:   "Address"

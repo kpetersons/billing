@@ -1,9 +1,9 @@
 <div class="panel">
-	<%=form_for @role_function, :url => add_role_functions_path(@role) do |rf_f|%>
-	<%=rf_f.hidden_field :role_id%>
-	<%= render :partial => "/functions/index", :locals => {:functions => @functions, :table_title => t('function.list.choose'), :choose => true, :fields => rf_f, :param_name => 'page'} %>
-	<div class="buttons">
-		<span class="button"><%= rf_f.submit t('button.add') %></span>
-	</div>	
-	<%end%>
+  <%= form_for @role_function, :url => add_role_functions_path(@role) do |rf_f| %>
+      <%= rf_f.hidden_field :role_id %>
+      <%= render :partial => "/functions/index", :locals => {:functions => @functions, :table_title => t('function.list.choose'), :choose => true, :fields => rf_f, :param_name => 'page'} %>
+      <div class="buttons">
+        <span class="button"><%= rf_f.submit t('button.add') %></span>
+      </div>
+  <% end %>
 </div>

@@ -77,6 +77,7 @@ class Invoice < ActiveRecord::Base
   validates :date_paid, :date_not_far_future => true
   validates :invoice_date, :date_not_far_future => true
 
+  validate :if_paid_then_when
   validate :not_future
   validate :our_ref_present
 
@@ -303,6 +304,13 @@ class Invoice < ActiveRecord::Base
   end
 
   private
+
+  def if_paid_then_when
+    status_test = status_name.eql? "invoice.status.paid"
+    if status_test && (self.date_paid.nil? || self.date_paid.empty?)
+      errors.add(:date_paid, "should be entered before marking invoice as paid.")
+    end
+  end
 
   def parse_our_refs
     @our_refs = []

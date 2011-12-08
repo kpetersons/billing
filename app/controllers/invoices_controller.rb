@@ -27,7 +27,7 @@ class InvoicesController < ApplicationController
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
       @other_invoices = VMatters.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).order(params[:order]).paginate(:per_page => 10, :page => params[:other_invoices_page])
       render "index" and return
-    rescue  => ex
+    rescue => ex
       flash.now[:error] = "Invalid search parameters. Check them again!"
       logger.error ex.message
     end
@@ -153,12 +153,13 @@ class InvoicesController < ApplicationController
   def flow
     @invoice = Invoice.find(params[:id])
     Invoice.transaction do
-      if @invoice.update_attribute(:invoice_status_id, params[:invoice_status][:id])
-        redirect_to invoice_path(@invoice) and return
-      else
+      if @invoice.update_attributes({:invoice_status_id => params[:invoice_status][:id]})
         redirect_to invoice_path(@invoice) and return
       end
     end
+    @document = @invoice.document
+    @invoice_lines = Array.new
+    render 'show'
   end
 
   def reset

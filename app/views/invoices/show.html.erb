@@ -4,6 +4,7 @@
   </div>
   <%= render :partial => "shared/flash", :locals => {:flash => flash} %>
   <%= render :partial => "shared/error", :locals => {:obj => @document.invoice} %>
+  <%= render :partial => "shared/error", :locals => {:obj => @invoice} %>
   <dl class="panel-content">
     <dt>
       <label> Invoice number </label>
