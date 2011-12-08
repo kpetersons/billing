@@ -2,5 +2,5 @@
 	<label><%= t('matter.fields.agent')%></label>
 </dt>
 <dd>
-	<%= matter.agent_name %>&nbsp;
+	<%= link_to matter.agent_name, customer_path(matter.agent) %>&nbsp;
 </dd>

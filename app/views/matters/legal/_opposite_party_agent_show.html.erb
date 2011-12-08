@@ -2,5 +2,5 @@
 	<label><%= t('matter.legal.fields.opposite_party_agent')%></label>
 </dt>
 <dd>
-	<%= matter.legal.opposite_party_agent_name%>&nbsp;
+	<%= link_to matter.legal.opposite_party_agent_name, customer_path(matter.legal.opposite_party_agent)%>&nbsp;
 </dd>
