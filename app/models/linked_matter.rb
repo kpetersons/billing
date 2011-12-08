@@ -21,6 +21,13 @@ class LinkedMatter < ActiveRecord::Base
 
   validate :duplication
 
+  def opposite_matter tester
+    if matter_id == tester.id
+      return linked_matter
+    end
+    return matter
+  end
+
   private
   def duplication
     unless LinkedMatter.where(:matter_id => matter_id, :linked_matter_id => linked_matter_id).first.nil?

@@ -33,7 +33,7 @@ class MattersController < ApplicationController
     @direction = params[:direction]
     @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
     @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
-    render"index"
+    render "index"
   end
 
   def new
@@ -214,14 +214,16 @@ class MattersController < ApplicationController
   end
 
   def unlink
-    @matter = Matter.find(params[:id])
-    if params[:from].nil?
-      redirect to @matter
+    Matter.transaction do
+      @matter = Matter.find(params[:id])
+      if params[:from].nil?
+        redirect to @matter
+      end
+      @linked = Matter.find(params[:from])
+      LinkedMatter.delete(LinkedMatter.where(:linked_matter_id => @linked.id, :matter_id => @matter.id).first)
+      LinkedMatter.delete(LinkedMatter.where(:linked_matter_id => @matter.id, :matter_id => @linked.id).first)
+      redirect_to @matter
     end
-    @linked = Matter.find(params[:from])
-    LinkedMatter.delete_all(:matter_id => @matter.id, :linked_matter_id => @linked.id)
-    LinkedMatter.delete_all(:matter_id => @linked.id, :linked_matter_id => @matter.id)
-    redirect_to @matter
   end
 
   def find_ajax
@@ -271,7 +273,6 @@ class MattersController < ApplicationController
     end
     redirect_to matters_path
   end
-
 
 
   def filter

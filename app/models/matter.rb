@@ -80,8 +80,7 @@ class Matter < ActiveRecord::Base
   end
 
   def linked
-    Matter.joins(:linked_matters).joins(:inverse_linked_matters).all
-    #inverse_matters + matters
+    LinkedMatter.where("matter_id = ? or linked_matter_id = ?", id, id)
   end
 
   def classes

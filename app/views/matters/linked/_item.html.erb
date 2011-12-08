@@ -1,6 +1,7 @@
 <div class="linked-matter">
-    <%= link_to item.document.registration_number, matter_path(item.id) %>
+    <% opposite = item.opposite_matter(@matter)%>
+    <%= link_to opposite.document.registration_number, matter_path(opposite) %>
     <div class="unlink">
-        <%= link_to 'Unlink', unlink_matter_path(@matter, :from => item.id) %>
+        <%= link_to 'Unlink', unlink_matter_path(@matter, :from => opposite.id) %>
     </div>
 </div>
