@@ -65,7 +65,8 @@ end
 
 @customer_functions = [
     ["funct.customers.link", true],
-    ["funct.create.customer", true]
+    ["funct.create.customer", true],
+    ["funct.edit.save", true]
 ]
 
 @admin_functions = [
@@ -1159,22 +1160,22 @@ Party.transaction do
   Party.all.each do |p|
     effective_date = DateTime.now
     p.update_attribute(:version, 1)
-    p.update_attribute(:orig_id, p.id)
+    #p.update_attribute(:orig_id, p.id)
     p.update_attribute(:date_effective, effective_date)
     Company.where(:party_id => p.id).all.each do |c|
       c.update_attribute(:version, 1)
-      c.update_attribute(:orig_id, c.id)
+      #c.update_attribute(:orig_id, c.id)
       c.update_attribute(:date_effective, effective_date)
     end
     Customer.where(:party_id => p.id).all.each do |c|
       c.update_attribute(:version, 1)
-      c.update_attribute(:orig_id, c.id)
+      #c.update_attribute(:orig_id, c.id)
       c.update_attribute(:date_effective, effective_date)
     end
 
     Address.where(:party_id => p.id).all.each do |a|
       a.update_attribute(:version, 1)
-      a.update_attribute(:orig_id, a.id)
+      #a.update_attribute(:orig_id, a.id)
       a.update_attribute(:date_effective, effective_date)
     end
   end

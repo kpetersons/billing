@@ -6,5 +6,8 @@
   <%= render :partial => "shared/error", :locals => {:obj => @party} %>
   <%= form_for @party, :url => {:controller => :customers, :action => :create} do |p_f| %>
       <%= render :partial => "form", :locals => {:customer => @party, :p_f => p_f} %>
+      <div class="panel-footer controls history">
+        <%= p_f.submit "Save", :name => 'save' %>
+      </div>
   <% end %>
 </div>

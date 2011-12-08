@@ -6,5 +6,11 @@
   <%= render :partial => "shared/error", :locals => {:obj => @party} %>
   <%= form_for @party, :url => {:controller => :customers, :action => :update}, :method => :put do |p_f| %>
       <%= render :partial => "form", :locals => {:customer => @party, :p_f => p_f} %>
+      <div class="panel-footer controls history">
+        <% if current_user.has_function :name => 'funct.edit.save' %>
+            <%= p_f.submit "Save", :name => 'save' %>
+        <% end %>
+        <%= p_f.submit "Save As", :name => 'save_as' %>
+      </div>
   <% end %>
 </div>

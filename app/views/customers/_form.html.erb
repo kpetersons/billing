@@ -1,8 +1,2 @@
 <%= p_f.hidden_field :id %>
 <%= render :partial => "fields", :locals => {:fields => p_f} %>
-<div class="panel-footer controls history">
-  <%= p_f.submit "Save", :name => 'save' %>
-  <% unless p_f.object.orig_id.nil? %>
-      <%= p_f.submit "Save As", :name => 'save_as' %>
-  <% end %>
-</div>
