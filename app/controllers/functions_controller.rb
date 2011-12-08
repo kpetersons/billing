@@ -25,6 +25,13 @@ class FunctionsController < ApplicationController
     end    
   end
 
+  def remove
+    @role = Role.find(params[:role_id])
+    @function = Function.find(params[:id])
+    @role.functions.delete(@function)
+    redirect_to role_path(@role, :anchor => "functions")
+  end
+
   def show
     @function = Function.find(params[:id])
   end

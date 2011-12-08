@@ -26,6 +26,10 @@
 			<td class="col-text"><%= function.description %></td>
 			<td class="col-number">
 				<%= link_to t('button.show'), function_path(function)%>
+                <%= if @role
+                        link_to "Remove", remove_role_function_path(@role, function), :method => :delete
+                    end
+                %>
 			</td>
 		</tr>
 		<% end %>

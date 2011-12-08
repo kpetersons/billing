@@ -160,6 +160,7 @@ Billing::Application.routes.draw do
       end
       member do
         get :show
+        delete :remove
       end
     end
   end
