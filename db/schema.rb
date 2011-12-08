@@ -18,12 +18,13 @@ ActiveRecord::Schema.define(:version => 20111208141632) do
     SQL
 
     execute <<-SQL
-      drop view if exists v_matters;
+      drop view if exists v_matter_tasks;
     SQL
 
     execute <<-SQL
-      drop view if exists v_matter_tasks;
+      drop view if exists v_matters;
     SQL
+
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
