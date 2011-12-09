@@ -10,7 +10,7 @@ module ApplicationHelper
 
   def current_url params = {}, data = {}
     #data = reject_object data
-    data.merge(params) unless data.nil?
+    data.merge(params) unless params.nil?
   end
 
   def search_url_query
