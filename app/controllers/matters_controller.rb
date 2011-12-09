@@ -26,7 +26,7 @@ class MattersController < ApplicationController
     @direction = params[:direction]
     @precision = params[:precision]
     begin
-      @matters = VMatters.where(@detail_search.query).where(:author_id => current_user.id).order(params[:order]).paginate(:per_page => 10, :page => params[:my_matters_page])
+      @matters = VMatters.where(@detail_search.query).where(:author_id => current_user.id).order("#{@order_by} #{@direction}").paginate(:per_page => 10, :page => params[:my_matters_page])
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
       render "index" and return
     rescue => ex
@@ -331,6 +331,11 @@ class MattersController < ApplicationController
 
 
   def show_column_filter
+    puts "before Marshal"
+    @parameters = Marshal.load(Marshal.dump(params))
+    @parameters.delete_if {|k,v| k.eql?"direction"}
+    @parameters.delete_if {|k,v| k.eql?"order_by"}
+    puts "after Marshal @parameters #{@parameters} params #{params}"
     @apply_filter = true
     default_filter = DefaultFilter.where(:table_name => 'matters').first
     @columns = DefaultFilterColumn.where(:default_filter_id => default_filter.id).all

@@ -8,9 +8,9 @@ module ApplicationHelper
     check_box_tag '', '', value, :disabled => true
   end
 
-  def current_url data = {}
-    data = reject_object data
-    data[:overwrite].merge(data[:prms])
+  def current_url params = {}, data = {}
+    #data = reject_object data
+    data.merge(params) unless data.nil?
   end
 
   def search_url_query
@@ -29,16 +29,12 @@ module ApplicationHelper
 
   private
   def reject_object data
-    if data.empty?
-      return {}
-    end
-    data.keys.each do |key|
-      logger.error "Key #{key} Value #{data[key]}"
-      if data[key].instance_of? Hash
-        reject_object data[key]
-      end
-    end
-    return data
+    clean = proc {
+        |k,v|
+      puts "Key #{k}"
+      k.eql?"order_by" or v.instance_of?(Hash) && v.delete_if(&clean)
+    }
+    data.delete_if &clean
   end
 
 end

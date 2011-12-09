@@ -5,8 +5,8 @@
 			<% current_user.column_names(column_names).each do |column|%>
 				<th class="<%=column.column_type%>">
                   <%=t(column.column_name)%>
-                 <%=link_to "↑", matters_path(:order_by => column.column_query, :direction => "ASC"), :style => "text-decoration:none"%>
-                 <%=link_to "↓", matters_path(:order_by => column.column_query, :direction => "DESC"), :style => "text-decoration:none"%>
+                 <%=link_to "↑", current_url(@parameters, {:order_by => column.column_query, :direction => "ASC"}), :style => "text-decoration:none"%>
+                 <%=link_to "↓", current_url(@parameters, {:order_by => column.column_query, :direction => "DESC"}), :style => "text-decoration:none"%>
                 </th>
 			<%end%>
 			<th></th>
