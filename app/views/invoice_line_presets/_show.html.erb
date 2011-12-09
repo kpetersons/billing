@@ -34,5 +34,11 @@
 	</dt>
 	<dd>
 		<%= @invoice_line_preset.attorney_fee %>&nbsp;
-	</dd>	
+	</dd>
+	<dt>
+		<label> <%="Currency"%> </label>
+	</dt>
+	<dd>
+		<%= (@invoice_line_preset.currency.nil?)? " " : @invoice_line_preset.currency.name %>&nbsp;
+	</dd>
 </dl>

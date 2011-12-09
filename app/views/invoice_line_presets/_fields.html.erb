@@ -1,30 +1,34 @@
 <%= fields.hidden_field :id %>
 <ul>
-	<li>
-		<%= fields.label :name, t('invoice_line_preset.fields.name') %>
-		<%= fields.text_field :name %>
-	</li>
-	<li>
-		<%= fields.label :operating_party_id, t('invoice_line_preset.fields.operating_party') %>
-		<%= fields.select :operating_party_id, OperatingParty.all.collect { |tt| [t(tt.name), tt.id] }, 
-			 {:include_blank => true},{:class => 'wide'} %>
-	</li>
-	<li>
-		<%= fields.label :official_fee_type_id, t('invoice_line_preset.fields.official_fee_type') %>
-		<%= fields.select :official_fee_type_id, OfficialFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [t(tt.name), tt.id] }, 
-			 {:include_blank => true},{:class => 'wide'} %>
-	</li>
-	<li>
-		<%= fields.label :official_fee , t('invoice_line_preset.fields.official_fee')%>
-		<%= fields.text_field :official_fee %>
-	</li>
-	<li>
-		<%= fields.label :attorney_fee_type_id, t('invoice_line_preset.fields.attorney_fee_type') %>
-		<%= fields.select :attorney_fee_type_id, AttorneyFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [t(tt.name), tt.id] }, 
-			 {:include_blank => true},{:class => 'wide'} %>
-	</li>
-	<li>
-		<%= fields.label :attorney_fee, t('invoice_line_preset.fields.attorney_fee') %>
-		<%= fields.text_field :attorney_fee %>
-	</li>	
+  <li>
+    <%= fields.label :name, t('invoice_line_preset.fields.name') %>
+    <%= fields.text_field :name %>
+  </li>
+  <li>
+    <%= fields.label :operating_party_id, t('invoice_line_preset.fields.operating_party') %>
+    <%= fields.select :operating_party_id, OperatingParty.all.collect { |tt| [t(tt.name), tt.id] },
+                      {:include_blank => true}, {:class => 'wide'} %>
+  </li>
+  <li>
+    <%= fields.label :official_fee_type_id, t('invoice_line_preset.fields.official_fee_type') %>
+    <%= fields.select :official_fee_type_id, OfficialFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [t(tt.name), tt.id] },
+                      {:include_blank => true}, {:class => 'wide'} %>
+  </li>
+  <li>
+    <%= fields.label :official_fee, t('invoice_line_preset.fields.official_fee') %>
+    <%= fields.text_field :official_fee %>
+  </li>
+  <li>
+    <%= fields.label :attorney_fee_type_id, t('invoice_line_preset.fields.attorney_fee_type') %>
+    <%= fields.select :attorney_fee_type_id, AttorneyFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [t(tt.name), tt.id] },
+                      {:include_blank => true}, {:class => 'wide'} %>
+  </li>
+  <li>
+    <%= fields.label :attorney_fee, t('invoice_line_preset.fields.attorney_fee') %>
+    <%= fields.text_field :attorney_fee %>
+  </li>
+  <li>
+    <%= fields.label :currency_id, t('invoice_line_preset.fields.currency') %>
+    <%= fields.select :currency_id, Currency.all.collect { |tt| [t(tt.name), tt.id] }, {}, {:class => 'wide'} %>
+  </li>
 </ul>

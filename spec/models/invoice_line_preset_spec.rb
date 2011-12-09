@@ -13,6 +13,10 @@
 #  private_preset       :boolean
 #  official_fee         :decimal(8, 2)
 #  attorney_fee         :decimal(8, 2)
+#  currency_id          :integer
+#  orig_id              :integer
+#  date_effective       :date
+#  date_effective_end   :date
 #
 
 require 'spec_helper'

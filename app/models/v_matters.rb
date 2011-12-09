@@ -8,7 +8,7 @@
 #  id                    :integer         primary key
 #  author_id             :integer
 #  parent_id             :integer
-#  registration_number   :string(255)
+#  registration_number   :text
 #  description           :string(255)
 #  created_at            :datetime
 #  updated_at            :datetime

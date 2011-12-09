@@ -13,6 +13,10 @@
 #  private_preset       :boolean
 #  official_fee         :decimal(8, 2)
 #  attorney_fee         :decimal(8, 2)
+#  currency_id          :integer
+#  orig_id              :integer
+#  date_effective       :date
+#  date_effective_end   :date
 #
 
 class InvoiceLinePreset < ActiveRecord::Base
@@ -20,9 +24,11 @@ class InvoiceLinePreset < ActiveRecord::Base
   belongs_to :operating_party
   belongs_to :official_fee_type
   belongs_to :attorney_fee_type
+  belongs_to :currency
   belongs_to :author, :class_name => 'User', :foreign_key => :author_id
 
-  validates :operating_party_id, :presence => true  
+  validates :operating_party_id, :presence => true
+  validates :currency_id, :presence => true
 
   def operating_party_name
     operating_party.name unless operating_party.nil? 

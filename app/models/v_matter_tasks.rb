@@ -4,7 +4,7 @@
 #
 #  id                  :integer         primary key
 #  matter_id           :integer
-#  registration_number :string(255)
+#  registration_number :text
 #  matter_type         :string(255)
 #  task_type           :string(255)
 #  status              :string(255)

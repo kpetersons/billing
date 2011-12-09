@@ -1,4 +1,4 @@
-<% if obj.errors.any? %>
+<% if  !obj.nil? && obj.errors.any? %>
 <ul class="errors">
 	<% obj.errors.full_messages.each do |msg| %>
 	<li class="error">

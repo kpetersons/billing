@@ -118,6 +118,7 @@ en:
       official_fee: "Official fee"
       attorney_fee_type: "Attorney fee type"
       attorney_fee: "Attorney fee"
+      currency: "Currency"
   list:
     matters: "List matters"
     column:
