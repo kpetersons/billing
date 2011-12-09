@@ -33,7 +33,7 @@
                         <td style="width:1em">
                           <%= fo.select :precision, ["Is", "Contains"].collect { |tt|
                               attrs = {}
-                              attrs[:selected] = true if tt.eql?(item[:closing_bracket])
+                              attrs[:selected] = true if tt.eql?(item[:precision])
                               [tt, tt, attrs]
                           }, "data-prefix" => "detail_search[details]", "data-name" => "[closing_bracket]" %>
                         </td>

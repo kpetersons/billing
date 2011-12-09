@@ -51,6 +51,7 @@ class DetailSearch
     @details.each do |item|
       query_s = "#{query_s} #{item[:conjunction]} #{item[:opening_bracket]} #{query_field_comparator item} #{item[:closing_bracket]}"
     end
+    puts "QUERY: #{query_s}"
     return query_s
   end
 
@@ -67,25 +68,27 @@ class DetailSearch
   def query_field_comparator item
     comparator = ""
     if @all_fields_hash[item[:field]][:data_type].eql?("col-date")
-      comparator = "#{comparator} between #{upper item, item[:range_from]}..#{upper item, item[:range_to]} "
+      comparator = "#{comparator} between #{item[:range_from]}..#{item[:range_to]} "
     else
-      regular = "'%#{item[:regular]}%'"
-      #comparator = "#{comparator} #{upper (item, item[:field])} #{get_conjunction item, @all_fields_hash[item[:field]][:data_type]} #{upper item, regular}"
+      regular = item[:regular]
+      type = @all_fields_hash[item[:field]][:data_type]
+      if type.eql?("col-text") && item[:precision].eql?("Contains")
+        regular = upper item, "'%#{regular}%'"
+        regular = "like #{regular}"
+      else
+        if @all_fields_hash[item[:field]][:data_type].eql?("col-text")
+          regular = upper item, "'#{regular}'"
+        end
+        regular = " = #{regular}"
+      end
+      comparator = "#{comparator} #{upper(item, item[:field])} #{regular}"
     end
     return comparator
   end
 
-  def get_conjunction item, type
-    if type.eql?("col-text") && item[:precision].eql?("Contains")
-      return " like "
-    else
-      return " = "
-    end
-  end
-
   def upper item, val
     if item[:match_case].eql? "0"
-      return val = "upper(#{val})"
+      return "upper(#{val})"
     end
     return val
   end
