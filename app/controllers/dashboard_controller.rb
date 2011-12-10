@@ -5,11 +5,12 @@ class DashboardController < ApplicationController
   before_filter :show_column_filter, :only => [:show, :message, :find]
 
   def show
-    @matter_tasks = VMatterTasks.paginate(:page => params[:param_name])
-    @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:page => params[:param_name])
+    @matter_tasks = VMatterTasks.paginate(:page => params[:matter_tasks])
+    @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:page => params[:recent_activity_page])
     ids = VMatterTasks.all.collect {|x| x.matter_id}.uniq
-    @upcoming_deadlines_matters = VMatters.where(:id => ids).paginate(:page => params[:param_name])
+    @upcoming_deadlines_matters = VMatters.where(:id => ids).paginate(:page => params[:upcoming_deadlines_page])
     @message = Message.last
+
   end
 
   def message

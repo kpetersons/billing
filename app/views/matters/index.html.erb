@@ -4,9 +4,9 @@
   </div>
   <%= render :partial => "search_form" %>
 </div>
-<div class="nested-panel">
+<div class="nested-panel" id="matters_index">
   <div class="panel-header">
     <strong>Matter list</strong>
   </div>
-  <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matters, :choose => false, :param_name => 'my_matters_page'} %>
+  <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matters, :choose => false, :param_name => 'my_matters_page', :anchor => "matters_index"} %>
 </div>

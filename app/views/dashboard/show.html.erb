@@ -11,19 +11,19 @@
       <strong><a href="#deadlines">Matters tasks</a></strong>
     </dt>
     <dd id="deadlines">
-      <%= render :partial => "/matter_tasks/dash_index", :locals => {:matter_tasks => @matter_tasks, :table_title => "Matters tasks", :choose => false, :param_name => "matter_tasks"} %>
+      <%= render :partial => "/matter_tasks/dash_index", :locals => {:matter_tasks => @matter_tasks, :table_title => "Matters tasks", :choose => false, :param_name => "matter_tasks", :anchor => "deadlines"}%>
     </dd>
     <dt class="panel-header">
       <strong><a href="#upcoming_matters">Matters with approaching deadlines</a></strong>
     </dt>
     <dd id="upcoming_matters">
-      <%= render :partial => "/matters/index", :locals => {:column_names => 'dashboard', :matters => @upcoming_deadlines_matters, :table_title => "Matters with upcoming deadlines", :choose => false, :param_name => "upcoming_deadlines_page"} %>
+      <%= render :partial => "/matters/index", :locals => {:column_names => 'dashboard', :matters => @upcoming_deadlines_matters, :table_title => "Matters with upcoming deadlines", :choose => false, :param_name => "upcoming_deadlines_page", :anchor => "upcoming_matters"} %>
     </dd>
     <dt class="panel-header">
       <strong><a href="#recent_activity">Recently updated/created matters</a></strong>
     </dt>
     <dd id="recent_activity">
-      <%= render :partial => "/matters/index", :locals => {:column_names => 'dashboard', :matters => @recent_activity_matters, :table_title => "Recently updated matters", :choose => false, :param_name => "recent_activity_page"} %>
+      <%= render :partial => "/matters/index", :locals => {:column_names => 'dashboard', :matters => @recent_activity_matters, :table_title => "Recently updated matters", :choose => false, :param_name => "recent_activity_page", :anchor => "recent_activity"} %>
     </dd>
 
   </dl>

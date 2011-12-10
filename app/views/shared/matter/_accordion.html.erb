@@ -19,7 +19,7 @@
 		<strong><a href="#sub_matters">Sub matters</a></strong>
 	</dt>
 	<dd id="sub_matters">
-		<%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matter.sub_matters.paginate(:page => params[:sub_matters]), :choose => false, :param_name => :sub_matters} %>
+		<%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matter.sub_matters.paginate(:page => params[:sub_matters]), :choose => false, :param_name => :sub_matters, :anchor => 'sub_matters'} %>
 		<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Create sub matter', :path => new_matter_matter_path(@matter.document_id, :anchor => :sub_matters, :type => @matter.matter_type_id)} %>
 	</dd>
 </dl>
