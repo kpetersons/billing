@@ -1,0 +1,10 @@
+<div class="panel">
+  <div class="panel-header">
+    <strong>Edit matter customer</strong>
+  </div>
+  <%= render :partial => "shared/flash", :locals => {:flash => flash} %>
+  <%= render :partial => "shared/error", :locals => {:obj => @matter_customer} %>
+  <%= form_for [@matter, @matter_customer] do |fields| %>
+      <%= render :partial => "form", :locals => {:matter_customer => @matter_customer, :fields => fields} %>
+  <% end %>
+</div>
