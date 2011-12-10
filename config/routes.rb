@@ -67,6 +67,7 @@ Billing::Application.routes.draw do
       get :search
     end
     resources :invoices, :only => [:new]
+    resources :matter_customers
     resources :tasks, :controller => "MatterTasks" do
       member do
         put :flow

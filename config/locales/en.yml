@@ -97,7 +97,8 @@ en:
         pass_done: "Done"
         re_canceled: "Cancel"
         canceled: "Canceled"
-        pass_canceled: "Cancel"  
+        pass_canceled: "Cancel"
+        all: "All"
   invoice:
       status:
           open:   "Open"
@@ -291,6 +292,10 @@ en:
           created_at: "Created at"
           updated_at: "Updated at"
   currency:
+      list: "List of currencies"
+      show: "Currency"
+      create: "Create new currency"
+      edit: "Update currency"
       fields:
           code: "Code"
           name: "Name"
@@ -303,7 +308,6 @@ en:
   customer_name: "Customer name"
   address_: "Address"
   contact_person_: "Contact person"
-  currency: "Currency"
   discount: "Discount"
   our_ref: "Our ref"
   your_ref: "Your ref"

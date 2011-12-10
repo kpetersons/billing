@@ -1,0 +1,19 @@
+<dl class="panel-content">
+  <dt>
+    <label>
+      <%= t('currency.fields.code') %>
+    </label>
+  </dt>
+  <dd>
+    <%= @currency.code %>&nbsp;
+  </dd>
+  <dt>
+    <label>
+      <%= t('currency.fields.name') %>
+    </label>
+  </dt>
+  <dd>
+    <%= @currency.name %>&nbsp;
+  </dd>
+</dl>
+<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> t("button.edit"), :path => edit_currency_path(@currency)} %>

@@ -15,7 +15,7 @@ class CurrenciesController < ApplicationController
 
   def create
     Currency.transaction do
-      @currency = Currency.new(:params[:currency])
+      @currency = Currency.new(params[:currency])
       if @currency.save
         redirect_to @currency
       else

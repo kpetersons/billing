@@ -12,8 +12,16 @@
 class MatterTaskStatus < ActiveRecord::Base
 
   has_many :matter_tasks
-    
+
   validates :name, :presence => true
-  validates :function_id, :presence => true  
-  
+  validates :function_id, :presence => true
+
+  def translated_name
+    I18n.translate(name)
+  end
+
+  def self.all_inclusive
+    MatterTaskStatus.all<<MatterType.new(:name => "matters.task.status.all", :id => -1)
+  end
+
 end

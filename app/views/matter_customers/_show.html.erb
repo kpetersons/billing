@@ -1,0 +1,46 @@
+<dl class="panel-content">
+  <dt style="font-size: 1em; line-height:2em;">
+    <span><%= link_to "< Back to Matter", matter_path(@matter_customer.matter_id) %></span>
+  </dt>
+  <dd style="font-size: 1em; line-height:2em;">&nbsp;</dd>
+  <dt>
+    <label>
+    <%= "Matter registration number" %>
+    </label>
+  </dt>
+  <dd>
+    <%= @matter_customer.matter.registration_number %>&nbsp;
+  </dd>
+  <dt>
+    <label>
+      <%= "Type" %>
+    </label>
+  </dt>
+  <dd>
+    <%= @matter_customer.type%>&nbsp;
+  </dd>
+  <dt>
+    <label>
+      <%= "Customer" %>
+    </label>
+  </dt>
+  <dd>
+    <%= @matter_customer.customer.name %>&nbsp;
+  </dd>
+  <dt>
+    <label>
+      <%= "Takeover date" %>
+    </label>
+  </dt>
+  <dd>
+    <%= @matter_customer.takeover_date.to_s(:show) %>&nbsp;
+  </dd>
+  <dt>
+    <label>
+      <%= "Shortnote" %>
+    </label>
+  </dt>
+  <dd>
+    <%= @matter_customer.shortnote %>&nbsp;
+  </dd>
+</dl>

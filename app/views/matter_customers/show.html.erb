@@ -1,0 +1,8 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong>Matter customer</strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>
+    <%= render :partial => "show",         :locals => {:matter_customer => @matter_customer}%>
+	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_matter_matter_customer_path(@matter_customer)} %>
+</div>

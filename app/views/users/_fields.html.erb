@@ -1,22 +1,23 @@
 <ul>
-	<%= render :partial => "/shared/party/fields", :locals => {:fields => fields} %>
-	<%= fields.fields_for :individual do |pi_f| %>
-		<%= render :partial => "/shared/party/individual/fields", :locals => {:fields => pi_f} %>
-		<%= pi_f.fields_for :user do |piu_f| %>
-		<li>
-			<%= piu_f.label :initials %>
-			<%= piu_f.text_field :initials, {:style => "width: 2em;"} %>
-		</li>		
-		<li>
-			<%= piu_f.hidden_field :id %>
-			<%= piu_f.label :email %>
-			<%= piu_f.text_field :email %>
-		</li>
-		<li>
-			<%= piu_f.label :operating_party_id %>
-			<%= piu_f.select :operating_party_id, OperatingParty.all.collect { |tt| [tt.name, tt.id] } %>
-		</li>		
-<!-- 			<% unless @party.persisted?%>
+  <%= render :partial => "/shared/party/fields", :locals => {:fields => fields} %>
+  <%= fields.fields_for :individual do |pi_f| %>
+      <%= render :partial => "/shared/party/individual/fields", :locals => {:fields => pi_f} %>
+      <%= pi_f.fields_for :user do |piu_f| %>
+          <li>
+            <%= piu_f.label :initials %>
+            <%= piu_f.text_field :initials, {:style => "width: 2em;"} %>
+          </li>
+          <li>
+            <%= piu_f.hidden_field :id %>
+            <%= piu_f.label :email %>
+            <%= piu_f.text_field :email %>
+          </li>
+          <li>
+            <%= piu_f.label :operating_party_id %>
+            <%= piu_f.select :operating_party_id, OperatingParty.all.collect { |tt| [t(tt.name), tt.id] } %>
+          </li>
+          <!--
+          <% unless @party.persisted? %>
 			<li>
 				<%= piu_f.label :password %>
 				<%= piu_f.password_field :password %>
@@ -25,7 +26,8 @@
 				<%= piu_f.label :password_confirmation, "Confirmation" %>
 				<%= piu_f.password_field :password_confirmation %>
 			</li>
-			<%end%> -->
-		<%end%>
-	<%end%>
+
+          <% end %> -->
+      <% end %>
+  <% end %>
 </ul>

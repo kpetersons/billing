@@ -1,0 +1,8 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong><%= t('currency.create')%></strong>
+	</div>
+	<%= render :partial => "shared/flash", 	:locals => {:flash 		=> flash}%>
+	<%= render :partial => "shared/error", 	:locals => {:obj 		=> @currency}%>
+	<%= render :partial => "form", 			:locals => {:contact 	=> @currency} %>
+</div>

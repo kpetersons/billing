@@ -1,0 +1,44 @@
+<%= fields.hidden_field :id %>
+<%= fields.hidden_field :author_id %>
+<%= fields.hidden_field :matter_id %>
+<ul>
+  <li>
+    <span><%= link_to "< Back to Matter", matter_path(matter_customer.matter_id) %></span>
+  </li>
+  <li>
+    <%= fields_for matter_customer.matter.document do |fields| %>
+        <%= fields.label :registration_number, "For matter" %>
+        <%= fields.text_field :registration_number, {:disabled => true} %>&nbsp;
+    <% end %>
+  </li>
+  <li>
+    <%= fields.label :customer_type %>
+    <%= fields.text_field :customer_type, {:disabled => true} %>&nbsp;
+    <%= fields.hidden_field :customer_type %>
+  </li>
+  <li>
+    <%= fields.hidden_field :customer_id %>
+    <%= fields.label :customer_name %>
+    <%= fields.text_field :customer_name, {:disabled => (fields.object.persisted?)? true : false} %>&nbsp;
+  </li>
+  <li>
+    <%= fields.label :takeover_date %>
+    <%= fields.text_field :takeover_date , "class" => "field-date date-field", :value => date_format_field(fields.object.takeover_date) %>
+  </li>
+  <li>
+    <%= fields.label :shortnote %>
+    <%= fields.text_field :shortnote %>&nbsp;
+  </li>
+</ul>
+<script>
+	$(document).ready(function(){
+		$('#matter_customer_customer_name').autocomplete({
+			source: '/customers/agent_find_ajax',
+			minLength: 2,
+			select: function( event, ui ) {
+                $(this).after("<span style='color:black; padding-left: 5px;'>VAT number:  "+ ui.item.vat_number +"</span>")
+				$('#matter_customer_customer_id').attr('value', ui.item.id)
+			}
+		});
+	})
+</script>

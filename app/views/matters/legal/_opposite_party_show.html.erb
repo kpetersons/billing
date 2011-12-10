@@ -3,4 +3,6 @@
 </dt>
 <dd>
 	<%= link_to matter.legal.opposite_party_name, customer_path(matter.legal.opposite_party)%>&nbsp;
+    <%= link_to 'Change', new_matter_matter_customer_path(matter, :type => "Opposite_party")%>
+    <%= link_to 'History', matter_matter_customers_path(matter, :type => "Opposite_party")%>
 </dd>

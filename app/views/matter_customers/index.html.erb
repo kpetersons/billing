@@ -1,0 +1,12 @@
+<div class="panel">
+  <div class="panel-header">
+    <strong>History</strong>
+  </div>
+  <ul>
+    <li>
+      <%= link_to "< Back to matter", matter_path(params[:matter_id]) %>
+    </li>
+  </ul>
+  <%= render :partial => "shared/flash", :locals => {:flash => flash} %>
+  <%= render :partial => "index", :locals => {:matter_customers => @matter_customers} %>
+</div>

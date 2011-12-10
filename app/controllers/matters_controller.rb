@@ -97,6 +97,9 @@ class MattersController < ApplicationController
         unless params[:document][:matter_attributes][:classes].nil?
           @matter.save_classes params
         end
+
+        @matter.create_customers_history
+
         redirect_to @matter
       else
         render 'new'

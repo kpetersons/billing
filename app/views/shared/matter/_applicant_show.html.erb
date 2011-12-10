@@ -3,4 +3,6 @@
 </dt>
 <dd>
 	<%= link_to matter.applicant_name, customer_path(matter.applicant) %>&nbsp;
+    <%= link_to 'Change', new_matter_matter_customer_path(matter, :type => "Applicant")%>
+    <%= link_to 'History', matter_matter_customers_path(matter, :type => "Applicant")%>
 </dd>

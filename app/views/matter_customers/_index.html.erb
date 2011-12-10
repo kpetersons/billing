@@ -1,0 +1,30 @@
+<table style="width:100%;">
+  <thead>
+  <tr>
+    <th style="width:15em;" class="col-text">
+      Customer name
+    </th>
+    <th style="width:10em;" class="col-text">
+      Takeover date
+    </th>
+    <th>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @matter_customers.each do |matter_customer| %>
+      <tr>
+        <td style="width:15em;" class="col-text">
+          <%= matter_customer.customer.name %>
+        </td>
+        <td style="width:10em;" class="col-text">
+          <%= matter_customer.takeover_date %>
+        </td>
+        <td class="col-text">
+          <%= link_to "Edit", edit_matter_matter_customer_path(matter_customer.matter, matter_customer) %>,
+          <%= link_to_unless (matter_customer.matter.current_customer(matter_customer)), "Delete", matter_matter_customer_path(matter_customer.matter, matter_customer), :method => :delete, :confirm => "Are you sure?" %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

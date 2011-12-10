@@ -3,4 +3,6 @@
 </dt>
 <dd>
 	<%= link_to matter.custom.client_all_ip_name, customer_path(matter.custom.client_all_ip)%>&nbsp;
+    <%= link_to 'Change', new_matter_matter_customer_path(matter, :type => "Client_all_ip")%>
+    <%= link_to 'History', matter_matter_customers_path(matter, :type => "Client_all_ip")%>
 </dd>

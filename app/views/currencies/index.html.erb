@@ -3,4 +3,7 @@
 		<strong><%= t('currency.list')%></strong>
 	</div>	
 	<%= render :partial => "index", :locals => {:currencies => @currencies, :param_name => "currencies_page"} %>
+	<div class="panel-footer controls">
+		<%= link_to "New currency", new_currency_path %>
+	</div>
 </div>

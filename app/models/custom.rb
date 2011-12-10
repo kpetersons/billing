@@ -26,4 +26,22 @@ class Custom < ActiveRecord::Base
     client_all_ip.name unless client_all_ip.nil?
   end
 
+
+  def create_customers_history
+    client_all_ip = MatterCustomer.new({:customer_id => client_all_ip_id, :matter_id => matter_id, :customer_type => 'client_all_ip'.capitalize, :takeover_date => DateTime.now, :author_id => matter.author_id})
+    client_all_ip.save!
+  end
+
+  def change_customers_from_history matter_customer
+    if matter_customer.customer_type.eql?("Client_all_ip")
+      update_attribute(:client_all_ip_id, matter_customer.customer.id)
+    end
+  end
+
+  def current_customer matter_customer
+    if matter_customer.customer_type.eql?("Client_all_ip") && client_all_ip_id == matter_customer.customer_id
+      return true
+    end
+    return false
+  end
 end

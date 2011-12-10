@@ -360,6 +360,9 @@ class Invoice < ActiveRecord::Base
     if invoice_date.future?
       errors.add(:invoice_date, 'may not be in future')
     end
+    if !date_paid.nil? && date_paid.future?
+      errors.add(:date_paid, 'may not be in future')
+    end
   end
 
   def mark_as_paid

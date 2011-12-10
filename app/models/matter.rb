@@ -30,8 +30,8 @@ class Matter < ActiveRecord::Base
 
 
   belongs_to :document
-  belongs_to :applicant,  :class_name => "Customer", :foreign_key => :applicant_id, :primary_key => :orig_id, :conditions => "date_effective_end is null"
-  belongs_to :agent,      :class_name => "Customer", :foreign_key => :agent_id, :primary_key => :orig_id, :conditions => "date_effective_end is null"
+  belongs_to :applicant, :class_name => "Customer", :foreign_key => :applicant_id, :primary_key => :orig_id, :conditions => "date_effective_end is null"
+  belongs_to :agent, :class_name => "Customer", :foreign_key => :agent_id, :primary_key => :orig_id, :conditions => "date_effective_end is null"
   belongs_to :author, :class_name => "User", :foreign_key => :author_id
   belongs_to :matter_type
   belongs_to :operating_party
@@ -178,6 +178,45 @@ class Matter < ActiveRecord::Base
       document.update_attribute(:registration_number, "#{matter_prefixes[matter_type_id]}#{get_matter_count (matter_type_id)}") and return
     end
     document.update_attribute(:registration_number, "#{matter_prefixes[matter_type_id]}#{get_matter_count_per_year matter_type_id, Time.new.strftime('%Y')}#{Time.new.strftime('%y')}")
+  end
+
+  def create_customers_history
+    agent = MatterCustomer.new({:customer_id => agent_id, :matter_id => id, :customer_type => 'Agent', :takeover_date => DateTime.now, :author_id => author_id})
+    applicant = MatterCustomer.new({:customer_id => agent_id, :matter_id => id, :customer_type => 'Applicant', :takeover_date => DateTime.now, :author_id => author_id})
+    agent.save!
+    applicant.save!
+    custom = Custom.find_by_matter_id(id)
+    unless custom.nil?
+      custom.create_customers_history
+    end
+    legal = Legal.find_by_matter_id(id)
+    unless legal.nil?
+      legal.create_customers_history
+    end
+
+  end
+
+  def change_customers_from_history matter_customer
+    if matter_customer.customer_type.eql? "Agent"
+      update_attribute(:agent_id, matter_customer.customer.id)
+    end
+    if matter_customer.customer_type.eql? "Applicant"
+      update_attribute(:applicant_id, matter_customer.customer.id)
+    end
+    custom.change_customers_from_history matter_customer unless custom.nil?
+    legal.change_customers_from_history matter_customer unless legal.nil?
+  end
+
+  def current_customer matter_customer
+    if matter_customer.customer_type.eql?("Agent") && agent_id == matter_customer.customer_id
+      return true
+    end
+    if matter_customer.customer_type.eql?("Applicant") && applicant_id == matter_customer.customer_id
+      return true
+    end
+    return custom.current_customer matter_customer unless custom.nil?
+    return legal.current_customer matter_customer unless legal.nil?
+    return false
   end
 
   private
