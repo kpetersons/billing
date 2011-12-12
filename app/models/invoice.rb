@@ -309,7 +309,7 @@ class Invoice < ActiveRecord::Base
 
   def if_paid_then_when
     status_test = status_name.eql? "invoice.status.paid"
-    if status_test && (self.date_paid.nil? || self.date_paid.empty?)
+    if status_test && (self.date_paid.nil?)
       errors.add(:date_paid, "should be entered before marking invoice as paid.")
     end
   end
