@@ -90,7 +90,7 @@ class DashboardController < ApplicationController
     default_filter = DefaultFilter.where(:table_name => 'dashboard').first
     @columns = DefaultFilterColumn.where(:default_filter_id => default_filter.id).all
     #
-    filter = UserFilter.where(:user_id => current_user.id, :table_name => 'matters_deadlines').first
+    filter = UserFilter.where(:user_id => current_user.id, :table_name => 'dashboard').first
     if filter.nil?
       filter = default_filter
     end
