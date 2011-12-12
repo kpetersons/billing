@@ -20,6 +20,8 @@ class Customer < ActiveRecord::Base
   belongs_to :party
   has_many :matters_as_agent, :class_name=> 'VMatters', :foreign_key => :agent_id
   has_many :matters_as_applicant, :class_name=> 'VMatters', :foreign_key => :applicant_id
+  has_many :matters_as_opposite_applicant, :class_name => 'VMatters', :foreign_key => :opposite_party_id
+  has_many :matters_as_opposite_agent, :class_name => 'VMatters', :foreign_key => :opposite_party_agent_id
 
   attr_accessible :vat_registration_number, :customer_type, :shortnote, :orig_id, :party_id, :date_effective, :date_effective_end
   validate :vat_registration_number_unique

@@ -275,6 +275,8 @@ en:
           default: "Customers"
           as_agent: "As agent"
           as_applicant: "As applicant"
+          as_opposite_applicant: "As opposite party"
+          as_opposite_agent: "As opposite agent"
       fields:
           name: "Name"
           registration_number: "Registration number"

@@ -87,6 +87,18 @@
       <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @customer.matters_as_applicant.paginate(:per_page=> 10, :page => params[:matters_applicant]), :choose => false, :param_name => 'matters_applicant', :anchor => "matters_applicant"} %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => '#'} %>
     </dd>
+    <dt class="panel-header"><a href="#matters_opposite_applicant"><strong><%= t('customer.list.as_opposite_applicant') %></strong></a>
+    </dt>
+    <dd id="matters_opposite_applicant">
+      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @customer.matters_as_opposite_applicant.paginate(:per_page=> 10, :page => params[:matters_opposite_applicant]), :choose => false, :param_name => 'matters_opposite_applicant', :anchor => "matters_opposite_applicant"} %>
+      <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => '#'} %>
+    </dd>
+    <dt class="panel-header"><a href="#matters_opposite_agent"><strong><%= t('customer.list.as_opposite_agent') %></strong></a>
+    </dt>
+    <dd id="matters_opposite_agent">
+      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @customer.matters_as_opposite_agent.paginate(:per_page=> 10, :page => params[:matters_opposite_agent]), :choose => false, :param_name => 'matters_opposite_agent', :anchor => "matters_opposite_agent"} %>
+      <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => '#'} %>
+    </dd>
     <dt class="panel-header"><a href="#history"><strong>History</strong></a>
     </dt>
     <dd id="history">
