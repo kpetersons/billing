@@ -10,11 +10,3 @@
 	</div>	
 	<%= render :partial => "/invoices/index", :locals => {:invoices => @invoices, :choose => false, :param_name => :my_invoices_page} %>
 </div>
-<%unless @other_invoices.empty?%>
-<div class="nested-panel">
-		<div class="panel-header">
-		<strong>Others invoices</strong>
-	</div>	
-	<%= render :partial => "/invoices/index", :locals => {:invoices => @other_invoices, :choose => false, :param_name => :other_invoices_page} %>
-</div>
-<%end%>

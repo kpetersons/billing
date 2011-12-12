@@ -52,6 +52,10 @@ class Trademark < ActiveRecord::Base
   validates :priority_date, :date_not_far_future => true
   validates :registration_date, :date_not_far_future => true
 
+  validates :ctm_number, :numericality => true, :allow_blank => true, :allow_nil => true
+  validates :wipo_number, :numericality => true, :allow_blank => true, :allow_nil => true
+  validates :reg_number, :numericality => true, :allow_blank => true, :allow_nil => true
+
   before_save :replace_spaces
   before_update :replace_spaces
 
@@ -63,4 +67,29 @@ class Trademark < ActiveRecord::Base
     wipo_number.gsub!(/ /, "")
   end
 
+  validate :unique_per_matter
+
+  def unique_per_matter
+    m_doc = self.matter
+    unless m_doc
+      ObjectSpace.each_object(Matter) { |o| m_doc = o if o.trademark == self }
+    end
+    parent = m_doc.parent_matter
+    [:ctm_number, :wipo_number, :reg_number].each do |attribute|
+      if self.try(attribute).eql? ""
+        break
+      end
+      obj = self.class.where("#{attribute} = ?", self.try(attribute)).all.each do |obj|
+        break if (persisted? && obj.id == self.id)
+        break if (!parent.nil? && parent.id == obj.matter.id)
+
+        if !parent.nil? && parent.trademark.nil?
+          self.errors.add attribute, "You are trying to create sub Trademark from invalid parent matter!" and break
+        end
+        unless obj.nil?
+          self.errors.add attribute, "is not unique!"
+        end
+      end
+    end
+  end
 end

@@ -1,25 +1,27 @@
 <dl class="nested-panel accordion">
-	<dt class="panel-header">
-		<strong><a href="#tasks">Tasks</a></strong>
-	</dt>
-	<dd id="tasks">
-		<%= render :partial => "/matter_tasks/index", :locals => {:matter_tasks => @matter.matter_tasks.paginate(:page => params[:tasks]), :param_name => :tasks} %>
-		<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Add task', :path => new_matter_task_path(@matter, :anchor => :tasks)} %>
-	</dd>
-	<dt class="panel-header">
-		<strong><a href="#invoices">Invoices</a></strong>
-	</dt>
-	<dd id="invoices">
-        <%invoices =  @matter.invoices%>
-        <%invoices =  invoices.paginate(:page => params[:invoices])%>
-		<%= render :partial => "/invoices/index", :locals => {:invoices => invoices, :choose => false, :param_name => :invoices} %>
-		<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Create invoice', :path => new_matter_invoice_path(@matter)} %>
-	</dd>
-	<dt class="panel-header">
-		<strong><a href="#sub_matters">Sub matters</a></strong>
-	</dt>
-	<dd id="sub_matters">
-		<%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matter.sub_matters.paginate(:page => params[:sub_matters]), :choose => false, :param_name => :sub_matters, :anchor => 'sub_matters'} %>
-		<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Create sub matter', :path => new_matter_matter_path(@matter.document_id, :anchor => :sub_matters, :type => @matter.matter_type_id)} %>
-	</dd>
+  <dt class="panel-header">
+    <strong><a href="#tasks">Tasks</a></strong>
+  </dt>
+  <dd id="tasks">
+    <%= render :partial => "/matter_tasks/index", :locals => {:matter_tasks => @matter.matter_tasks.paginate(:page => params[:tasks]), :param_name => :tasks} %>
+    <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Add task', :path => new_matter_task_path(@matter, :anchor => :tasks)} %>
+  </dd>
+  <dt class="panel-header">
+    <strong><a href="#invoices">Invoices</a></strong>
+  </dt>
+  <dd id="invoices">
+    <% invoices = @matter.invoices %>
+    <% invoices = invoices.paginate(:page => params[:invoices]) %>
+    <%= render :partial => "/invoices/index", :locals => {:invoices => invoices, :choose => false, :param_name => :invoices} %>
+    <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Create invoice', :path => new_matter_invoice_path(@matter)} %>
+  </dd>
+  <% if @matter.document.parent_id.nil? %>
+      <dt class="panel-header">
+        <strong><a href="#sub_matters">Sub matters</a></strong>
+      </dt>
+      <dd id="sub_matters">
+        <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @matter.sub_matters.paginate(:page => params[:sub_matters]), :choose => false, :param_name => :sub_matters, :anchor => 'sub_matters'} %>
+        <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Create sub matter', :path => new_matter_matter_path(@matter.document_id, :anchor => :sub_matters, :type => @matter.matter_type_id)} %>
+      </dd>
+  <% end %>
 </dl>

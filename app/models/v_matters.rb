@@ -57,8 +57,9 @@ class VMatters < ActiveRecord::Base
 
   has_many :matter_tasks, :foreign_key => :matter_id
 
+
   def self.quick_search query, page
-    paginate :per_page => 10, :page => page, :conditions => ['registration_number like :q or description like :q or notes like :q or applicant like :q or agent like :q or author like :q or operating_party like :q or matter_type like :q or matter_status like :q or wipo_number like :q or mark_name like :q or ctm_number like :q or cfe_index like :q or application_number like :q or patent_number like :q or ep_appl_number like :q or design_number like :q or rdc_appl_number like :q or rdc_number like :q or opposed_marks like :q or instance like :q or opposite_party like :q or opposite_party_agent like :q or legal_type like :q or ca_application_number like :q or client_all_ip like :q or patent_eq_numbers like :q', {:q => "%#{query}%", :gi => query}]
+    paginate :per_page => 10, :page => page, :conditions => ['registration_number ilike :q or description ilike :q or notes ilike :q or applicant ilike :q or agent ilike :q or author ilike :q or operating_party ilike :q or matter_type ilike :q or matter_status ilike :q or wipo_number ilike :q or mark_name ilike :q or ctm_number ilike :q or cfe_index ilike :q or application_number ilike :q or patent_number ilike :q or ep_appl_number ilike :q or design_number ilike :q or rdc_appl_number ilike :q or rdc_number ilike :q or opposed_marks ilike :q or instance ilike :q or opposite_party ilike :q or opposite_party_agent ilike :q or legal_type ilike :q or ca_application_number ilike :q or client_all_ip ilike :q or patent_eq_numbers ilike :q', {:q => "%#{query}%", :gi => query}]
   end
 
 end

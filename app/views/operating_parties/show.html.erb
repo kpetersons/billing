@@ -8,7 +8,7 @@
 			<label> Name </label>
 		</dt>
 		<dd>
-			<%= @operating_party.name%>
+			<%= t(@operating_party.name)%>
 		</dd>
 		<dt>
 			<label> Registration number </label>
@@ -20,7 +20,7 @@
 			<label> Parent unit </label>
 		</dt>
 		<dd>			
-			<%= link_to @operating_party.parent_name, @operating_party.parent_operating_party unless @operating_party.parent_operating_party.nil?%>
+			<%= link_to t(@operating_party.parent_name), @operating_party.parent_operating_party unless @operating_party.parent_operating_party.nil?%>
 		</dd>
 	</dl>
 	<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_operating_party_path(@operating_party)} %>

@@ -26,7 +26,7 @@ class Party < ActiveRecord::Base
   has_many :source_parties, :class_name => 'Party', :through => :source_relationships
   has_many :target_parties, :class_name => 'Party', :through => :target_relationships
   #
-  has_many :addresses, :conditions => "date_effective_end is null", :primary_key => :orig_id, :dependent => :delete_all
+  has_many :addresses, :dependent => :delete_all
   has_many :contacts, :dependent => :delete_all
 
   attr_accessible :identifier, :party_type, :individual_attributes, :contact_person_attributes, :company_attributes, :customer_attributes, :address_attributes, :user_attributes, :orig_id, :date_effective, :date_effective_end

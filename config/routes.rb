@@ -91,7 +91,8 @@ Billing::Application.routes.draw do
     resources :contacts
     member do
       get  :choose_matter_type      
-      post :add_matter_type 
+      post :add_matter_type
+      delete :remove_matter_type
     end
   end
 

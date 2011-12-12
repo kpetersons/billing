@@ -40,7 +40,8 @@ class Address < ActiveRecord::Base
   end
 
   def name
-    "#{city}, #{street}, #{house_number}, #{post_code}, #{country.name}"
+    [line_1, line_2, line_3, line_4, line_5].reject{|x| (x.nil? || x.eql?(""))}.join(', ')
+    #"#{city}, #{street}, #{house_number}, #{post_code}, #{country.name}"
   end
 
   def line_1

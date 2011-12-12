@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111210151805) do
+ActiveRecord::Schema.define(:version => 20111211161314) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -314,6 +314,7 @@ ActiveRecord::Schema.define(:version => 20111210151805) do
     t.integer  "foreign_number"
     t.integer  "local_number"
     t.integer  "invoice_type"
+    t.integer  "matter_type_id"
   end
 
   create_table "legal_types", :force => true do |t|

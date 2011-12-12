@@ -1,32 +1,37 @@
 <table style="width: 100%;">
-	<thead>
-		<tr>
-			<th class="col-radio"></th>
-			<th class="col-text">Name</th>
-			<th class="col-text">Description</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tfoot>
-		<tr>
-			<th class="list-paginate" colspan="4"> <%= will_paginate matter_types, :param_name => param_name, :params => {:anchor => param_name} %> </th>
-		</tr>
-	</tfoot>
-	<tbody>
-		<% matter_types.each do |matter_type| %>
-		<tr>
-			<td> <%if choose%>
-			<%= fields.radio_button :matter_type_id, matter_type.id%>
-			<%end%> </td>
-			<td class="col-text"><%= matter_type.name %></td>
-			<td class="col-text"><%= matter_type.description %></td>
-			<th></th>
-		</tr>
-		<% end %>
-		<% if matter_types.empty? %>
-		<tr>
-			<td colspan="4">&nbsp;</td>
-		</tr>
-		<% end %>
-	</tbody>
+  <thead>
+  <tr>
+    <th class="col-radio"></th>
+    <th class="col-text">Name</th>
+    <th class="col-text">Description</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <th class="list-paginate" colspan="4"> <%= will_paginate matter_types, :param_name => param_name, :params => {:anchor => param_name} %> </th>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% matter_types.each do |matter_type| %>
+      <tr>
+        <td>
+          <% if choose %>
+              <%= fields.radio_button :matter_type_id, matter_type.id %>
+          <% end %> </td>
+        <td class="col-text"><%= t(matter_type.name) %></td>
+        <td class="col-text"><%= t(matter_type.description) %></td>
+        <td>
+          <% if !choose %>
+            <%= link_to "Remove", remove_matter_type_operating_party_path(params[:operating_party_id], :matter_type_id => matter_type.id), :method => :delete %>
+        <% end %>
+        </td>
+      </tr>
+  <% end %>
+  <% if matter_types.empty? %>
+      <tr>
+        <td colspan="4">&nbsp;</td>
+      </tr>
+  <% end %>
+  </tbody>
 </table>

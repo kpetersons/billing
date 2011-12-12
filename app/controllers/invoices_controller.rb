@@ -7,14 +7,12 @@ class InvoicesController < ApplicationController
   def index
     @order_by = params[:order_by]
     @direction = params[:direction]
-    @invoices = VInvoices.where(:author_id => current_user.id).order("#{@order_by} #{@direction}").paginate(:per_page => 10, :page => params[:my_invoices_page])
-    @other_invoices = VInvoices.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).order("#{@order_by} #{@direction}").paginate(:per_page => 10, :page => params[:other_invoices_page])
+    @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).order("#{@order_by} #{@direction}").paginate(:per_page => 10, :page => params[:my_invoices_page])
     @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
   end
 
   def quick_search
     @invoices = VInvoices.quick_search(params[:search], params[:my_invoices_page])
-    @other_invoices = []
     render 'index'
   end
 
@@ -28,7 +26,6 @@ class InvoicesController < ApplicationController
     @precision = params[:precision]
     begin
       @invoices = VInvoices.where(@detail_search.query).where(:author_id => current_user.id).order("#{@order_by} #{@direction}").paginate(:per_page => 10, :page => params[:my_invoices_page])
-      @other_invoices = VInvoices.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).order("#{@order_by} #{@direction}").paginate(:per_page => 10, :page => params[:other_invoices_page])
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
       render "index" and return
     rescue => ex
@@ -36,7 +33,6 @@ class InvoicesController < ApplicationController
       logger.error ex.message
     end
     @invoices = VInvoices.where(:author_id => current_user.id).order(params[:order], params[:direction]).paginate(:per_page => 10, :page => params[:my_invoices_page])
-    @other_invoices = VInvoices.where("author_id != #{current_user.id}").where(:operating_party_id => current_user.operating_party.own_and_child_ids).order(params[:order]).paginate(:per_page => 10, :page => params[:other_invoices_page])
     render "index" and return
   end
 

@@ -81,6 +81,7 @@ class MattersController < ApplicationController
   def create
     Document.transaction do
       @document = Document.new(params[:document].merge(:user_id => current_user.id))
+      #@document.matter.unique_per_matter params[:document][:parent_id]
       if @document.save
         @matter = @document.matter
         @date_effective =DateTime.now
@@ -97,9 +98,7 @@ class MattersController < ApplicationController
         unless params[:document][:matter_attributes][:classes].nil?
           @matter.save_classes params
         end
-
         @matter.create_customers_history
-
         redirect_to @matter
       else
         render 'new'
@@ -234,7 +233,7 @@ class MattersController < ApplicationController
     @result = []
     index = 0
     @matter = Matter.find(params[:id])
-    @matters = Matter.where(['matters.id != ?', "#{@matter.id}"]).joins(:document).where(:matter_type_id => @matter.matter_type_id).all(:conditions => ['registration_number like ?', "%#{params[:query]}%"])
+    @matters = Matter.where(['matters.id != ?', "#{@matter.id}"]).joins(:document).where(:matter_type_id => @matter.matter_type_id).all(:conditions => ['registration_number ilike ?', "%#{params[:query]}%"])
     @matters.each do |matter|
       @result<<{:id => matter.id, :label => matter.document.registration_number, :value => matter.document.registration_number}
       index += 1
@@ -336,8 +335,8 @@ class MattersController < ApplicationController
   def show_column_filter
     puts "before Marshal"
     @parameters = Marshal.load(Marshal.dump(params))
-    @parameters.delete_if {|k,v| k.eql?"direction"}
-    @parameters.delete_if {|k,v| k.eql?"order_by"}
+    @parameters.delete_if { |k, v| k.eql? "direction" }
+    @parameters.delete_if { |k, v| k.eql? "order_by" }
     puts "after Marshal @parameters #{@parameters} params #{params}"
     @apply_filter = true
     default_filter = DefaultFilter.where(:table_name => 'matters').first

@@ -99,13 +99,13 @@ class Matter < ActiveRecord::Base
     VMatters.where(:parent_id => document.id)
   end
 
-  def has_parent
-    (document.parent_document.nil?) ? false : true
-  end
-
   def parent_matter
-    if has_parent
-      Matter.find_by_document_id(document.parent_document.id)
+    doc = self.document
+    if !doc
+      ObjectSpace.each_object(Document) {|o| doc = o if o.matter == self }
+    end
+    unless doc.parent_id.nil?
+      return Matter.find_by_document_id(doc.parent_id)
     end
   end
 
@@ -166,11 +166,11 @@ class Matter < ActiveRecord::Base
   end
 
   def get_matter_count type
-    return Matter.where(:matter_type_id => type).count
+    return Matter.joins(:document).where(:documents => {:parent_id => nil}).where(:matter_type_id => type).count
   end
 
   def get_matter_count_per_year type, year
-    return PatentSearch.where("to_char(date_of_order, 'YYYY') = ?", year).count
+    return PatentSearch.joins(:matter => :document).where(:documents => {:parent_id => nil}).where("to_char(date_of_order, 'YYYY') = ?", year).count
   end
 
   def generate_registration_number

@@ -66,7 +66,8 @@ end
 @customer_functions = [
     ["funct.customers.link", true],
     ["funct.create.customer", true],
-    ["funct.edit.save", true]
+    ["funct.customer.edit.save", true],
+    ["funct.customer.edit.save_as", true]
 ]
 
 @admin_functions = [

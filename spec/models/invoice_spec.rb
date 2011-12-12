@@ -29,6 +29,7 @@
 #  foreign_number    :integer
 #  local_number      :integer
 #  invoice_type      :integer
+#  matter_type_id    :integer
 #
 
 require 'spec_helper'

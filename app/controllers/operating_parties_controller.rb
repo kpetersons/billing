@@ -48,12 +48,19 @@ class OperatingPartiesController < ApplicationController
     render 'matters/types/choose'
   end
 
+  def remove_matter_type
+    @operating_party = OperatingParty.find(params[:id])
+    @operating_party_matter_type = OperatingPartyMatterType.where(:operating_party_id => @operating_party.id, :matter_type_id => params[:matter_type_id])
+    OperatingPartyMatterType.delete(@operating_party_matter_type)
+    redirect_to @operating_party, :anchor => :matter_types
+  end
+
   def add_matter_type
     OperatingPartyMatterType.transaction do
       @operating_party = OperatingParty.find(params[:id])
       @operating_party_matter_type = OperatingPartyMatterType.new(params[:operating_party_matter_type])
       if @operating_party_matter_type.save
-        redirect_to @operating_party
+        redirect_to @operating_party, :anchor => :matter_types
       else
         flash[:error] = :could_not_add_matter_type
         redirect_to choose_matter_type_operating_party_path(@operating_party)

@@ -29,6 +29,7 @@
 #  foreign_number    :integer
 #  local_number      :integer
 #  invoice_type      :integer
+#  matter_type_id    :integer
 #
 
 class Invoice < ActiveRecord::Base
@@ -83,6 +84,7 @@ class Invoice < ActiveRecord::Base
 
   before_validation :parse_our_refs
   before_save :mark_as_paid
+  before_save :set_matter_type
   #
   after_update :update_lines
 
@@ -295,7 +297,7 @@ class Invoice < ActiveRecord::Base
 
   def self.quick_search query, page
     joins(:customer => [:party => [:company]]).paginate :per_page => 10, :page => page,
-                                                        :conditions => ['our_ref like :q or companies.name like :q or your_ref like :q',
+                                                        :conditions => ['our_ref ilike :q or companies.name ilike :q or your_ref ilike :q',
                                                                         {:q => "%#{query}%", :gi => query}]
   end
 
@@ -337,21 +339,28 @@ class Invoice < ActiveRecord::Base
 
   def our_ref_present
     @our_ref_matters = []
+    @matter_type = nil
     unless @our_refs_invalid.empty?
       @our_refs_invalid.each do |item|
         errors.add(:our_ref, "referenced matter #{item} not found")
       end
     end
     @our_refs.each do |item|
-      doc = Document.find_by_registration_number(item)
+      doc = VMatters.find_by_registration_number(item)
+      if doc.nil?
+        errors.add(:our_ref, "referenced matter #{item} is not a matter")
+      else
+        if @matter_type.nil?
+          @matter_type = doc.matter_type_id
+        end
+        if @matter_type != doc.matter_type_id
+          errors.add(:our_ref, "references multiple matter types. Choose only one type!")
+        end
+      end
       if doc.nil?
         errors.add(:our_ref, "referenced matter #{item} not found")
       else
-        if doc.matter.nil?
-          errors.add(:our_ref, "referenced matter #{item} not found")
-        else
-          @our_ref_matters<<doc.matter
-        end
+        @our_ref_matters<<Matter.find(doc.id)
       end
     end
   end
@@ -387,6 +396,10 @@ class Invoice < ActiveRecord::Base
     invoice_lines.each do |line|
       line.save
     end
+  end
+
+  def set_matter_type
+    self.matter_type_id = @matter_type
   end
 
 end
