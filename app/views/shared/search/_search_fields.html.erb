@@ -38,12 +38,12 @@
                           }, "data-prefix" => "detail_search[details]", "data-name" => "[closing_bracket]" %>
                         </td>
                         <td style="width:1em">
-                          <div class="values range <%= (@detail_search.all_fields_hash[item[:field]][:data_type].eql?("col-date"))? "" : "invisible" %>" style="width:200px">
+                          <div class="values range <%= (!@detail_search.all_fields_hash[item[:field]].nil? && @detail_search.all_fields_hash[item[:field]][:data_type].eql?("col-date"))? "" : "invisible" %>" style="width:200px">
                             <%= fo.text_field :range_from, {"data-prefix" => "detail_search[details]", "data-name" => "[range_from]", :style=> "width:94px; display:inline-block;", :value => item[:range_from]} %>
                             <div style="width:4px;display:inline-block;"></div>
                             <%= fo.text_field :range_to, {"data-prefix" => "detail_search[details]", "data-name" => "[range_to]", :style=> "width:94px; display:inline-block;", :value => item[:range_to]} %>
                           </div>
-                          <div class="values regular <%= (@detail_search.all_fields_hash[item[:field]][:data_type].eql?("col-date"))? "invisible" : "" %>" style="width:200px">
+                          <div class="values regular <%= (!@detail_search.all_fields_hash[item[:field]].nil? && @detail_search.all_fields_hash[item[:field]][:data_type].eql?("col-date"))? "invisible" : "" %>" style="width:200px">
                             <%= fo.text_field :regular, {"data-prefix" => "detail_search[details]", "data-name" => "[regular]", :style=> "width:200px", :value => item[:regular]} %>
                           </div>
                         </td>
