@@ -26,14 +26,14 @@ class MattersController < ApplicationController
     @direction = params[:direction]
     @precision = params[:precision]
     begin
-      @matters = VMatters.where(@detail_search.query).where(:author_id => current_user.id).order("#{@order_by} #{@direction}").paginate(:per_page => 10, :page => params[:my_matters_page])
+      @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).where(@detail_search.query).order("#{@order_by} #{@direction}").paginate(:per_page => 10, :page => params[:my_matters_page])
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
       render "index" and return
     rescue => ex
       flash.now[:error] = "Invalid search parameters. Check them again!"
       logger.error ex.message
     end
-    @matters = VMatters.where(:author_id => current_user.id).order(params[:order]).paginate(:per_page => 10, :page => params[:my_matters_page])
+    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).order(params[:order]).paginate(:per_page => 10, :page => params[:my_matters_page])
     render "index" and return
   end
 
