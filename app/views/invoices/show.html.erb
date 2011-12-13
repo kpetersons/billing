@@ -109,8 +109,8 @@
       <%= @document.invoice.payment_term %>&nbsp;
     </dd>
   </dl>
+  <%= render :partial => "status_controls", :locals => {:invoice => @document.invoice} %>
   <% if @document.invoice.invoice_status.editable_state %>
-      <%= render :partial => "status_controls", :locals => {:invoice => @document.invoice} %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
       <%= render :partial => "shared/ui/show_edit_controls_confirm", :locals => {:name=> "Copy", :path => copy_invoice_path(@invoice), :message => "Are you sure want to copy invoice details?"} %>
   <% end %>
@@ -131,7 +131,7 @@
                 <%= link_to 'FR', apreview_invoice_pdf_path(@document.invoice, :language => 'fr'), :target => :_blank %>
               </li>
               <li>
-                <%= link_to 'DE', apreview_invoice_pdf_path(@document.invoice, :language => 'de'), :target => :_blank  %>
+                <%= link_to 'DE', apreview_invoice_pdf_path(@document.invoice, :language => 'de'), :target => :_blank %>
               </li>
             </ul>
           </li>

@@ -1,89 +1,87 @@
 <%= render :partial => "shared/flash", :locals => {:flash => flash} %>
 <ul style="list-style: none; margin: 5px; padding: 5px;box-sizing:border-box;" id="search-box">
   <li style="box-sizing:border-box;" data-index="0">
-    <%= fields_for "detail_search", @detail_search do |f| %>
-        <table style="width:100%; height:auto;">
-          <tbody style="color:black">
-          <%= f.fields_for "details", @detail_search.details do |fd| %>
-              <% fd.object.each_with_index do |item, idx| %>
-                  <%= fd.fields_for "#{idx}", fd.object[idx] do |fo| %>
-                      <tr class="search-field-container">
-                        <td style="width:1em">
-                          <%= fo.select :conjunction, @detail_search.all_conjunctions.collect { |tt|
-                              attrs = {}
-                              attrs[:selected] = true if tt.eql?(item[:conjunction])
-                              [tt, tt, attrs]
-                          }, {}, {"data-prefix" => "detail_search[details]", "data-name" => "[conjunction]", :style => "width:5em;"} %>
-                        </td>
-                        <td style="width:1em">
-                          <%= fo.select :opening_bracket, ["", "("].collect { |tt|
-                              attrs = {}
-                              attrs[:selected] = true if tt.eql?(item[:opening_bracket])
-                              [tt, tt, attrs]
-                          }, {}, {"data-prefix" => "detail_search[details]", "data-name" => "[opening_bracket]"} %>
-                        </td>
-                        <td style="width:1em">
-                          <%= fo.select :field, @detail_search.all_fields.collect { |tt|
-                              attrs = {"data-type" => tt.column_type}
-                              attrs[:selected] = true if tt.column_query.eql?(item[:field])
-                              [t(tt.column_name), tt.column_query, attrs] },
-                                        {},
-                                        {"data-prefix" => "detail_search[details]", "data-name" => "[field]", "class" => "column-rows"} %>
-                        </td>
-                        <td style="width:1em">
-                          <%= fo.select :precision, ["Is", "Contains"].collect { |tt|
-                              attrs = {}
-                              attrs[:selected] = true if tt.eql?(item[:precision])
-                              [tt, tt, attrs]
-                          }, "data-prefix" => "detail_search[details]", "data-name" => "[closing_bracket]" %>
-                        </td>
-                        <td style="width:1em">
-                          <div class="values range <%= (!@detail_search.all_fields_hash[item[:field]].nil? && @detail_search.all_fields_hash[item[:field]][:data_type].eql?("col-date"))? "" : "invisible" %>" style="width:200px">
-                            <%= fo.text_field :range_from, {"data-prefix" => "detail_search[details]", "data-name" => "[range_from]", :style=> "width:94px; display:inline-block;", :value => item[:range_from]} %>
-                            <div style="width:4px;display:inline-block;"></div>
-                            <%= fo.text_field :range_to, {"data-prefix" => "detail_search[details]", "data-name" => "[range_to]", :style=> "width:94px; display:inline-block;", :value => item[:range_to]} %>
-                          </div>
-                          <div class="values regular <%= (!@detail_search.all_fields_hash[item[:field]].nil? && @detail_search.all_fields_hash[item[:field]][:data_type].eql?("col-date"))? "invisible" : "" %>" style="width:200px">
-                            <%= fo.text_field :regular, {"data-prefix" => "detail_search[details]", "data-name" => "[regular]", :style=> "width:200px", :value => item[:regular]} %>
-                          </div>
-                        </td>
-                        <td style="width:1em">
-                          <%= fo.select :closing_bracket, ["", ")"].collect { |tt|
-                              attrs = {}
-                              attrs[:selected] = true if tt.eql?(item[:closing_bracket])
-                              [tt, tt, attrs]
-                          }, "data-prefix" => "detail_search[details]", "data-name" => "[closing_bracket]" %>
-                        </td>
-                        <td style="width:1em">
-                          <%
-                             attrs = {"data-prefix" => "detail_search[details]", "data-name" => "[match_case]"}
-                             attrs[:checked] = true if item[:match_case].eql?("1")
-                          %>
-                          <%= fo.check_box :match_case, attrs %>
-                        </td>
-                        <td style="width:auto">
+    <table style="width:100%; height:auto;">
+      <tbody style="color:black">
+      <% @detail_search.details.each_with_index do |item, idx| %>
+          <%= fields_for "detail_search[details][#{idx}]", item do |fo| %>
+              <tr class="search-field-container">
+                <td style="width:1em">
+                  <%= fo.select :conjunction, @detail_search.all_conjunctions.collect { |tt|
+                      attrs = {}
+                      attrs[:selected] = true if tt.eql?(item.conjunction)
+                      [tt, tt, attrs]
+                  }, {}, {"data-prefix" => "detail_search[details]", "data-name" => "[conjunction]", :style => "width:5em;"} %>
+                </td>
+                <td style="width:1em">
+                  <%= fo.select :opening_bracket, ["", "("].collect { |tt|
+                      attrs = {}
+                      attrs[:selected] = true if tt.eql?(item.opening_bracket)
+                      [tt, tt, attrs]
+                  }, {}, {"data-prefix" => "detail_search[details]", "data-name" => "[opening_bracket]"} %>
+                </td>
+                <td style="width:1em">
+                  <%= fo.select :field, @detail_search.all_fields.collect { |tt|
+                      attrs = {"data-type" => tt.column_type}
+                      attrs[:selected] = true if tt.column_query.eql?(item.field)
+                      [t(tt.column_name), tt.column_query, attrs] },
+                                {},
+                                {"data-prefix" => "detail_search[details]", "data-name" => "[field]", "class" => "column-rows"} %>
+                </td>
+                <td style="width:1em">
+                  <%= fo.select :precision, ["Is", "Contains"].collect { |tt|
+                      attrs = {}
+                      attrs[:selected] = true if tt.eql?(item.precision)
+                      [tt, tt, attrs]
+                  }, "data-prefix" => "detail_search[details]", "data-name" => "[closing_bracket]" %>
+                </td>
+                <td style="width:1em">
+                  <div class="values range <%= (!@detail_search.all_fields_hash[item.field].nil? && @detail_search.all_fields_hash[item.field][:data_type].eql?("col-date")) ? "" : "invisible" %>" style="width:200px">
+                    <%= fo.text_field :range_from, {"data-prefix" => "detail_search[details]", "data-name" => "[range_from]", :style=> "width:94px; display:inline-block;", :value => item.range_from} %>
+                    <div style="width:4px;display:inline-block;"></div>
+                    <%= fo.text_field :range_to, {"data-prefix" => "detail_search[details]", "data-name" => "[range_to]", :style=> "width:94px; display:inline-block;", :value => item.range_to} %>
+                  </div>
+                  <div class="values regular <%= (!@detail_search.all_fields_hash[item.field].nil? && @detail_search.all_fields_hash[item.field][:data_type].eql?("col-date")) ? "invisible" : "" %>" style="width:200px">
+                    <%= fo.text_field :regular, {"data-prefix" => "detail_search[details]", "data-name" => "[regular]", :style=> "width:200px", :value => item.regular} %>
+                  </div>
+                </td>
+                <td style="width:1em">
+                  <%= fo.select :closing_bracket, ["", ")"].collect { |tt|
+                      attrs = {}
+                      attrs[:selected] = true if tt.eql?(item.closing_bracket)
+                      [tt, tt, attrs]
+                  }, "data-prefix" => "detail_search[details]", "data-name" => "[closing_bracket]" %>
+                </td>
+                <td style="width:1em">
+                  <%
+                     attrs = {"data-prefix" => "detail_search[details]", "data-name" => "[match_case]"}
+                     attrs[:checked] = true if item.match_case.eql?("1")
+                  %>
+                  <%= fo.check_box :match_case, attrs %>
+                </td>
+                <td style="width:auto">
 
-                        </td>
-                      </tr>
-                  <% end %>
-              <% end %>
+                </td>
+
+
+              </tr>
           <% end %>
-          </tbody>
-          <tfoot>
-          <tr>
-            <td colspan="6">
-              <a href="#" style="width:auto;" id="add">Add</a>
-              <a href="#" style="width:auto;" id="clear">Clear</a>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="7">
-              <button style="clear:both; display:block; margin-top:5px;" id="search" type="submit">Search</button>
-            </td>
-          </tr>
-          </tfoot>
-        </table>
-    <% end %>
+      <% end %>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="6">
+          <a href="#" style="width:auto;" id="add">Add</a>
+          <a href="#" style="width:auto;" id="clear">Clear</a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="7">
+          <button style="clear:both; display:block; margin-top:5px;" id="search" type="submit">Search</button>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
   </li>
 </ul>
 <script>

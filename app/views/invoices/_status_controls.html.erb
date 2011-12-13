@@ -1,6 +1,6 @@
 <div class="status-controls">
 	<% invoice.available_statuses.each do |status|%>
-		<% if has_function :name => "funct.#{status.name}"%>
+		<% if has_function(:name => "funct.#{status.name}") || has_function(:name => "funct.invoice.status.override")%>
 		<div class="status-control">
 			<%=form_for status, :url => flow_invoice_path(invoice) do |f| %>
 				<%=f.hidden_field :id%>				

@@ -145,4 +145,4 @@ DEPENDENCIES
   rspec-rails (= 2.7.0)
   uuidtools
   webrat (= 0.7.1)
-  will_paginate (~> 3.0.pre2)
+  will_paginate

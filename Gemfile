@@ -5,7 +5,7 @@ gem 'rails', '3.1'
 gem 'rspec', '2.7.0'
 gem 'rspec-rails', '2.7.0'
 gem 'gravatar_image_tag'
-gem 'will_paginate', '~>3.0.pre2'
+gem 'will_paginate'
 gem 'uuidtools'
 gem 'paperclip', '~> 2.3'
 gem 'prawn', :submodules => true

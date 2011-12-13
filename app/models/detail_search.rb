@@ -25,7 +25,7 @@ class DetailSearch
     if @details.nil?
       @details = Array.new
     end
-    @details << detail
+    @details << Detail.new(detail)
   end
 
   def details
@@ -53,7 +53,7 @@ class DetailSearch
   def query
     query_s = ""
     @details.each do |item|
-      query_s = "#{query_s} #{item[:conjunction]} #{item[:opening_bracket]} #{query_field_comparator item} #{item[:closing_bracket]}"
+      query_s = "#{query_s} #{item.conjunction} #{item.opening_bracket} #{query_field_comparator item} #{item.closing_bracket}"
     end
     puts "QUERY: #{query_s}"
     return query_s
@@ -71,28 +71,28 @@ class DetailSearch
 
   def query_field_comparator item
     comparator = ""
-    if @all_fields_hash[item[:field]][:data_type].eql?("col-date")
+    if @all_fields_hash[item.field][:data_type].eql?("col-date")
       comparator = item[:field]
-      comparator = "#{comparator} between date '#{Date.strptime(item[:range_from], '%d.%m.%Y').to_s(:db)}' and date '#{Date.strptime(item[:range_to], '%d.%m.%Y').to_s(:db)}' "
+      comparator = "#{comparator} between date '#{Date.strptime(item.range_from, '%d.%m.%Y').to_s(:db)}' and date '#{Date.strptime(item.range_to, '%d.%m.%Y').to_s(:db)}' "
     else
-      regular = item[:regular]
-      type = @all_fields_hash[item[:field]][:data_type]
-      if type.eql?("col-text") && item[:precision].eql?("Contains")
+      regular = item.regular
+      type = @all_fields_hash[item.field][:data_type]
+      if type.eql?("col-text") && item.precision.eql?("Contains")
         regular = upper item, "'%#{regular}%'"
         regular = "ilike #{regular}"
       else
-        if @all_fields_hash[item[:field]][:data_type].eql?("col-text")
+        if @all_fields_hash[item.field][:data_type].eql?("col-text")
           regular = upper item, "'#{regular}'"
         end
         regular = " = #{regular}"
       end
-      comparator = "#{comparator} #{upper(item, item[:field])} #{regular}"
+      comparator = "#{comparator} #{upper(item, item.field)} #{regular}"
     end
     return comparator
   end
 
   def upper item, val
-    if item[:match_case].eql? "0"
+    if item.match_case.eql? "0"
       return "upper(#{val})"
     end
     return val
@@ -115,4 +115,5 @@ class Detail
   end
 
   attr_accessor :conjunction, :opening_bracket, :closing_bracket, :field, :range_from, :range_to, :regular, :match_case, :precision
+
 end

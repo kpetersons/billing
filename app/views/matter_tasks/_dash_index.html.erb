@@ -12,7 +12,7 @@
   </thead>
   <tfoot>
   <tr>
-    <th class="list-paginate" colspan="8">
+    <th class="list-paginate" colspan="<%= current_user.column_names('invoices').length %>">
       <%= will_paginate matter_tasks, :param_name => param_name, :params => {:anchor => "deadlines"} %>
     </th>
   </tr>

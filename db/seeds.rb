@@ -60,7 +60,8 @@ end
     ["funct.invoice.status.issued", true],
     ["funct.invoice.status.canceled", true],
     ["funct.invoice.status.awaiting", true],
-    ["funct.invoice.status.paid", true]
+    ["funct.invoice.status.paid", true],
+    ["funct.invoice.status.override", true]
 ]
 
 @customer_functions = [
@@ -595,14 +596,17 @@ InvoiceStatus.transaction do
   invoice_statuses = [
       ["open", true],
       ["approved", true],
-      ["issued", true],
+      ["issued", false],
       ["canceled", false],
       ["awaiting", false],
       ["paid", false]
   ]
   invoice_statuses.each do |name|
-    unless InvoiceStatus.find_by_name("#{prefix}#{name[0]}")
+    is = InvoiceStatus.find_by_name("#{prefix}#{name[0]}")
+    unless is
       InvoiceStatus.create(:editable_state => name[1], :name => "#{prefix}#{name[0]}", :function_id => Function.find_by_name("funct.#{prefix}#{name[0]}").id)
+    else
+      is.update_attributes({:editable_state => name[1], :name => "#{prefix}#{name[0]}", :function_id => Function.find_by_name("funct.#{prefix}#{name[0]}").id})
     end
   end
 end
