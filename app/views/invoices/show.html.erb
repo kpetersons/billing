@@ -137,6 +137,7 @@
           </li>
         </ul>
       </div>
+      <% if @document.invoice.ind_invoice_status_name.eql?("invoice.status.issued")%>
       <div class="show controls slide-out">
         <ul>
           <li>
@@ -179,5 +180,6 @@
           </li>
         </ul>
       </div>
+      <% end %>
   <% end %>
 </div>
