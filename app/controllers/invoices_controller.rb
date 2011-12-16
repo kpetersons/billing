@@ -12,7 +12,10 @@ class InvoicesController < ApplicationController
   end
 
   def quick_search
+    @order_by = params[:order_by]
+    @direction = params[:direction]
     @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).quick_search(params[:search], params[:my_invoices_page], current_user.rows_per_page)
+    @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
     render 'index'
   end
 
@@ -228,11 +231,9 @@ class InvoicesController < ApplicationController
   end
 
   def show_column_filter
-    puts "before Marshal"
     @parameters = Marshal.load(Marshal.dump(params))
     @parameters.delete_if {|k,v| k.eql?"direction"}
     @parameters.delete_if {|k,v| k.eql?"order_by"}
-    puts "after Marshal @parameters #{@parameters} params #{params}"
     @apply_filter = true
     default_filter = DefaultFilter.where(:table_name => 'invoices').first
     @columns = DefaultFilterColumn.where(:default_filter_id => default_filter.id).all

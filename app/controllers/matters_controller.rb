@@ -333,11 +333,9 @@ class MattersController < ApplicationController
 
 
   def show_column_filter
-    puts "before Marshal"
     @parameters = Marshal.load(Marshal.dump(params))
     @parameters.delete_if { |k, v| k.eql? "direction" }
     @parameters.delete_if { |k, v| k.eql? "order_by" }
-    puts "after Marshal @parameters #{@parameters} params #{params}"
     @apply_filter = true
     default_filter = DefaultFilter.where(:table_name => 'matters').first
     @columns = DefaultFilterColumn.where(:default_filter_id => default_filter.id).all
