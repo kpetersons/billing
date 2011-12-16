@@ -31,7 +31,7 @@
 </div>
 <div class="panel nested-panel">
   <div class="panel-header">
-    <strong>Preferences user</strong>
+    <strong>User preferences</strong>
   </div>
   <%= render :partial => "shared/error", :locals => {:obj => @preferences} %>
   <%= form_for @preferences, :url => "/profile/settings", :method => :post  do |p_f| %>
