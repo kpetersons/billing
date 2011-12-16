@@ -57,7 +57,7 @@ class InvoicePdfLocal < Prawn::Document
         move_down 10
 
         party_info_data = customer_party_table(invoice)
-        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120] , :cell_style => {:borders => [], :padding_top => 1, :padding_left => 1, :padding_right => 1, :padding_bottom => 0})
+        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120] , :cell_style => {:borders => [], :padding => 1})
 
         party_info_table.cells[0, 0].style :borders => [:left, :top]
         party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
@@ -72,9 +72,20 @@ class InvoicePdfLocal < Prawn::Document
         party_info_table.cells[2, 3].style :borders => [:right], :font_style => :bold
 
         party_info_table.cells[3, 0].style :borders => [:left, :bottom]
-        party_info_table.cells[3, 1].style :borders => [:bottom], :font_style => :bold, :padding_bottom => 10
+        party_info_table.cells[3, 1].style :borders => [:bottom], :font_style => :bold
         party_info_table.cells[3, 2].style :borders => [:bottom]
         party_info_table.cells[3, 3].style :borders => [:bottom, :right], :font_style => :bold
+
+
+        max_height = 0
+        4.times do |idx|
+          max_height = party_info_table.cells[3, idx].natural_content_height if max_height < party_info_table.cells[3, idx].natural_content_height
+        end
+        4.times do |idx|
+          party_info_table.cells[3, idx].height = max_height
+          party_info_table.cells[3, idx].style :padding_bottom =>1.7
+        end
+
         party_info_table.draw
 
         move_down 10
