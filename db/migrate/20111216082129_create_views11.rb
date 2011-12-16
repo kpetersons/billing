@@ -1,6 +1,14 @@
 class CreateViews11 < ActiveRecord::Migration
   def up
     execute <<-SQL
+      CREATE AGGREGATE array_agg(anyelement) (
+        SFUNC=array_append,
+        STYPE=anyarray,
+        INITCOND='{}'
+      );
+    SQL
+
+    execute <<-SQL
       drop view if exists v_matter_tasks;
     SQL
     execute <<-SQL
