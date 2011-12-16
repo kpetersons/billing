@@ -72,7 +72,7 @@ class DetailSearch
   def query_field_comparator item
     comparator = ""
     if @all_fields_hash[item.field][:data_type].eql?("col-date")
-      comparator = item[:field]
+      comparator = item.field
       comparator = "#{comparator} between date '#{Date.strptime(item.range_from, '%d.%m.%Y').to_s(:db)}' and date '#{Date.strptime(item.range_to, '%d.%m.%Y').to_s(:db)}' "
     else
       regular = item.regular

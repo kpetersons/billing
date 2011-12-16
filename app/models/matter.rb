@@ -30,8 +30,8 @@ class Matter < ActiveRecord::Base
 
 
   belongs_to :document
-  belongs_to :applicant, :class_name => "Customer", :foreign_key => :applicant_id, :primary_key => :orig_id, :conditions => "date_effective_end is null"
-  belongs_to :agent, :class_name => "Customer", :foreign_key => :agent_id, :primary_key => :orig_id, :conditions => "date_effective_end is null"
+  belongs_to :applicant, :class_name => "Customer", :foreign_key => :applicant_id, :primary_key => :orig_id
+  belongs_to :agent, :class_name => "Customer", :foreign_key => :agent_id, :primary_key => :orig_id
   belongs_to :author, :class_name => "User", :foreign_key => :author_id
   belongs_to :matter_type
   belongs_to :operating_party
@@ -83,10 +83,6 @@ class Matter < ActiveRecord::Base
     LinkedMatter.where("matter_id = ? or linked_matter_id = ?", id, id)
   end
 
-  def classes
-    clazzs.collect { |clazz| clazz.code }.join(',')
-  end
-
   def agent_name
     (agent.nil?) ? '' : agent.name
   end
@@ -101,7 +97,7 @@ class Matter < ActiveRecord::Base
 
   def parent_matter
     doc = self.document
-    if !doc
+    unless doc
       ObjectSpace.each_object(Document) {|o| doc = o if o.matter == self }
     end
     unless doc.parent_id.nil?
@@ -126,7 +122,7 @@ class Matter < ActiveRecord::Base
   end
 
   def available_statuses
-    MatterStatus.where("id != ?", [matter_status_id]).all
+    MatterStatus.where("id != ?", matter_status_id).all
   end
 
   def has_invoices?
@@ -182,7 +178,7 @@ class Matter < ActiveRecord::Base
 
   def create_customers_history
     agent = MatterCustomer.new({:customer_id => agent_id, :matter_id => id, :customer_type => 'Agent', :takeover_date => DateTime.now, :author_id => author_id})
-    applicant = MatterCustomer.new({:customer_id => agent_id, :matter_id => id, :customer_type => 'Applicant', :takeover_date => DateTime.now, :author_id => author_id})
+    applicant = MatterCustomer.new({:customer_id => applicant_id, :matter_id => id, :customer_type => 'Applicant', :takeover_date => DateTime.now, :author_id => author_id})
     agent.save!
     applicant.save!
     custom = Custom.find_by_matter_id(id)

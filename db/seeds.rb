@@ -1076,7 +1076,11 @@ DefaultFilter.transaction do
       {:column_query => 'no_of_objects', :column_position => 40, :is_default => false, :column_name => 'mi_no_of_objects', :column_type => 'col-number', :translate => false},
       {:column_query => 'express_search', :column_position => 41, :is_default => false, :column_name => 'mi_express_search', :column_type => 'col-boolean', :translate => false},
       {:column_query => 'domain_name', :column_position => 42, :is_default => false, :column_name => 'mi_domain_name', :column_type => 'col-text', :translate => false},
-      {:column_query => 'registration_date', :column_position => 43, :is_default => false, :column_name => 'mi_registration_date', :column_type => 'col-date', :translate => false}
+      {:column_query => 'registration_date', :column_position => 43, :is_default => false, :column_name => 'mi_registration_date', :column_type => 'col-date', :translate => false},
+      {:column_query => 'classes', :column_position => 44, :is_default => false, :column_name => 'mi_classes', :column_type => 'col-text', :translate => false},
+      {:column_query => 'court_ref', :column_position => 45, :is_default => false, :column_name => 'mi_court_ref', :column_type => 'col-text', :translate => false},
+      {:column_query => 'vid_ref', :column_position => 46, :is_default => false, :column_name => 'mi_vid_ref', :column_type => 'col-text', :translate => false},
+      {:column_query => 'tm_registration_number', :column_position => 47, :is_default => false, :column_name => 'mi_tm_registration_number', :column_type => 'col-text', :translate => false}
   ]
 
   dashboard_columns = matter_columns

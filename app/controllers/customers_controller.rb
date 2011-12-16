@@ -54,7 +54,7 @@ class CustomersController < ApplicationController
     index = 0
     @customers = Customer.joins(:party => :company).all(:conditions => ['name ilike ? and customers.date_effective_end is null', "%#{params[:term]}%"])
     @customers.each do |customer|
-      @result<<{:id => customer.id, :label => customer.name, :value => customer.name, :vat_number => customer.vat_registration_number}
+      @result<<{:id => customer.orig_id, :label => customer.name, :value => customer.name, :vat_number => customer.vat_registration_number}
       index += 1
     end
     render :json => @result
@@ -65,7 +65,7 @@ class CustomersController < ApplicationController
     index = 0
     @customers = Customer.joins(:party => :company).all(:conditions => ['name ilike ? and customers.date_effective_end is null', "%#{params[:term]}%"])
     @customers.each do |customer|
-      @result<<{:id => customer.id, :label => customer.name, :value => customer.name, :vat_number => customer.vat_registration_number}
+      @result<<{:id => customer.orig_id, :label => customer.name, :value => customer.name, :vat_number => customer.vat_registration_number}
       index += 1
     end
     render :json => @result

@@ -23,6 +23,11 @@ class InvoicePdfForeign < Prawn::Document
          fill_color "000000"
       end
     end
+    if images
+      image "#{Rails.root}/app/reports/foreign_icons/logo.png", :at => [0,700], :width => 100, :height => 100
+      image "#{Rails.root}/app/reports/foreign_icons/header.png", :at => [120,700], :width => (8.81*50), :height => 50
+      image "#{Rails.root}/app/reports/foreign_icons/footer.png", :at => [0, 0], :width => (8.81*50), :height => 50
+    end
     font_families.update(
     "InvoiceFamily" => {
       :bold        => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif-Bold.ttf",
