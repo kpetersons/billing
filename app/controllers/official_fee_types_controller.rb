@@ -2,7 +2,7 @@ class OfficialFeeTypesController < ApplicationController
   layout "invoices"
 
   def index
-    @official_fee_types = OfficialFeeType.paginate(:page =>  params[:official_fee_types], :conditions => ["operating_party_id = #{current_user.operating_party_id}"])
+    @official_fee_types = OfficialFeeType.paginate(:per_page => current_user.rows_per_page, :page =>  params[:official_fee_types], :conditions => ["operating_party_id = #{current_user.operating_party_id}"])
   end
 
   def new

@@ -15,7 +15,7 @@
 	<tfoot>
 		<tr>
 			<th class="list-paginate" colspan="<%=current_user.column_names(column_names).length + 2%>">
-				<%= will_paginate matters, :param_name => param_name, :params=> {:anchor => anchor} %>
+				<%= will_paginate matters,:per_page => current_user.rows_per_page, :param_name => param_name, :params=> {:anchor => anchor} %>
 			</th>
 		</tr>
 	</tfoot>

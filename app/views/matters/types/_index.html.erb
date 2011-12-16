@@ -9,7 +9,7 @@
   </thead>
   <tfoot>
   <tr>
-    <th class="list-paginate" colspan="4"> <%= will_paginate matter_types, :param_name => param_name, :params => {:anchor => param_name} %> </th>
+    <th class="list-paginate" colspan="4"> <%= will_paginate matter_types,:per_page => current_user.rows_per_page, :param_name => param_name, :params => {:anchor => param_name} %> </th>
   </tr>
   </tfoot>
   <tbody>

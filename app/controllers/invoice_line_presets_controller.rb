@@ -3,7 +3,7 @@ class InvoiceLinePresetsController < ApplicationController
   layout "invoices"
 
   def index
-    @invoice_line_presets = InvoiceLinePreset.paginate(:page =>  params[:invoice_line_presets])
+    @invoice_line_presets = InvoiceLinePreset.paginate(:per_page => current_user.rows_per_page, :page =>  params[:invoice_line_presets])
   end
 
   def new

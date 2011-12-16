@@ -295,8 +295,8 @@ class Invoice < ActiveRecord::Base
     return !invoice_lines.empty?
   end
 
-  def self.quick_search query, page
-    joins(:customer => [:party => [:company]]).paginate :per_page => 10, :page => page,
+  def self.quick_search query, page, per_page
+    joins(:customer => [:party => [:company]]).paginate :per_page => per_page, :page => page,
                                                         :conditions => ['our_ref ilike :q or companies.name ilike :q or your_ref ilike :q',
                                                                         {:q => "%#{query}%", :gi => query}]
   end

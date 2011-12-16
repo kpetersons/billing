@@ -14,7 +14,7 @@
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="10"> <%= will_paginate addresses, :param_name => param_name, :params => {:anchor => param_name} %> </th>
+			<th class="list-paginate" colspan="10"> <%= will_paginate addresses, :per_page => current_user.rows_per_page, :param_name => param_name, :params => {:anchor => param_name} %> </th>
 		</tr>
 	</tfoot>
 	<tbody>

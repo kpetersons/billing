@@ -4,12 +4,12 @@ class CustomersController < ApplicationController
 
   def index
     @apply_filter = true
-    @customers = Customer.where(:date_effective_end => nil).paginate(:page => params[:customers_page])
+    @customers = Customer.where(:date_effective_end => nil).paginate(:per_page => current_user.rows_per_page, :page => params[:customers_page])
   end
 
   def quick_search
     @apply_filter = true
-    @customers = Customer.quick_search(params[:search], params[:customers_page])
+    @customers = Customer.quick_search(params[:search], params[:customers_page], current_user.rows_per_page)
     render 'index'
   end
 

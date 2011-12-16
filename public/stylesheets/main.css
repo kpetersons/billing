@@ -156,7 +156,7 @@ dl.nested-panel dt, dl.nested-panel dd {margin:0px;float:none}
 	margin:0px;	
 }
 
-.panel .panel-footer {font-size:.85em;}
+.panel .panel-footer, .nested-panel .panel-footer  {font-size:.85em;}
 
 input[type="submit"], button, .panel-footer a {
 	font-weight: bold; 	

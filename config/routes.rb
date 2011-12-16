@@ -18,6 +18,7 @@ Billing::Application.routes.draw do
     member do
       get :show_password
       put :change_password
+      post :settings
     end        
   end  
 

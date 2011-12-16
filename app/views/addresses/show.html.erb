@@ -12,6 +12,6 @@
 	<div class="panel-header">
 		<strong>History</strong>
 	</div>
-    <%= render :partial => "index", :locals => {:addresses => @address.history.paginate(:per_page=> 10, :page => params[:addresses]), :param_name => 'addresses', :path_elements => @path_elements} %>
+    <%= render :partial => "index", :locals => {:addresses => @address.history.paginate(:per_page => current_user.rows_per_page, :page => params[:addresses]), :param_name => 'addresses', :path_elements => @path_elements} %>
 
 </div>

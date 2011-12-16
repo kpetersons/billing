@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111216092443) do
+ActiveRecord::Schema.define(:version => 20111216103047) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -610,6 +610,13 @@ ActiveRecord::Schema.define(:version => 20111216092443) do
   create_table "user_filters", :force => true do |t|
     t.integer  "user_id"
     t.string   "table_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_preferences", :force => true do |t|
+    t.integer  "rows_per_page"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

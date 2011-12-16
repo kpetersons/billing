@@ -2,7 +2,7 @@ class OperatingPartiesController < ApplicationController
 
   layout "administration"
   def index
-    @operating_parties = OperatingParty.paginate(:page =>  params[:operating_parties_page])
+    @operating_parties = OperatingParty.paginate(:per_page => current_user.rows_per_page, :page =>  params[:operating_parties_page])
   end
 
   def new
@@ -44,7 +44,7 @@ class OperatingPartiesController < ApplicationController
   def choose_matter_type
     @operating_party = OperatingParty.find(params[:id])
     @operating_party_matter_type = OperatingPartyMatterType.new(:operating_party_id => @operating_party.id)
-    @matter_types = MatterType.paginate(:page =>  params[:matter_type])
+    @matter_types = MatterType.paginate(:per_page => current_user.rows_per_page, :page =>  params[:matter_type])
     render 'matters/types/choose'
   end
 

@@ -10,7 +10,7 @@
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="6"> <%= will_paginate official_fee_types, :param_name => param_name, :params => {:anchor => param_name} %> </th>
+			<th class="list-paginate" colspan="6"> <%= will_paginate official_fee_types, :per_page => current_user.rows_per_page, :param_name => param_name, :params => {:anchor => param_name} %> </th>
 		</tr>
 	</tfoot>
 	<tbody>

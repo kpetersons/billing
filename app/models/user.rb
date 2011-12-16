@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
   has_many :invoices, :foreign_key => :author_id
   has_many :invoice_lines, :foreign_key => :author_id
   has_many :invoice_line_presets, :foreign_key => :author_id
+  has_one :user_preferences
   #  
   belongs_to :operating_party
   #
@@ -143,6 +144,15 @@ class User < ActiveRecord::Base
     end
     chosen_columns = UserFilterColumn.where(:user_filter_id => filter.id).all
     return chosen_columns
+  end
+
+  def rows_per_page
+    return user_preferences.safe_rows_per_page unless user_preferences.nil?
+    return 20
+  end
+
+  def preferences
+    user_preferences || UserPreferences.new
   end
 
   private

@@ -1,31 +1,49 @@
 <div class="panel">
-	<div class="panel-header">
-		<strong>Edit user</strong>
-	</div>
-	<%= render :partial => "shared/flash", 	:locals => {:flash 	=> flash}%>
-	<%= render :partial => "shared/error", 	:locals => {:obj 	=> @party}%>
-	<%=form_for @party, :url => profile_path do |p_f| %>
-	<ul>
-		<%= render :partial => "/shared/party/fields", :locals => {:fields => p_f} %>
-		<%= p_f.fields_for :individual do |pi_f| %>
-		<%= render :partial => "/shared/party/individual/fields", :locals => {:fields => pi_f} %>
-		<%= pi_f.fields_for :user do |piu_f| %>
-		<li>
-			<%= piu_f.label :initials %>
-			<%= piu_f.text_field :initials, {:style => "width: 2em;"} %>
-		</li>
-		<li>
-			<%= piu_f.hidden_field :id %>
-			<%= piu_f.label :email %>
-			<%= piu_f.text_field :email %>
-		</li>
-		<li>
-			<%= piu_f.label :operating_party_id %>
-			<%= piu_f.select :operating_party_id, OperatingParty.all.collect { |tt| [t(tt.name), tt.id] } %>
-		</li>
-		<%end%>
-		<%end%>
-	</ul>
-	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> p_f}%>
-	<%end%>
+  <div class="panel-header">
+    <strong>Edit user</strong>
+  </div>
+  <%= render :partial => "shared/flash", :locals => {:flash => flash} %>
+  <%= render :partial => "shared/error", :locals => {:obj => @party} %>
+  <%= form_for @party, :url => profile_path do |p_f| %>
+      <ul>
+        <%= render :partial => "/shared/party/fields", :locals => {:fields => p_f} %>
+        <%= p_f.fields_for :individual do |pi_f| %>
+            <%= render :partial => "/shared/party/individual/fields", :locals => {:fields => pi_f} %>
+            <%= pi_f.fields_for :user do |piu_f| %>
+                <li>
+                  <%= piu_f.label :initials %>
+                  <%= piu_f.text_field :initials, {:style => "width: 2em;"} %>
+                </li>
+                <li>
+                  <%= piu_f.hidden_field :id %>
+                  <%= piu_f.label :email %>
+                  <%= piu_f.text_field :email %>
+                </li>
+                <li>
+                  <%= piu_f.label :operating_party_id %>
+                  <%= piu_f.select :operating_party_id, OperatingParty.all.collect { |tt| [t(tt.name), tt.id] } %>
+                </li>
+            <% end %>
+        <% end %>
+      </ul>
+      <%= render :partial => "shared/ui/form-submit-controls", :locals => {:fields => p_f} %>
+  <% end %>
+</div>
+<div class="panel nested-panel">
+  <div class="panel-header">
+    <strong>Preferences user</strong>
+  </div>
+  <%= render :partial => "shared/error", :locals => {:obj => @preferences} %>
+  <%= form_for @preferences, :url => "/profile/settings", :method => :post  do |p_f| %>
+      <%=p_f.hidden_field :user_id %>
+      <ul>
+        <li>
+          <%= p_f.label :rows_per_page %>
+          <%= p_f.text_field :rows_per_page, {:style => "width: 4em;"} %>
+        </li>
+      </ul>
+      <div style="margin:0px 0px 10px 20px; float:left">
+      <%= render :partial => "shared/ui/form-submit-controls", :locals => {:fields => p_f} %>
+      </div>
+  <% end %>
 </div>

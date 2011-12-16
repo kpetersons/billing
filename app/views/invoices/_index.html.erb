@@ -15,7 +15,7 @@
   <tfoot>
   <tr>
     <th class="list-paginate" colspan="<%= current_user.column_names('invoices').length + 2 %>">
-      <%= will_paginate invoices, :param_name => param_name, "" => @parameters %>
+      <%= will_paginate invoices,:per_page => current_user.rows_per_page, :param_name => param_name, "" => @parameters %>
     </th>
   </tr>
   </tfoot>

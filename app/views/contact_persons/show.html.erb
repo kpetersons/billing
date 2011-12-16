@@ -9,12 +9,12 @@
 	<dl class="nested-panel accordion">
 		<dt class="panel-header"><a href="#addresses"><strong><%=t("address.list")%></strong></a></dt>
 		<dd id="addresses">	 			
-			<%= render :partial => "addresses/index", :locals => {:addresses => @contact_person.party.addresses.paginate(:per_page=> 10, :page => params[:addresses]), :param_name => 'addresses', :path_elements => [@customer, @contact_person]} %>
+			<%= render :partial => "addresses/index", :locals => {:addresses => @contact_person.party.addresses.paginate(:per_page => current_user.rows_per_page, :page => params[:addresses]), :param_name => 'addresses', :path_elements => [@customer, @contact_person]} %>
 			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => new_customer_contact_person_address_path(@customer, @contact_person)} %>
 		</dd>	
 		<dt class="panel-header"><a href="#contacts"><strong><%=t("contact.list")%></strong></a></dt>
 		<dd id="contacts">
-			<%= render :partial => "contacts/index", :locals => {:contacts => @contact_person.party.contacts.paginate(:per_page=>10, :page => params[:contacts]), :param_name => 'contacts', :path_elements => [@customer, @contact_person]} %>
+			<%= render :partial => "contacts/index", :locals => {:contacts => @contact_person.party.contacts.paginate(:per_page => current_user.rows_per_page, :page => params[:contacts]), :param_name => 'contacts', :path_elements => [@customer, @contact_person]} %>
 			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => new_customer_contact_person_contact_path(@customer, @contact_person)} %>
 		</dd>	
 	</dl>	

@@ -77,8 +77,8 @@ class Customer < ActiveRecord::Base
     return Address.new
   end
 
-  def self.quick_search query, page
-    where(:date_effective_end => nil).joins(:party => [:company]).paginate :per_page => 10, :page => page,
+  def self.quick_search query, page, per_page
+    where(:date_effective_end => nil).joins(:party => [:company]).paginate :per_page => per_page, :page => page,
                                                                            :conditions => ['vat_registration_number ilike :q or name ilike :q', {:q => "%#{query}%", :gi => query}]
   end
 

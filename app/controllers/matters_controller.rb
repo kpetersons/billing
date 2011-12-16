@@ -7,12 +7,12 @@ class MattersController < ApplicationController
   def index
     @order_by = params[:order_by]
     @direction = params[:direction]
-    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).order("#{@order_by} #{@direction}").paginate(:page => params[:my_matters_page])
+    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page,:page => params[:my_matters_page])
     @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
   end
 
   def quick_search
-    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).quick_search(params[:search], params[:param_name])
+    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).quick_search(params[:search], params[:param_name], current_user.rows_per_page)
     @other_matters = []
     render 'index'
   end
@@ -26,14 +26,14 @@ class MattersController < ApplicationController
     @direction = params[:direction]
     @precision = params[:precision]
     begin
-      @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).where(@detail_search.query).order("#{@order_by} #{@direction}").paginate(:per_page => 10, :page => params[:my_matters_page])
+      @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).where(@detail_search.query).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page,:page => params[:my_matters_page])
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
       render "index" and return
     rescue => ex
       flash.now[:error] = "Invalid search parameters. Check them again!"
       logger.error ex.message
     end
-    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).order(params[:order]).paginate(:per_page => 10, :page => params[:my_matters_page])
+    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).order(params[:order]).paginate(:per_page => current_user.rows_per_page, :page => params[:my_matters_page])
     render "index" and return
   end
 
@@ -187,7 +187,7 @@ class MattersController < ApplicationController
 
   def choose
     @document = Document.new
-    @matters = Matter.paginate(:page => params[:param_name])
+    @matters = Matter.paginate(:per_page => current_user.rows_per_page, :page => params[:param_name])
   end
 
   def add

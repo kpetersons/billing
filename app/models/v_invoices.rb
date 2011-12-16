@@ -31,11 +31,12 @@
 #  subtotal            :decimal(, )
 #  total_vat           :decimal(, )
 #  grand_total         :decimal(, )
+#  matter_type_id      :integer
 #
 
 class VInvoices < ActiveRecord::Base
 
-  def self.quick_search query, page
-    paginate :per_page => 10, :page => page, :conditions => ['registration_number ilike :q or customer_name ilike :q or person ilike :q or address ilike :q or currency ilike :q or author ilike :q or status ilike :q or our_ref ilike :q or your_ref ilike :q or po_billing ilike :q or subject ilike :q or ending_details ilike :q', {:q => "%#{query}%", :gi => query}]
+  def self.quick_search query, page, per_page
+    paginate :per_page => per_page, :page => page, :conditions => ['registration_number ilike :q or customer_name ilike :q or person ilike :q or address ilike :q or currency ilike :q or author ilike :q or status ilike :q or our_ref ilike :q or your_ref ilike :q or po_billing ilike :q or subject ilike :q or ending_details ilike :q', {:q => "%#{query}%", :gi => query}]
   end
 end

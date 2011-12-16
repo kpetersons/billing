@@ -2,7 +2,7 @@ class CurrenciesController < ApplicationController
 
   layout "invoices"
   def index
-    @currencies = Currency.paginate(:page => params[:param_name])
+    @currencies = Currency.paginate(:per_page => current_user.rows_per_page,:page => params[:param_name])
   end
 
   def show

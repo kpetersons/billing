@@ -7,12 +7,12 @@ class InvoicesController < ApplicationController
   def index
     @order_by = params[:order_by]
     @direction = params[:direction]
-    @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).order("#{@order_by} #{@direction}").paginate(:per_page => 10, :page => params[:my_invoices_page])
+    @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page, :page => params[:my_invoices_page])
     @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
   end
 
   def quick_search
-    @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).quick_search(params[:search], params[:my_invoices_page])
+    @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).quick_search(params[:search], params[:my_invoices_page], current_user.rows_per_page)
     render 'index'
   end
 
@@ -25,14 +25,14 @@ class InvoicesController < ApplicationController
     @direction = params[:direction]
     @precision = params[:precision]
     begin
-      @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).where(@detail_search.query).order("#{@order_by} #{@direction}").paginate(:per_page => 10, :page => params[:my_invoices_page])
+      @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).where(@detail_search.query).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page, :page => params[:my_invoices_page])
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
       render "index" and return
     rescue => ex
       flash.now[:error] = "Invalid search parameters. Check them again!"
       logger.error ex.message
     end
-    @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).where(:author_id => current_user.id).order(params[:order], params[:direction]).paginate(:per_page => 10, :page => params[:my_invoices_page])
+    @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).where(:author_id => current_user.id).order(params[:order], params[:direction]).paginate(:per_page => current_user.rows_per_page,:page => params[:my_invoices_page])
     render "index" and return
   end
 

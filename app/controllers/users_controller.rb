@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   layout "administration"
   def index
-    @users = User.paginate(:page =>  params[:page])
+    @users = User.paginate(:per_page => current_user.rows_per_page, :page =>  params[:page])
   end
 
   def new

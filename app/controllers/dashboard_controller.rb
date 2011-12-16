@@ -5,19 +5,19 @@ class DashboardController < ApplicationController
   before_filter :show_column_filter, :only => [:show, :message, :find]
 
   def show
-    @matter_tasks = VMatterTasks.paginate(:page => params[:matter_tasks])
-    @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:page => params[:recent_activity_page])
+    @matter_tasks = VMatterTasks.paginate(:per_page => current_user.rows_per_page,:page => params[:matter_tasks])
+    @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:per_page => current_user.rows_per_page,:page => params[:recent_activity_page])
     ids = VMatterTasks.all.collect {|x| x.matter_id}.uniq
-    @upcoming_deadlines_matters = VMatters.where(:id => ids).paginate(:page => params[:upcoming_deadlines_page])
+    @upcoming_deadlines_matters = VMatters.where(:id => ids).paginate(:per_page => current_user.rows_per_page, :page => params[:upcoming_deadlines_page])
     @message = Message.last
 
   end
 
   def message
-    @matter_tasks = VMatterTasks.paginate(:page => params[:param_name])
-    @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:page => params[:param_name])
+    @matter_tasks = VMatterTasks.paginate(:per_page => current_user.rows_per_page, :page => params[:param_name])
+    @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:per_page => current_user.rows_per_page, :page => params[:param_name])
     ids = VMatterTasks.all.collect {|x| x.matter_id}.uniq
-    @upcoming_deadlines_matters = VMatters.where(:id => ids).paginate(:page => params[:param_name])
+    @upcoming_deadlines_matters = VMatters.where(:id => ids).paginate(:per_page => current_user.rows_per_page, :page => params[:param_name])
     @message = get_message params[:id]
     render 'show'
   end
@@ -40,7 +40,7 @@ class DashboardController < ApplicationController
     @task_status = (params[:task_status].eql?"matters.task.status.all")? MatterTaskStatus.all.collect{|x| x.name} : params[:task_status]
     @description = params[:description]
     @query = VMatterTasks.where(:task_type => @task_type, :matter_type => @matter_type, :status => @task_status).where("deadline between ? and ? and description ilike ?", @from.to_s(:db), @to.to_s(:db), "%#{@description}%")
-    @matter_tasks = @query.paginate(:page => params[:param_name])
+    @matter_tasks = @query.paginate(:per_page => current_user.rows_per_page, :page => params[:param_name])
     @message = get_message params[:id]
     if from_bkp
       @from = nil
@@ -51,7 +51,7 @@ class DashboardController < ApplicationController
     @matter_type = params[:matter_type]
     @task_type = params[:task_type]
     @task_status = params[:task_status]
-    @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:page => params[:param_name])
+    @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).paginate(:per_page => current_user.rows_per_page, :page => params[:param_name])
     @upcoming_deadlines_matters = VMatters.where(:id => @query.all.collect {|x| x.matter_id}.uniq).paginate(:page => params[:param_name])
     render 'show'
   end

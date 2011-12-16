@@ -58,45 +58,45 @@
   <dl class="nested-panel accordion">
     <dt class="panel-header"><a href="#addresses"><strong><%= t('address.list') %></strong></a></dt>
     <dd id="addresses">
-      <%= render :partial => "addresses/index", :locals => {:addresses => @customer.party.addresses.paginate(:per_page=> 10, :page => params[:addresses]), :param_name => 'addresses', :path_elements => [@customer]} %>
+      <%= render :partial => "addresses/index", :locals => {:addresses => @customer.party.addresses.paginate(:per_page => current_user.rows_per_page, :page => params[:addresses]), :param_name => 'addresses', :path_elements => [@customer]} %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => new_customer_address_path(@customer)} %>
     </dd>
     <dt class="panel-header"><a href="#contacts"><strong><%= t('contact.list') %></strong></a></dt>
     <dd id="contacts">
-      <%= render :partial => "contacts/index", :locals => {:contacts => @customer.party.contacts.paginate(:per_page=>10, :page => params[:contacts]), :param_name => 'contacts', :path_elements => [@customer]} %>
+      <%= render :partial => "contacts/index", :locals => {:contacts => @customer.party.contacts.paginate(:per_page => current_user.rows_per_page, :page => params[:contacts]), :param_name => 'contacts', :path_elements => [@customer]} %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => new_customer_contact_path(@customer)} %>
     </dd>
     <dt class="panel-header"><a href="#contact_persons"><strong><%= t('contact_person.list') %></strong></a></dt>
     <dd id="contact_persons">
-      <%= render :partial => "/contact_persons/index", :locals => {:contact_persons => @customer.contact_persons.paginate(:per_page=> 10, :page => params[:contact_persons]), :choose => false, :param_name => 'contact_persons'} %>
+      <%= render :partial => "/contact_persons/index", :locals => {:contact_persons => @customer.contact_persons.paginate(:per_page => current_user.rows_per_page, :page => params[:contact_persons]), :choose => false, :param_name => 'contact_persons'} %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => new_customer_contact_person_path(@customer)} %>
     </dd>
     <dt class="panel-header"><a href="#account"><strong><%= t('account.list') %></strong></a></dt>
     <dd id="account">
-      <%= render :partial => "accounts/index", :locals => {:accounts => @customer.party.company.accounts.paginate(:per_page=>10, :page => params[:contacts]), :param_name => 'accounts', :path_elements => [@customer]} %>
+      <%= render :partial => "accounts/index", :locals => {:accounts => @customer.party.company.accounts.paginate(:per_page => current_user.rows_per_page,:page => params[:contacts]), :param_name => 'accounts', :path_elements => [@customer]} %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => new_customer_account_path(@customer)} %>
     </dd>
     <dt class="panel-header"><a href="#matters_agent"><strong><%= t('customer.list.as_agent') %></strong></a></dt>
     <dd id="matters_agent">
-      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @customer.matters_as_agent.paginate(:per_page=> 10, :page => params[:matters_agent]), :choose => false, :param_name => 'matters_agent', :anchor => "matters_agent"} %>
+      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @customer.matters_as_agent.paginate(:per_page => current_user.rows_per_page, :page => params[:matters_agent]), :choose => false, :param_name => 'matters_agent', :anchor => "matters_agent"} %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => '#'} %>
     </dd>
     <dt class="panel-header"><a href="#matters_applicant"><strong><%= t('customer.list.as_applicant') %></strong></a>
     </dt>
     <dd id="matters_applicant">
-      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @customer.matters_as_applicant.paginate(:per_page=> 10, :page => params[:matters_applicant]), :choose => false, :param_name => 'matters_applicant', :anchor => "matters_applicant"} %>
+      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @customer.matters_as_applicant.paginate(:per_page => current_user.rows_per_page, :page => params[:matters_applicant]), :choose => false, :param_name => 'matters_applicant', :anchor => "matters_applicant"} %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => '#'} %>
     </dd>
     <dt class="panel-header"><a href="#matters_opposite_applicant"><strong><%= t('customer.list.as_opposite_applicant') %></strong></a>
     </dt>
     <dd id="matters_opposite_applicant">
-      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @customer.matters_as_opposite_applicant.paginate(:per_page=> 10, :page => params[:matters_opposite_applicant]), :choose => false, :param_name => 'matters_opposite_applicant', :anchor => "matters_opposite_applicant"} %>
+      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @customer.matters_as_opposite_applicant.paginate(:per_page => current_user.rows_per_page, :page => params[:matters_opposite_applicant]), :choose => false, :param_name => 'matters_opposite_applicant', :anchor => "matters_opposite_applicant"} %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => '#'} %>
     </dd>
     <dt class="panel-header"><a href="#matters_opposite_agent"><strong><%= t('customer.list.as_opposite_agent') %></strong></a>
     </dt>
     <dd id="matters_opposite_agent">
-      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @customer.matters_as_opposite_agent.paginate(:per_page=> 10, :page => params[:matters_opposite_agent]), :choose => false, :param_name => 'matters_opposite_agent', :anchor => "matters_opposite_agent"} %>
+      <%= render :partial => "/matters/index", :locals => {:column_names => 'matters', :matters => @customer.matters_as_opposite_agent.paginate(:per_page => current_user.rows_per_page, :page => params[:matters_opposite_agent]), :choose => false, :param_name => 'matters_opposite_agent', :anchor => "matters_opposite_agent"} %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => t('button.create'), :path => '#'} %>
     </dd>
     <dt class="panel-header"><a href="#history"><strong>History</strong></a>

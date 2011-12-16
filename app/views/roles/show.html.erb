@@ -27,7 +27,7 @@
 			<strong>Functions</strong>
 		</div>
 		<div>
-			<%= render :partial => "/functions/index", :locals => {:functions => @role.functions.paginate(:page => params[:page], :per_page => 10), :choose => false, :param_name => 'function_page'} %>	 
+			<%= render :partial => "/functions/index", :locals => {:functions => @role.functions.paginate(:per_page => current_user.rows_per_page, :page => params[:page]), :choose => false, :param_name => 'function_page'} %>
 			<%= render :partial => "shared/ui/show_edit_controls", :locals => {:name => 'Add function', :path => choose_role_functions_path(@role)} %>
 		</div>
 	</div>	

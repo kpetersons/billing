@@ -3,7 +3,7 @@ class AttorneyFeeTypesController < ApplicationController
   layout "invoices"
 
   def index
-    @attorney_fee_types = AttorneyFeeType.paginate(:page =>  params[:attorney_fee_types], :conditions => ["operating_party_id = #{current_user.operating_party_id}"])
+    @attorney_fee_types = AttorneyFeeType.paginate(:per_page => current_user.rows_per_page, :page =>  params[:attorney_fee_types], :conditions => ["operating_party_id = #{current_user.operating_party_id}"])
   end
 
   def new
