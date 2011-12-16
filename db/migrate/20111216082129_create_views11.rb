@@ -104,7 +104,7 @@ class CreateViews11 < ActiveRecord::Migration
         left outer join patent_searches ps 	on ma.id = ps.matter_id
         left outer join searches s 			on ma.id = s.matter_id
         left outer join domains dm 			on ma.id = dm.matter_id
-        left outer join (select array_agg(c.code::integer)::text as classes, mc.matter_id from matter_clazzs mc, clazzs c where mc.clazz_id = c.id group by mc.matter_id) cl on ma.id = cl.matter_id,
+        left outer join (select array_agg(CAST(c.code AS integer))::text as classes, mc.matter_id from matter_clazzs mc, clazzs c where mc.clazz_id = c.id group by mc.matter_id) cl on ma.id = cl.matter_id,
         customers applicant,
         parties appl_party,
         companies appl_company,
