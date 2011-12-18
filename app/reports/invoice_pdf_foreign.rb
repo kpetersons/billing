@@ -13,13 +13,13 @@ class InvoicePdfForeign < Prawn::Document
     #518
   end
 
-  def to_pdf(invoice, current_user, watermark, images)
+  def to_pdf(invoice, current_user, watermark, images, top)
 
     if images
-      bounding_box([112.036, 620], :width => 60.292) do
+      bounding_box([112.036, 620+top], :width => 60.292) do
         logo
       end
-      bounding_box([0, 610], :width => 284.364) do
+      bounding_box([0, 610+top], :width => 284.364) do
         party_profile
       end
     end

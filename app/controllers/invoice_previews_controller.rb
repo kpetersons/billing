@@ -29,7 +29,7 @@ class InvoicePreviewsController < ApplicationController
       send_data output, :filename => "#{@lang}_#{@invoice.id}.pdf",
                 :type => "application/pdf"
     else
-      output = InvoicePdfForeign.new(:compress => true, :page_size => "A4").to_pdf(@invoice, current_user, false, true)
+      output = InvoicePdfForeign.new(:compress => true, :page_size => "A4").to_pdf(@invoice, current_user, false, true, 100)
       send_data output, :filename => "#{@lang}_#{@invoice.id}.pdf",
                 :type => "application/pdf"
     end
@@ -51,7 +51,7 @@ class InvoicePreviewsController < ApplicationController
                 :type => "application/pdf",
                 :disposition => 'inline'
     else
-      output = InvoicePdfForeign.new(:bottom_margin => 85, :page_size => "A4").to_pdf(@invoice, current_user, @watermark, @images)
+      output = InvoicePdfForeign.new(:bottom_margin => 85, :page_size => "A4").to_pdf(@invoice, current_user, @watermark, @images, 0)
       send_data output, :filename => "#{@lang}_#{@invoice.id}_preview.pdf",
                 :type => "application/pdf",
                 :disposition => 'inline'
