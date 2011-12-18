@@ -12,6 +12,6 @@
 class Clazz < ActiveRecord::Base
   
   has_many :matter_clazzs
-  has_many :matter, :through => :matter_clazzs
+  has_many :matters, :through => :matter_clazzs
     
 end

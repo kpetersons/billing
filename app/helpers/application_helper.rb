@@ -30,9 +30,9 @@ module ApplicationHelper
   private
   def reject_object data
     clean = proc {
-        |k,v|
+        |k, v|
       puts "Key #{k}"
-      k.eql?"order_by" or v.instance_of?(Hash) && v.delete_if(&clean)
+      k.eql? "order_by" or v.instance_of?(Hash) && v.delete_if(&clean)
     }
     data.delete_if &clean
   end

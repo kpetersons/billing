@@ -83,7 +83,7 @@ class InvoicePdfLocal < Prawn::Document
         end
         4.times do |idx|
           party_info_table.cells[3, idx].height = max_height
-          party_info_table.cells[3, idx].style :padding_bottom =>1.7
+          party_info_table.cells[3, idx].style
         end
 
         party_info_table.draw

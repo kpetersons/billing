@@ -403,6 +403,15 @@ en:
     message: "Edit message"
   foreign:
     print:
+      party_profile:
+        line_1: "PATENTS * DESIGNS * TRADEMARKS * LITIGATION * LICENCES * VALUATION"
+        line_2: "COPYRIGHT * PLANT VARIETIES * SEARCHES * DOMAIN NAMES"
+        line_3: "PĒTERSONA PATENTS - P.O.Box 61, LV-1010, Riga, Latvia"
+      footer:
+        company: "<font size='11.35'><b>P</b></font><font size='9.67'>ĒTERSONA</font> <font size='11.35'><b>P</b></font><font size='9.67'>ATENTS VAT No. </font><font size='10.36'>LV40102013203</font>"
+        address: "<font size='6.48'> 2, Ausekla Street, Suite 2, LV-1010, Riga, LATVIA • Tel.: +371 6732-4695, +371 6732-5437 • Fax:  +371 6783-0030 • E-mail: petpat@petpat.lv • http://www.petpat.lv </font>"
+      banks:
+        banks: "<font size='8.12'>BANKS</font>"
       invoice:
         head:
           date: "Date: %{date}"

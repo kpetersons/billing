@@ -28,7 +28,7 @@ class ProfilesController < ApplicationController
     UserPreferences.transaction do
       if @preferences.nil?
         @preferences = UserPreferences.new(params[:user_preferences])
-        current_user.user_preferences = @preferences
+        @preferences.user_id = current_user.id
         if @preferences.save()
           flash[:success] = "Preferences updated"
           redirect_to profile_path and return

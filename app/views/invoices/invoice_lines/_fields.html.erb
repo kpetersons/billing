@@ -1,32 +1,34 @@
 <tr>
-	<td class="col-text wide"style="width:1em">
-		<%= fields.text_field :offering %>
-	</td>
-	<td class="col-text medium" style="width:1em">
-		<%= fields.hidden_field :id %>
-		<%= fields.select :official_fee_type_id, OfficialFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [tt.name, tt.id] },    {:include_blank => true},{:class => 'wide'} %> 
-	</td>
-	<td class="col-number narrow" style="width:1em">
-		<%= fields.text_field :official_fee %> 
-	</td>
-	<td class="col-text medium" style="width:1em">
-		<%= fields.select :attorney_fee_type_id, AttorneyFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [tt.name, tt.id] },    {:include_blank => true},{:class => 'wide'} %> 
-	</td>
-	<td class="col-number narrow" style="width:1em">
-		<%= fields.text_field :attorney_fee %> 
-	</td>
-	<td class="col-text narrow"style="width:1em">
-		<%= fields.text_field :units %> 
-	</td>	
-	<td class="col-number narrow"style="width:1em">
-		<%= fields.text_field :items %> 
-	</td>
+  <td class="col-text wide" style="width: auto; padding-right: 1em">
+    <%= fields.text_field :offering, :style => "width: 100%;" %>
+  </td>
+  <td class="col-text medium" style="width:1em">
+    <%= fields.hidden_field :id %>
+    <%= fields.select :official_fee_type_id, OfficialFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [tt.name, tt.id] }, {:include_blank => true}, {:class => 'wide'} %>
+  </td>
+  <td class="col-number narrow" style="width:1em">
+    <%= fields.text_field :official_fee %>
+  </td>
+  <td class="col-text medium" style="width:1em">
+    <%= fields.select :attorney_fee_type_id, AttorneyFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [tt.name, tt.id] }, {:include_blank => true}, {:class => 'wide'} %>
+  </td>
+  <td class="col-number narrow" style="width:1em">
+    <%= fields.text_field :attorney_fee %>
+  </td>
+  <td class="col-text narrow" style="width:1em">
+    <%= fields.text_field :units %>
+  </td>
+  <td class="col-number narrow" style="width:1em">
+    <%= fields.text_field :items %>
+  </td>
 </tr>
 <tr>
-	<td colspan="6" class="col-text">
-		<%= fields.text_area :details, {:rows => 1, :style => "width: 100%; resizeable:false;"} %> 
-	</td>
-  	<td class="col-text narrow"style="width:1em;vertical-align: middle; text-align: right;">
-  		<%= link_to 'Remove', remove_line_invoice_path(@invoice, :invoice_line_id => fields.object), :method => :delete, :style => "margin-right: .5em;" %>
-  	</td>
+  <td colspan="6" class="col-text">
+    <%= fields.text_area :details, {:rows => 1, :style => "width: 100%; resizeable:false;"} %>
+  </td>
+  <td class="col-text narrow" style="width:1em;vertical-align: middle; text-align: right;">
+    <% unless fields.object.invoice.status_name.eql?("invoice.status.paid") || fields.object.invoice.status_name.eql?("invoice.status.issued")%>
+        <%= link_to 'Remove', remove_line_invoice_path(@invoice, :invoice_line_id => fields.object), :method => :delete, :style => "margin-right: .5em;" %>
+    <% end %>
+  </td>
 </tr>

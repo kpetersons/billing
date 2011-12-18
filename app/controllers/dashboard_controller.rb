@@ -50,10 +50,6 @@ class DashboardController < ApplicationController
     if to_bkp
       @to = nil
     end
-    @matter_type = params[:matter_type]
-    @task_type = params[:task_type]
-    @task_status = params[:task_status]
-    @matter_tasks = VMatterTasks.order(matters_order_clause).paginate(:per_page => current_user.rows_per_page, :page => params[:matter_tasks])
     @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).order(matters_order_clause).paginate(:per_page => current_user.rows_per_page, :page => params[:recent_activity_page])
     @upcoming_deadlines_matters = VMatters.where(:id => ids).order(matters_order_clause).paginate(:per_page => current_user.rows_per_page, :page => params[:upcoming_deadlines_page])
 

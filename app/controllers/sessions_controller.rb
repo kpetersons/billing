@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
 
   before_filter :authenticate, :only => [:destroy]
   def new
+    update_activity_time
     unless current_user.nil?
       redirect_to dashboard_index_path
     end

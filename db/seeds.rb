@@ -1195,3 +1195,7 @@ User.transaction do
     x.update_attribute(:active, true)
   end
 end
+
+MatterClazz.transaction do
+  MatterClazz.delete(MatterClazz.where(:matter_id => nil).all)
+end

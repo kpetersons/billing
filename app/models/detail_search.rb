@@ -73,7 +73,7 @@ class DetailSearch
     comparator = ""
     if @all_fields_hash[item.field][:data_type].eql?("col-date")
       comparator = item.field
-      comparator = "#{comparator} between date '#{Date.strptime(item.range_from, '%d.%m.%Y').to_s(:db)}' and date '#{Date.strptime(item.range_to, '%d.%m.%Y').to_s(:db)}' "
+      comparator = "#{comparator} between date '#{Date.strptime(item.range_from, '%d.%m.%Y').yesterday.to_s(:db)}' and date '#{Date.strptime(item.range_to, '%d.%m.%Y').tomorrow.to_s(:db)}' "
     else
       regular = item.regular
       type = @all_fields_hash[item.field][:data_type]
@@ -92,7 +92,7 @@ class DetailSearch
   end
 
   def upper item, val
-    if item.match_case.eql? "0"
+    if item.match_case.eql? "0" && @all_fields_hash[item.field][:data_type].eql?("col-text")
       return "upper(#{val})"
     end
     return val

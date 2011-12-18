@@ -23,6 +23,13 @@ module SessionsHelper
   end
 
   def authenticate
+    @time_left = (session[:expires_at] - Time.now).to_i
+    unless @time_left > 0
+      reset_session
+      flash[:error] = 'Session expired.'
+      sign_out
+      redirect_to new_session_path and return
+    end
     deny_access unless signed_in?
   end
 
@@ -57,5 +64,5 @@ module SessionsHelper
 
   def clear_return_to
     session[:return_to] = nil
-  end  
+  end
 end

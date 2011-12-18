@@ -11,7 +11,10 @@
 
 class MatterClazz < ActiveRecord::Base
 
-  belongs_to :trademark
+  belongs_to :matter
   belongs_to :clazz  
-  
+
+  validates :matter_id, :presence => true
+  validates :clazz_id, :presence => true
+
 end

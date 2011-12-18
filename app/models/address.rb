@@ -76,7 +76,6 @@ class Address < ActiveRecord::Base
     address_data<<line_3
     address_data<<line_4
     address_data<<line_5
-    puts "address array:                    #{address_data}"
     return address_data.reject { |n| n.nil? }.join(', ')
   end
 

@@ -1,11 +1,13 @@
 class ApplicationController < ActionController::Base
 
-  #I18n.locale = 'en'
+  def update_activity_time
+    session[:expires_at] = 30.minutes.from_now
+  end
 
   protect_from_forgery
   include SessionsHelper
 
-  before_filter :authenticate
+  before_filter :authenticate, :update_activity_time
 
   def per_page
     @per_page ||= 5

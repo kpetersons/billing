@@ -25,11 +25,12 @@ class InvoicePreviewsController < ApplicationController
     I18n.locale = @lang
 
     if @invoice.invoice_type ==0
-      output = InvoicePdfLocal.new(:bottom_margin => 85, :left_margin => 51).to_pdf(@invoice, current_user, false, true)
+      output = InvoicePdfLocal.new(:bottom_margin => 85, :left_margin => 51, :page_size => "A4").to_pdf(@invoice, current_user, false, true)
       send_data output, :filename => "#{@lang}_#{@invoice.id}.pdf",
                 :type => "application/pdf"
     else
-      output = InvoicePdfForeign.new(:bottom_margin => 85, :left_margin => 51).to_pdf(@invoice, current_user, false, true)
+      output = InvoicePdfForeign.new(:compress => true, :page_size => "A4").to_pdf(@invoice, current_user, false, true)
+      #output = InvoicePdfForeign.new(:skip_page_creation => true, :compress => false).to_pdf(@invoice, current_user, @watermark, true)
       send_data output, :filename => "#{@lang}_#{@invoice.id}.pdf",
                 :type => "application/pdf"
     end
@@ -46,12 +47,12 @@ class InvoicePreviewsController < ApplicationController
     I18n.locale = @lang
 
     if @invoice.invoice_type ==0
-      output = InvoicePdfLocal.new(:bottom_margin => 85, :left_margin => 51).to_pdf(@invoice, current_user, @watermark, @images)
+      output = InvoicePdfLocal.new(:bottom_margin => 85, :page_size => "A4").to_pdf(@invoice, current_user, @watermark, @images)
       send_data output, :filename => "#{@lang}_#{@invoice.id}_preview.pdf",
                 :type => "application/pdf",
                 :disposition => 'inline'
     else
-      output = InvoicePdfForeign.new(:bottom_margin => 85, :left_margin => 51).to_pdf(@invoice, current_user, @watermark, @images)
+      output = InvoicePdfForeign.new(:bottom_margin => 85, :page_size => "A4").to_pdf(@invoice, current_user, @watermark, @images)
       send_data output, :filename => "#{@lang}_#{@invoice.id}_preview.pdf",
                 :type => "application/pdf",
                 :disposition => 'inline'
