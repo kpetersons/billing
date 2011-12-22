@@ -123,7 +123,7 @@ Billing::Application.routes.draw do
       post :filter
       delete :reset
       delete :clear
-      post :find
+      get :find
     end
     member do
       get :message

@@ -438,10 +438,18 @@ en:
           ask_for_reference: "Kindly refer to our Invoice number in your remittance"
   local:
     print:
+      party_profile:
+         line_1: "PATENTI * PREČU ZĪMES * DIZAINPARAUGI * LICENCES"
+         line_2: "AUTORTIESĪBAS * DOMĒNVĀRDI"
+         line_3: "PĒTERSONA PATENTS - a.k. 61, LV-1010, Riga, Latvia"
+      footer:
+        company: "<font size='11.35'><b>P</b></font><font size='9.67'>ĒTERSONA</font> <font size='11.35'><b>P</b></font><font size='9.67'>ATENTS                              <font size='8.2'>A/S SWEDBANK                                                    Tālrunis: 67324695, 67325437</font>"
+        vat_reg_nr: "PVN reģ. nr. LV40102013203                                  Kods: HABALV22                                                                         Fakss: 67830030"
+        address: "Ausekļa iela 2-2, Rīga, LV-1010                   Konts: LV86HABA0001409046866           E-pasts: petpat@petpat.lv, http://www.petpat.lv"
       invoice:
         head:
           invoice_no_small: "<b>Rēķina nr.</b>%{no}"
-          invoice_page_small: "<font size='9'>Lapa nr. %{from}% no %{of}</font>"
+          invoice_page_small: "<font size='9'>Lapa nr. %{from} no %{to} </font>"
           invoice_no: "Rēķins Nr. %{no}"
           created_place: "Rēķina datums: %{place}"
         refs:

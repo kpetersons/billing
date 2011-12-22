@@ -1,4 +1,4 @@
-<%= form_tag :controller => :dashboard, :action => :find, :anchor => :deadlines do |f| %>
+<%= form_tag '/dashboard/find', :anchor => :deadlines, :method => :get do |f| %>
     <ul class="dashboard-filter">
       <li>
         <label style="float:none">From</label><%=text_field_tag :from, @from, {:style => "width:6em;min-width:6em;"}%>

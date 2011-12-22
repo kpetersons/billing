@@ -1,22 +1,22 @@
 <tr>
-  <td class="col-text wide" style="width: auto; padding-right: 1em">
+  <td class="col-text" style="width: auto; padding-right: 1em">
     <%= fields.text_field :offering, :style => "width: 100%;" %>
   </td>
-  <td class="col-text medium" style="width:1em">
+  <td class="col-text" style="">
     <%= fields.hidden_field :id %>
-    <%= fields.select :official_fee_type_id, OfficialFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [tt.name, tt.id] }, {:include_blank => true}, {:class => 'wide'} %>
+    <%= fields.select :official_fee_type_id, OfficialFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [tt.name, tt.id] }, {:include_blank => true}, {:style => 'width:100%'} %>
   </td>
-  <td class="col-number narrow" style="width:1em">
-    <%= fields.text_field :official_fee %>
+  <td class="col-text" style="width:1em; text-align: left">
+    <%= fields.text_field :official_fee, :style => "width: 5em" %>
   </td>
-  <td class="col-text medium" style="width:1em">
-    <%= fields.select :attorney_fee_type_id, AttorneyFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [tt.name, tt.id] }, {:include_blank => true}, {:class => 'wide'} %>
+  <td class="col-text" style="width:1em; margin-left: 1em;">
+    <%= fields.select :attorney_fee_type_id, AttorneyFeeType.where(:operating_party_id => current_user.operating_party_id).all.collect { |tt| [tt.name, tt.id] }, {:include_blank => true}, {:style => 'width:100%'} %>
   </td>
-  <td class="col-number narrow" style="width:1em">
-    <%= fields.text_field :attorney_fee %>
+  <td class="col-text" style="width:1em; text-align: left">
+    <%= fields.text_field :attorney_fee, :style => "width: 5em" %>
   </td>
-  <td class="col-text narrow" style="width:1em">
-    <%= fields.text_field :units %>
+  <td class="col-text" style="width:1em; text-align: right">
+    <%= fields.text_field :units, :style => "width: 5em; " %>
   </td>
   <td class="col-number narrow" style="width:1em">
     <%= fields.text_field :items %>

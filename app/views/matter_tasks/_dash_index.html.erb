@@ -3,28 +3,28 @@
   <tr>
     <th class="col-text">
       <%= 'Matter no.' %>
-      <%=link_to "↑", current_url(@parameters, :tasks => {:order_by => "registration_number", :direction => "ASC"}), :style => "text-decoration:none"%>
-      <%=link_to "↓", current_url(@parameters, :tasks => {:order_by => "registration_number", :direction => "DESC"}), :style => "text-decoration:none"%>
+      <%=link_to "↑", current_url(@parameters, :tasks => {:order_by => "registration_number", :direction => "ASC"}, :anchor=> "deadlines"), :style => "text-decoration:none"%>
+      <%=link_to "↓", current_url(@parameters, :tasks => {:order_by => "registration_number", :direction => "DESC"}, :anchor=> "deadlines"), :style => "text-decoration:none"%>
     </th>
     <th class="col-date">
       <%= "Description" %>
-      <%=link_to "↑", current_url(@parameters, :tasks => {:order_by => "description", :direction => "ASC"}), :style => "text-decoration:none"%>
-      <%=link_to "↓", current_url(@parameters, :tasks => {:order_by => "description", :direction => "DESC"}), :style => "text-decoration:none"%>
+      <%=link_to "↑", current_url(@parameters, :tasks => {:order_by => "description", :direction => "ASC"}, :anchor=> "deadlines"), :style => "text-decoration:none"%>
+      <%=link_to "↓", current_url(@parameters, :tasks => {:order_by => "description", :direction => "DESC"}, :anchor=> "deadlines"), :style => "text-decoration:none"%>
     </th>
     <th class="col-text">
       <%= t('matter_task.fields.type') %>
-      <%=link_to "↑", current_url(@parameters, :tasks => {:order_by => "task_type", :direction => "ASC"}), :style => "text-decoration:none"%>
-      <%=link_to "↓", current_url(@parameters, :tasks => {:order_by => "task_type", :direction => "DESC"}), :style => "text-decoration:none"%>
+      <%=link_to "↑", current_url(@parameters, :tasks => {:order_by => "task_type", :direction => "ASC"}, :anchor=> "deadlines"), :style => "text-decoration:none"%>
+      <%=link_to "↓", current_url(@parameters, :tasks => {:order_by => "task_type", :direction => "DESC"}, :anchor=> "deadlines"), :style => "text-decoration:none"%>
     </th>
     <th class="col-date">
       <%= "Deadline" %>
-      <%=link_to "↑", current_url(@parameters, :tasks => {:order_by => "deadline", :direction => "ASC"}), :style => "text-decoration:none"%>
-      <%=link_to "↓", current_url(@parameters, :tasks => {:order_by => "deadline", :direction => "DESC"}), :style => "text-decoration:none"%>
+      <%=link_to "↑", current_url(@parameters, :tasks => {:order_by => "deadline", :direction => "ASC"}, :anchor=> "deadlines"), :style => "text-decoration:none"%>
+      <%=link_to "↓", current_url(@parameters, :tasks => {:order_by => "deadline", :direction => "DESC"}, :anchor=> "deadlines"), :style => "text-decoration:none"%>
     </th>
     <th class="col-text">
       <%= "Status" %>
-      <%=link_to "↑", current_url(@parameters, :tasks => {:order_by => "status", :direction => "ASC"}), :style => "text-decoration:none"%>
-      <%=link_to "↓", current_url(@parameters, :tasks => {:order_by => "status", :direction => "DESC"}), :style => "text-decoration:none"%>
+      <%=link_to "↑", current_url(@parameters, :tasks => {:order_by => "status", :direction => "ASC"}, :anchor=> "deadlines"), :style => "text-decoration:none"%>
+      <%=link_to "↓", current_url(@parameters, :tasks => {:order_by => "status", :direction => "DESC"}, :anchor=> "deadlines"), :style => "text-decoration:none"%>
     </th>
     <%= render :partial => "shared/ui/date_th" %>
     <th class="col-number"></th>
