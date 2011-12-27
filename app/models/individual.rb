@@ -47,7 +47,14 @@ class Individual < ActiveRecord::Base
     name = []
     name << first_name unless first_name.nil?
     name << last_name unless last_name.nil?
-    return name.join(',')
+    return name.join(', ')
+  end
+
+  def name_wo_comma
+    name = []
+    name << first_name unless first_name.nil?
+    name << last_name unless last_name.nil?
+    return name.join(' ')
   end
   
 end

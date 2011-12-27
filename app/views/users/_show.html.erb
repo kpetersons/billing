@@ -58,6 +58,6 @@
 		<label> Belongs to </label>
 	</dt>
 	<dd>
-		<%= @user.try(:operating_party).try(:name) %>&nbsp;
+		<%= t(@user.try(:operating_party).try(:name)) %>&nbsp;
 	</dd>	
 </dl>

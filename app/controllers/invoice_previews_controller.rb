@@ -14,7 +14,7 @@ class InvoicePreviewsController < ApplicationController
     @invoice = Invoice.find(params[:invoice_id])
     @lang = params[:language]
     @watermark = false
-    @images = true
+    @images = false
     render "invoice_previews/show"
   end
 
@@ -37,6 +37,7 @@ class InvoicePreviewsController < ApplicationController
   end
 
   def ainline
+    pars = params
     @invoice = Invoice.find(params[:invoice_id])
     @lang = params[:language]
     @watermark = to_boolean(params[:watermark])

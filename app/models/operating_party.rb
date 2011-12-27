@@ -51,7 +51,12 @@ class OperatingParty < ActiveRecord::Base
     ids = children self, ids
   end
 
+  def self.top_op
+    OperatingParty.where(:operating_party_id => nil).first
+  end
+
   private
+
   def children parent, list
     OperatingParty.find_all_by_operating_party_id(parent.id).each do |x|
       list << x.id

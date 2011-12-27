@@ -18,7 +18,7 @@ class UsersController < ApplicationController
         @user = @party.individual.user        
         @user.update_attributes(:active => false, :blocked => false, :registration_date => Date.today)
         Contact.create(:party_id => @party.id, :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id, :contact_value => @party.individual.user.email)
-        ActivationMailer.activation_email(@user).deliver        
+        ActivationMailer.activation_email(@user).deliver
         redirect_to user_path(@user)
       else
         render 'new'

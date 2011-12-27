@@ -24,8 +24,8 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  username: pfdmpwligv
+  username: kristaps
   port: 5432
-  host: ec2-50-16-215-44.compute-1.amazonaws.com
-  database: pfdmpwligv
-  password: zlljvM7WGGiP4NnZD_za
+  host: localhost
+  database: billing
+  password: 5rbyOn10rls

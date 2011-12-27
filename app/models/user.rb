@@ -155,6 +155,10 @@ class User < ActiveRecord::Base
     user_preferences || UserPreferences.new
   end
 
+  def operating_party_name
+    return I18n.t (operating_party.name) unless operating_party.nil?
+  end
+
   private
 
   def encrypt_password

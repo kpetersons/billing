@@ -7,12 +7,12 @@ class MattersController < ApplicationController
   def index
     @order_by = params[:order_by]
     @direction = params[:direction]
-    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page,:page => params[:my_matters_page])
+    @matters = VMatters.where(:matter_type_id => current_user.operating_party.matter_types).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page,:page => params[:my_matters_page])
     @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
   end
 
   def quick_search
-    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).quick_search(params[:search], params[:param_name], current_user.rows_per_page)
+    @matters = VMatters.where(:matter_type_id => current_user.operating_party.matter_types).quick_search(params[:search], params[:param_name], current_user.rows_per_page)
     @other_matters = []
     render 'index'
   end

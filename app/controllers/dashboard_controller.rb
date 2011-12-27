@@ -51,7 +51,7 @@ class DashboardController < ApplicationController
       @to = nil
     end
     @recent_activity_matters = VMatters.where("updated_at between ? and ?", Date.today-5, Date.today+1).order(matters_order_clause).paginate(:per_page => current_user.rows_per_page, :page => params[:recent_activity_page])
-    @upcoming_deadlines_matters = VMatters.where(:id => ids).order(matters_order_clause).paginate(:per_page => current_user.rows_per_page, :page => params[:upcoming_deadlines_page])
+    @upcoming_deadlines_matters = VMatters.where(:id => @matter_tasks.collect {|x| x.matter_id}.uniq).order(matters_order_clause).paginate(:per_page => current_user.rows_per_page, :page => params[:upcoming_deadlines_page])
 
     @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
     render 'show'

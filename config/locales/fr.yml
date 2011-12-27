@@ -62,7 +62,7 @@ fr:
           curr: "LVL"
         footer:
           disclaimer: "* Valsts nodevas"
-          payment_term: "Lūdzam veikt parskaitījumu %{term} dienu laika."
+          payment_term: "Lūdzam veikt parskaitījumu %{term} dienu laikā."
           disclaimer1: "<u>Maksājuma uzdevumā obligāti norādiet mūsu rēķina numuru!</u>"
   party:
     operating:

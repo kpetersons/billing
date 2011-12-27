@@ -21,7 +21,7 @@
                 </li>
                 <li>
                   <%= piu_f.label :operating_party_id %>
-                  <%= piu_f.select :operating_party_id, OperatingParty.all.collect { |tt| [t(tt.name), tt.id] } %>
+                  <%= piu_f.text_field :operating_party_name, :disabled => true %>
                 </li>
             <% end %>
         <% end %>

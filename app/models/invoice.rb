@@ -305,6 +305,15 @@ class Invoice < ActiveRecord::Base
     @our_ref_matters
   end
 
+  def local_our_ref
+    "#{author.initials}/#{our_ref}"
+  end
+
+
+  def has_official_fees?
+    !invoice_lines.where("official_fee_type_id is not null").all.empty?
+  end
+
   private
 
   def if_paid_then_when

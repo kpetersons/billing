@@ -4,46 +4,43 @@ class InvoicePdfLocal < Prawn::Document
   def to_pdf(invoice, current_user, watermark, images, top)
 
     if images
-      bounding_box([112.036, cursor-50], :width => 60.292) do
+      bounding_box([112.036, 620+top], :width => 60.292) do
         logo
       end
-      bounding_box([0, cursor-10], :width => 284.364) do
+      bounding_box([0, 610+top], :width => 284.364) do
         party_profile
       end
     end
     move_down 10
-    if watermark
-      for i in 0..page_count
-        go_to_page i
-        font_size(100)
-        fill_color "939393"
-        draw_text "Preview", :rotate => 45, :at => [100, 250], :font_style => :bold
-         fill_color "000000"
-      end
-    end
     table_width = 520
     fill_color "000000"
     font_families.update(
-                      "InvoiceFamily" => {
-                            :bold        => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif-Bold.ttf",
-                            :italic      => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif-Italic.ttf",
-                            :bold_italic => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif-BoldItalic.ttf",
-                            :normal      => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif.ttf" })
+        "InvoiceFamily" => {
+            :bold => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif-Bold.ttf",
+            :italic => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif-Italic.ttf",
+            :bold_italic => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif-BoldItalic.ttf",
+            :normal => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif.ttf"})
 
     font("InvoiceFamily") do
 
+      if images
+        #move_down 10
+      else
+        move_down 87
+      end
+
       font_size(10) do
-         txt = I18n.t('local.print.invoice.head.invoice_no', :no => "#{invoice.invoice_date.strftime("%y")}/#{invoice.number}")
-         inv_number_cell = make_cell(:content =>txt)
-         inv_number_cell.style(:font_style => :bold)
-         inv_number_cell.width=width_of(txt)+50
-         inv_number_cell.draw
+        txt = I18n.t('local.print.invoice.head.invoice_no', :no => "#{invoice.invoice_date.strftime("%y")}/#{invoice.number}")
+        inv_number_cell = make_cell(:content =>txt)
+        inv_number_cell.style(:font_style => :bold)
+        inv_number_cell.width=width_of(txt)+50
+        inv_number_cell.draw
       end
       move_down 30
       font_size(8) do
         party_info_data = operating_party_table(invoice, current_user)
 
-        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120] , :cell_style => {:borders => [], :padding => 1})
+        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120], :cell_style => {:borders => [], :padding => 1})
 
         party_info_table.cells[0, 0].style :borders => [:left, :top]
         party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
@@ -66,7 +63,7 @@ class InvoicePdfLocal < Prawn::Document
         move_down 10
 
         party_info_data = customer_party_table(invoice)
-        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120] , :cell_style => {:borders => [], :padding => 1})
+        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120], :cell_style => {:borders => [], :padding => 1})
 
         party_info_table.cells[0, 0].style :borders => [:left, :top]
         party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
@@ -112,11 +109,11 @@ class InvoicePdfLocal < Prawn::Document
         line_table.columns(0).style(:borders => [:left])
         line_table.columns(2..4).style(:align => :right)
         line_table.columns(line_table_data[0].length-1).style(:borders => [:right])
-        line_table.cells[0,0].style(:borders => [:left, :top, :bottom])
-        line_table.cells[0,line_table_data[0].length-1].style(:borders => [:right, :top, :bottom])
+        line_table.cells[0, 0].style(:borders => [:left, :top, :bottom])
+        line_table.cells[0, line_table_data[0].length-1].style(:borders => [:right, :top, :bottom])
 
-        line_table.cells[line_table_data.length-1,0].style(:borders => [:left, :bottom])
-        line_table.cells[line_table_data.length-1,line_table_data[0].length-1].style(:borders => [:right, :bottom])
+        line_table.cells[line_table_data.length-1, 0].style(:borders => [:left, :bottom])
+        line_table.cells[line_table_data.length-1, line_table_data[0].length-1].style(:borders => [:right, :bottom])
 
         line_table.draw
 
@@ -128,14 +125,14 @@ class InvoicePdfLocal < Prawn::Document
         end
 
         group(false) do
-            line_table_totals_data  = totals_invoice_line_table invoice
-            line_table_totals = make_table(line_table_totals_data, :width => table_width, :cell_style => {:borders => [], :padding => 3}, :column_widths => [415, 40, 65])
-            line_table_totals.row(line_table_totals_data.length-1).style(:font_style => :bold)
-            line_table_totals.columns(0).style(:align => :right)
-            line_table_totals.columns(2).style(:align => :right)
-            line_table_totals.draw
-            move_down 10
-            draw_invoice_footer invoice, current_user
+          line_table_totals_data = totals_invoice_line_table invoice
+          line_table_totals = make_table(line_table_totals_data, :width => table_width, :cell_style => {:borders => [], :padding => 3}, :column_widths => [415, 40, 65])
+          line_table_totals.row(line_table_totals_data.length-1).style(:font_style => :bold)
+          line_table_totals.columns(0).style(:align => :right)
+          line_table_totals.columns(2).style(:align => :right)
+          line_table_totals.draw
+          move_down 10
+          draw_invoice_footer invoice, current_user
         end
         if page_count > 1
           go_to_page 1
@@ -151,6 +148,15 @@ class InvoicePdfLocal < Prawn::Document
         bank_info
       end
     end
+    if watermark
+      for i in 0..page_count
+        go_to_page i
+        font_size(100)
+        fill_color "939393"
+        draw_text "Preview", :rotate => 45, :at => [100, 250], :font_style => :bold
+        fill_color "000000"
+      end
+    end
     render
   end
 
@@ -163,77 +169,78 @@ class InvoicePdfLocal < Prawn::Document
 
   def invoice_refs_table invoice
     return [
-      I18n.t('local.print.invoice.head.created_place', :place => invoice.invoice_date.to_s(:show)),
-      ""
+        I18n.t('local.print.invoice.head.created_place', :place => invoice.invoice_date.to_s(:show)),
+        ""
     ],
-    [
-      I18n.t('local.print.invoice.refs.our_ref', :ref => invoice.our_ref),
-      I18n.t('local.print.invoice.refs.your_ref', :ref => invoice.your_ref)
-    ],
-    []
+        [
+            I18n.t('local.print.invoice.refs.our_ref', :ref => invoice.local_our_ref),
+            I18n.t('local.print.invoice.refs.your_ref', :ref => invoice.your_ref)
+        ],
+        []
   end
 
   def operating_party_table invoice, current_user
+    top_op = OperatingParty.top_op
     return [
-      I18n.t('local.print.invoice.refs.sender'),
-      I18n.t(current_user.operating_party.name),
-      I18n.t('local.print.invoice.refs.bank'),
-      (current_user.operating_party.default_account.bank unless current_user.operating_party.default_account.nil?)
+        I18n.t('local.print.invoice.refs.sender'),
+        I18n.t(top_op.name),
+        I18n.t('local.print.invoice.refs.bank'),
+        (top_op.default_account.bank unless current_user.operating_party.default_account.nil?)
     ],
-    [
-      I18n.t('local.print.invoice.refs.sender_reg'),
-      current_user.operating_party.company.registration_number,
-      I18n.t('local.print.invoice.refs.sender_bank_code'),
-      (current_user.operating_party.default_account.bank_code)
-    ],
-    [
-      I18n.t('local.print.invoice.refs.sender_vat'),
-      current_user.operating_party.company.registration_number,
-      I18n.t('local.print.invoice.refs.sender_bank_acc'),
-      (current_user.operating_party.default_account.account_number)
-    ],
-    [
-      I18n.t('local.print.invoice.refs.sender_address'),
-      current_user.operating_party.invoice_address.to_local_s,
-      "",
-      ""
-    ]
+        [
+            I18n.t('local.print.invoice.refs.sender_reg'),
+            top_op.company.registration_number,
+            I18n.t('local.print.invoice.refs.sender_bank_code'),
+            (top_op.default_account.bank_code)
+        ],
+        [
+            I18n.t('local.print.invoice.refs.sender_vat'),
+            top_op.company.registration_number,
+            I18n.t('local.print.invoice.refs.sender_bank_acc'),
+            (top_op.default_account.account_number)
+        ],
+        [
+            I18n.t('local.print.invoice.refs.sender_address'),
+            top_op.invoice_address.to_local_s,
+            "",
+            ""
+        ]
   end
 
   def customer_party_table invoice
     return [
-      I18n.t('local.print.invoice.refs.receiver'),
-      invoice.customer.name,
-      I18n.t('local.print.invoice.refs.bank'),
-      invoice.customer.default_account.bank
+        I18n.t('local.print.invoice.refs.receiver'),
+        invoice.customer.name,
+        I18n.t('local.print.invoice.refs.bank'),
+        invoice.customer.default_account.bank
     ],
-    [
-      I18n.t('local.print.invoice.refs.receiver_reg'),
-      invoice.customer.registration_number,
-      I18n.t('local.print.invoice.refs.receiver_bank_code'),
-      (invoice.customer.default_account.bank_code)
-    ],
-    [
-      I18n.t('local.print.invoice.refs.receiver_vat'),
-      invoice.customer.registration_number,
-      I18n.t('local.print.invoice.refs.receiver_bank_acc'),
-      (invoice.customer.default_account.account_number)
-    ],
-    [
-      I18n.t('local.print.invoice.refs.receiver_address'),
-      invoice.customer.invoice_address.name,
-      "",
-      ""
-    ]
+        [
+            I18n.t('local.print.invoice.refs.receiver_reg'),
+            invoice.customer.registration_number,
+            I18n.t('local.print.invoice.refs.receiver_bank_code'),
+            (invoice.customer.default_account.bank_code)
+        ],
+        [
+            I18n.t('local.print.invoice.refs.receiver_vat'),
+            invoice.customer.registration_number,
+            I18n.t('local.print.invoice.refs.receiver_bank_acc'),
+            (invoice.customer.default_account.account_number)
+        ],
+        [
+            I18n.t('local.print.invoice.refs.receiver_address'),
+            invoice.customer.invoice_address.name,
+            "",
+            ""
+        ]
   end
 
   def invoice_line_table_header
     return [
-      I18n.t('local.print.invoice.lines.calc_costs'),
-      I18n.t('local.print.invoice.lines.measurement'),
-      I18n.t('local.print.invoice.lines.cost_one_unit'),
-      I18n.t('local.print.invoice.lines.unit_count'),
-      I18n.t('local.print.invoice.lines.cost_without_vat')
+        I18n.t('local.print.invoice.lines.calc_costs'),
+        I18n.t('local.print.invoice.lines.measurement'),
+        I18n.t('local.print.invoice.lines.cost_one_unit'),
+        I18n.t('local.print.invoice.lines.unit_count'),
+        I18n.t('local.print.invoice.lines.cost_without_vat')
     ]
   end
 
@@ -243,53 +250,55 @@ class InvoicePdfLocal < Prawn::Document
     counter = 1
     invoice.invoice_lines.each do |line|
       line_data = make_table([
-          ["#{counter}.#{(!line.official_fee_type_id.nil? && !line.official_fee_type.apply_vat?)? " * " : " "}#{line.offering}"],
-          [line.details]
-        ],
-        :cell_style => {:borders => [], :padding => 0},
-        :column_widths => [310])
-      line_data.rows(1).style  :font_style => :italic
+                                 ["#{counter}.#{(!line.official_fee_type_id.nil? && !line.official_fee_type.apply_vat?) ? " * " : " "}#{line.offering}"],
+                                 [line.details]
+                             ],
+                             :cell_style => {:borders => [], :padding => 0},
+                             :column_widths => [310])
+      line_data.rows(1).style :font_style => :italic
       table<<[
-        line_data,
-        line.units,
-        number_to_currency((line.official_fee_type_id.nil?)? line.attorney_fee : line.official_fee, :unit => "", :delimiter  => ""),
-        line.items,
-        number_to_currency((line.official_fee_type_id.nil?)? line.total_attorney_fee : line.total_official_fee, :unit => "", :delimiter  => "")
-        ]
-        counter = counter + 1
+          line_data,
+          line.units,
+          number_to_currency((line.official_fee_type_id.nil?) ? line.attorney_fee : line.official_fee, :unit => "", :delimiter => ""),
+          (line.items.to_i == line.items) ? number_with_precision(line.items, :precision => 0) : line.items,
+          number_to_currency((line.official_fee_type_id.nil?) ? line.total_attorney_fee : line.total_official_fee, :unit => "", :delimiter => "")
+      ]
+      counter = counter + 1
     end
     return table
   end
 
   def totals_invoice_line_table invoice
-    return [
-      I18n.t('local.print.invoice.lines.sum_vat_exempt'),
-      "",
-      number_to_currency(invoice.local_sum_exempt_vat, :unit => "", :delimiter  => "")
-    ],
-    [
-      I18n.t('local.print.invoice.lines.sum_vat_taxable'),
-      "",
-      number_to_currency(invoice.local_sum_taxable_vat, :unit => "", :delimiter  => "")
-    ],
-    [
-      I18n.t('local.print.invoice.lines.vat_22'),
-      "",
-      number_to_currency(invoice.local_sum_vat, :unit => "", :delimiter  => "")
-    ],
-    [
-      I18n.t('local.print.invoice.lines.sum_to_pay'),
-      I18n.t('local.print.invoice.lines.curr'),
-      number_to_currency(invoice.local_sum_total, :unit => "", :delimiter  => "")
+    totals_data = []
+    totals_data << [
+        I18n.t('local.print.invoice.lines.sum_vat_exempt'),
+        "",
+        number_to_currency(invoice.local_sum_exempt_vat, :unit => "", :delimiter => "")
+    ] if invoice.has_official_fees?
+    totals_data <<[
+        I18n.t('local.print.invoice.lines.sum_vat_taxable'),
+        "",
+        number_to_currency(invoice.local_sum_taxable_vat, :unit => "", :delimiter => "")
     ]
+    totals_data <<[
+        I18n.t('local.print.invoice.lines.vat_22'),
+        "",
+        number_to_currency(invoice.local_sum_vat, :unit => "", :delimiter => "")
+    ]
+    totals_data <<[
+        I18n.t('local.print.invoice.lines.sum_to_pay'),
+        I18n.t('local.print.invoice.lines.curr'),
+        number_to_currency(invoice.local_sum_total, :unit => "", :delimiter => "")
+    ]
+    return totals_data
   end
 
   def draw_invoice_footer (invoice, current_user)
-    text I18n.t('local.print.invoice.footer.disclaimer')
+    text I18n.t('local.print.invoice.footer.disclaimer') if invoice.has_official_fees?
     move_down 10
     text I18n.t('local.print.invoice.footer.payment_term', :term => invoice.payment_term)
     text I18n.t('local.print.invoice.footer.disclaimer1'), :inline_format => true
-    move_down 20
+    move_down 40
     text current_user.full_name
   end
 

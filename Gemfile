@@ -10,7 +10,8 @@ gem 'uuidtools'
 gem 'paperclip', '~> 2.3'
 gem 'prawn', :submodules => true
 gem "jquery-rails"
-gem 'pg'
+gem 'pg', '0.12.0'
+gem 'capistrano'
 
 group :development do
   gem 'annotate', '2.4.0'
@@ -23,5 +24,5 @@ group :test do
 end
 
 group :production do
-  
+
 end

@@ -22,6 +22,8 @@
 #
 
 class InvoiceLine < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
+
   belongs_to :invoice
   belongs_to :official_fee_type
   belongs_to :attorney_fee_type
@@ -57,14 +59,13 @@ class InvoiceLine < ActiveRecord::Base
   end
 
   def line_details
-    attorney_fee_print = attorney_fee.to_s.gsub('.00', '')
+    attorney_fee_print = attorney_fee.to_s.gsub('.00', '').gsub('.0', '')
     if attorney_fee_print.include? "."
       attorney_fee_print = "#{attorney_fee_print}0"
     end
-    items_print = items.to_s.to_s.gsub('.00', '')
-    brackets_tmp = (items.nil?)? "" : " (#{items_print} #{units} x #{invoice.currency.name} #{attorney_fee_print})"
+    items_print = (items.to_i == items)? number_with_precision(items, :precision => 0) : items
+    brackets_tmp = (items.nil?)? "" : " (#{items_print.to_s} #{units} x #{invoice.currency.name} #{attorney_fee_print.to_s})"
     details_tmp = "#{details}#{brackets_tmp}"
-    #return (both_official_and_attorney?)? "#{details} x#{items_print}" : details_tmp
     return (both_official_and_attorney?)? details : details_tmp
   end
 
@@ -73,11 +74,11 @@ class InvoiceLine < ActiveRecord::Base
     if attorney_fee_print.include? "."
       attorney_fee_print = "#{attorney_fee_print}0"
     end
-    items_print = items.to_s.to_s.gsub('.00', '').gsub('.0', '')
+    items_print = (items.to_i == items)? number_with_precision(items, :precision => 0) : items
 
-    brackets_tmp = (items.nil?)? "" : " (#{items_print} #{units} x #{invoice.currency.name} #{attorney_fee_print})"
+    brackets_tmp = (items.nil?)? "" : " (#{items_print.to_s} #{units} x #{invoice.currency.name} #{attorney_fee_print.to_s})"
     details_tmp = "#{details}#{brackets_tmp}"
-    return (both_official_and_attorney?)? "#{offering} x#{items_print}" : offering
+    return (both_official_and_attorney?)? "#{offering} x#{items_print.to_s}" : offering
   end
 
   private

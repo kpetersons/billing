@@ -14,7 +14,7 @@
 		</label>
 	</dt>
 	<dd>
-		<%=@address.country.name%>&nbsp;
+		<%=t(@address.country.name) unless @address.country.nil?%>&nbsp;
 	</dd>
 	<dt>
 		<label>

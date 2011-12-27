@@ -41,7 +41,6 @@ class Address < ActiveRecord::Base
 
   def name
     [line_1, line_2, line_3, line_4, line_5].reject{|x| (x.nil? || x.eql?(""))}.join(', ')
-    #"#{city}, #{street}, #{house_number}, #{post_code}, #{country.name}"
   end
 
   def line_1
@@ -65,7 +64,7 @@ class Address < ActiveRecord::Base
   end
 
   def line_5
-    return country.name unless country.nil?
+    return I18n.t(country.name) unless country.nil?
     return Country.new.name
   end
 

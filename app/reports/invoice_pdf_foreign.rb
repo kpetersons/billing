@@ -24,15 +24,6 @@ class InvoicePdfForeign < Prawn::Document
       end
     end
 
-    if watermark
-      for i in 0..page_count
-        go_to_page i
-        font_size(100)
-        fill_color "939393"
-        draw_text "Preview", :rotate => 45, :at => [100, 250], :font_style => :bold
-      end
-    end
-
     fill_color "000000"
 
     font_families.update(
@@ -87,17 +78,26 @@ class InvoicePdfForeign < Prawn::Document
           footer_group = invoice_line_footer_group invoice
           footer_group.draw
           move_down 20
-          invoice_preparer_group invoice, current_user
+          imgs = images
+          invoice_preparer_group invoice, current_user, images
         end
       end
     end
     if images
-      bounding_box([-15, 50], :width => 642.022) do
+      bounding_box([-15, 53], :width => 642.022) do
         footer
         fill do
-          rectangle([0.346, 0.518], 545.305, 0.518)
+          rectangle([0.346, 0.518], 559.305, 0.518)
         end
         bank_info
+      end
+    end
+    if watermark
+      for i in 0..page_count
+        go_to_page i
+        font_size(100)
+        fill_color "939393"
+        draw_text "Preview", :rotate => 45, :at => [100, 250], :font_style => :bold
       end
     end
     render
@@ -266,14 +266,16 @@ class InvoicePdfForeign < Prawn::Document
     return footer
   end
 
-  def invoice_preparer_group invoice, current_user
+  def invoice_preparer_group invoice, current_user, images
     group do
       text I18n.t('foreign.print.invoice.footer.var_reverse_disclaimer'), :inline_format => true
       move_down 20
       text I18n.t('foreign.print.invoice.footer.remit_disclaimer', :date => invoice.payment_term)
       text I18n.t('foreign.print.invoice.footer.ask_for_reference'), :inline_format => true
       move_down 30
-      text current_user.individual.name
+      imgs = images
+      #todo ielikt i18n
+      text (!images)? current_user.individual.name_wo_comma : "Invoice issued by: #{current_user.individual.name_wo_comma}"
     end
   end
 
@@ -644,13 +646,30 @@ class InvoicePdfForeign < Prawn::Document
       draw_text "Beneficiary:", :at => [0, cursor], :size => 8.15
 
       draw_text "IBAN LV91 UNLA 0050 0006 26706", :at => [80, cursor], :size => 8.13
-      draw_text "EUR", :at => [210, cursor], :size => 8.13
+
+      fill do
+        rectangle([210, cursor - 2], 20, cursor - 10)
+      end
+      fill_color "ffffff"
+      draw_text "EUR", :at => [211.5, cursor], :size => 8.13
+      fill_color "7E8083"
 
       draw_text "IBAN LV 52 HABA 0019 4090 46866", :at => [240, cursor], :size => 8.13
-      draw_text "EUR", :at => [370, cursor], :size => 8.13
+      fill do
+        rectangle([372, cursor - 2], 20, cursor - 10)
+      end
+      fill_color "ffffff"
+      draw_text "EUR", :at => [373, cursor], :size => 8.13
+      fill_color "7E8083"
+
 
       draw_text "IBAN LV 52 HABA 0019 4090 46866", :at => [400, cursor], :size => 8.13
-      draw_text "USD", :at => [530, cursor], :size => 8.13
+      fill do
+        rectangle([532, cursor - 2], 20, cursor - 10)
+      end
+      fill_color "ffffff"
+      draw_text "USD", :at => [533, cursor], :size => 8.13
+      fill_color "7E8083"
 
       move_down 10
       draw_text "Beneficiary bank:", :at => [0, cursor], :size => 8.15
