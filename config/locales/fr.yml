@@ -1,6 +1,7 @@
 fr:
   foreign:
     print:
+      invoice_issued_by: "Invoice issued by:"
       invoice:
         head:
           date: "Date: %{date}"

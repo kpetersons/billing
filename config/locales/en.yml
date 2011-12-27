@@ -403,6 +403,7 @@ en:
     message: "Edit message"
   foreign:
     print:
+      invoice_issued_by: "Invoice issued by:"
       party_profile:
         line_1: "PATENTS * DESIGNS * TRADEMARKS * LITIGATION * LICENCES * VALUATION"
         line_2: "COPYRIGHT * PLANT VARIETIES * SEARCHES * DOMAIN NAMES"

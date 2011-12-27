@@ -275,7 +275,7 @@ class InvoicePdfForeign < Prawn::Document
       move_down 30
       imgs = images
       #todo ielikt i18n
-      text (!images)? current_user.individual.name_wo_comma : "Invoice issued by: #{current_user.individual.name_wo_comma}"
+      text (!images)? current_user.individual.name_wo_comma : "#{I18n.t('foreign.print.invoice_issued_by')} #{current_user.individual.name_wo_comma}"
     end
   end
 
