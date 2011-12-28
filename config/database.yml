@@ -24,8 +24,8 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  username: kristaps
+  username: pguser
   port: 5432
   host: localhost
   database: billing
-  password: 5rbyOn10rls
+  password: 10rbyOn5rls

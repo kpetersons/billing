@@ -44,6 +44,8 @@ Billing::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
 
+  Paperclip.options[:command_path] = "/var/ppi/images/"
+
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
@@ -51,9 +53,7 @@ Billing::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    #  :domain               => 'petpat.lv.net',
-    :user_name            => 'kristapspetersons',
-    :password             => 'zanubis',
     :authentication       => 'plain',
-    :enable_starttls_auto => true  }  
+    :enable_starttls_auto => true
+  }
 end
