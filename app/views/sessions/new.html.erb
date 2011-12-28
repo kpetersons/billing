@@ -5,19 +5,17 @@
 	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
 	<div class="panel-content">		
 		<%= form_for(:session, :url => signin_sessions_path) do |f| %>
-			<ul>
+			<ul style="padding-left: 1em">
 				<li>
-					<%= f.label :email %>
-					<%= f.text_field :email %>
+					<%= f.label :email, :style => "display:inline-block" %>
+					<%= f.text_field :email, :style => "display:inline-block" %>
 				</li>
 				<li>
-					<%= f.label :password %>
-					<%= f.password_field :password %>
+					<%= f.label :password, :style => "display:inline-block" %>
+					<%= f.password_field :password, :style => "display:inline-block" %>
 				</li>
 			</ul>
-			<div class="buttons">
-				<span class="button"><%= f.submit "Sign in" %></span>
-			</div>			
+          <%= render :partial => "shared/ui/form-submit-controls_name", 	:locals => {:name => "Sign in", :fields 	=> f}%>
 		<% end %>
 	</div>
 </div>
