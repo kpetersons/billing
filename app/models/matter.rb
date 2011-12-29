@@ -179,8 +179,8 @@ class Matter < ActiveRecord::Base
   def create_customers_history
     agent = MatterCustomer.new({:customer_id => agent_id, :matter_id => id, :customer_type => 'Agent', :takeover_date => DateTime.now, :author_id => author_id})
     applicant = MatterCustomer.new({:customer_id => applicant_id, :matter_id => id, :customer_type => 'Applicant', :takeover_date => DateTime.now, :author_id => author_id})
-    agent.save!
-    applicant.save!
+    agent.save! unless agent.nil?
+    applicant.save! unless applicant.nil?
     custom = Custom.find_by_matter_id(id)
     unless custom.nil?
       custom.create_customers_history

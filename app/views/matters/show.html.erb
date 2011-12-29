@@ -2,7 +2,8 @@
 	<div class="panel-header">
 		<strong>Matter</strong>
 	</div>
-	<%= render :partial => "shared/flash", 	:locals => {:flash 	=> flash}%>
+    <%= render :partial => "shared/flash", 	:locals => {:flash 	=> flash}%>
+    <%= render :partial => "shared/error", 	:locals => {:obj => @document}%>
 	<div class="panel-content">
 		<div style="display:inline-block; width:50%;">
 		<%= render :partial => "show", 					:locals => {:matter 	=> @matter}%>

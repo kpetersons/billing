@@ -1,7 +1,8 @@
 <div class="images" style="display:inline-block;">		
 	<div><label>Images</label></div>
 	<%@matter.matter_images.each do |mi|%>
-		<%= image_tag mi.image.url(:medium) %>
+		<%= link_to image_tag(mi.image.url(:medium)), mi.image.url, :target => :new %>
+        <%=link_to "Remove", remove_image_matter_path(@matter, :image_id => mi.id), :method => :delete %>
 	<%end%>
 	<%=form_for :matter_image, :url => add_image_matter_path(@matter), :html => { :multipart => true } do |mi_f| %>
 		<div style="float:left; margin-top:1em;">		

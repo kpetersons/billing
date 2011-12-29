@@ -1,8 +1,11 @@
 <dt>
-	<label><%= t('matter.legal.fields.opposite_party')%></label>
+  <label><%= t('matter.legal.fields.opposite_party') %></label>
 </dt>
 <dd>
-	<%= link_to matter.legal.opposite_party_name, customer_path(matter.legal.opposite_party)%>&nbsp;
-    <%= link_to 'Change', new_matter_matter_customer_path(matter, :type => "Opposite_party")%>
-    <%= link_to 'History', matter_matter_customers_path(matter, :type => "Opposite_party")%>
+  <% unless matter.legal.opposite_party.nil? %>
+      <%= link_to matter.legal.opposite_party_name, customer_path(matter.legal.opposite_party) %>&nbsp;
+      <%= link_to 'Change', new_matter_matter_customer_path(matter, :type => "Opposite_party") %>
+      <%= link_to 'History', matter_matter_customers_path(matter, :type => "Opposite_party") %>
+  <% end %>
+  &nbsp;
 </dd>

@@ -6,7 +6,7 @@ Billing::Application.configure do
   config.cache_classes = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
   # Specifies the header that your server uses for sending files
@@ -48,12 +48,15 @@ Billing::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-  
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :authentication       => 'plain',
-    :enable_starttls_auto => true
+      :address => "smtp.gmail.com",
+      :port => 587,
+      :authentication => 'plain',
+      :enable_starttls_auto => true,
+      :user_name => 'ppi.admin',
+      :password => 'ppi_admin@lv',
+
   }
 end

@@ -26,14 +26,14 @@ class MattersController < ApplicationController
     @direction = params[:direction]
     @precision = params[:precision]
     begin
-      @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).where(@detail_search.query).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page,:page => params[:my_matters_page])
+      @matters = VMatters.where(:matter_type_id => current_user.operating_party.matter_types).where(@detail_search.query).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page,:page => params[:my_matters_page])
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
       render "index" and return
     rescue => ex
       flash.now[:error] = "Invalid search parameters. Check them again!"
       logger.error ex.message
     end
-    @matters = VMatters.where(:operating_party_id => current_user.operating_party.own_and_child_ids).order(params[:order]).paginate(:per_page => current_user.rows_per_page, :page => params[:my_matters_page])
+    @matters = VMatters.where(:matter_type_id => current_user.operating_party.matter_types).order(params[:order]).paginate(:per_page => current_user.rows_per_page, :page => params[:my_matters_page])
     render "index" and return
   end
 
@@ -243,13 +243,26 @@ class MattersController < ApplicationController
 
   def add_image
     @matter = Matter.find(params[:id])
+    @document = @matter.document
     @image = MatterImage.create(params[:matter_image])
     if @matter.matter_images<<@image
-      flash.now[:success] = "matter.success.image.added"
+      flash.now[:success] = "Image added."
       redirect_to @matter and return
     end
-    flash.now[:error] = "matter.error.image.added"
-    redirect_to @matter and return
+    flash.now[:error] = "Could not add image! Probably too large. Maximum image size = 2MB"
+    render 'show'
+  end
+
+  def remove_image
+    @matter = Matter.find(params[:id])
+    @document = @matter.document
+    @image = MatterImage.find(params[:image_id])
+    if MatterImage.delete(@image)
+      flash.now[:success] = "Image removed."
+      redirect_to @matter and return
+    end
+    flash.now[:error] = "Could not remove image!"
+    render 'show'
   end
 
   def flow

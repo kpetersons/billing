@@ -39,8 +39,8 @@ class Legal < ActiveRecord::Base
   def create_customers_history
     opposite_party_agent = MatterCustomer.new({:customer_id => opposite_party_agent_id, :matter_id => matter_id, :customer_type => 'opposite_party_agent'.capitalize, :takeover_date => DateTime.now, :author_id => matter.author_id})
     opposite_party = MatterCustomer.new({:customer_id => opposite_party_id, :matter_id => matter_id, :customer_type => 'opposite_party'.capitalize, :takeover_date => DateTime.now, :author_id => matter.author_id})
-    opposite_party_agent.save!
-    opposite_party.save!
+    opposite_party_agent.save! unless opposite_party_agent_id.nil?
+    opposite_party.save! unless opposite_party_id.nil?
   end
 
   def change_customers_from_history matter_customer
