@@ -16,10 +16,10 @@ class InvoicePdfForeign < Prawn::Document
   def to_pdf(invoice, current_user, watermark, images, top)
 
     if images
-      bounding_box([112.036, 620+top], :width => 60.292) do
+      bounding_box([112.220472, bounds.height - 51.023622], :width => 60.292) do # + 25.511811
         logo
       end
-      bounding_box([0, 610+top], :width => 284.364) do
+      bounding_box([0, bounds.height - 68.6062992], :width => 284.364) do # + 99.2125984
         party_profile
       end
     end
@@ -34,6 +34,8 @@ class InvoicePdfForeign < Prawn::Document
             :normal => "#{Rails.root}/app/reports/fonts/ttf/DejaVuSerif.ttf"})
 
     font("InvoiceFamily") do
+
+      move_down 5.66929134
 
       if images
         move_down 10
@@ -97,7 +99,9 @@ class InvoicePdfForeign < Prawn::Document
         go_to_page i
         font_size(100)
         fill_color "939393"
-        draw_text "Preview", :rotate => 45, :at => [100, 250], :font_style => :bold
+        transparent(0.2) do
+          draw_text "Preview", :rotate => 45, :at => [100, 250], :font_style => :bold
+        end
       end
     end
     render
@@ -275,7 +279,7 @@ class InvoicePdfForeign < Prawn::Document
       move_down 30
       imgs = images
       #todo ielikt i18n
-      text (!images)? current_user.individual.name_wo_comma : "#{I18n.t('foreign.print.invoice_issued_by')} #{current_user.individual.name_wo_comma}"
+      text (!images) ? current_user.individual.name_wo_comma : "#{I18n.t('foreign.print.invoice_issued_by')} #{current_user.individual.name_wo_comma}"
     end
   end
 

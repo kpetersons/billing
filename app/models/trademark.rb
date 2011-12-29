@@ -62,9 +62,9 @@ class Trademark < ActiveRecord::Base
   attr_protected :classes
 
   def replace_spaces
-    ctm_number.gsub!(/ /, "")
-    reg_number.gsub!(/ /, "")
-    wipo_number.gsub!(/ /, "")
+    ctm_number.gsub!(/ /, "") unless ctm_number.nil?
+    reg_number.gsub!(/ /, "") unless reg_number.nil?
+    wipo_number.gsub!(/ /, "") unless wipo_number.nil?
   end
 
   validate :unique_per_matter

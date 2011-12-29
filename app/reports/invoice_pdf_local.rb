@@ -4,14 +4,14 @@ class InvoicePdfLocal < Prawn::Document
   def to_pdf(invoice, current_user, watermark, images, top)
 
     if images
-      bounding_box([112.036, 620+top], :width => 60.292) do
+      bounding_box([112.220472, bounds.height - 51.023622], :width => 60.292) do # + 25.511811
         logo
       end
-      bounding_box([0, 610+top], :width => 284.364) do
+      bounding_box([0, bounds.height - 68.6062992], :width => 284.364) do # + 99.2125984
         party_profile
       end
     end
-    move_down 10
+    move_down 58.031496
     table_width = 520
     fill_color "000000"
     font_families.update(
@@ -63,7 +63,7 @@ class InvoicePdfLocal < Prawn::Document
         move_down 10
 
         party_info_data = customer_party_table(invoice)
-        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120], :cell_style => {:borders => [], :padding => 1})
+        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120], :cell_style => {:borders => [], :padding => 0.5})
 
         party_info_table.cells[0, 0].style :borders => [:left, :top]
         party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
@@ -88,8 +88,7 @@ class InvoicePdfLocal < Prawn::Document
           max_height = party_info_table.cells[3, idx].natural_content_height if max_height < party_info_table.cells[3, idx].natural_content_height
         end
         4.times do |idx|
-          party_info_table.cells[3, idx].height = max_height
-          party_info_table.cells[3, idx].style
+          party_info_table.cells[3, idx].height = max_height + 2
         end
 
         party_info_table.draw
@@ -143,7 +142,7 @@ class InvoicePdfLocal < Prawn::Document
       end
     end
     if images
-      bounding_box([-15, 40], :width => 642.022) do
+      bounding_box([-15, 38], :width => 642.022) do
         footer
         bank_info
       end
@@ -153,7 +152,9 @@ class InvoicePdfLocal < Prawn::Document
         go_to_page i
         font_size(100)
         fill_color "939393"
-        draw_text "Preview", :rotate => 45, :at => [100, 250], :font_style => :bold
+        transparent(0.2) do
+          draw_text "Preview", :rotate => 45, :at => [100, 250], :font_style => :bold
+        end
         fill_color "000000"
       end
     end
@@ -195,7 +196,7 @@ class InvoicePdfLocal < Prawn::Document
         ],
         [
             I18n.t('local.print.invoice.refs.sender_vat'),
-            top_op.company.registration_number,
+            "LV40102013203",
             I18n.t('local.print.invoice.refs.sender_bank_acc'),
             (top_op.default_account.account_number)
         ],
@@ -222,7 +223,7 @@ class InvoicePdfLocal < Prawn::Document
         ],
         [
             I18n.t('local.print.invoice.refs.receiver_vat'),
-            invoice.customer.registration_number,
+            invoice.customer.vat_registration_number,
             I18n.t('local.print.invoice.refs.receiver_bank_acc'),
             (invoice.customer.default_account.account_number)
         ],
@@ -298,7 +299,7 @@ class InvoicePdfLocal < Prawn::Document
     move_down 10
     text I18n.t('local.print.invoice.footer.payment_term', :term => invoice.payment_term)
     text I18n.t('local.print.invoice.footer.disclaimer1'), :inline_format => true
-    move_down 40
+    move_down 60
     text current_user.full_name
   end
 
@@ -631,7 +632,7 @@ class InvoicePdfLocal < Prawn::Document
             :normal => "#{Rails.root}/app/reports/fonts/Times_New_Roman.ttf",
             :bold => "#{Rails.root}/app/reports/fonts/Times_New_Roman_bold.ttf"})
     font("footer") do
-      move_down 5
+      move_down 4
       font("InvoiceFamily") do
         fill_color "7E8083"
         text I18n.t("local.print.footer.company"), :inline_format => :true

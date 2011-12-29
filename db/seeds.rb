@@ -1061,6 +1061,7 @@ end
 
 Customer.transaction do
   customers = [
+      ["Agent", "UNKNOWN", "UNKNOWN", "-", "-", "", "LATVIA"],
       ["Agent", "A. A. Thornton & Co.", "GB232930088", "235 High Holborn", "London WC1V 7LE", "", "UNITED KINGDOM"],
       ["Agent", "Ab Ovo Patents & Trademarks", "NL806653772B01", "", "", "", "NETHERLANDS"],
       ["Agent", "ABG Patentes, S.L.", "ESB83769737", "", "", "", "SPAIN"],
@@ -1460,4 +1461,140 @@ end
 
 MatterClazz.transaction do
   MatterClazz.delete(MatterClazz.where(:matter_id => nil).all)
+end
+
+
+author = User.find_by_email("armins.petersons@petpat.lv")
+unknown = Customer.find_by_vat_registration_number('UNKNOWN')
+type = MatterType.find_by_name("matters.trademark")
+status = MatterStatus.find_by_name("matters.status.active")
+if Trademark.count <= 11530
+  11530.times do
+    document = Document.new(:user_id => author.id)
+    matter = Matter.new(:author_id => author.id, :agent_id => unknown.id, :applicant_id => unknown.id, :matter_type_id => type.id, :operating_party_id => author.operating_party_id, :matter_status_id => status.id)
+    trademark = Trademark.new(:mark_name => 'Not set')
+    document.matter = matter
+    document.matter.trademark = trademark
+    Trademark.transaction do
+      unless document.save
+        document.errors.full_messages.each do |msg|
+          puts msg
+        end
+      else
+        date_effective = DateTime.now
+
+        document.update_attribute(:version, 1)
+        matter.update_attribute(:version, 1)
+        document.update_attribute(:orig_id, document.id)
+        matter.update_attribute(:orig_id, matter.id)
+        document.update_attribute(:date_effective, date_effective)
+        matter.update_attribute(:date_effective, date_effective)
+
+        matter.generate_registration_number
+        matter.create_customers_history
+      end
+    end
+  end
+end
+
+
+author = User.find_by_email("lucija.kuzjukevica@petpat.lv")
+unknown = Customer.find_by_vat_registration_number('UNKNOWN')
+type = MatterType.find_by_name("matters.patent")
+status = MatterStatus.find_by_name("matters.status.active")
+if Patent.count <= 2448
+  2448.times do
+    document = Document.new(:user_id => author.id)
+    matter = Matter.new(:author_id => author.id, :agent_id => unknown.id, :applicant_id => unknown.id, :matter_type_id => type.id, :operating_party_id => author.operating_party_id, :matter_status_id => status.id)
+    patent = Patent.new()
+    document.matter = matter
+    document.matter.patent = patent
+    Patent.transaction do
+      unless document.save
+        document.errors.full_messages.each do |msg|
+          puts msg
+        end
+      else
+        date_effective = DateTime.now
+
+        document.update_attribute(:version, 1)
+        matter.update_attribute(:version, 1)
+        document.update_attribute(:orig_id, document.id)
+        matter.update_attribute(:orig_id, matter.id)
+        document.update_attribute(:date_effective, date_effective)
+        matter.update_attribute(:date_effective, date_effective)
+
+        matter.generate_registration_number
+        matter.create_customers_history
+      end
+    end
+  end
+end
+
+
+author = User.find_by_email("gatis.merzvinskis@petpat.lv")
+unknown = Customer.find_by_vat_registration_number('UNKNOWN')
+type = MatterType.find_by_name("matters.legal")
+status = MatterStatus.find_by_name("matters.status.active")
+if Legal.count <= 40
+  40.times do
+    document = Document.new(:user_id => author.id)
+    matter = Matter.new(:author_id => author.id, :agent_id => unknown.id, :applicant_id => unknown.id, :matter_type_id => type.id, :operating_party_id => author.operating_party_id, :matter_status_id => status.id)
+    legal = Legal.new()
+    document.matter = matter
+    document.matter.legal = legal
+    Legal.transaction do
+      unless document.save
+        document.errors.full_messages.each do |msg|
+          puts msg
+        end
+      else
+        date_effective = DateTime.now
+
+        document.update_attribute(:version, 1)
+        matter.update_attribute(:version, 1)
+        document.update_attribute(:orig_id, document.id)
+        matter.update_attribute(:orig_id, matter.id)
+        document.update_attribute(:date_effective, date_effective)
+        matter.update_attribute(:date_effective, date_effective)
+
+        matter.generate_registration_number
+        matter.create_customers_history
+      end
+    end
+  end
+end
+
+
+author = User.find_by_email("sandra.kumaceva@petpat.lv")
+unknown = Customer.find_by_vat_registration_number('UNKNOWN')
+type = MatterType.find_by_name("matters.design")
+status = MatterStatus.find_by_name("matters.status.active")
+if Design.count <= 120
+  120.times do
+    document = Document.new(:user_id => author.id, :description => 'Please describe!')
+    matter = Matter.new(:author_id => author.id, :agent_id => unknown.id, :applicant_id => unknown.id, :matter_type_id => type.id, :operating_party_id => author.operating_party_id, :matter_status_id => status.id)
+    design = Design.new()
+    document.matter = matter
+    document.matter.design = design
+    Design.transaction do
+      unless document.save
+        document.errors.full_messages.each do |msg|
+          puts msg
+        end
+      else
+        date_effective = DateTime.now
+
+        document.update_attribute(:version, 1)
+        matter.update_attribute(:version, 1)
+        document.update_attribute(:orig_id, document.id)
+        matter.update_attribute(:orig_id, matter.id)
+        document.update_attribute(:date_effective, date_effective)
+        matter.update_attribute(:date_effective, date_effective)
+
+        matter.generate_registration_number
+        matter.create_customers_history
+      end
+    end
+  end
 end

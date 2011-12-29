@@ -178,7 +178,7 @@ class Invoice < ActiveRecord::Base
   #end column filter  
 
   def self.new_foreign_reg_number
-    return Invoice.where(:invoice_type=> 1).count
+    return Invoice.where(:invoice_type=> 1).count + 26268
   end
 
   def self.new_local_reg_number
