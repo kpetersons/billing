@@ -415,6 +415,33 @@ User.transaction do
     User.find_by_email("ieva.stala@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "ieva.stala@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
   end
 
+
+
+  unless User.find_by_email("ieva.zvejsalniece@petpat.lv")
+    Party.create({
+                     :identifier => UUIDTools::UUID.random_create.to_s,
+                     :individual_attributes => {
+                         :first_name => 'Ieva',
+                         :last_name => 'Zvejsalniece',
+                         :birth_date => Date.today,
+                         :user_attributes => {
+                             :email => 'ieva.zvejsalniece@petpat.lv',
+                             :password_confirmation => 'password',
+                             :password => 'password',
+                             :initials => "ID",
+                             :registration_date => Date.today,
+                             :active => false,
+                             :blocked => false,
+                             :operating_party_id => Company.find_by_name("party.operating.trademark").operating_party.id
+                         }
+                     }
+                 }).individual.user.roles<<Role.all
+
+  end
+  unless User.find_by_email("ieva.zvejsalniece@petpat.lv").individual.party.contacts.where(:contact_value => "ieva.zvejsalniece@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id).first
+    User.find_by_email("ieva.zvejsalniece@petpat.lv").individual.party.contacts<<Contact.create(:contact_value => "ieva.zvejsalniece@petpat.lv", :contact_type_id => ContactType.find_by_name("CT_E-MAIL").id)
+  end
+
   unless User.find_by_email("katrina.sole@petpat.lv")
     Party.create({
                      :identifier => UUIDTools::UUID.random_create.to_s,
