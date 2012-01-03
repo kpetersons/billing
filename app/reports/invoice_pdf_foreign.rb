@@ -279,7 +279,7 @@ class InvoicePdfForeign < Prawn::Document
       move_down 30
       imgs = images
       #todo ielikt i18n
-      text (!images) ? current_user.individual.name_wo_comma : "#{I18n.t('foreign.print.invoice_issued_by')} #{current_user.individual.name_wo_comma}"
+      text (!images) ? invoice.author_name : "#{I18n.t('foreign.print.invoice_issued_by')} #{invoice.author_name }"
     end
   end
 

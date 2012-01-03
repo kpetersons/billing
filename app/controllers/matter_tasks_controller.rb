@@ -1,14 +1,15 @@
 class MatterTasksController < ApplicationController
   layout "matters"
+
   def index
     @matter_tasks = MatterTask.all
   end
 
   def new
     @matter_task = MatterTask.new(
-    :matter_id => params[:matter_id],
-    :matter_task_status_id => MatterTaskStatus.first.id,
-    :author_id => current_user.id
+        :matter_id => params[:matter_id],
+        :matter_task_status_id => MatterTaskStatus.first.id,
+        :author_id => current_user.id
     )
   end
 
@@ -25,6 +26,14 @@ class MatterTasksController < ApplicationController
 
   def edit
     @matter_task = MatterTask.find(params[:id])
+  end
+
+  def remove
+    MatterTask.transaction do
+      @matter_task = MatterTask.find(params[:id])
+      MatterTask.delete(@matter_task)
+      redirect_to Matter.find(params[:matter_id])
+    end
   end
 
   def update
@@ -45,7 +54,7 @@ class MatterTasksController < ApplicationController
 
   def flow
     @matter = Matter.find(params[:matter_id])
-    @matter_task = MatterTask.find(params[:id])    
+    @matter_task = MatterTask.find(params[:id])
     MatterTask.transaction do
       if @matter_task.update_attribute(:matter_task_status_id, params[:matter_task_status][:id])
         redirect_to matter_task_path(@matter, @matter_task) and return

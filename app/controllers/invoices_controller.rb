@@ -73,8 +73,8 @@ class InvoicesController < ApplicationController
 
   def edit
     @document = Invoice.find(params[:id]).document
-    @document.user_id = current_user.id
-    @document.invoice.author_id = current_user.id
+    #@document.user_id = current_user.id
+    #@document.invoice.author_id = current_user.id
   end
 
   def update

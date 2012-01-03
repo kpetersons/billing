@@ -1,6 +1,6 @@
 <%= fields.hidden_field :applicant_id %>
 <%= fields.label :applicant_name %>
-<%= fields.text_field :applicant_name %>
+<%= fields.text_field :applicant_name, :disabled => false || fields.object.persisted? %>
 <script>
 	$(document).ready(function(){
 		$('#document_matter_attributes_applicant_name').autocomplete({

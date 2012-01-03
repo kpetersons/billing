@@ -142,10 +142,6 @@ class Matter < ActiveRecord::Base
     "#{document.parent_document.registration_number}/#{document.registration_number}"
   end
 
-  def should_update? params
-    params[:document][:matter_attributes][:agent_id].eql?("#{agent_id}") && params[:document][:matter_attributes][:applicant_id].eql?("#{applicant_id}")
-  end
-
   def save_classes params
     mc = params[:document][:matter_attributes][:classes]
     unless mc.nil?

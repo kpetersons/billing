@@ -99,9 +99,9 @@
 	</li>
 	<li>
 		<ul>
-		<li>
-			<h3>Invoice details</h3>
-		</li>
+            <li>
+                <h3>Invoice details</h3>
+            </li>
 			<li>
 				<%= i_f.label :subject %>
 				<%= i_f.text_area :subject, :size => "80x5", :style => "width:auto;" %>
@@ -110,7 +110,11 @@
 				<%= i_f.label :ending_details, 'Ending' %>
 				<%= i_f.text_area :ending_details, :size => "80x5", :style => "width:auto;" %>
 			</li>
-			</ul>
+          <li>
+            <%= i_f.label :author_name %>
+            <%= i_f.text_field :author_name, 'class' => 'field-text text-field' %>
+          </li>
+		</ul>
 	</li>
 	<%if has_function :name => 'funct.invoice.status.paid' %>
 		<li>

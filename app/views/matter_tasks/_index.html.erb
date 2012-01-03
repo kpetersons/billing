@@ -13,7 +13,7 @@
   <tfoot>
   <tr>
     <th class="list-paginate" colspan="8">
-      <%= will_paginate matter_tasks,:per_page => current_user.rows_per_page, :param_name => param_name %>
+      <%= will_paginate matter_tasks, :per_page => current_user.rows_per_page, :param_name => param_name %>
     </th>
   </tr>
   </tfoot>
@@ -37,6 +37,9 @@
         <%= render :partial => "shared/ui/date_td", :locals => {:object => matter_task} %>
         <td class="col-number">
           <%= link_to 'Show', matter_task_path(@matter, matter_task) %>
+          <% if has_function :name => "funct.matters.task.remove" %>
+              <%= link_to 'Remove', remove_matter_task_path(@matter, matter_task), :method => :delete, :confirm => "Are you sure?" %>
+          <% end %>
         </td>
       </tr>
   <% end %>

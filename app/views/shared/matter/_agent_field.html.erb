@@ -1,6 +1,6 @@
 <%= fields.hidden_field :agent_id %>
 <%= fields.label :agent_name %>
-<%= fields.text_field :agent_name %>
+<%= fields.text_field :agent_name, :disabled => false || fields.object.persisted? %>
 <script>
 	$(document).ready(function(){
 		$('#document_matter_attributes_agent_name').autocomplete({

@@ -1,6 +1,6 @@
 <div class="status-controls">
   <% invoice.available_statuses.each do |status| %>
-      <% if can_change_this_state(status, invoice, current_user) %>
+      <% if can_change_this_state(status, invoice) %>
           <div class="status-control">
             <%= form_for status, :url => flow_invoice_path(invoice) do |f| %>
                 <%= f.hidden_field :id %>

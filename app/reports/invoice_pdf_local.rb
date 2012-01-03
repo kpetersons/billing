@@ -40,7 +40,7 @@ class InvoicePdfLocal < Prawn::Document
       font_size(8) do
         party_info_data = operating_party_table(invoice, current_user)
 
-        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120], :cell_style => {:borders => [], :padding => 1})
+        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 190, 100, 130], :cell_style => {:borders => [], :padding => 1})
 
         party_info_table.cells[0, 0].style :borders => [:left, :top]
         party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
@@ -63,7 +63,7 @@ class InvoicePdfLocal < Prawn::Document
         move_down 10
 
         party_info_data = customer_party_table(invoice)
-        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 200, 100, 120], :cell_style => {:borders => [], :padding => 0.5})
+        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 190, 100, 130], :cell_style => {:borders => [], :padding => 0.5})
 
         party_info_table.cells[0, 0].style :borders => [:left, :top]
         party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
@@ -104,15 +104,27 @@ class InvoicePdfLocal < Prawn::Document
         line_table = make_table(line_table_data, :header => false, :width => table_width, :cell_style => {:borders => [], :padding => 3}, :column_widths => [310, 40, 65, 40, 65])
 
         line_table.rows(0).style(:borders => [:top, :bottom], :font_style => :bold)
-        line_table.rows(line_table_data.length-1).style(:borders => [:bottom])
+        unless invoice.ending_details.nil? || invoice.ending_details.eql?("")
+          line_table.rows(line_table_data.length-1).style(:borders => [:bottom, :top])
+        else
+          line_table.rows(line_table_data.length-1).style(:borders => [:bottom])
+        end
+
         line_table.columns(0).style(:borders => [:left])
         line_table.columns(2..4).style(:align => :right)
         line_table.columns(line_table_data[0].length-1).style(:borders => [:right])
         line_table.cells[0, 0].style(:borders => [:left, :top, :bottom])
         line_table.cells[0, line_table_data[0].length-1].style(:borders => [:right, :top, :bottom])
 
-        line_table.cells[line_table_data.length-1, 0].style(:borders => [:left, :bottom])
-        line_table.cells[line_table_data.length-1, line_table_data[0].length-1].style(:borders => [:right, :bottom])
+        unless invoice.ending_details.nil? || invoice.ending_details.eql?("")
+        line_table.cells[line_table_data.length-1, 0].style(:borders => [:left, :bottom, :top])
+        line_table.cells[line_table_data.length-1, line_table_data[0].length-1].style(:borders => [:right, :bottom, :top])
+        else
+          line_table.cells[line_table_data.length-1, 0].style(:borders => [:left, :bottom])
+          line_table.cells[line_table_data.length-1, line_table_data[0].length-1].style(:borders => [:right, :bottom])
+        end
+
+        line_table.rows(line_table_data.length-1).border_top_width= 0.2 unless (invoice.ending_details.nil? || invoice.ending_details.eql?(""))
 
         line_table.draw
 
@@ -266,6 +278,10 @@ class InvoicePdfLocal < Prawn::Document
       ]
       counter = counter + 1
     end
+    table<<[
+        invoice.ending_details,
+        "", "", "", ""
+    ] unless (invoice.ending_details.nil? || invoice.ending_details.eql?(""))
     return table
   end
 
@@ -300,7 +316,7 @@ class InvoicePdfLocal < Prawn::Document
     text I18n.t('local.print.invoice.footer.payment_term', :term => invoice.payment_term)
     text I18n.t('local.print.invoice.footer.disclaimer1'), :inline_format => true
     move_down 60
-    text current_user.full_name
+    text invoice.author_name
   end
 
   def new_page?

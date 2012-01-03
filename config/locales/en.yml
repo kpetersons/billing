@@ -72,6 +72,9 @@ en:
       closed: "Closed"
       appealed: "Appealed"
       lapsed: "Lapsed"
+      expired_bt: "Expired BT"
+      reinstated: "Reinstated"
+      canceled: "Canceled"
     trademark: "Trademark matter"
     patent:    "Patent matter"
     design:    "Design matter"
@@ -434,7 +437,7 @@ en:
           vat: "VAT 22%"
           total_due: "Total due %{curr}"
         footer:
-          var_reverse_disclaimer: "<b>VAT reverse charge procedure is applicable according to Art 44 of the EU Council directive 2006/112/EC and Art 41(a) of the Latvian Law on VAT.</b>"
+          var_reverse_disclaimer: "<b>VAT reverse charge procedure is applicable according to Art. 44 of the EU Council directive 2006/112/EC and Art. 4.1(4) of the Latvian Law on VAT.</b>"
           remit_disclaimer: "Please remit within %{date} days."
           ask_for_reference: "Kindly refer to our Invoice number in your remittance"
   local:

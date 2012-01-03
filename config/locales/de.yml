@@ -1,31 +1,40 @@
 de:
   foreign:
     print:
-      invoice_issued_by: "Invoice issued by:"
+      invoice_issued_by: "Rechnung ausgestellt vom:"
+      party_profile:
+        line_1: "PATENTS * DESIGNS * TRADEMARKS * LITIGATION * LICENCES * VALUATION"
+        line_2: "COPYRIGHT * PLANT VARIETIES * SEARCHES * DOMAIN NAMES"
+        line_3: "PĒTERSONA PATENTS - P.O.Box 61, LV-1010, Riga, Latvia"
+      footer:
+        company: "<font size='11.35'><b>P</b></font><font size='9.67'>ĒTERSONA</font> <font size='11.35'><b>P</b></font><font size='9.67'>ATENTS VAT No. </font><font size='10.36'>LV40102013203</font>"
+        address: "<font size='6.48'> 2, Ausekla Street, Suite 2, LV-1010, Riga, LATVIA • Tel.: +371 6732-4695, +371 6732-5437 • Fax:  +371 6783-0030 • E-mail: petpat@petpat.lv • http://www.petpat.lv </font>"
+      banks:
+        banks: "<font size='8.12'>BANKS</font>"
       invoice:
         head:
-          date: "Date: %{date}"
-          invoice_no: "Invoice No. %{no}"
+          date: "Datum: %{date}"
+          invoice_no: "Rechnung Nr. %{no}"
         refs:
-          your_vat: "Your VAT No. %{no}"
-          attorney_charge: "Attorney in charge: %{name}"
-          your_ref: "Your Ref.: %{ref}"
-          po_number: "PO number: %{po}"
-          our_ref: "Our Ref.: %{initials}/%{ref}"
-          your_date: "Your date: %{date}"
+          your_vat: "Ihre USt-IdNr. %{no}"
+          attorney_charge: "Sacheführende Anwalt: %{name}"
+          your_ref: "Ihr Zeichen: %{ref}"
+          po_number: "Ihre Bestellung Nr.: %{po}"
+          our_ref: "Unser Zeichen: %{initials}/%{ref}"
+          your_date: "Ihr Datum: %{date}"
         lines:
-          caption: "Our measures and costs specified below:"
-          description: "Description"
-          official_fee: "Official fee %{curr}"
-          attorneys_fee: "Attorney's fee %{curr}"
-          discount: "Discount to our fees %{discount}%"
-          subtotal: "Subtotal %{curr}"
-          vat: "VAT 22%"
-          total_due: "Total due %{curr}"
+          caption: "Unsere Dienste und deren Taxierung:"
+          description: "Beschreibung"
+          official_fee: "Offizielle Gebühr %{curr}"
+          attorneys_fee: "Unsere Gebühr %{curr}"
+          discount: "Nachlass auf unsere Gebühr %{discount}%"
+          subtotal: "Zwischensumme %{curr}"
+          vat: "USt. 22%"
+          total_due: "Gesamt zur Bezahlung %{curr}"
         footer:
-          var_reverse_disclaimer: "<b>VAT reverse charge procedure is applicable according to Art 44 of the EU Council directive 2006/112/EC and Art 41(a) of the Latvian Law on VAT.</b>"
-          remit_disclaimer: "Please remit within %{date} days."
-          ask_for_reference: "Kindly refer to our Invoice number in your remittance"
+          var_reverse_disclaimer: "<b>Die Steuerschuldumkehr ist  laut  Art. 44 der Richtlinie 2006/112/EG des EG Rates und Art. 4.1(4) des Lettlands Umsatzsteuergesetzes anwendbar.</b>"
+          remit_disclaimer: "Bitte in %{date} Tagen bezahlen."
+          ask_for_reference: "Wir bitten Sie bei Ihrer Überweisung auf unserer Rechnungsnummer sich beziehen"
   local:
     print:
       invoice:

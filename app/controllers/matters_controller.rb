@@ -7,7 +7,7 @@ class MattersController < ApplicationController
   def index
     @order_by = params[:order_by]
     @direction = params[:direction]
-    @matters = VMatters.where(:matter_type_id => current_user.operating_party.matter_types).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page,:page => params[:my_matters_page])
+    @matters = VMatters.where(:matter_type_id => current_user.operating_party.matter_types).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page, :page => params[:my_matters_page])
     @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
   end
 
@@ -26,7 +26,7 @@ class MattersController < ApplicationController
     @direction = params[:direction]
     @precision = params[:precision]
     begin
-      @matters = VMatters.where(:matter_type_id => current_user.operating_party.matter_types).where(@detail_search.query).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page,:page => params[:my_matters_page])
+      @matters = VMatters.where(:matter_type_id => current_user.operating_party.matter_types).where(@detail_search.query).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page, :page => params[:my_matters_page])
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
       render "index" and return
     rescue => ex
@@ -114,68 +114,24 @@ class MattersController < ApplicationController
   def update
     @document = Document.find(params[:document][:id])
     Document.transaction do
-      if @document.matter.should_update? params
-        if @document.update_attributes(params[:document])
-          @matter = @document.matter
-          @date_effective =DateTime.now
-
-          @document.update_attribute(:version, @document.version + 1 || 1)
-          @document.matter.update_attribute(:version, @document.matter.version + 1 || 1)
-          @document.update_attribute(:orig_id, @document.id)
-          @matter.update_attribute(:orig_id, @matter.id)
-          @document.update_attribute(:date_effective, @date_effective)
-          @matter.update_attribute(:date_effective, @date_effective)
-
-          unless params[:document][:matter_attributes][:classes].nil?
-            #@matter.generate_registration_number
-            @matter.save_classes params
-          end
-          redirect_to matter_path(@matter)
-        else
-          render 'edit'
-        end
-      else
-
+      if @document.update_attributes(params[:document])
+        @matter = @document.matter
         @date_effective =DateTime.now
-        @document.matter.update_attribute(:date_effective_end, @date_effective)
-        @document.update_attribute(:date_effective_end, @date_effective)
 
-        if @document.version.nil?
-          @document.update_attribute(:version, 1)
+        @document.update_attribute(:version, @document.version + 1 || 1)
+        @document.matter.update_attribute(:version, @document.matter.version + 1 || 1)
+        @document.update_attribute(:orig_id, @document.id)
+        @matter.update_attribute(:orig_id, @matter.id)
+        @document.update_attribute(:date_effective, @date_effective)
+        @matter.update_attribute(:date_effective, @date_effective)
+
+        unless params[:document][:matter_attributes][:classes].nil?
+          #@matter.generate_registration_number
+          @matter.save_classes params
         end
-        if @document.matter.version.nil?
-          @document.matter.update_attribute(:version, 1)
-        end
-
-        params_copy = params.reject { |x| false }
-        params_copy[:document].reject! { |x| x.eql?("id") }
-        params_copy[:document][:matter_attributes].reject! { |x| x.eql?("id") }
-        params_copy[:document][:matter_attributes][:trademark_attributes].reject! { |x| x.eql?("id") } unless params_copy[:document][:matter_attributes][:trademark_attributes].nil?
-        params_copy[:document][:matter_attributes][:trademark_attributes].reject! { |x| x.eql?("id") } unless params_copy[:document][:matter_attributes][:trademark_attributes].nil?
-        params_copy[:document][:matter_attributes][:patent_attributes].reject! { |x| x.eql?("id") } unless params_copy[:document][:matter_attributes][:patent_attributes].nil?
-        params_copy[:document][:matter_attributes][:design_attributes].reject! { |x| x.eql?("id") } unless params_copy[:document][:matter_attributes][:design_attributes].nil?
-        params_copy[:document][:matter_attributes][:legal_attributes].reject! { |x| x.eql?("id") } unless params_copy[:document][:matter_attributes][:legal_attributes].nil?
-        params_copy[:document][:matter_attributes][:custom_attributes].reject! { |x| x.eql?("id") } unless params_copy[:document][:matter_attributes][:custom_attributes].nil?
-        params_copy[:document][:matter_attributes][:domain_attributes].reject! { |x| x.eql?("id") } unless params_copy[:document][:matter_attributes][:domain_attributes].nil?
-        params_copy[:document][:matter_attributes][:search_attributes].reject! { |x| x.eql?("id") } unless params_copy[:document][:matter_attributes][:search_attributes].nil?
-        params_copy[:document][:matter_attributes][:patent_attributes].reject! { |x| x.eql?("id") } unless params_copy[:document][:matter_attributes][:patent_attributes].nil?
-
-        @document_new = Document.new(params[:document])
-        @document_new.orig_id = @document.orig_id || @document.id
-        @document_new.version = @document.version + 1
-        @document_new.date_effective = @date_effective
-
-        @document_new.matter.orig_id = @document.matter.orig_id || @document.matter.id
-        @document_new.matter.version = @document.matter.version + 1
-        @document_new.matter.date_effective = @date_effective
-
-        if @document_new.save
-          @document_new.matter.generate_registration_number if @document_new.parent_id.nil?
-          redirect_to matter_path(@document_new.matter) and return
-        else
-          @document = @document_new
-          render 'edit'
-        end
+        redirect_to matter_path(@matter)
+      else
+        render 'edit'
       end
     end
   end

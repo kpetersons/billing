@@ -73,6 +73,7 @@ Billing::Application.routes.draw do
     resources :tasks, :controller => "MatterTasks" do
       member do
         put :flow
+        delete :remove
       end
       resources :invoices, :only => [:new]
     end
