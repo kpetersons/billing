@@ -12,4 +12,14 @@ module InvoicesHelper
     return has_function(:name => "funct.#{status.name}")
   end
 
+  def can_print_it? invoice
+    if invoice.status_name.eql?("invoice.status.approved") ||
+        invoice.status_name.eql?("invoice.status.paid") ||
+        invoice.status_name.eql?("invoice.status.awaiting") ||
+        invoice.status_name.eql?("invoice.status.issued")
+      return true
+    end
+    return false
+  end
+
 end

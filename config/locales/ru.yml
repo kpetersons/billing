@@ -23,7 +23,7 @@ ru:
           our_ref: "Наш Но.: %{initials}/%{ref}"
           your_date: "Ваша дата: %{date}"
         lines:
-          caption: "Ппедмет счета:"
+          caption: "Предмет счета:"
           description: "Описание"
           official_fee: "Гос. пошлина %{curr}"
           attorneys_fee: "Наши услуги %{curr}"

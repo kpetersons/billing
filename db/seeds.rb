@@ -1321,11 +1321,11 @@ end
 #  end
 #end
 #
-#DefaultFilter.transaction do
-#  DefaultFilter.delete_all
-#  DefaultFilterColumn.delete_all
-#  UserFilter.delete_all
-#  UserFilterColumn.delete_all
+DefaultFilter.transaction do
+  #DefaultFilter.delete_all
+  #DefaultFilterColumn.delete_all
+  #UserFilter.delete_all
+  #UserFilterColumn.delete_all
 #
 #  matter_columns = [
 #      {:column_query => 'registration_number', :column_position => 1, :is_default => true, :column_name => 'mi_registration_number', :column_type => 'col-text', :translate => false},
@@ -1379,64 +1379,65 @@ end
 #
 #  dashboard_columns = matter_columns
 #
-#  invoice_columns = [
-#      {:column_query => 'registration_number', :column_position => 0, :is_default => true, :column_name => 'ii_registration_number', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'customer_name', :column_position => 1, :is_default => true, :column_name => 'ii_customer_name', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'person', :column_position => 2, :is_default => false, :column_name => 'ii_person', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'address', :column_position => 3, :is_default => false, :column_name => 'ii_address', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'currency', :column_position => 4, :is_default => false, :column_name => 'ii_currency', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'author', :column_position => 5, :is_default => false, :column_name => 'ii_author', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'status', :column_position => 6, :is_default => true, :column_name => 'ii_status', :column_type => 'col-text', :translate => true},
-#      {:column_query => 'our_ref', :column_position => 7, :is_default => true, :column_name => 'ii_our_ref', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'your_ref', :column_position => 8, :is_default => true, :column_name => 'ii_your_ref', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'your_date', :column_position => 9, :is_default => false, :column_name => 'ii_your_date', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'invoice_date', :column_position => 10, :is_default => false, :column_name => 'ii_invoice_date', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'payment_term', :column_position => 11, :is_default => false, :column_name => 'ii_payment_term', :column_type => 'col-number', :translate => false},
-#      {:column_query => 'discount', :column_position => 12, :is_default => false, :column_name => 'ii_discount', :column_type => 'col-number', :translate => false},
-#      {:column_query => 'po_billing', :column_position => 13, :is_default => false, :column_name => 'ii_po_billing', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'subject', :column_position => 14, :is_default => false, :column_name => 'ii_subject', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'ending_details', :column_position => 15, :is_default => false, :column_name => 'ii_ending_details', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'created_at', :column_position => 16, :is_default => false, :column_name => 'ii_created_at', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'updated_at', :column_position => 17, :is_default => false, :column_name => 'ii_updated_at', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'rate', :column_position => 18, :is_default => false, :column_name => 'ii_rate', :column_type => 'col-number', :translate => false},
-#      {:column_query => 'apply_vat', :column_position => 19, :is_default => false, :column_name => 'ii_apply_vat', :column_type => 'col-boolean', :translate => false},
-#      {:column_query => 'date_paid', :column_position => 20, :is_default => false, :column_name => 'ii_date_paid', :column_type => 'col-date', :translate => false},
-#      #{:column_query => 'total_official_fee', :column_position => 21, :is_default => false, :column_name => 'ii_total_official_fee', :column_type => 'col-number', :translate => false},
-#      #{:column_query => 'total_attorney_fee', :column_position => 22, :is_default => false, :column_name => 'ii_total_attorney_fee', :column_type => 'col-number', :translate => false},
-#      #{:column_query => 'subtotal', :column_position => 23, :is_default => false, :column_name => 'ii_subtotal', :column_type => 'col-number', :translate => false},
-#      {:column_query => 'total_vat', :column_position => 22, :is_default => true, :column_name => 'ii_total_vat', :column_type => 'col-number', :translate => false},
-#      {:column_query => 'grand_total', :column_position => 23, :is_default => true, :column_name => 'ii_grand_total', :column_type => 'col-number', :translate => false}
-#  ]
+  invoice_columns = [
+      {:column_query => 'registration_number', :column_position => 0, :is_default => true, :column_name => 'ii_registration_number', :column_type => 'col-text', :translate => false},
+      {:column_query => 'customer_name', :column_position => 1, :is_default => true, :column_name => 'ii_customer_name', :column_type => 'col-text', :translate => false},
+      {:column_query => 'person', :column_position => 2, :is_default => false, :column_name => 'ii_person', :column_type => 'col-text', :translate => false},
+      {:column_query => 'address', :column_position => 3, :is_default => false, :column_name => 'ii_address', :column_type => 'col-text', :translate => false},
+      {:column_query => 'currency', :column_position => 4, :is_default => false, :column_name => 'ii_currency', :column_type => 'col-text', :translate => false},
+      {:column_query => 'author', :column_position => 5, :is_default => false, :column_name => 'ii_author', :column_type => 'col-text', :translate => false},
+      {:column_query => 'status', :column_position => 6, :is_default => true, :column_name => 'ii_status', :column_type => 'col-text', :translate => true},
+      {:column_query => 'our_ref', :column_position => 7, :is_default => true, :column_name => 'ii_our_ref', :column_type => 'col-text', :translate => false},
+      {:column_query => 'your_ref', :column_position => 8, :is_default => true, :column_name => 'ii_your_ref', :column_type => 'col-text', :translate => false},
+      {:column_query => 'your_date', :column_position => 9, :is_default => false, :column_name => 'ii_your_date', :column_type => 'col-date', :translate => false},
+      {:column_query => 'invoice_date', :column_position => 10, :is_default => false, :column_name => 'ii_invoice_date', :column_type => 'col-date', :translate => false},
+      {:column_query => 'payment_term', :column_position => 11, :is_default => false, :column_name => 'ii_payment_term', :column_type => 'col-number', :translate => false},
+      {:column_query => 'discount', :column_position => 12, :is_default => false, :column_name => 'ii_discount', :column_type => 'col-number', :translate => false},
+      {:column_query => 'po_billing', :column_position => 13, :is_default => false, :column_name => 'ii_po_billing', :column_type => 'col-text', :translate => false},
+      {:column_query => 'subject', :column_position => 14, :is_default => false, :column_name => 'ii_subject', :column_type => 'col-text', :translate => false},
+      {:column_query => 'ending_details', :column_position => 15, :is_default => false, :column_name => 'ii_ending_details', :column_type => 'col-text', :translate => false},
+      {:column_query => 'created_at', :column_position => 16, :is_default => false, :column_name => 'ii_created_at', :column_type => 'col-date', :translate => false},
+      {:column_query => 'updated_at', :column_position => 17, :is_default => false, :column_name => 'ii_updated_at', :column_type => 'col-date', :translate => false},
+      {:column_query => 'rate', :column_position => 18, :is_default => false, :column_name => 'ii_rate', :column_type => 'col-number', :translate => false},
+      {:column_query => 'apply_vat', :column_position => 19, :is_default => false, :column_name => 'ii_apply_vat', :column_type => 'col-boolean', :translate => false},
+      {:column_query => 'date_paid', :column_position => 20, :is_default => false, :column_name => 'ii_date_paid', :column_type => 'col-date', :translate => false},
+      #{:column_query => 'total_official_fee', :column_position => 21, :is_default => false, :column_name => 'ii_total_official_fee', :column_type => 'col-number', :translate => false},
+      #{:column_query => 'total_attorney_fee', :column_position => 22, :is_default => false, :column_name => 'ii_total_attorney_fee', :column_type => 'col-number', :translate => false},
+      #{:column_query => 'subtotal', :column_position => 23, :is_default => false, :column_name => 'ii_subtotal', :column_type => 'col-number', :translate => false},
+      {:column_query => 'total_vat', :column_position => 22, :is_default => true, :column_name => 'ii_total_vat', :column_type => 'col-number', :translate => false},
+      {:column_query => 'grand_total', :column_position => 23, :is_default => true, :column_name => 'ii_grand_total', :column_type => 'col-number', :translate => false},
+      {:column_query => 'issued_by', :column_position => 23, :is_default => true, :column_name => 'ii_issued_by', :column_type => 'col-text', :translate => false}
+  ]
 #
-#  tables = [
-#      "invoices",
-#      "matters",
-#      "dashboard",
-#      "customers"
-#  ]
+  tables = [
+      #"matters",
+      #"dashboard",
+      #"customers",
+      "invoices"
+  ]
 #
-#  columns = {
-#      "matters" => matter_columns,
-#      "dashboard" => dashboard_columns,
-#      "customers" => [],
-#      "invoices" => invoice_columns
-#  }
+  columns = {
+      #"matters" => matter_columns,
+      #"dashboard" => dashboard_columns,
+      #"customers" => [],
+      "invoices" => invoice_columns
+  }
 #
-#  tables.each do |table|
-#    default_filter = DefaultFilter.new(:table_name => table)
-#    if !default_filter.save()
-#      default_filter = DefaultFilter.find_by_table_name(table)
-#    end
-#    DefaultFilterColumn.transaction do
-#      columns[table].each do |column|
-#        filter_column = DefaultFilterColumn.new(column.merge(:default_filter_id => default_filter.id))
-#        unless filter_column.save
-#          puts "filter_column.errors: #{filter_column.errors}"
-#        end
-#      end
-#    end
-#  end
-#end
+  tables.each do |table|
+    default_filter = DefaultFilter.new(:table_name => table)
+    unless default_filter.save()
+      default_filter = DefaultFilter.find_by_table_name(table)
+    end
+    DefaultFilterColumn.transaction do
+      columns[table].each do |column|
+        filter_column = DefaultFilterColumn.new(column.merge(:default_filter_id => default_filter.id))
+        unless filter_column.save
+          puts "filter_column.errors: #{filter_column.errors}"
+        end
+      end
+    end
+  end
+end
 #
 #MatterTaskType.transaction do
 #  matter_task_types = [

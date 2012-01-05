@@ -376,6 +376,7 @@ en:
   mi_express_search: "Express search?"
   mi_domain_name: "Domain name"
   mi_registration_date: "Registration date"
+  ii_issued_by: "Issued by"
   ii_registration_number: "Invoice number"
   ii_customer_name: "Customer name"
   ii_person: "Contac person"

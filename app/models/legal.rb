@@ -27,6 +27,8 @@ class Legal < ActiveRecord::Base
 
   validates :date_of_closure, :date_not_far_future => true
   validates :date_of_order, :date_not_far_future => true
+  validates :opposite_party_agent_name, :presence => true
+  validates :opposite_party_name, :presence => true
 
   def opposite_party_name
     opposite_party.name unless opposite_party.nil?

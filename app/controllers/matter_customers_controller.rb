@@ -9,7 +9,7 @@ class MatterCustomersController < ApplicationController
   end
 
   def new
-    @matter_customer = MatterCustomer.new()
+    @matter_customer = MatterCustomer.new(:takeover_date => Date.today)
     @matter_customer.customer_type = params[:type].to_s.capitalize
     @matter_customer.author = current_user
     @matter_customer.matter = @matter
@@ -17,6 +17,11 @@ class MatterCustomersController < ApplicationController
 
   def create
     @matter_customer = MatterCustomer.new(params[:matter_customer])
+    puts params
+    if @matter_customer.customer_id.nil?
+      @matter_customer.errors.add(:customer_name, "may not be empty")
+      render 'new' and return
+    end
     @matter.change_customers_from_history @matter_customer
     if @matter_customer.save
       redirect_to @matter

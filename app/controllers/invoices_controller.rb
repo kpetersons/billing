@@ -51,6 +51,7 @@ class InvoicesController < ApplicationController
       @document.invoice.our_ref = @matter.document.registration_number
     end
     @document.invoice.customer = @matter.agent unless @matter.nil?
+    @document.invoice.author_name = current_user.full_name
     #@document.invoice.our_ref = "#{current_user.initials}/#{@matter.full_reg_nr_for_invoice}" unless @matter.nil?
   end
 

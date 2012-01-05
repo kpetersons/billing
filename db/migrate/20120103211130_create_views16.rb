@@ -1,17 +1,11 @@
-class CreateViews15 < ActiveRecord::Migration
+class CreateViews16 < ActiveRecord::Migration
   def up
-    execute <<-SQL
-      drop view if exists v_matter_tasks;
-    SQL
-    execute <<-SQL
-      drop view if exists v_matters;
-    SQL
     execute <<-SQL
       drop view if exists v_invoices;
     SQL
 
     execute <<-SQL
-     create view v_matters as (
+     create or replace view v_matters as (
       select
         ma.matter_type_id,
         ma.operating_party_id,
@@ -25,8 +19,8 @@ class CreateViews15 < ActiveRecord::Migration
         doc.created_at,
         doc.updated_at,
         doc.notes,
-        appl_company.name as applicant,
-        agent_company.name as agent,
+        applicant.name as applicant,
+        agent.name as agent,
         author_individual.first_name || ' ' || author_individual.last_name as author,
         op_company.name as operating_party,
         mt.name as matter_type,
@@ -95,6 +89,12 @@ class CreateViews15 < ActiveRecord::Migration
                   l.legal_type_id = lt.id
         ) l on ma.id = l.matter_id
         left outer join (
+        	select appl.orig_id, appl_c.name from customers appl, companies appl_c where appl.party_id = appl_c.party_id and appl.date_effective_end is null
+        ) applicant on applicant.orig_id = ma.applicant_id
+        left outer join (
+        	select ag.orig_id, ag_c.name from customers ag, companies ag_c where ag.party_id = ag_c.party_id and ag.date_effective_end is null
+        ) agent on agent.orig_id = ma.agent_id
+        left outer join (
                 select
                   c.date_of_order_alert,
                   c.ca_application_date,
@@ -109,12 +109,6 @@ class CreateViews15 < ActiveRecord::Migration
         left outer join domains dm 			on ma.id = dm.matter_id
         left outer join (select trim(overlay(overlay(classes placing ' ' from 1) placing ' ' from length(overlay(classes placing ' ' from 1)))) as classes, matter_id  from (
 			select array_agg(CAST(c.code AS integer))::text as classes, mc.matter_id FROM MATTER_clazzs mc, clazzs c where c.id = mc.clazz_id group by mc.matter_id) c) cl on ma.id = cl.matter_id,
-        customers applicant,
-        parties appl_party,
-        companies appl_company,
-        customers agent,
-        parties agent_party,
-        companies agent_company,
         users author,
         individuals author_individual,
         matter_types mt,
@@ -126,48 +120,15 @@ class CreateViews15 < ActiveRecord::Migration
         ma.matter_type_id = mt.id and
         ma.matter_status_id = ms.id and
         ma.author_id = author.id and
-        ma.applicant_id = applicant.orig_id and
-        ma.agent_id = agent.orig_id and
         ma.operating_party_id = op.id and
         author.individual_id = author_individual.id and
-        applicant.party_id = appl_party.id and
-        agent.party_id = agent_party.id and
-        applicant.date_effective_end is null and
-        agent.date_effective_end is null and
-        appl_party.id = appl_company.party_id and
-        agent_party.id = agent_company.party_id and
         op.company_id = op_company.id
       order by ma.id
     );
     SQL
 
     execute <<-SQL
-      create or replace view v_matter_tasks as (
-        select
-          mt.id,
-          mt.matter_id,
-          m.registration_number,
-          m.matter_type,
-          mtt.name as task_type,
-          mts.name as status,
-          substring(mt.description from 1 for 150) as description,
-          mt.proposed_deadline as deadline,
-          mt.created_at,
-          mt.updated_at
-        from
-          matter_tasks mt,
-          v_matters m,
-          matter_task_statuses mts,
-          matter_task_types mtt
-        where
-          mt.matter_id = m.id
-          and mts.id = mt.matter_task_status_id
-          and mtt.id = mt.matter_task_type_id
-      );
-    SQL
-
-    execute <<-SQL
-      create or replace view v_invoices as (
+     create or replace view v_invoices as (
 select
    case invoice_type when 0 then to_char(invoice_date, 'YY')||'/'|| registration_number else registration_number::text end as registration_number,
    operating_party_id,
@@ -179,8 +140,6 @@ select
    currency,
    author,
    status,
-   invoice_status_id,
-   issued_by,
    our_ref,
    your_ref,
    your_date,
@@ -196,11 +155,11 @@ select
    apply_vat,
    date_paid,
    trunc(round(total_official_fee, 2), 2) as total_official_fee,
-   trunc(round(total_attorney_fee, 2), 2) as total_attorney_fee,
-   trunc(round(total_attorney_fee + total_official_fee, 2), 2) as subtotal,
-   trunc(round(case apply_vat when true then (total_attorney_fee + total_official_fee) * 0.22 else 0 end, 2), 2)  as total_vat,
-   trunc(round(case apply_vat when true then (total_attorney_fee + total_official_fee) * 1.22 else (total_attorney_fee + total_official_fee) end, 2), 2) as grand_total,
-   matter_type_id
+   trunc(round(case invoice_type = 1 when true then case apply_vat when true then (total_attorney_fee + total_official_fee) * 0.22 else (total_attorney_fee + total_official_fee) end else (total_attorney_fee) * 0.22 end, 2), 2) as total_vat,
+   trunc(round(case invoice_type = 1 when true then case apply_vat when true then (total_attorney_fee + total_official_fee) * 1.22 else (total_attorney_fee + total_official_fee) end else (total_attorney_fee) * 1.22 + total_official_fee end, 2), 2) as grand_total,
+   total_discount,
+   matter_type_id,
+   author_name as issued_by
 from (
 	select
 	  author.operating_party_id,
@@ -212,8 +171,7 @@ from (
 	        curr.currency,
 	        ai.first_name || ' ' || ai.last_name as author,
 	        iss.name as status,
-          i.invoice_status_id,
-          i.author_name as issued_by,
+	        iss.id as invoice_status_id,
 	        i.our_ref,
 	        i.your_ref,
 	        i.your_date,
@@ -229,10 +187,12 @@ from (
 	        i.apply_vat,
 	        i.date_paid,
 	        il.total_official_fee,
-	        il.total_attorney_fee - coalesce(nullif(il.total_attorney_fee/100*i.discount, 0), 0) as total_attorney_fee,
+	        il.total_attorney_fee - total_discount as total_attorney_fee,
+	        il.total_discount,
 	        doc.registration_number,
 	        i.invoice_type,
-	        i.matter_type_id
+	        i.matter_type_id,
+	        i.author_name
 	      from
 	        invoices i	left outer join (
 	                  select p.id as party_id, c.id, co.name from customers c, parties p, companies co where c.party_id = p.id and p.id = co.party_id
@@ -250,11 +210,12 @@ from (
 	                  select * from exchange_rates
 	                    ) er on i.exchange_rate_id = er.id and er.currency_id = i.currency_id
 	              left outer join (
-	              		select invoice_id, sum(total_official_fee) as total_official_fee, sum(total_attorney_fee) as total_attorney_fee from (
+	              		select invoice_id, sum(total_official_fee) as total_official_fee, sum(total_attorney_fee) as total_attorney_fee, sum(total_discount) as total_discount from (
 	              		select invoice_id,
 	              		sum(total_official_fee) as total_official_fee,
-	              		sum(total_attorney_fee) as total_attorney_fee
-	              		from invoice_lines group by invoice_id, total_discount, items
+	              		sum(total_attorney_fee) as total_attorney_fee,
+	              		sum(total_discount) as total_discount
+	              		from invoice_lines group by invoice_id, items
 	              		) k group by invoice_id) il on il.invoice_id = i.id,
 	        users author,
 	        individuals ai,
@@ -266,9 +227,8 @@ from (
 	        iss.id = i.invoice_status_id and
 	        doc.id = i.document_id
 	      order by i.id) a
-);
+      );
     SQL
-
   end
 
   def down

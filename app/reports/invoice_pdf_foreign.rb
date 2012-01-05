@@ -149,7 +149,7 @@ class InvoicePdfForeign < Prawn::Document
   end
 
   def attorney_in_charge_group invoice
-    return I18n.t('foreign.print.invoice.refs.attorney_charge', :name=> invoice.contact_person.name) unless invoice.individual.nil?
+    return I18n.t('foreign.print.invoice.refs.attorney_charge', :name=> invoice.contact_person.name_wo_comma) unless invoice.individual.nil?
   end
 
   def references_group invoice

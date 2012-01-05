@@ -14,9 +14,9 @@ class CustomersController < ApplicationController
   end
 
   def new
-    @party = Party.new()
-    @party.customer = Customer.new(:customer_type => params[:customer_type])
-    @party.company = Company.new
+    @party = Party.new(:date_effective => Date.today)
+    @party.customer = Customer.new(:customer_type => params[:customer_type], :date_effective => Date.today)
+    @party.company = Company.new(:date_effective => Date.today)
   end
 
   def create

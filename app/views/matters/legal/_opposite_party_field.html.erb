@@ -1,6 +1,6 @@
 <%= fields.hidden_field :opposite_party_id %>
 <%= fields.label :opposite_party_name, t('matter.legal.fields.opposite_party') %>
-<%= fields.text_field :opposite_party_name %>
+<%= fields.text_field :opposite_party_name, :disabled => false || fields.object.persisted? %>
 <script>
 	$(document).ready(function(){
 		$('#document_matter_attributes_legal_attributes_opposite_party_name').autocomplete({

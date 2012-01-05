@@ -103,7 +103,7 @@
       <%= @document.invoice.ending_details %>&nbsp;
     </dd>
     <dt>
-      <label> Author name </label>
+      <label> Issued by </label>
     </dt>
     <dd>
       <%= @document.invoice.author_name %>&nbsp;
@@ -145,7 +145,7 @@
           </li>
         </ul>
       </div>
-      <% if @document.invoice.ind_invoice_status_name.eql?("invoice.status.issued") %>
+      <% if can_print_it? @document.invoice %>
           <div class="show controls slide-out">
             <ul>
               <li>
