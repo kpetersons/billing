@@ -22,7 +22,7 @@
           <div class="panel-footer controls" style="margin-top:1em;">
             <% if (has_function :name=>i_f.object.invoice_status.function.name) && (document.invoice.invoice_status.editable_state) %>
                 <%= i_f.submit 'Save lines', :name => "save_lines", :style => "display:inline-block; float:none;" %>
-                <%= i_f.select :preset_id, InvoiceLinePreset.where(:currency_id => i_f.object.currency_id, :operating_party_id => current_user.operating_party_id).all.collect { |tt| [(tt.name.nil?)? tt.name : t(tt.name), tt.id] }, {}, {:style => "display:inline-block; float:none; margin-left:5em; max-width:20em;"} %>
+                <%= i_f.select :preset_id, InvoiceLinePreset.where(:currency_id => i_f.object.currency_id, :operating_party_id => current_user.operating_party_id).all.collect { |tt| [(tt.name.nil? || tt.name.eql?(""))? tt.name : t(tt.name), tt.id] }, {}, {:style => "display:inline-block; float:none; margin-left:5em; max-width:20em;"} %>
                 <% if !InvoiceLinePreset.all.empty? %>
                     <%= i_f.submit 'Add line', :name => "add_line", :style => "display:inline-block; float:none;" %>
                 <% else %>
