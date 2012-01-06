@@ -11,7 +11,6 @@ class InvoicePdfLocal < Prawn::Document
         party_profile
       end
     end
-    move_down 58.031496
     table_width = 520
     fill_color "000000"
     font_families.update(
@@ -24,9 +23,9 @@ class InvoicePdfLocal < Prawn::Document
     font("InvoiceFamily") do
 
       if images
-        #move_down 10
+        move_down 50.456693
       else
-        move_down 87
+        move_down 155.519685
       end
 
       font_size(10) do

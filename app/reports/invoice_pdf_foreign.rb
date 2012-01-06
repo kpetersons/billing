@@ -35,12 +35,10 @@ class InvoicePdfForeign < Prawn::Document
 
     font("InvoiceFamily") do
 
-      move_down 5.66929134
-
       if images
-        move_down 10
+        move_down 4.04724414
       else
-        move_down 87
+        move_down 110.244094
       end
 
 
