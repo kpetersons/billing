@@ -29,6 +29,7 @@ class InvoiceLinePreset < ActiveRecord::Base
 
   validates :operating_party_id, :presence => true
   validates :currency_id, :presence => true
+  validates :name, :presence => true
 
   def operating_party_name
     operating_party.name unless operating_party.nil? 

@@ -36,6 +36,7 @@ en:
     change: "Change"
     confirm: "Confirm"
     add: "Add"
+    new: "New"
   address:
     create: "Create address"
     show:   "Address"
@@ -49,6 +50,7 @@ en:
       line_3: "Address line 3"
       line_4: "Address line 4"
   attorney_fee_type:
+    list: "Attorney fee types"
     fields:
       name: "Name"
       description: "Description"

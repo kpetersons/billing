@@ -116,7 +116,7 @@
     </dd>
   </dl>
   <%= render :partial => "status_controls", :locals => {:invoice => @document.invoice} %>
-  <% if @document.invoice.invoice_status.editable_state || has_function(:name => "funct.invoice.status.override") %>
+  <% if can_edit_invoice? @document.invoice.status_name, @document.invoice  %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
   <% end %>
   <% if @document.invoice.invoice_status.editable_state %>

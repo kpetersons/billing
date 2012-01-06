@@ -155,7 +155,7 @@ select
    apply_vat,
    date_paid,
    trunc(round(total_official_fee, 2), 2) as total_official_fee,
-   trunc(round(case invoice_type = 1 when true then case apply_vat when true then (total_attorney_fee + total_official_fee) * 0.22 else (total_attorney_fee + total_official_fee) end else (total_attorney_fee) * 0.22 end, 2), 2) as total_vat,
+   trunc(round(case invoice_type = 1 when true then case apply_vat when true then (total_attorney_fee + total_official_fee) * 0.22 else 0 end else (total_attorney_fee) * 0.22 end, 2), 2) as total_vat,
    trunc(round(case invoice_type = 1 when true then case apply_vat when true then (total_attorney_fee + total_official_fee) * 1.22 else (total_attorney_fee + total_official_fee) end else (total_attorney_fee) * 1.22 + total_official_fee end, 2), 2) as grand_total,
    total_discount,
    matter_type_id,

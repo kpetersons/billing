@@ -1,6 +1,6 @@
 <div class="status-controls" style="margin-left:2em;">
 	<% matter.available_statuses.each do |status|%>
-		<% if has_function :name => "funct.#{status.name}"%>
+		<% if can_change_state? matter, "funct.#{status.name}"%>
 			<div class="status-control">
 				<%=form_for status, :url => flow_matter_path(matter) do |f| %>
 					<%=f.hidden_field :id%>
