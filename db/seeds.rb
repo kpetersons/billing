@@ -76,7 +76,7 @@
 #    ["funct.customer.edit.save_as", true]
 #]
 #
-#@admin_functions = [
+@admin_functions = [
 #    ["funct.admin.link", true],
 #    ["funct.create.user", true],
 #    ["funct.activate.user", true],
@@ -85,8 +85,8 @@
 #    ["funct.add.role", true],
 #    ["funct.add.function", true],
 #    ["funct.create.message", true],
-#    ["funct.edit.message", true],
-#]
+    ["funct.view.all.fee.types", true]
+]
 #
 #@minimal_functions = [
 #    ["funct.login", true],
@@ -105,7 +105,7 @@
 #}
 #
 @functions = Array.new.concat(@matter_functions)
-#@functions.concat(@admin_functions)
+@functions.concat(@admin_functions)
 #@functions.concat(@matter_functions)
 #@functions.concat(@invoice_functions)
 #@functions.concat(@customer_functions)

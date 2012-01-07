@@ -282,8 +282,7 @@ class InvoicePdfForeign < Prawn::Document
       move_down 20
       text I18n.t('foreign.print.invoice.footer.remit_disclaimer', :date => invoice.payment_term)
       text I18n.t('foreign.print.invoice.footer.ask_for_reference'), :inline_format => true
-      move_down 30
-      move_down 30
+      move_down 34.015748
       text (!images) ? invoice.author_name : "#{I18n.t('foreign.print.invoice_issued_by')} #{invoice.author_name }"
     end
   end

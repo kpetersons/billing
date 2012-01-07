@@ -349,8 +349,7 @@ class InvoicePdfLocal < Prawn::Document
       move_down 10
       text I18n.t('local.print.invoice.footer.payment_term', :term => invoice.payment_term)
       text I18n.t('local.print.invoice.footer.disclaimer1'), :inline_format => true
-      move_down 30
-      move_down 20
+      move_down 34.015748
       text invoice.author_name
     end
   end
