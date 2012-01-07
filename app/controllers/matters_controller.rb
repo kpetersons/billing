@@ -213,7 +213,7 @@ class MattersController < ApplicationController
     @matter = Matter.find(params[:id])
     @document = @matter.document
     @image = MatterImage.find(params[:image_id])
-    if MatterImage
+    if MatterImage.delete(@image)
       flash.now[:success] = "Image removed."
       redirect_to @matter and return
     end
