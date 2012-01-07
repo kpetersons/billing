@@ -32,7 +32,8 @@ class InvoiceLine < ActiveRecord::Base
   validates :attorney_fee_type_id, :presence => true, :if => Proc.new { |invoice_line| !invoice_line.attorney_fee.nil? }
   validates :official_fee_type_id, :presence => true, :if => Proc.new { |invoice_line| !invoice_line.official_fee.nil? }
   #
-  validates :offering, :presence => true, :length => {:within => 5..250}
+  validates :offering, :presence => true, :length => {:within => 5..1000}
+  validates :details,  :presence => true, :length  => {:within => 5..1000}
   validates :items, :presence => true, :numericality => true
 
   before_save :calculate_totals

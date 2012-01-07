@@ -1,6 +1,10 @@
 class InvoicePdfLocal < Prawn::Document
   include ActionView::Helpers::NumberHelper
 
+  def table_width
+    520
+  end
+
   def to_pdf(invoice, current_user, watermark, images, top)
 
     if images
@@ -11,7 +15,7 @@ class InvoicePdfLocal < Prawn::Document
         party_profile
       end
     end
-    table_width = 520
+
     fill_color "000000"
     font_families.update(
         "InvoiceFamily" => {
@@ -36,128 +40,115 @@ class InvoicePdfLocal < Prawn::Document
         inv_number_cell.draw
       end
       move_down 30
-      font_size(8) do
-        party_info_data = operating_party_table(invoice, current_user)
+      bounding_box([0, cursor], :width => 520, :height => 570.19685 - 11.3385827 - 2.83464567) do
+        font_size(8) do
+          party_info_data = operating_party_table(invoice, current_user)
 
-        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 190, 100, 130], :cell_style => {:borders => [], :padding => 1})
+          party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 190, 100, 130], :cell_style => {:borders => [], :padding => 1})
 
-        party_info_table.cells[0, 0].style :borders => [:left, :top]
-        party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
-        party_info_table.cells[0, 2].style :borders => [:top]
-        party_info_table.cells[0, 3].style :borders => [:top, :right], :font_style => :bold
+          party_info_table.cells[0, 0].style :borders => [:left, :top]
+          party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
+          party_info_table.cells[0, 2].style :borders => [:top]
+          party_info_table.cells[0, 3].style :borders => [:top, :right], :font_style => :bold
 
-        party_info_table.cells[1, 0].style :borders => [:left]
-        party_info_table.cells[1, 1].style :font_style => :bold
-        party_info_table.cells[1, 3].style :borders => [:right], :font_style => :bold
-        party_info_table.cells[2, 0].style :borders => [:left]
-        party_info_table.cells[2, 1].style :font_style => :bold
-        party_info_table.cells[2, 3].style :borders => [:right], :font_style => :bold
+          party_info_table.cells[1, 0].style :borders => [:left]
+          party_info_table.cells[1, 1].style :font_style => :bold
+          party_info_table.cells[1, 3].style :borders => [:right], :font_style => :bold
+          party_info_table.cells[2, 0].style :borders => [:left]
+          party_info_table.cells[2, 1].style :font_style => :bold
+          party_info_table.cells[2, 3].style :borders => [:right], :font_style => :bold
 
-        party_info_table.cells[3, 0].style :borders => [:left, :bottom]
-        party_info_table.cells[3, 1].style :borders => [:bottom], :font_style => :bold
-        party_info_table.cells[3, 2].style :borders => [:bottom]
-        party_info_table.cells[3, 3].style :borders => [:bottom, :right], :font_style => :bold
-        party_info_table.draw
+          party_info_table.cells[3, 0].style :borders => [:left, :bottom]
+          party_info_table.cells[3, 1].style :borders => [:bottom], :font_style => :bold
+          party_info_table.cells[3, 2].style :borders => [:bottom]
+          party_info_table.cells[3, 3].style :borders => [:bottom, :right], :font_style => :bold
+          party_info_table.draw
 
-        move_down 10
-
-        party_info_data = customer_party_table(invoice)
-        party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 190, 100, 130], :cell_style => {:borders => [], :padding => 0.5})
-
-        party_info_table.cells[0, 0].style :borders => [:left, :top]
-        party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
-        party_info_table.cells[0, 2].style :borders => [:top]
-        party_info_table.cells[0, 3].style :borders => [:top, :right], :font_style => :bold
-
-        party_info_table.cells[1, 0].style :borders => [:left]
-        party_info_table.cells[1, 1].style :font_style => :bold
-        party_info_table.cells[1, 3].style :borders => [:right], :font_style => :bold
-        party_info_table.cells[2, 0].style :borders => [:left]
-        party_info_table.cells[2, 1].style :font_style => :bold
-        party_info_table.cells[2, 3].style :borders => [:right], :font_style => :bold
-
-        party_info_table.cells[3, 0].style :borders => [:left, :bottom]
-        party_info_table.cells[3, 1].style :borders => [:bottom], :font_style => :bold
-        party_info_table.cells[3, 2].style :borders => [:bottom]
-        party_info_table.cells[3, 3].style :borders => [:bottom, :right], :font_style => :bold
-
-
-        max_height = 0
-        4.times do |idx|
-          max_height = party_info_table.cells[3, idx].natural_content_height if max_height < party_info_table.cells[3, idx].natural_content_height
-        end
-        4.times do |idx|
-          party_info_table.cells[3, idx].height = max_height + 2
-        end
-
-        party_info_table.draw
-
-        move_down 10
-        ref_table = make_table(invoice_refs_table(invoice), :width => table_width, :cell_style => {:borders =>[], :padding_left => 0})
-        ref_table.draw
-
-        move_down 10
-        text invoice.subject
-        move_down 10
-        line_table_data = invoice_line_table(invoice)
-        line_table = make_table(line_table_data, :header => false, :width => table_width, :cell_style => {:borders => [], :padding => 3}, :column_widths => [310, 40, 65, 40, 65])
-
-        line_table.rows(0).style(:borders => [:top, :bottom], :font_style => :bold)
-        unless invoice.ending_details.nil? || invoice.ending_details.eql?("")
-          line_table.rows(line_table_data.length-1).style(:borders => [:bottom, :top])
-        else
-          line_table.rows(line_table_data.length-1).style(:borders => [:bottom])
-        end
-
-        line_table.columns(0).style(:borders => [:left])
-        line_table.columns(2..4).style(:align => :right)
-        line_table.columns(line_table_data[0].length-1).style(:borders => [:right])
-        line_table.cells[0, 0].style(:borders => [:left, :top, :bottom])
-        line_table.cells[0, line_table_data[0].length-1].style(:borders => [:right, :top, :bottom])
-
-        unless invoice.ending_details.nil? || invoice.ending_details.eql?("")
-        line_table.cells[line_table_data.length-1, 0].style(:borders => [:left, :bottom, :top])
-        line_table.cells[line_table_data.length-1, line_table_data[0].length-1].style(:borders => [:right, :bottom, :top])
-        else
-          line_table.cells[line_table_data.length-1, 0].style(:borders => [:left, :bottom])
-          line_table.cells[line_table_data.length-1, line_table_data[0].length-1].style(:borders => [:right, :bottom])
-        end
-
-        line_table.rows(line_table_data.length-1).border_top_width= 0.2 unless (invoice.ending_details.nil? || invoice.ending_details.eql?(""))
-
-        line_table.draw
-
-        if new_page?
-          start_new_page
-          move_down 57
-          text I18n.t('local.print.invoice.head.invoice_no_small', :no => "#{invoice.invoice_date.strftime("%y")}/#{invoice.number}"), :inline_format => true
-          text I18n.t('local.print.invoice.head.invoice_page_small', :from => page_count, :to => page_count), :inline_format => true
-        end
-
-        group(false) do
-          line_table_totals_data = totals_invoice_line_table invoice
-          line_table_totals = make_table(line_table_totals_data, :width => table_width, :cell_style => {:borders => [], :padding => 3}, :column_widths => [415, 40, 65])
-          line_table_totals.row(line_table_totals_data.length-1).style(:font_style => :bold)
-          line_table_totals.columns(0).style(:align => :right)
-          line_table_totals.columns(2).style(:align => :right)
-          line_table_totals.draw
           move_down 10
-          draw_invoice_footer invoice, current_user
-        end
-        if page_count > 1
-          go_to_page 1
-          move_down 152
-          move_down 30
-          text I18n.t('local.print.invoice.head.invoice_page_small', :from => page_count, :to => page_count), :inline_format => true
+
+          party_info_data = customer_party_table(invoice)
+          party_info_table = make_table(party_info_data, :width => table_width, :column_widths => [100, 190, 100, 130], :cell_style => {:borders => [], :padding => 0.5})
+
+          party_info_table.cells[0, 0].style :borders => [:left, :top]
+          party_info_table.cells[0, 1].style :borders => [:top], :font_style => :bold
+          party_info_table.cells[0, 2].style :borders => [:top]
+          party_info_table.cells[0, 3].style :borders => [:top, :right], :font_style => :bold
+
+          party_info_table.cells[1, 0].style :borders => [:left]
+          party_info_table.cells[1, 1].style :font_style => :bold
+          party_info_table.cells[1, 3].style :borders => [:right], :font_style => :bold
+          party_info_table.cells[2, 0].style :borders => [:left]
+          party_info_table.cells[2, 1].style :font_style => :bold
+          party_info_table.cells[2, 3].style :borders => [:right], :font_style => :bold
+
+          party_info_table.cells[3, 0].style :borders => [:left, :bottom]
+          party_info_table.cells[3, 1].style :borders => [:bottom], :font_style => :bold
+          party_info_table.cells[3, 2].style :borders => [:bottom]
+          party_info_table.cells[3, 3].style :borders => [:bottom, :right], :font_style => :bold
+
+
+          max_height = 0
+          4.times do |idx|
+            max_height = party_info_table.cells[3, idx].natural_content_height if max_height < party_info_table.cells[3, idx].natural_content_height
+          end
+          4.times do |idx|
+            party_info_table.cells[3, idx].height = max_height + 2
+          end
+
+          party_info_table.draw
+
+          move_down 10
+          ref_table = make_table(invoice_refs_table(invoice), :width => table_width, :cell_style => {:borders =>[], :padding_left => 0})
+          ref_table.draw
+
+          move_down 10
+          text invoice.subject
+          move_down 10
+          line_table_data = invoice_line_table(invoice)
+          line_table = line_table_data #make_table(line_table_data, :header => false, :width => table_width, :cell_style => {:borders => [], :padding => 3}, :column_widths => [310, 40, 65, 40, 65])
+
+          bg_page = page_count
+          group do
+            if bg_page < page_count
+              move_up (842 - 640 - 10.7716536)
+            end
+            line_table_totals_data = totals_invoice_line_table invoice
+            line_table_totals = make_table(line_table_totals_data, :width => table_width, :cell_style => {:borders => [], :padding => 3}, :column_widths => [415, 40, 65])
+            line_table_totals.row(line_table_totals_data.length-1).style(:font_style => :bold)
+            line_table_totals.columns(0).style(:align => :right)
+            line_table_totals.columns(2).style(:align => :right)
+            line_table_totals.draw
+            move_down 10
+            draw_invoice_footer invoice, current_user
+          end
+
         end
       end
     end
     if images
-      bounding_box([-15, 38], :width => 642.022) do
-        footer
+      page_count.times do |x|
+        go_to_page x
         bank_info
       end
     end
+
+    if page_count > 1
+      page_count.times do |x|
+        go_to_page x
+        if x < page_count-1
+          move_up 162
+        end
+        move_down 142
+        fill_color "000000"
+        font("InvoiceFamily") do
+          if x < page_count - 1
+            text I18n.t('local.print.invoice.head.invoice_no_small', :no => "#{invoice.invoice_date.strftime("%y")}/#{invoice.number}"), :inline_format => true
+          end
+          text I18n.t('local.print.invoice.head.invoice_page_small', :from => page_count - x, :of => page_count), :inline_format => true
+        end
+      end
+    end
+
     if watermark
       for i in 0..page_count
         go_to_page i
@@ -259,28 +250,71 @@ class InvoicePdfLocal < Prawn::Document
   def invoice_line_table invoice
     table = []
     table<<invoice_line_table_header
+    h_table = make_table(table, :header => false, :width => table_width, :cell_style => {:borders => [], :padding => 3}, :column_widths => [310, 40, 65, 40, 65])
+    h_table.columns(2..4).style(:align => :right)
+    h_table.columns(1..3).style(:borders => [:top, :bottom])
+    h_table.columns(0).style(:borders => [:left, :top, :bottom])
+    h_table.columns(4).style(:borders => [:right, :top, :bottom])
+
+    h_table.draw
     counter = 1
     invoice.invoice_lines.each do |line|
-      line_data = make_table([
-                                 ["#{counter}.#{(!line.official_fee_type_id.nil? && !line.official_fee_type.apply_vat?) ? " * " : " "}#{line.offering}"],
-                                 [line.details]
-                             ],
-                             :cell_style => {:borders => [], :padding => 0},
-                             :column_widths => [310])
-      line_data.rows(1).style :font_style => :italic
-      table<<[
-          line_data,
-          line.units,
-          number_to_currency((line.official_fee_type_id.nil?) ? line.attorney_fee : line.official_fee, :unit => "", :delimiter => ""),
-          (line.items.to_i == line.items) ? number_with_precision(line.items, :precision => 0) : line.items,
-          number_to_currency((line.official_fee_type_id.nil?) ? line.total_attorney_fee : line.total_official_fee, :unit => "", :delimiter => "")
-      ]
+      bg_page = page_count
+      group do
+        if bg_page < page_count
+          move_up (842 - 680)
+        end
+        line_data = make_table([
+                                   ["#{counter}.#{(!line.official_fee_type_id.nil? && !line.official_fee_type.apply_vat?) ? " * " : " "}#{line.offering}"],
+                                   [line.details]
+                               ],
+                               :cell_style => {:borders => [], :padding => 0},
+                               :column_widths => [310])
+        line_data.rows(1).style :font_style => :italic
+        l_table = make_table(
+            []<<[
+                line_data,
+                line.units,
+                number_to_currency((line.official_fee_type_id.nil?) ? line.attorney_fee : line.official_fee, :unit => "", :delimiter => ""),
+                (line.items.to_i == line.items) ? number_with_precision(line.items, :precision => 0) : line.items,
+                number_to_currency((line.official_fee_type_id.nil?) ? line.total_attorney_fee : line.total_official_fee, :unit => "", :delimiter => "")
+            ], :header => false, :width => table_width, :cell_style => {:borders => [], :padding => 3}, :column_widths => [310, 40, 65, 40, 65])
+
+        l_table.columns(0).style(:borders => [:left])
+        l_table.columns(2..4).style(:align => :right)
+        l_table.columns(4).style(:borders => [:right])
+        #l_table.cells[0, 0].style(:borders => [:left, :top, :bottom])
+        if invoice.invoice_lines.count == counter && (invoice.ending_details.nil? || invoice.ending_details.eql?(""))
+          l_table.columns(0).style(:borders => [:left, :bottom])
+          l_table.columns(1..3).style(:borders => [:bottom])
+          l_table.columns(2..4).style(:align => :right)
+          l_table.columns(4).style(:borders => [:right, :bottom])
+        end
+        l_table.draw
+      end
       counter = counter + 1
     end
-    table<<[
-        invoice.ending_details,
-        "", "", "", ""
-    ] unless (invoice.ending_details.nil? || invoice.ending_details.eql?(""))
+    unless (invoice.ending_details.nil? || invoice.ending_details.eql?(""))
+      bg_page = page_count
+      group do
+        if bg_page < page_count
+          move_up (842 - 680)
+        end
+        f_table = make_table([]<<[
+            invoice.ending_details,
+            "", "", "", ""
+        ], :header => false, :width => table_width, :cell_style => {:borders => [], :padding => 3}, :column_widths => [310, 40, 65, 40, 65])
+
+        f_table.columns(0).style(:borders => [:left, :bottom, :top])
+        f_table.columns(1..3).style(:borders => [:bottom, :top])
+        f_table.columns(2..4).style(:align => :right)
+        f_table.columns(4).style(:borders => [:right, :bottom, :top])
+
+        f_table.row(0).border_top_width= 0.5
+        f_table.row(0).border_top_color= "000000"
+        f_table.draw
+      end
+    end
     return table
   end
 
@@ -310,19 +344,15 @@ class InvoicePdfLocal < Prawn::Document
   end
 
   def draw_invoice_footer (invoice, current_user)
-    text I18n.t('local.print.invoice.footer.disclaimer') if invoice.has_official_fees?
-    move_down 10
-    text I18n.t('local.print.invoice.footer.payment_term', :term => invoice.payment_term)
-    text I18n.t('local.print.invoice.footer.disclaimer1'), :inline_format => true
-    move_down 60
-    text invoice.author_name
-  end
-
-  def new_page?
-    if (y/671).to_int < ((y+148)/671).to_int
-      return true
+    group do
+      text I18n.t('local.print.invoice.footer.disclaimer') if invoice.has_official_fees?
+      move_down 10
+      text I18n.t('local.print.invoice.footer.payment_term', :term => invoice.payment_term)
+      text I18n.t('local.print.invoice.footer.disclaimer1'), :inline_format => true
+      move_down 30
+      move_down 20
+      text invoice.author_name
     end
-    return false
   end
 
   def logo
@@ -632,29 +662,22 @@ class InvoicePdfLocal < Prawn::Document
     end
   end
 
-  def footer
-    fill do
-      fill_color "7E8083"
-      rectangle([0.346, 0.858], 545.305, 0.858)
-      #fill_color "000000"
-      move_down 1
-    end
-  end
-
   def bank_info
-    font_families.update(
-        "footer" => {
-            :normal => "#{Rails.root}/app/reports/fonts/Times_New_Roman.ttf",
-            :bold => "#{Rails.root}/app/reports/fonts/Times_New_Roman_bold.ttf"})
-    font("footer") do
-      move_down 4
+    fill_color "7E8083"
+    bounding_box([-15, 33], :width => 642.022, :height => 0.5) do
+      fill do
+        rectangle([0.346, 0.858], 545.305, 0.858)
+      end
+    end
+    move_down 0.5
+    bounding_box([-15, 32], :width => 642.022, :height => 36) do
       font("InvoiceFamily") do
-        fill_color "7E8083"
         text I18n.t("local.print.footer.company"), :inline_format => :true
         text I18n.t("local.print.footer.vat_reg_nr"), :size => 8.2
         text I18n.t("local.print.footer.address"), :size => 8.15
       end
     end
+    fill_color "000000"
   end
 
 end

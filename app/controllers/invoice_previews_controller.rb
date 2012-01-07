@@ -25,7 +25,7 @@ class InvoicePreviewsController < ApplicationController
     I18n.locale = @lang
 
     if @invoice.invoice_type ==0
-      output = InvoicePdfLocal.new(:compress => true, :page_size => "A4").to_pdf(@invoice, current_user, false, true, 100)
+      output = InvoicePdfLocal.new(:compress => true, :page_size => "A4", :bottom_margin => 0).to_pdf(@invoice, current_user, false, true, 100)
       send_data output, :filename => "#{@lang}_#{@invoice.id}.pdf",
                 :type => "application/pdf"
     else

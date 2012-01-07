@@ -455,8 +455,8 @@ en:
         address: "Ausekļa iela 2-2, Rīga, LV-1010                   Konts: LV86HABA0001409046866           E-pasts: petpat@petpat.lv, http://www.petpat.lv"
       invoice:
         head:
-          invoice_no_small: "<b>Rēķina nr.</b>%{no}"
-          invoice_page_small: "<font size='9'>Lapa nr. %{from} no %{to} </font>"
+          invoice_no_small: "<font size='9'><b>Rēķina nr.</b>%{no}</font>"
+          invoice_page_small: "<font size='9'>Lapa nr. %{from} no %{of} </font>"
           invoice_no: "Rēķins Nr. %{no}"
           created_place: "Rēķina datums: %{place}"
         refs:

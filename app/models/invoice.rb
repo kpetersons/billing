@@ -72,7 +72,7 @@ class Invoice < ActiveRecord::Base
   validates :invoice_type, :presence => true
   validates :customer_id, :presence => true
   validates :payment_term, :presence => true, :numericality => true
-  validates :subject, :presence => true, :length => {:within => 5..500}
+  validates :subject, :presence => true, :length => {:within => 5..1999}
   validates :author_name, :presence => true
 
   validates :your_date, :date_not_far_future => true

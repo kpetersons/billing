@@ -40,56 +40,63 @@ class InvoicePdfForeign < Prawn::Document
       else
         move_down 110.244094
       end
+      puts "cursor #{cursor}"
+      bounding_box([0, cursor], :width => 523, :height => 567.03937 + 28.3464567 - 4.66929134) do
+        font_size(8) do
+          head_table = Prawn::Table.new([
+                                            [
+                                                (customer_info_group invoice),
+                                                (left_side_group invoice)
+                                            ]
+                                        ], self, :cell_style => {:borders => []})
+          head_table.draw
 
+          your_info_table = make_table([
+                                           [
+                                               (your_vat_group invoice),
+                                               (attorney_in_charge_group invoice)
+                                           ]
+                                       ], :width => 520, :cell_style => {:borders => [], :padding_top => 5, :padding_bottom => 5, :padding_left => 0})
+          your_info_table.cells[0, 0].style :font_style => :bold
+          your_info_table.cells[0, 1].style :font_style => :bold_italic
+          your_info_table.draw
+          move_down 10
 
-      font_size(8) do
-        head_table = Prawn::Table.new([
-                                          [
-                                              (customer_info_group invoice),
-                                              (left_side_group invoice)
-                                          ]
-                                      ], self, :cell_style => {:borders => []})
-        head_table.draw
+          (references_group invoice).draw
+          (po_number_group invoice).draw
+          (subject_group invoice).draw
+          (invoice_line_caption_group invoice).draw
+          (invoice_line_group invoice)
 
-        your_info_table = make_table([
-                                         [
-                                             (your_vat_group invoice),
-                                             (attorney_in_charge_group invoice)
-                                         ]
-                                     ], :width => 520, :cell_style => {:borders => [], :padding_top => 5, :padding_bottom => 5, :padding_left => 0})
-        your_info_table.cells[0, 0].style :font_style => :bold
-        your_info_table.cells[0, 1].style :font_style => :bold_italic
-        your_info_table.draw
-        move_down 10
-      end
-
-      font_size(8) do
-        (references_group invoice).draw
-        (po_number_group invoice).draw
-        (subject_group invoice).draw
-        (invoice_line_caption_group invoice).draw
-        (invoice_line_group invoice).draw
-        group do
-          if !invoice.discount.nil? && invoice.discount > 0
-            discount = invoice_line_discount_group invoice
-            discount.draw
+          bg_page = page_count
+          group do
+            if bg_page < page_count
+              move_up (842 - 660 - 71.023622 - 0.708661415)
+            end
+            if !invoice.discount.nil? && invoice.discount > 0
+              discount = invoice_line_discount_group invoice
+              discount.draw
+            end
+            #
+            footer_group = invoice_line_footer_group invoice
+            footer_group.draw
+            move_down 20
+            invoice_preparer_group invoice, current_user, images
           end
-          #
-          footer_group = invoice_line_footer_group invoice
-          footer_group.draw
-          move_down 20
-          imgs = images
-          invoice_preparer_group invoice, current_user, images
         end
       end
     end
+
     if images
-      bounding_box([-15, 53], :width => 642.022) do
-        footer
-        fill do
-          rectangle([0.346, 0.518], 559.305, 0.518)
+      page_count.times do |x|
+        go_to_page x
+        bounding_box([-15, 53], :width => 642.022) do
+          footer
+          fill do
+            rectangle([0.346, 0.518], 559.305, 0.518)
+          end
+          bank_info
         end
-        bank_info
       end
     end
     if watermark
@@ -181,15 +188,16 @@ class InvoicePdfForeign < Prawn::Document
   end
 
   def invoice_line_group invoice
-    lines_table = make_table(
-        lines(invoice),
-        :width => width,
-        :cell_style=> {:borders => [:top, :right, :bottom, :left], :padding => 5},
-        :column_widths => [409, 53, 56]
-    )
-    lines_table.columns(1).style :align => :right
-    lines_table.columns(2).style :align => :right
-    return lines_table
+    lines(invoice)
+    #lines_table = make_table(
+    #    lines(invoice),
+    #    :width => width,
+    #    :cell_style=> {:borders => [:top, :right, :bottom, :left], :padding => 5},
+    #    :column_widths => [409, 53, 56]
+    #)
+    #lines_table.columns(1).style :align => :right
+    #lines_table.columns(2).style :align => :right
+    #return lines_table
   end
 
   def invoice_line_discount_group invoice
@@ -275,8 +283,7 @@ class InvoicePdfForeign < Prawn::Document
       text I18n.t('foreign.print.invoice.footer.remit_disclaimer', :date => invoice.payment_term)
       text I18n.t('foreign.print.invoice.footer.ask_for_reference'), :inline_format => true
       move_down 30
-      imgs = images
-      #todo ielikt i18n
+      move_down 30
       text (!images) ? invoice.author_name : "#{I18n.t('foreign.print.invoice_issued_by')} #{invoice.author_name }"
     end
   end
@@ -288,6 +295,16 @@ class InvoicePdfForeign < Prawn::Document
         I18n.t('foreign.print.invoice.lines.official_fee', :curr => invoice.currency.name),
         I18n.t('foreign.print.invoice.lines.attorneys_fee', :curr => invoice.currency.name)
     ]
+    lines_table = make_table(
+      table,
+        :width => width,
+        :cell_style=> {:borders => [:top, :right, :bottom, :left], :padding => 5},
+        :column_widths => [409, 53, 56]
+    )
+    lines_table.columns(1).style :align => :right
+    lines_table.columns(2).style :align => :right
+    lines_table.draw
+
     counter = 1
     invoice.invoice_lines.each do |line|
       if line.items > 1 || (line.items < 1 && line.items > 0)
@@ -306,10 +323,24 @@ class InvoicePdfForeign < Prawn::Document
                                :column_widths => [409])
       end
       line_data.rows(1).style :font_style => :italic
-      table<<[line_data,
-              "#{(line.total_official_fee == 0) ? '-' : (curr line.total_official_fee)}",
-              "#{(line.total_attorney_fee == 0) ? '-' : (curr line.total_attorney_fee)}"
-      ]
+      lines_table = make_table(
+          [[line_data,
+           "#{(line.total_official_fee == 0) ? '-' : (curr line.total_official_fee)}",
+           "#{(line.total_attorney_fee == 0) ? '-' : (curr line.total_attorney_fee)}"
+          ]],
+          :width => width,
+          :cell_style=> {:borders => [:top, :right, :bottom, :left], :padding => 5},
+          :column_widths => [409, 53, 56]
+      )
+      lines_table.columns(1).style :align => :right
+      lines_table.columns(2).style :align => :right
+      bg_page = page_count
+      group do
+        if bg_page < page_count
+          move_up (842 - 660 - 71.023622 - 0.708661415)
+        end
+        lines_table.draw
+      end
       counter = counter + 1
     end
     return table
