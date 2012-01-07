@@ -251,7 +251,7 @@ ActiveRecord::Schema.define(:version => 20120103211130) do
     t.decimal  "official_fee",         :precision => 8,  :scale => 2
     t.decimal  "attorney_fee",         :precision => 8,  :scale => 2
     t.integer  "author_id"
-    t.string   "offering"
+    t.text     "offering"
     t.decimal  "items",                :precision => 10, :scale => 2
     t.string   "units"
     t.decimal  "total",                :precision => 10, :scale => 2
