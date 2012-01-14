@@ -17,4 +17,13 @@ class AttorneyFeeType < ActiveRecord::Base
 
   validates :operating_party_id, :presence => true
   validates :name, :presence => true
+
+  def self.all_available current_user
+    if current_user.has_function :name => "funct.view.all.fee.types"
+      return AttorneyFeeType.all
+    else
+      return AttorneyFeeType.where(:operating_party_id => current_user.operating_party_id).all
+    end
+  end
+
 end

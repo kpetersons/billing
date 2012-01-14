@@ -33,7 +33,7 @@ class InvoiceLine < ActiveRecord::Base
   validates :official_fee_type_id, :presence => true, :if => Proc.new { |invoice_line| !invoice_line.official_fee.nil? }
   #
   validates :offering, :presence => true, :length => {:within => 5..1000}
-  validates :details,  :presence => true, :length  => {:within => 5..1000}
+  validates :details,  :length => {:maximum => 1000}
   validates :items, :presence => true, :numericality => true
 
   before_save :calculate_totals
@@ -61,8 +61,8 @@ class InvoiceLine < ActiveRecord::Base
 
   def line_details
 
-    attorney_fee_print = (attorney_fee.to_i == attorney_fee)? number_with_precision(attorney_fee, :precision => 0) :  number_with_precision(attorney_fee, :precision => 2)
-    items_print        = (items.to_i ==        items)       ? number_with_precision(items,        :precision => 0) : number_with_precision(items,        :precision => 2)
+    attorney_fee_print = (attorney_fee.to_i == attorney_fee)? number_with_precision(attorney_fee, :precision => 0) :  number_with_precision(attorney_fee, :precision => 2, :separator => ".")
+    items_print        = (items.to_i ==        items)       ? number_with_precision(items,        :precision => 0) : number_with_precision(items,        :precision => 2, :separator => ".")
 
     brackets_tmp = (items.nil?)? "" : " (#{items_print} #{units} x #{invoice.currency.name} #{attorney_fee_print})"
     details_tmp = "#{details}#{brackets_tmp}"
@@ -72,6 +72,7 @@ class InvoiceLine < ActiveRecord::Base
 
   def offering_print
     items_print = (items.to_i == items)? number_with_precision(items, :precision => 0) : items
+    puts "items_print #{items_print}"
     return (both_official_and_attorney?)? "#{offering} x#{items_print.to_s}" : offering
   end
 

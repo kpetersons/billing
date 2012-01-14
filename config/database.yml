@@ -24,11 +24,11 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  username: pguser
+  username: pfdmpwligv
   port: 5432
-  host: localhost
-  database: billing
-  password: 10rbyOn5rls
+  host: ec2-50-16-215-44.compute-1.amazonaws.com
+  database: pfdmpwligv
+  password: zlljvM7WGGiP4NnZD_za
 
 production2:
   adapter: postgresql

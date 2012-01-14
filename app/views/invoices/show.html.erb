@@ -116,7 +116,7 @@
     </dd>
   </dl>
   <%= render :partial => "status_controls", :locals => {:invoice => @document.invoice} %>
-  <% if can_edit_invoice? @document.invoice.status_name, @document.invoice  %>
+  <% if can_edit_invoice? @document.invoice.status_name, @document.invoice %>
       <%= render :partial => "shared/ui/show_edit_controls", :locals => {:name=> "Edit", :path => edit_invoice_path(@invoice)} %>
   <% end %>
   <% if @document.invoice.invoice_status.editable_state %>
@@ -148,12 +148,15 @@
       <% if can_print_it? @document.invoice %>
           <div class="show controls slide-out">
             <ul>
+
               <li>
-                <%= link_to 'Print', aprint_invoice_pdf_path(@document.invoice, :language => 'lv'), :target => :_blank %>
+                <%= link_to 'Print', aprint_invoice_pdf_path(@document.invoice, :language => (@document.invoice.invoice_type == 1) ? 'en' : 'lv'), :target => :_blank %>
                 <ul>
-                  <li>
-                    <%= link_to 'LV', aprint_invoice_pdf_path(@document.invoice, :language => 'lv'), :target => :_blank %>
-                  </li>
+                  <% unless @document.invoice.invoice_type == 1 %>
+                      <li>
+                        <%= link_to 'LV', asave_invoice_pdf_path(@document.invoice, :language => 'lv') %>
+                      </li>
+                  <% end %>
                   <li>
                     <%= link_to 'EN', aprint_invoice_pdf_path(@document.invoice, :language => 'en'), :target => :_blank %>
                   </li>
@@ -170,11 +173,13 @@
           <div class="show controls slide-out" style="margin-bottom:2em;">
             <ul>
               <li>
-                <%= link_to 'Save as PDF', asave_invoice_pdf_path(@document.invoice, :language => 'lv') %>
+                <%= link_to 'Save as PDF', asave_invoice_pdf_path(@document.invoice, :language => (@document.invoice.invoice_type == 1) ? 'en' : 'lv') %>
                 <ul>
-                  <li>
-                    <%= link_to 'LV', asave_invoice_pdf_path(@document.invoice, :language => 'lv') %>
-                  </li>
+                  <% unless @document.invoice.invoice_type == 1 %>
+                      <li>
+                        <%= link_to 'LV', asave_invoice_pdf_path(@document.invoice, :language => 'lv') %>
+                      </li>
+                  <% end %>
                   <li>
                     <%= link_to 'EN', asave_invoice_pdf_path(@document.invoice, :language => 'en') %>
                   </li>

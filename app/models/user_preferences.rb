@@ -15,7 +15,7 @@ class UserPreferences < ActiveRecord::Base
 
   belongs_to :user
 
-  validates :rows_per_page, :numericality => {:only_integer => true, :greater_than => 10, :less_than => 501}
+  validates :rows_per_page, :numericality => {:only_integer => true, :greater_than => 10, :less_than => 30000}
 
   def safe_rows_per_page
     rows_per_page || 20

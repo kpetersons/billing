@@ -177,6 +177,14 @@ class InvoicePdfForeign < Prawn::Document
   def subject_group invoice
     subject = make_table([[invoice.subject]], :width => 520, :cell_style => {:borders => [], :padding_top => 5, :padding_left => 0})
     subject.cells[0, 0].style :font_style => :bold
+    #puts "Subject nat height #{subject.cells[0, 0].natural_content_height}"
+    #puts "Subject height #{subject.cells[0, 0].height}"
+    subject.cells[0, 0].height = subject.cells[0, 0].natural_content_height
+    if subject.cells[0, 0].height > subject.cells[0, 0].natural_content_height
+      subject.cells[0, 0].natural_content_height = subject.cells[0, 0].height + 8
+    else
+      subject.cells[0, 0].height = subject.cells[0, 0].natural_content_height + 8
+    end
     return subject
   end
 
@@ -283,7 +291,7 @@ class InvoicePdfForeign < Prawn::Document
       text I18n.t('foreign.print.invoice.footer.remit_disclaimer', :date => invoice.payment_term)
       text I18n.t('foreign.print.invoice.footer.ask_for_reference'), :inline_format => true
       move_down 34.015748
-      text (!images) ? invoice.author_name : "#{I18n.t('foreign.print.invoice_issued_by')} #{invoice.author_name }"
+      text (!images) ? invoice.author_name : "#{I18n.t('foreign.print.invoice_issued_by')} #{invoice.author_name}"
     end
   end
 

@@ -109,7 +109,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def ind_author_name
-    author.individual.name unless author.nil?
+    return author.individual.name unless author.nil?
   end
 
   def ind_invoice_status_name

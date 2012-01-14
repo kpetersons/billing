@@ -76,18 +76,19 @@ class Trademark < ActiveRecord::Base
     end
     parent = m_doc.parent_matter
     [:ctm_number, :wipo_number, :reg_number].each do |attribute|
-      if self.try(attribute).eql? ""
-        break
-      end
-      obj = self.class.where("#{attribute} = ?", self.try(attribute)).all.each do |obj|
-        break if (persisted? && obj.id == self.id)
-        break if (!parent.nil? && parent.id == obj.matter.id)
+      unless self.try(attribute).eql? ""
 
-        if !parent.nil? && parent.trademark.nil?
-          self.errors.add attribute, "You are trying to create sub Trademark from invalid parent matter!" and break
-        end
-        unless obj.nil?
-          self.errors.add attribute, "is not unique!"
+
+        obj = self.class.where("#{attribute} = ?", self.try(attribute)).all.each do |obj|
+          break if (persisted? && obj.id == self.id)
+          break if (!parent.nil? && parent.id == obj.matter.id)
+
+          if !parent.nil? && parent.trademark.nil?
+            self.errors.add attribute, "You are trying to create sub Trademark from invalid parent matter!" and break
+          end
+          unless obj.nil?
+            self.errors.add attribute, "is not unique!"
+          end
         end
       end
     end

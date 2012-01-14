@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120103211130) do
+ActiveRecord::Schema.define(:version => 20120107161442) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(:version => 20120103211130) do
     t.integer  "country_id"
     t.integer  "version",            :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",     :default => '2011-12-03'
+    t.date     "date_effective",     :default => '2011-12-29'
     t.datetime "date_effective_end"
   end
 
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(:version => 20120103211130) do
     t.string   "registration_number"
     t.integer  "version",             :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",      :default => '2011-12-03'
+    t.date     "date_effective",      :default => '2011-12-29'
     t.datetime "date_effective_end"
   end
 
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(:version => 20120103211130) do
     t.string   "vat_registration_number"
     t.integer  "version",                 :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",          :default => '2011-12-03'
+    t.date     "date_effective",          :default => '2011-12-29'
     t.datetime "date_effective_end"
     t.text     "shortnote"
   end
@@ -179,7 +179,7 @@ ActiveRecord::Schema.define(:version => 20120103211130) do
     t.string   "notes"
     t.integer  "version",             :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",      :default => '2011-12-03'
+    t.date     "date_effective",      :default => '2011-12-29'
     t.datetime "date_effective_end"
   end
 
@@ -244,7 +244,7 @@ ActiveRecord::Schema.define(:version => 20120103211130) do
   create_table "invoice_lines", :force => true do |t|
     t.integer  "invoice_id"
     t.integer  "official_fee_type_id"
-    t.string   "details"
+    t.text     "details"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "attorney_fee_type_id"
@@ -319,10 +319,10 @@ ActiveRecord::Schema.define(:version => 20120103211130) do
   end
 
   create_table "legal_types", :force => true do |t|
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.string   "description"
   end
 
   create_table "legals", :force => true do |t|
@@ -456,7 +456,7 @@ ActiveRecord::Schema.define(:version => 20120103211130) do
     t.integer  "matter_status_id"
     t.integer  "version",            :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",     :default => '2011-12-03'
+    t.date     "date_effective",     :default => '2011-12-29'
     t.datetime "date_effective_end"
   end
 
@@ -506,7 +506,7 @@ ActiveRecord::Schema.define(:version => 20120103211130) do
     t.datetime "updated_at"
     t.integer  "version",            :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",     :default => '2011-12-03'
+    t.date     "date_effective",     :default => '2011-12-29'
     t.datetime "date_effective_end"
   end
 
@@ -579,12 +579,11 @@ ActiveRecord::Schema.define(:version => 20120103211130) do
   end
 
   create_table "trademarks", :force => true do |t|
+    t.date     "appl_date"
+    t.string   "appl_number"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "matter_id"
-    t.date     "appl_date"
-    t.string   "appl_number"
-    t.string   "notes"
     t.string   "mark_name"
     t.string   "cfe_index"
     t.date     "application_date"
