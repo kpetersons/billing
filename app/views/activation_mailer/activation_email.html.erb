@@ -6,12 +6,12 @@
 	<body style="height:auto;">
 		Hi.
 		
-		System has created a user for you in PetPat application. 
+		System has created a user for you in PetPat application.<br/>
 		
 		Click this link to proceed with activation:
-		<%=link_to account_path(:key => @user.activation_key), account_path(:key => @user.activation_key)%>
-		
-		If your link does not open in a browser, copy it to the browsers address bar.		
+		<%=link_to account_path(:key => @user.activation_key, :only_path => false, :host => @host), account_path(:key => @user.activation_key, :only_path => false, :host => @host)%>
+        <br/>
+		If your link does not open in a browser, copy it to the browsers address bar.<br/>
 		
 		br
 		Admin
