@@ -55,7 +55,7 @@ Billing::Application.configure do
       :port => 587,
       :authentication => 'plain',
       :enable_starttls_auto => true,
-      :user_name => 'ppi.admin',
+      :user_name => 'ppi.admin@petpat.lv',
       :password => 'ppi_admin@lv',
 
   }

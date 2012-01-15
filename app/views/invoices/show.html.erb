@@ -154,7 +154,7 @@
                 <ul>
                   <% unless @document.invoice.invoice_type == 1 %>
                       <li>
-                        <%= link_to 'LV', asave_invoice_pdf_path(@document.invoice, :language => 'lv') %>
+                        <%= link_to 'LV', aprint_invoice_pdf_path(@document.invoice, :language => 'lv'), :target => :_blank %>
                       </li>
                   <% end %>
                   <li>
