@@ -1630,12 +1630,12 @@ end
 #    end
 #  end
 #end
-
-Invoice.transaction do
-  Invoice.where(:author_name => nil).all.each do |invoice|
-    author = invoice.author
-    unless author.nil?
-      invoice.update_attribute(:author_name, author.full_name)
-    end
-  end
-end
+#
+#Invoice.transaction do
+#  Invoice.where(:author_name => nil).all.each do |invoice|
+#    author = invoice.author
+#    unless author.nil?
+#      invoice.update_attribute(:author_name, author.full_name)
+#    end
+#  end
+#end
