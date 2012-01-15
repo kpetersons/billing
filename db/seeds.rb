@@ -97,11 +97,11 @@
 #@roles = ["role.minimal", "role.admin", "role.matters", "role.invoices", "role_customers"]
 #
 #@role_functions = {
-    #"role.minimal" => @minimal_functions,
-    #"role.admin" => @admin_functions,
-    #"role.matters" => @matter_functions,
-    #"role.invoices" => @invoice_functions,
-    #"role_customers" => @customer_functions
+#"role.minimal" => @minimal_functions,
+#"role.admin" => @admin_functions,
+#"role.matters" => @matter_functions,
+#"role.invoices" => @invoice_functions,
+#"role_customers" => @customer_functions
 #}
 #
 @functions = Array.new.concat(@matter_functions)
@@ -1326,139 +1326,139 @@ DefaultFilter.transaction do
   #DefaultFilterColumn.delete_all
   #UserFilter.delete_all
   #UserFilterColumn.delete_all
-#
-#  matter_columns = [
-#      {:column_query => 'registration_number', :column_position => 1, :is_default => true, :column_name => 'mi_registration_number', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'description', :column_position => 2, :is_default => false, :column_name => 'mi_description', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'created_at', :column_position => 3, :is_default => true, :column_name => 'mi_created_at', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'updated_at', :column_position => 4, :is_default => true, :column_name => 'mi_updated_at', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'notes', :column_position => 5, :is_default => false, :column_name => 'mi_notes', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'applicant', :column_position => 6, :is_default => false, :column_name => 'mi_applicant', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'agent', :column_position => 7, :is_default => true, :column_name => 'mi_agent', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'author', :column_position => 8, :is_default => false, :column_name => 'mi_author', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'operating_party', :column_position => 9, :is_default => false, :column_name => 'mi_operating_party', :column_type => 'col-text', :translate => true},
-#      {:column_query => 'matter_type', :column_position => 10, :is_default => true, :column_name => 'mi_matter_type', :column_type => 'col-text', :translate => true},
-#      {:column_query => 'matter_status', :column_position => 11, :is_default => true, :column_name => 'mi_matter_status', :column_type => 'col-text', :translate => true},
-#      {:column_query => 'application_number', :column_position => 12, :is_default => false, :column_name => 'mi_application_number', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'application_date', :column_position => 13, :is_default => false, :column_name => 'mi_application_date', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'date_of_order', :column_position => 14, :is_default => false, :column_name => 'mi_date_of_order', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'wipo_number', :column_position => 15, :is_default => false, :column_name => 'mi_wipo_number', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'priority_date', :column_position => 16, :is_default => false, :column_name => 'mi_priority_date', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'mark_name', :column_position => 17, :is_default => false, :column_name => 'mi_mark_name', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'ctm_number', :column_position => 18, :is_default => false, :column_name => 'mi_ctm_number', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'cfe_index', :column_position => 19, :is_default => false, :column_name => 'mi_cfe_index', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'patent_number', :column_position => 20, :is_default => false, :column_name => 'mi_patent_number', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'patent_grant_date', :column_position => 21, :is_default => false, :column_name => 'mi_patent_grant_date', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'ep_appl_number', :column_position => 22, :is_default => false, :column_name => 'mi_ep_appl_number', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'ep_number', :column_position => 23, :is_default => false, :column_name => 'mi_ep_number', :column_type => 'col-number', :translate => false},
-#      {:column_query => 'design_number', :column_position => 24, :is_default => false, :column_name => 'mi_design_number', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'rdc_appl_number', :column_position => 25, :is_default => false, :column_name => 'mi_rdc_appl_number', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'rdc_number', :column_position => 26, :is_default => false, :column_name => 'mi_rdc_number', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'opposed_marks', :column_position => 27, :is_default => false, :column_name => 'mi_opposed_marks', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'instance', :column_position => 28, :is_default => false, :column_name => 'mi_instance', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'date_of_closure', :column_position => 29, :is_default => false, :column_name => 'mi_date_of_closure', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'opposite_party', :column_position => 30, :is_default => false, :column_name => 'mi_opposite_party', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'opposite_party_agent', :column_position => 31, :is_default => false, :column_name => 'mi_opposite_party_agent', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'legal_type', :column_position => 32, :is_default => false, :column_name => 'mi_legal_type', :column_type => 'col-text', :translate => true},
-#      {:column_query => 'date_of_order_alert', :column_position => 33, :is_default => false, :column_name => 'mi_date_of_order_alert', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'ca_application_date', :column_position => 34, :is_default => false, :column_name => 'mi_ca_application_date', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'ca_application_number', :column_position => 35, :is_default => false, :column_name => 'mi_ca_application_number', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'client_all_ip', :column_position => 36, :is_default => false, :column_name => 'mi_client_all_ip', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'patent_eq_numbers', :column_position => 37, :is_default => false, :column_name => 'mi_patent_eq_numbers', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'no_of_patents', :column_position => 38, :is_default => false, :column_name => 'mi_no_of_patents', :column_type => 'col-number', :translate => false},
-#      {:column_query => 'search_for', :column_position => 39, :is_default => false, :column_name => 'mi_search_for', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'no_of_objects', :column_position => 40, :is_default => false, :column_name => 'mi_no_of_objects', :column_type => 'col-number', :translate => false},
-#      {:column_query => 'express_search', :column_position => 41, :is_default => false, :column_name => 'mi_express_search', :column_type => 'col-boolean', :translate => false},
-#      {:column_query => 'domain_name', :column_position => 42, :is_default => false, :column_name => 'mi_domain_name', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'registration_date', :column_position => 43, :is_default => false, :column_name => 'mi_registration_date', :column_type => 'col-date', :translate => false},
-#      {:column_query => 'classes', :column_position => 44, :is_default => false, :column_name => 'mi_classes', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'court_ref', :column_position => 45, :is_default => false, :column_name => 'mi_court_ref', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'vid_ref', :column_position => 46, :is_default => false, :column_name => 'mi_vid_ref', :column_type => 'col-text', :translate => false},
-#      {:column_query => 'tm_registration_number', :column_position => 47, :is_default => false, :column_name => 'mi_tm_registration_number', :column_type => 'col-text', :translate => false}
-#  ]
-#
-#  dashboard_columns = matter_columns
-#
-  invoice_columns = [
-      {:column_query => 'registration_number', :column_position => 0, :is_default => true, :column_name => 'ii_registration_number', :column_type => 'col-text', :translate => false},
-      {:column_query => 'customer_name', :column_position => 1, :is_default => true, :column_name => 'ii_customer_name', :column_type => 'col-text', :translate => false},
-      {:column_query => 'person', :column_position => 2, :is_default => false, :column_name => 'ii_person', :column_type => 'col-text', :translate => false},
-      {:column_query => 'address', :column_position => 3, :is_default => false, :column_name => 'ii_address', :column_type => 'col-text', :translate => false},
-      {:column_query => 'currency', :column_position => 4, :is_default => false, :column_name => 'ii_currency', :column_type => 'col-text', :translate => false},
-      {:column_query => 'author', :column_position => 5, :is_default => false, :column_name => 'ii_author', :column_type => 'col-text', :translate => false},
-      {:column_query => 'status', :column_position => 6, :is_default => true, :column_name => 'ii_status', :column_type => 'col-text', :translate => true},
-      {:column_query => 'our_ref', :column_position => 7, :is_default => true, :column_name => 'ii_our_ref', :column_type => 'col-text', :translate => false},
-      {:column_query => 'your_ref', :column_position => 8, :is_default => true, :column_name => 'ii_your_ref', :column_type => 'col-text', :translate => false},
-      {:column_query => 'your_date', :column_position => 9, :is_default => false, :column_name => 'ii_your_date', :column_type => 'col-date', :translate => false},
-      {:column_query => 'invoice_date', :column_position => 10, :is_default => false, :column_name => 'ii_invoice_date', :column_type => 'col-date', :translate => false},
-      {:column_query => 'payment_term', :column_position => 11, :is_default => false, :column_name => 'ii_payment_term', :column_type => 'col-number', :translate => false},
-      {:column_query => 'discount', :column_position => 12, :is_default => false, :column_name => 'ii_discount', :column_type => 'col-number', :translate => false},
-      {:column_query => 'po_billing', :column_position => 13, :is_default => false, :column_name => 'ii_po_billing', :column_type => 'col-text', :translate => false},
-      {:column_query => 'subject', :column_position => 14, :is_default => false, :column_name => 'ii_subject', :column_type => 'col-text', :translate => false},
-      {:column_query => 'ending_details', :column_position => 15, :is_default => false, :column_name => 'ii_ending_details', :column_type => 'col-text', :translate => false},
-      {:column_query => 'created_at', :column_position => 16, :is_default => false, :column_name => 'ii_created_at', :column_type => 'col-date', :translate => false},
-      {:column_query => 'updated_at', :column_position => 17, :is_default => false, :column_name => 'ii_updated_at', :column_type => 'col-date', :translate => false},
-      {:column_query => 'rate', :column_position => 18, :is_default => false, :column_name => 'ii_rate', :column_type => 'col-number', :translate => false},
-      {:column_query => 'apply_vat', :column_position => 19, :is_default => false, :column_name => 'ii_apply_vat', :column_type => 'col-boolean', :translate => false},
-      {:column_query => 'date_paid', :column_position => 20, :is_default => false, :column_name => 'ii_date_paid', :column_type => 'col-date', :translate => false},
-      #{:column_query => 'total_official_fee', :column_position => 21, :is_default => false, :column_name => 'ii_total_official_fee', :column_type => 'col-number', :translate => false},
-      #{:column_query => 'total_attorney_fee', :column_position => 22, :is_default => false, :column_name => 'ii_total_attorney_fee', :column_type => 'col-number', :translate => false},
-      #{:column_query => 'subtotal', :column_position => 23, :is_default => false, :column_name => 'ii_subtotal', :column_type => 'col-number', :translate => false},
-      {:column_query => 'total_vat', :column_position => 22, :is_default => true, :column_name => 'ii_total_vat', :column_type => 'col-number', :translate => false},
-      {:column_query => 'grand_total', :column_position => 23, :is_default => true, :column_name => 'ii_grand_total', :column_type => 'col-number', :translate => false},
-      {:column_query => 'issued_by', :column_position => 23, :is_default => true, :column_name => 'ii_issued_by', :column_type => 'col-text', :translate => false}
-  ]
-#
-  tables = [
-      #"matters",
-      #"dashboard",
-      #"customers",
-      "invoices"
-  ]
-#
-  columns = {
-      #"matters" => matter_columns,
-      #"dashboard" => dashboard_columns,
-      #"customers" => [],
-      "invoices" => invoice_columns
-  }
-#
-  tables.each do |table|
-    default_filter = DefaultFilter.new(:table_name => table)
-    unless default_filter.save()
-      default_filter = DefaultFilter.find_by_table_name(table)
-    end
-    DefaultFilterColumn.transaction do
-      columns[table].each do |column|
-        filter_column = DefaultFilterColumn.new(column.merge(:default_filter_id => default_filter.id))
-        unless filter_column.save
-          puts "filter_column.errors: #{filter_column.errors}"
-        end
-      end
-    end
-  end
+  #
+  #  matter_columns = [
+  #      {:column_query => 'registration_number', :column_position => 1, :is_default => true, :column_name => 'mi_registration_number', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'description', :column_position => 2, :is_default => false, :column_name => 'mi_description', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'created_at', :column_position => 3, :is_default => true, :column_name => 'mi_created_at', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'updated_at', :column_position => 4, :is_default => true, :column_name => 'mi_updated_at', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'notes', :column_position => 5, :is_default => false, :column_name => 'mi_notes', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'applicant', :column_position => 6, :is_default => false, :column_name => 'mi_applicant', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'agent', :column_position => 7, :is_default => true, :column_name => 'mi_agent', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'author', :column_position => 8, :is_default => false, :column_name => 'mi_author', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'operating_party', :column_position => 9, :is_default => false, :column_name => 'mi_operating_party', :column_type => 'col-text', :translate => true},
+  #      {:column_query => 'matter_type', :column_position => 10, :is_default => true, :column_name => 'mi_matter_type', :column_type => 'col-text', :translate => true},
+  #      {:column_query => 'matter_status', :column_position => 11, :is_default => true, :column_name => 'mi_matter_status', :column_type => 'col-text', :translate => true},
+  #      {:column_query => 'application_number', :column_position => 12, :is_default => false, :column_name => 'mi_application_number', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'application_date', :column_position => 13, :is_default => false, :column_name => 'mi_application_date', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'date_of_order', :column_position => 14, :is_default => false, :column_name => 'mi_date_of_order', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'wipo_number', :column_position => 15, :is_default => false, :column_name => 'mi_wipo_number', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'priority_date', :column_position => 16, :is_default => false, :column_name => 'mi_priority_date', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'mark_name', :column_position => 17, :is_default => false, :column_name => 'mi_mark_name', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'ctm_number', :column_position => 18, :is_default => false, :column_name => 'mi_ctm_number', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'cfe_index', :column_position => 19, :is_default => false, :column_name => 'mi_cfe_index', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'patent_number', :column_position => 20, :is_default => false, :column_name => 'mi_patent_number', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'patent_grant_date', :column_position => 21, :is_default => false, :column_name => 'mi_patent_grant_date', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'ep_appl_number', :column_position => 22, :is_default => false, :column_name => 'mi_ep_appl_number', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'ep_number', :column_position => 23, :is_default => false, :column_name => 'mi_ep_number', :column_type => 'col-number', :translate => false},
+  #      {:column_query => 'design_number', :column_position => 24, :is_default => false, :column_name => 'mi_design_number', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'rdc_appl_number', :column_position => 25, :is_default => false, :column_name => 'mi_rdc_appl_number', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'rdc_number', :column_position => 26, :is_default => false, :column_name => 'mi_rdc_number', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'opposed_marks', :column_position => 27, :is_default => false, :column_name => 'mi_opposed_marks', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'instance', :column_position => 28, :is_default => false, :column_name => 'mi_instance', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'date_of_closure', :column_position => 29, :is_default => false, :column_name => 'mi_date_of_closure', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'opposite_party', :column_position => 30, :is_default => false, :column_name => 'mi_opposite_party', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'opposite_party_agent', :column_position => 31, :is_default => false, :column_name => 'mi_opposite_party_agent', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'legal_type', :column_position => 32, :is_default => false, :column_name => 'mi_legal_type', :column_type => 'col-text', :translate => true},
+  #      {:column_query => 'date_of_order_alert', :column_position => 33, :is_default => false, :column_name => 'mi_date_of_order_alert', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'ca_application_date', :column_position => 34, :is_default => false, :column_name => 'mi_ca_application_date', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'ca_application_number', :column_position => 35, :is_default => false, :column_name => 'mi_ca_application_number', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'client_all_ip', :column_position => 36, :is_default => false, :column_name => 'mi_client_all_ip', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'patent_eq_numbers', :column_position => 37, :is_default => false, :column_name => 'mi_patent_eq_numbers', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'no_of_patents', :column_position => 38, :is_default => false, :column_name => 'mi_no_of_patents', :column_type => 'col-number', :translate => false},
+  #      {:column_query => 'search_for', :column_position => 39, :is_default => false, :column_name => 'mi_search_for', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'no_of_objects', :column_position => 40, :is_default => false, :column_name => 'mi_no_of_objects', :column_type => 'col-number', :translate => false},
+  #      {:column_query => 'express_search', :column_position => 41, :is_default => false, :column_name => 'mi_express_search', :column_type => 'col-boolean', :translate => false},
+  #      {:column_query => 'domain_name', :column_position => 42, :is_default => false, :column_name => 'mi_domain_name', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'registration_date', :column_position => 43, :is_default => false, :column_name => 'mi_registration_date', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'classes', :column_position => 44, :is_default => false, :column_name => 'mi_classes', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'court_ref', :column_position => 45, :is_default => false, :column_name => 'mi_court_ref', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'vid_ref', :column_position => 46, :is_default => false, :column_name => 'mi_vid_ref', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'tm_registration_number', :column_position => 47, :is_default => false, :column_name => 'mi_tm_registration_number', :column_type => 'col-text', :translate => false}
+  #  ]
+  #
+  #  dashboard_columns = matter_columns
+  #
+  #  invoice_columns = [
+  #      {:column_query => 'registration_number', :column_position => 0, :is_default => true, :column_name => 'ii_registration_number', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'customer_name', :column_position => 1, :is_default => true, :column_name => 'ii_customer_name', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'person', :column_position => 2, :is_default => false, :column_name => 'ii_person', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'address', :column_position => 3, :is_default => false, :column_name => 'ii_address', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'currency', :column_position => 4, :is_default => false, :column_name => 'ii_currency', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'author', :column_position => 5, :is_default => false, :column_name => 'ii_author', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'status', :column_position => 6, :is_default => true, :column_name => 'ii_status', :column_type => 'col-text', :translate => true},
+  #      {:column_query => 'our_ref', :column_position => 7, :is_default => true, :column_name => 'ii_our_ref', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'your_ref', :column_position => 8, :is_default => true, :column_name => 'ii_your_ref', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'your_date', :column_position => 9, :is_default => false, :column_name => 'ii_your_date', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'invoice_date', :column_position => 10, :is_default => false, :column_name => 'ii_invoice_date', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'payment_term', :column_position => 11, :is_default => false, :column_name => 'ii_payment_term', :column_type => 'col-number', :translate => false},
+  #      {:column_query => 'discount', :column_position => 12, :is_default => false, :column_name => 'ii_discount', :column_type => 'col-number', :translate => false},
+  #      {:column_query => 'po_billing', :column_position => 13, :is_default => false, :column_name => 'ii_po_billing', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'subject', :column_position => 14, :is_default => false, :column_name => 'ii_subject', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'ending_details', :column_position => 15, :is_default => false, :column_name => 'ii_ending_details', :column_type => 'col-text', :translate => false},
+  #      {:column_query => 'created_at', :column_position => 16, :is_default => false, :column_name => 'ii_created_at', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'updated_at', :column_position => 17, :is_default => false, :column_name => 'ii_updated_at', :column_type => 'col-date', :translate => false},
+  #      {:column_query => 'rate', :column_position => 18, :is_default => false, :column_name => 'ii_rate', :column_type => 'col-number', :translate => false},
+  #      {:column_query => 'apply_vat', :column_position => 19, :is_default => false, :column_name => 'ii_apply_vat', :column_type => 'col-boolean', :translate => false},
+  #      {:column_query => 'date_paid', :column_position => 20, :is_default => false, :column_name => 'ii_date_paid', :column_type => 'col-date', :translate => false},
+  #      #{:column_query => 'total_official_fee', :column_position => 21, :is_default => false, :column_name => 'ii_total_official_fee', :column_type => 'col-number', :translate => false},
+  #      #{:column_query => 'total_attorney_fee', :column_position => 22, :is_default => false, :column_name => 'ii_total_attorney_fee', :column_type => 'col-number', :translate => false},
+  #      #{:column_query => 'subtotal', :column_position => 23, :is_default => false, :column_name => 'ii_subtotal', :column_type => 'col-number', :translate => false},
+  #      {:column_query => 'total_vat', :column_position => 22, :is_default => true, :column_name => 'ii_total_vat', :column_type => 'col-number', :translate => false},
+  #      {:column_query => 'grand_total', :column_position => 23, :is_default => true, :column_name => 'ii_grand_total', :column_type => 'col-number', :translate => false},
+  #      {:column_query => 'issued_by', :column_position => 23, :is_default => true, :column_name => 'ii_issued_by', :column_type => 'col-text', :translate => false}
+  #  ]
+  ##
+  #  tables = [
+  #      #"matters",
+  #      #"dashboard",
+  #      #"customers",
+  #      "invoices"
+  #  ]
+  #
+  #  columns = {
+  #      #"matters" => matter_columns,
+  #      #"dashboard" => dashboard_columns,
+  #      #"customers" => [],
+  #      "invoices" => invoice_columns
+  #  }
+  #
+  #  tables.each do |table|
+  #    default_filter = DefaultFilter.new(:table_name => table)
+  #    unless default_filter.save()
+  #      default_filter = DefaultFilter.find_by_table_name(table)
+  #    end
+  #    DefaultFilterColumn.transaction do
+  #      columns[table].each do |column|
+  #        filter_column = DefaultFilterColumn.new(column.merge(:default_filter_id => default_filter.id))
+  #        unless filter_column.save
+  #          puts "filter_column.errors: #{filter_column.errors}"
+  #        end
+  #      end
+  #    end
+  #  end
+  #end
+  #
+  #MatterTaskType.transaction do
+  #  matter_task_types = [
+  #      {:name => 'TRAN', :description => 'Translation'},
+  #      {:name => 'RENW', :description => 'Renewal, annuitie'},
+  #      {:name => 'OPP', :description => 'Opposition'},
+  #      {:name => 'PREG', :description => 'Publication, registration'},
+  #      {:name => 'OOFF', :description => 'Other official'},
+  #      {:name => 'CREQ', :description => 'Client requested'},
+  #      {:name => 'CUST', :description => 'Customs'},
+  #      {:name => 'MISC', :description => 'Miscellaneous'}
+  #  ]
+  #  matter_task_types.each do |matter_task_type|
+  #    type = MatterTaskType.new(matter_task_type)
+  #    unless MatterTaskType.find_by_name(matter_task_type[:name])
+  #      unless type.save
+  #        puts "matter_task_type errors #{type.errors}"
+  #      end
+  #    end
+  #  end
 end
-#
-#MatterTaskType.transaction do
-#  matter_task_types = [
-#      {:name => 'TRAN', :description => 'Translation'},
-#      {:name => 'RENW', :description => 'Renewal, annuitie'},
-#      {:name => 'OPP', :description => 'Opposition'},
-#      {:name => 'PREG', :description => 'Publication, registration'},
-#      {:name => 'OOFF', :description => 'Other official'},
-#      {:name => 'CREQ', :description => 'Client requested'},
-#      {:name => 'CUST', :description => 'Customs'},
-#      {:name => 'MISC', :description => 'Miscellaneous'}
-#  ]
-#  matter_task_types.each do |matter_task_type|
-#    type = MatterTaskType.new(matter_task_type)
-#    unless MatterTaskType.find_by_name(matter_task_type[:name])
-#      unless type.save
-#        puts "matter_task_type errors #{type.errors}"
-#      end
-#    end
-#  end
-#end
 #
 #Party.transaction do
 #  Party.all.each do |p|
