@@ -3,6 +3,9 @@ require "forwardable"
 
 
 class ActivationController < ApplicationController
+
+  before_filter :authenticate, :only => []
+
   def show
     @user = User.find_by_activation_key(params[:key])
     render 'activate'
