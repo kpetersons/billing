@@ -13,6 +13,9 @@
 	</dt>
 	<dd>
 		<%= render :partial => "/matters/linked/item", :as => :item, :collection => matter.linked, :spacer_template => "shared/ui/comma_spacer" %>&nbsp;
+        <%unless matter.linked.empty?%>
+            <%=link_to "Unlink all", unlink_all_matter_path(matter), :method => :delete, :confirm => "Are you sure?" %>
+        <%end%>
 	</dd>
 	<dd class="show">
 		<%= render :partial => "/matters/linked/form" %>&nbsp;
