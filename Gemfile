@@ -12,6 +12,7 @@ gem 'prawn', :submodules => true
 gem "jquery-rails"
 gem 'pg', '0.12.0'
 gem 'capistrano'
+gem 'heroku'
 
 group :development do
   gem 'annotate', '2.4.0'
