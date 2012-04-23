@@ -60,6 +60,7 @@ Billing::Application.routes.draw do
       delete :remove_image
       put   :flow
       get   :unlink
+      delete   :unlink_all
     end
     collection do
       post :filter

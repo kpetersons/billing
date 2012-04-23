@@ -1,7 +1,6 @@
 module InvoicesHelper
 
   def can_edit_invoice? status, invoice
-    puts "invoice.invoice_status.editable_state || has_function(:name => funct.invoice.status.override) #{invoice.invoice_status.editable_state || has_function(:name => "funct.invoice.status.override")}"
     return invoice.invoice_status.editable_state || has_function(:name => "funct.invoice.status.override")
   end
 

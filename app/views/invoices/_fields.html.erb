@@ -11,8 +11,14 @@
 	</li>
 	<%else%>
 	<li style="margin-bottom: 1em;">
-		<%= i_f.label :invoice_type, "Foreign invoice" %>
-		<%= i_f.check_box :invoice_type, :style => "width:auto;" %>
+      <div style="display:inline-block;">
+        <%= i_f.label :invoice_type, "Foreign invoice" %>
+        <%= i_f.radio_button :invoice_type, 1 %>
+      </div>
+      <div style="display:inline-block;">
+        <%= i_f.label :invoice_type, "Local invoice" %>
+        <%= i_f.radio_button :invoice_type, 0 %>
+      </div>
 	</li>
 	<%end%>	
 	<li>

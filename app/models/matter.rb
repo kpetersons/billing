@@ -169,7 +169,7 @@ class Matter < ActiveRecord::Base
     unless matter_prefixes[matter_type_id].length > 1
       document.update_attribute(:registration_number, "#{matter_prefixes[matter_type_id]}#{get_matter_count (matter_type_id)}") and return
     end
-    document.update_attribute(:registration_number, "#{matter_prefixes[matter_type_id]}#{get_matter_count_per_year matter_type_id, Time.new.strftime('%Y')}#{Time.new.strftime('%y')}")
+    document.update_attribute(:registration_number, "#{matter_prefixes[matter_type_id]}#{get_matter_count_per_year(matter_type_id, patent_search.date_of_order.strftime('%Y'))}#{patent_search.date_of_order.strftime('%y')}")
   end
 
   def create_customers_history

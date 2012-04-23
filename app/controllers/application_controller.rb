@@ -25,9 +25,7 @@ class ApplicationController < ActionController::Base
             right = val_sub.gsub(/[a-zA-Z]/, "")
           end
         end
-        puts "left and right: #{left}, #{right}"
         for i in left.to_i..right.to_i
-          puts "in loop #{i}"
           result<<i
         end
       else

@@ -17,7 +17,6 @@ class MatterCustomersController < ApplicationController
 
   def create
     @matter_customer = MatterCustomer.new(params[:matter_customer])
-    puts params
     if @matter_customer.customer_id.nil?
       @matter_customer.errors.add(:customer_name, "may not be empty")
       render 'new' and return

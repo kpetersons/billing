@@ -55,7 +55,7 @@ class DetailSearch
     @details.each do |item|
       query_s = "#{query_s} #{item.conjunction} #{item.opening_bracket} #{query_field_comparator item} #{item.closing_bracket}"
     end
-    puts "QUERY: #{query_s}"
+    #puts "QUERY: #{query_s}"
     return query_s
   end
 

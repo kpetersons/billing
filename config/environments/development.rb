@@ -25,7 +25,7 @@ Billing::Application.configure do
 
   Paperclip.options[:command_path] = "/c/Windows/system32/convert"
 
-  config.log_level = :warn
+  config.log_level = :info
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

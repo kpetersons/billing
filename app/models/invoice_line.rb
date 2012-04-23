@@ -72,7 +72,6 @@ class InvoiceLine < ActiveRecord::Base
 
   def offering_print
     items_print = (items.to_i == items)? number_with_precision(items, :precision => 0) : items
-    puts "items_print #{items_print}"
     return (both_official_and_attorney?)? "#{offering} x#{items_print.to_s}" : offering
   end
 
@@ -87,7 +86,6 @@ class InvoiceLine < ActiveRecord::Base
       self.total_discount= 0
     end
     self.total= (total_attorney_fee + total_official_fee - total_discount)
-    puts ""
   end
 
 

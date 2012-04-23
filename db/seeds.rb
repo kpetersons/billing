@@ -29,33 +29,33 @@
 #  end
 #end
 #
-@matter_functions = [
-    ["funct.matters.link", true],
-    ["funct.create.matter", true],
-    ["funct.create.matters.trademark", true],
-    ["funct.create.matters.patent", true],
-    ["funct.create.matters.legal", true],
-    ["funct.create.matters.design", true],
-    ["funct.create.matters.custom", true],
-    ["funct.create.matters.task", true],
-    ["funct.create.matters.trademark_search", true],
-    ["funct.create.matters.patent_search", true],
-    ["funct.create.matters.domain", true],
-    ["funct.matters.status.active", true],
-    ["funct.matters.status.pending", true],
-    ["funct.matters.status.closed", true],
-    ["funct.matters.status.appealed", true],
-    ["funct.matters.status.lapsed", true],
-    ["funct.matters.status.expired_bt", true],
-    ["funct.matters.status.reinstated", true],
-    ["funct.matters.status.canceled", true],
-    ["funct.matters.status.override", true],
-    ["funct.matters.task.remove", true],
-    ["funct.matters.task.status.open", true],
-    ["funct.matters.task.status.awaiting_response", true],
-    ["funct.matters.task.status.done", true],
-    ["funct.matters.task.status.canceled", true]
-]
+#@matter_functions = [
+#    ["funct.matters.link", true],
+#    ["funct.create.matter", true],
+#    ["funct.create.matters.trademark", true],
+#    ["funct.create.matters.patent", true],
+#    ["funct.create.matters.legal", true],
+#    ["funct.create.matters.design", true],
+#    ["funct.create.matters.custom", true],
+#    ["funct.create.matters.task", true],
+#    ["funct.create.matters.trademark_search", true],
+#    ["funct.create.matters.patent_search", true],
+#    ["funct.create.matters.domain", true],
+#    ["funct.matters.status.active", true],
+#    ["funct.matters.status.pending", true],
+#    ["funct.matters.status.closed", true],
+#    ["funct.matters.status.appealed", true],
+#    ["funct.matters.status.lapsed", true],
+#    ["funct.matters.status.expired_bt", true],
+#    ["funct.matters.status.reinstated", true],
+#    ["funct.matters.status.canceled", true],
+#    ["funct.matters.status.override", true],
+#    ["funct.matters.task.remove", true],
+#    ["funct.matters.task.status.open", true],
+#    ["funct.matters.task.status.awaiting_response", true],
+#    ["funct.matters.task.status.done", true],
+#    ["funct.matters.task.status.canceled", true]
+#]
 #
 #@invoice_functions = [
 #    ["funct.invoices.link", true],
@@ -76,7 +76,7 @@
 #    ["funct.customer.edit.save_as", true]
 #]
 #
-@admin_functions = [
+#@admin_functions = [
 #    ["funct.admin.link", true],
 #    ["funct.create.user", true],
 #    ["funct.activate.user", true],
@@ -85,8 +85,8 @@
 #    ["funct.add.role", true],
 #    ["funct.add.function", true],
 #    ["funct.create.message", true],
-    ["funct.view.all.fee.types", true]
-]
+#    ["funct.view.all.fee.types", true]
+#]
 #
 #@minimal_functions = [
 #    ["funct.login", true],
@@ -104,19 +104,19 @@
 #"role_customers" => @customer_functions
 #}
 #
-@functions = Array.new.concat(@matter_functions)
-@functions.concat(@admin_functions)
+#@functions = Array.new.concat(@matter_functions)
+#@functions.concat(@admin_functions)
 #@functions.concat(@matter_functions)
 #@functions.concat(@invoice_functions)
 #@functions.concat(@customer_functions)
 #
-Function.transaction do
-  @functions.each do |function_name|
-    unless Function.find_by_name(function_name[0])
-      Function.create(:name => function_name[0], :description => "#{function_name[0]}.descr")
-    end
-  end
-end
+#Function.transaction do
+#  @functions.each do |function_name|
+#    unless Function.find_by_name(function_name[0])
+#      Function.create(:name => function_name[0], :description => "#{function_name[0]}.descr")
+#    end
+#  end
+#end
 #
 #Role.transaction do
 #
@@ -1639,3 +1639,18 @@ end
 #    end
 #  end
 #end
+User.transaction do
+  @users = User.all
+  password_attributes = {
+      :password => 'password',
+      :password_confirmation => 'password',
+      :change_pwd => true,
+      :active => true,
+      :blocked => false
+  }
+  @users.each do |user|
+    @user = user
+    if @user.update_attributes(password_attributes)
+    end
+  end
+end

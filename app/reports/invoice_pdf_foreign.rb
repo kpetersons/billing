@@ -40,7 +40,6 @@ class InvoicePdfForeign < Prawn::Document
       else
         move_down 110.244094
       end
-      puts "cursor #{cursor}"
       bounding_box([0, cursor], :width => 523, :height => 567.03937 + 28.3464567 - 4.66929134) do
         font_size(8) do
           head_table = Prawn::Table.new([
@@ -319,14 +318,14 @@ class InvoicePdfForeign < Prawn::Document
                                    ["#{counter}. #{line.offering_print}"],
                                    [line.line_details]
                                ],
-                               :cell_style => {:borders => [], :padding => 0},
+                               :cell_style => {:borders => [], :padding_right => 6, :padding_left => 0},
                                :column_widths => [409])
       else
         line_data = make_table([
                                    ["#{counter}. #{line.offering}"],
                                    ["#{line.details}"]
                                ],
-                               :cell_style => {:borders => [], :padding => 0},
+                               :cell_style => {:borders => [], :padding_right => 6, :padding_left => 0},
                                :column_widths => [409])
       end
       line_data.rows(1).style :font_style => :italic
