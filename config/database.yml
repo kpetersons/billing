@@ -38,3 +38,4 @@ production:
   host: localhost
   database: billing
   password: 10rbyOn5rls
+  pool: 32
