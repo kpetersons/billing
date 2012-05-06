@@ -196,7 +196,7 @@ class InvoicesController < ApplicationController
   private
 
   def do_save_refs invoice, matters
-    invoice.invoice_matters.delete_all
+    InvoiceMatter.delete(invoice.invoice_matters)
     if matters.respond_to?(:each)
       matters.each do |matter|
         invoice.matters<<matter

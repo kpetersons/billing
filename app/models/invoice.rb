@@ -355,21 +355,22 @@ class Invoice < ActiveRecord::Base
         errors.add(:our_ref, "referenced matter #{item} not found")
       end
     end
-    @our_refs.each do |item|
-      doc = VMatters.find_by_registration_number(item)
-      if doc.nil?
-        errors.add(:our_ref, "referenced matter #{item} is not a matter")
-      else
+    docs = VMatters.where(:registration_number => @our_refs)
+    @our_refs.each do |ref|
+      if docs.select{|doc| ref.eql?(doc.registration_number)}.empty?
+        errors.add(:our_ref, "matter #{ref} not found!")
+      end
+    end
+    docs.each do |doc|
+        error = false
         if @matter_type.nil?
           @matter_type = doc.matter_type_id
         end
         if @matter_type != doc.matter_type_id
           errors.add(:our_ref, "references multiple matter types. Choose only one type!")
+          error = true
         end
-      end
-      if doc.nil?
-        errors.add(:our_ref, "referenced matter #{item} not found")
-      else
+      unless error
         @our_ref_matters<<Matter.find(doc.id)
       end
     end

@@ -3,7 +3,7 @@ development:
   encoding: utf8
   reconnect: false
   database: billing
-  pool: 5
+  pool: 32
   username: postgres
   password: root
   host: localhost

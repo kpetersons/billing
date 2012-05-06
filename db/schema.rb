@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120506123342) do
+ActiveRecord::Schema.define(:version => 20120506164852) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -183,6 +183,8 @@ ActiveRecord::Schema.define(:version => 20120506123342) do
     t.datetime "date_effective_end"
   end
 
+  add_index "documents", ["registration_number"], :name => "index_documents_on_registration_number"
+
   create_table "domains", :force => true do |t|
     t.integer  "matter_id"
     t.string   "domain_name"
@@ -260,6 +262,8 @@ ActiveRecord::Schema.define(:version => 20120506123342) do
     t.decimal  "total_discount",       :precision => 10, :scale => 2
   end
 
+  add_index "invoice_lines", ["invoice_id"], :name => "index_invoice_lines_on_invoice_id"
+
   create_table "invoice_matters", :force => true do |t|
     t.integer  "invoice_id"
     t.integer  "matter_id"
@@ -267,6 +271,10 @@ ActiveRecord::Schema.define(:version => 20120506123342) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "invoice_matters", ["invoice_id"], :name => "index_invoice_matters_on_invoice_id"
+  add_index "invoice_matters", ["matter_id"], :name => "index_invoice_matters_on_matter_id"
+  add_index "invoice_matters", ["matter_task_id"], :name => "index_invoice_matters_on_matter_task_id"
 
   create_table "invoice_status_flows", :force => true do |t|
     t.integer  "revert_to_step_id"
@@ -317,6 +325,8 @@ ActiveRecord::Schema.define(:version => 20120506123342) do
     t.integer  "matter_type_id"
     t.string   "author_name"
   end
+
+  add_index "invoices", ["document_id"], :name => "index_invoices_on_document_id"
 
   create_table "legal_types", :force => true do |t|
     t.string   "description"
@@ -428,6 +438,8 @@ ActiveRecord::Schema.define(:version => 20120506123342) do
     t.integer  "matter_task_type_id"
   end
 
+  add_index "matter_tasks", ["matter_id"], :name => "index_matter_tasks_on_matter_id"
+
   create_table "matter_types", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -459,6 +471,10 @@ ActiveRecord::Schema.define(:version => 20120506123342) do
     t.date     "date_effective",     :default => '2011-12-29'
     t.datetime "date_effective_end"
   end
+
+  add_index "matters", ["author_id"], :name => "index_matters_on_author_id"
+  add_index "matters", ["document_id"], :name => "index_matters_on_document_id"
+  add_index "matters", ["orig_id", "version"], :name => "index_matters_on_orig_id_and_version"
 
   create_table "messages", :force => true do |t|
     t.integer  "user_id"
