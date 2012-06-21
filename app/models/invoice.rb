@@ -2,34 +2,36 @@
 #
 # Table name: invoices
 #
-#  id                :integer         not null, primary key
-#  document_id       :integer
-#  customer_id       :integer
-#  address_id        :integer
-#  individual_id     :integer
-#  currency_id       :integer
-#  exchange_rate_id  :integer
-#  discount          :integer
-#  our_ref           :string(255)
-#  your_ref          :string(255)
-#  your_date         :date
-#  po_billing        :string(255)
-#  finishing_details :string(255)
-#  invoice_date      :date
-#  created_at        :datetime
-#  updated_at        :datetime
-#  author_id         :integer
-#  exchange_rate     :decimal(7, 4)
-#  subject           :string(2000)
-#  ending_details    :string(2000)
-#  payment_term      :integer(2)
-#  apply_vat         :boolean
-#  invoice_status_id :integer
-#  date_paid         :date
-#  foreign_number    :integer
-#  local_number      :integer
-#  invoice_type      :integer
-#  matter_type_id    :integer
+#  id                  :integer         not null, primary key
+#  document_id         :integer
+#  customer_id         :integer
+#  address_id          :integer
+#  individual_id       :integer
+#  currency_id         :integer
+#  exchange_rate_id    :integer
+#  discount            :integer
+#  our_ref             :string(255)
+#  your_ref            :string(255)
+#  your_date           :date
+#  po_billing          :string(255)
+#  finishing_details   :string(255)
+#  invoice_date        :date
+#  created_at          :datetime
+#  updated_at          :datetime
+#  author_id           :integer
+#  exchange_rate       :decimal(7, 4)
+#  subject             :string(2000)
+#  ending_details      :string(2000)
+#  payment_term        :integer(2)
+#  apply_vat           :boolean
+#  invoice_status_id   :integer
+#  date_paid           :date
+#  foreign_number      :integer
+#  local_number        :integer
+#  invoice_type        :integer
+#  matter_type_id      :integer
+#  author_name         :string(255)
+#  billing_settings_id :integer
 #
 
 class Invoice < ActiveRecord::Base
@@ -41,6 +43,8 @@ class Invoice < ActiveRecord::Base
   belongs_to :currency
   belongs_to :author, :class_name => "User", :foreign_key => :author_id
   belongs_to :invoice_status
+  belongs_to :billing_setting
+
   has_many :invoice_lines, :order => :id
   has_many :invoice_matters
   has_many :matters, :through => :invoice_matters
@@ -86,6 +90,7 @@ class Invoice < ActiveRecord::Base
   before_validation :parse_our_refs
   before_save :mark_as_paid
   before_save :set_matter_type
+  before_create :set_vat_rate
   #
   after_update :update_lines
 
@@ -245,7 +250,7 @@ class Invoice < ActiveRecord::Base
 
   def sum_vat
     if apply_vat?
-      ((sum_attorney_fees - sum_discount + sum_official_fees) * 0.22).round(2)
+      ((sum_attorney_fees - sum_discount + sum_official_fees) * billing_setting.vat_rate).round(2)
     end
   end
 
@@ -270,7 +275,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def local_sum_vat
-    local_sum_taxable_vat * 0.22
+    local_sum_taxable_vat * BillingSetting.find(billing_settings_id).vat_rate
   end
 
   def local_sum_total
@@ -411,6 +416,10 @@ class Invoice < ActiveRecord::Base
 
   def set_matter_type
     self.matter_type_id = @matter_type
+  end
+
+  def set_vat_rate
+    self.billing_settings_id = BillingSetting.where(:active => true).first.id
   end
 
 end

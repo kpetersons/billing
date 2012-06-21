@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120506164852) do
+ActiveRecord::Schema.define(:version => 20120620163624) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.boolean  "show_on_invoice"
   end
 
+  add_index "accounts", ["company_id"], :name => "index_accounts_on_company_id"
+
   create_table "address_types", :force => true do |t|
     t.string   "name"
     t.boolean  "built_in"
@@ -31,6 +33,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "updated_at"
     t.integer  "party_id"
   end
+
+  add_index "address_types", ["party_id"], :name => "index_address_types_on_party_id"
 
   create_table "addresses", :force => true do |t|
     t.integer  "party_id"
@@ -50,6 +54,11 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "date_effective_end"
   end
 
+  add_index "addresses", ["address_type_id"], :name => "index_addresses_on_address_type_id"
+  add_index "addresses", ["country_id"], :name => "index_addresses_on_country_id"
+  add_index "addresses", ["orig_id"], :name => "index_addresses_on_orig_id"
+  add_index "addresses", ["party_id"], :name => "index_addresses_on_party_id"
+
   create_table "attorney_fee_types", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -58,6 +67,17 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.integer  "operating_party_id"
     t.boolean  "apply_vat"
     t.boolean  "apply_discount"
+  end
+
+  add_index "attorney_fee_types", ["operating_party_id"], :name => "index_attorney_fee_types_on_operating_party_id"
+
+  create_table "billing_settings", :force => true do |t|
+    t.decimal  "vat_rate",         :precision => 8, :scale => 2
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.date     "activated_when"
+    t.date     "deactivated_when"
   end
 
   create_table "clazzs", :force => true do |t|
@@ -79,6 +99,9 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "date_effective_end"
   end
 
+  add_index "companies", ["orig_id"], :name => "index_companies_on_orig_id"
+  add_index "companies", ["party_id"], :name => "index_companies_on_party_id"
+
   create_table "contact_types", :force => true do |t|
     t.string   "name"
     t.boolean  "built_in"
@@ -93,6 +116,9 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "contacts", ["contact_type_id"], :name => "index_contacts_on_contact_type_id"
+  add_index "contacts", ["party_id"], :name => "index_contacts_on_party_id"
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -120,6 +146,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.text     "shortnote"
   end
 
+  add_index "customers", ["party_id"], :name => "index_customers_on_party_id"
+
   create_table "customs", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -130,6 +158,9 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.integer  "client_all_ip_id"
     t.text     "vid_ref"
   end
+
+  add_index "customs", ["client_all_ip_id"], :name => "index_customs_on_client_all_ip_id"
+  add_index "customs", ["matter_id"], :name => "index_customs_on_matter_id"
 
   create_table "default_filter_columns", :force => true do |t|
     t.string   "column_name"
@@ -144,11 +175,19 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.boolean  "translate",          :default => false
   end
 
+  add_index "default_filter_columns", ["column_name"], :name => "index_default_filter_columns_on_column_name"
+  add_index "default_filter_columns", ["column_position"], :name => "index_default_filter_columns_on_column_position"
+  add_index "default_filter_columns", ["column_query"], :name => "index_default_filter_columns_on_column_query"
+  add_index "default_filter_columns", ["column_type"], :name => "index_default_filter_columns_on_column_type"
+  add_index "default_filter_columns", ["default_filter_id"], :name => "index_default_filter_columns_on_default_filter_id"
+
   create_table "default_filters", :force => true do |t|
     t.string   "table_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "default_filters", ["table_name"], :name => "index_default_filters_on_table_name", :unique => true
 
   create_table "designs", :force => true do |t|
     t.datetime "created_at"
@@ -162,12 +201,17 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.date     "registration_date"
   end
 
+  add_index "designs", ["matter_id"], :name => "index_designs_on_matter_id"
+
   create_table "document_tags", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "document_id"
     t.integer  "tag_id"
   end
+
+  add_index "document_tags", ["document_id"], :name => "index_document_tags_on_document_id"
+  add_index "document_tags", ["tag_id"], :name => "index_document_tags_on_tag_id"
 
   create_table "documents", :force => true do |t|
     t.integer  "user_id"
@@ -183,7 +227,9 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "date_effective_end"
   end
 
+  add_index "documents", ["parent_id"], :name => "index_documents_on_parent_id"
   add_index "documents", ["registration_number"], :name => "index_documents_on_registration_number"
+  add_index "documents", ["user_id"], :name => "index_documents_on_user_id"
 
   create_table "domains", :force => true do |t|
     t.integer  "matter_id"
@@ -192,6 +238,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "domains", ["matter_id"], :name => "index_domains_on_matter_id"
 
   create_table "exchange_rates", :force => true do |t|
     t.integer  "currency_id"
@@ -208,6 +256,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "functions", ["name"], :name => "index_functions_on_name", :unique => true
 
   create_table "genders", :force => true do |t|
     t.string   "name"
@@ -226,6 +276,9 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "updated_at"
   end
 
+  add_index "individuals", ["gender_id"], :name => "index_individuals_on_gender_id"
+  add_index "individuals", ["party_id"], :name => "index_individuals_on_party_id"
+
   create_table "invoice_line_presets", :force => true do |t|
     t.integer  "operating_party_id"
     t.integer  "official_fee_type_id"
@@ -242,6 +295,13 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.date     "date_effective"
     t.date     "date_effective_end"
   end
+
+  add_index "invoice_line_presets", ["attorney_fee_type_id"], :name => "index_invoice_line_presets_on_attorney_fee_type_id"
+  add_index "invoice_line_presets", ["author_id"], :name => "index_invoice_line_presets_on_author_id"
+  add_index "invoice_line_presets", ["currency_id"], :name => "index_invoice_line_presets_on_currency_id"
+  add_index "invoice_line_presets", ["official_fee_type_id"], :name => "index_invoice_line_presets_on_official_fee_type_id"
+  add_index "invoice_line_presets", ["operating_party_id"], :name => "index_invoice_line_presets_on_operating_party_id"
+  add_index "invoice_line_presets", ["orig_id"], :name => "index_invoice_line_presets_on_orig_id"
 
   create_table "invoice_lines", :force => true do |t|
     t.integer  "invoice_id"
@@ -260,9 +320,12 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.decimal  "total_attorney_fee",   :precision => 10, :scale => 2
     t.decimal  "total_official_fee",   :precision => 10, :scale => 2
     t.decimal  "total_discount",       :precision => 10, :scale => 2
+    t.integer  "billing_settings_id"
   end
 
+  add_index "invoice_lines", ["attorney_fee_type_id"], :name => "index_invoice_lines_on_attorney_fee_type_id"
   add_index "invoice_lines", ["invoice_id"], :name => "index_invoice_lines_on_invoice_id"
+  add_index "invoice_lines", ["official_fee_type_id"], :name => "index_invoice_lines_on_official_fee_type_id"
 
   create_table "invoice_matters", :force => true do |t|
     t.integer  "invoice_id"
@@ -287,6 +350,12 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "updated_at"
   end
 
+  add_index "invoice_status_flows", ["current_step_id"], :name => "index_invoice_status_flows_on_current_step_id"
+  add_index "invoice_status_flows", ["pass_to_function_id"], :name => "index_invoice_status_flows_on_pass_to_function_id"
+  add_index "invoice_status_flows", ["pass_to_step_id"], :name => "index_invoice_status_flows_on_pass_to_step_id"
+  add_index "invoice_status_flows", ["revert_to_function_id"], :name => "index_invoice_status_flows_on_revert_to_function_id"
+  add_index "invoice_status_flows", ["revert_to_step_id"], :name => "index_invoice_status_flows_on_revert_to_step_id"
+
   create_table "invoice_statuses", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -294,6 +363,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.integer  "function_id"
     t.boolean  "editable_state"
   end
+
+  add_index "invoice_statuses", ["function_id"], :name => "index_invoice_statuses_on_function_id"
 
   create_table "invoices", :force => true do |t|
     t.integer  "document_id"
@@ -312,10 +383,10 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "author_id"
-    t.decimal  "exchange_rate",                     :precision => 7, :scale => 4
-    t.string   "subject",           :limit => 2000
-    t.string   "ending_details",    :limit => 2000
-    t.integer  "payment_term",      :limit => 2
+    t.decimal  "exchange_rate",                       :precision => 7, :scale => 4
+    t.string   "subject",             :limit => 2000
+    t.string   "ending_details",      :limit => 2000
+    t.integer  "payment_term",        :limit => 2
     t.boolean  "apply_vat"
     t.integer  "invoice_status_id"
     t.date     "date_paid"
@@ -324,9 +395,17 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.integer  "invoice_type"
     t.integer  "matter_type_id"
     t.string   "author_name"
+    t.integer  "billing_settings_id"
   end
 
+  add_index "invoices", ["address_id"], :name => "index_invoices_on_address_id"
+  add_index "invoices", ["currency_id"], :name => "index_invoices_on_currency_id"
+  add_index "invoices", ["customer_id"], :name => "index_invoices_on_customer_id"
   add_index "invoices", ["document_id"], :name => "index_invoices_on_document_id"
+  add_index "invoices", ["exchange_rate_id"], :name => "index_invoices_on_exchange_rate_id"
+  add_index "invoices", ["individual_id"], :name => "index_invoices_on_individual_id"
+  add_index "invoices", ["invoice_status_id"], :name => "index_invoices_on_invoice_status_id"
+  add_index "invoices", ["matter_type_id"], :name => "index_invoices_on_matter_type_id"
 
   create_table "legal_types", :force => true do |t|
     t.string   "description"
@@ -349,6 +428,11 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.text     "court_ref"
   end
 
+  add_index "legals", ["legal_type_id"], :name => "index_legals_on_legal_type_id"
+  add_index "legals", ["matter_id"], :name => "index_legals_on_matter_id"
+  add_index "legals", ["opposite_party_agent_id"], :name => "index_legals_on_opposite_party_agent_id"
+  add_index "legals", ["opposite_party_id"], :name => "index_legals_on_opposite_party_id"
+
   create_table "linked_matters", :force => true do |t|
     t.integer  "matter_id"
     t.integer  "linked_matter_id"
@@ -356,12 +440,18 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "updated_at"
   end
 
+  add_index "linked_matters", ["linked_matter_id"], :name => "index_linked_matters_on_linked_matter_id"
+  add_index "linked_matters", ["matter_id"], :name => "index_linked_matters_on_matter_id"
+
   create_table "matter_clazzs", :force => true do |t|
     t.integer  "matter_id"
     t.integer  "clazz_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "matter_clazzs", ["clazz_id"], :name => "index_matter_clazzs_on_clazz_id"
+  add_index "matter_clazzs", ["matter_id"], :name => "index_matter_clazzs_on_matter_id"
 
   create_table "matter_customers", :force => true do |t|
     t.integer  "matter_id"
@@ -374,6 +464,10 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.string   "customer_type"
   end
 
+  add_index "matter_customers", ["author_id"], :name => "index_matter_customers_on_author_id"
+  add_index "matter_customers", ["customer_id"], :name => "index_matter_customers_on_customer_id"
+  add_index "matter_customers", ["matter_id"], :name => "index_matter_customers_on_matter_id"
+
   create_table "matter_images", :force => true do |t|
     t.integer  "matter_id"
     t.string   "image_file_name"
@@ -383,6 +477,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "matter_images", ["matter_id"], :name => "index_matter_images_on_matter_id"
 
   create_table "matter_status_flows", :force => true do |t|
     t.integer  "revert_to_step_id"
@@ -395,12 +491,20 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "updated_at"
   end
 
+  add_index "matter_status_flows", ["current_step_id"], :name => "index_matter_status_flows_on_current_step_id"
+  add_index "matter_status_flows", ["pass_to_function_id"], :name => "index_matter_status_flows_on_pass_to_function_id"
+  add_index "matter_status_flows", ["pass_to_step_id"], :name => "index_matter_status_flows_on_pass_to_step_id"
+  add_index "matter_status_flows", ["revert_to_function_id"], :name => "index_matter_status_flows_on_revert_to_function_id"
+  add_index "matter_status_flows", ["revert_to_step_id"], :name => "index_matter_status_flows_on_revert_to_step_id"
+
   create_table "matter_statuses", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "function_id"
   end
+
+  add_index "matter_statuses", ["function_id"], :name => "index_matter_statuses_on_function_id"
 
   create_table "matter_task_status_flows", :force => true do |t|
     t.integer  "revert_to_step_id"
@@ -413,6 +517,12 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.integer  "revert_to_function_id"
   end
 
+  add_index "matter_task_status_flows", ["current_step_id"], :name => "index_matter_task_status_flows_on_current_step_id"
+  add_index "matter_task_status_flows", ["pass_to_function_id"], :name => "index_matter_task_status_flows_on_pass_to_function_id"
+  add_index "matter_task_status_flows", ["pass_to_step_id"], :name => "index_matter_task_status_flows_on_pass_to_step_id"
+  add_index "matter_task_status_flows", ["revert_to_function_id"], :name => "index_matter_task_status_flows_on_revert_to_function_id"
+  add_index "matter_task_status_flows", ["revert_to_step_id"], :name => "index_matter_task_status_flows_on_revert_to_step_id"
+
   create_table "matter_task_statuses", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -420,12 +530,17 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.integer  "function_id"
   end
 
+  add_index "matter_task_statuses", ["function_id"], :name => "index_matter_task_statuses_on_function_id"
+  add_index "matter_task_statuses", ["name"], :name => "index_matter_task_statuses_on_name"
+
   create_table "matter_task_types", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "matter_task_types", ["name"], :name => "index_matter_task_types_on_name"
 
   create_table "matter_tasks", :force => true do |t|
     t.integer  "matter_id"
@@ -438,7 +553,10 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.integer  "matter_task_type_id"
   end
 
+  add_index "matter_tasks", ["author_id"], :name => "index_matter_tasks_on_author_id"
   add_index "matter_tasks", ["matter_id"], :name => "index_matter_tasks_on_matter_id"
+  add_index "matter_tasks", ["matter_task_status_id"], :name => "index_matter_tasks_on_matter_task_status_id"
+  add_index "matter_tasks", ["matter_task_type_id"], :name => "index_matter_tasks_on_matter_task_type_id"
 
   create_table "matter_types", :force => true do |t|
     t.string   "name"
@@ -447,6 +565,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "updated_at"
     t.integer  "function_id"
   end
+
+  add_index "matter_types", ["function_id"], :name => "index_matter_types_on_function_id"
 
   create_table "matters", :force => true do |t|
     t.integer  "document_id"
@@ -472,9 +592,15 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "date_effective_end"
   end
 
+  add_index "matters", ["agent_id"], :name => "index_matters_on_agent_id"
+  add_index "matters", ["applicant_id"], :name => "index_matters_on_applicant_id"
   add_index "matters", ["author_id"], :name => "index_matters_on_author_id"
   add_index "matters", ["document_id"], :name => "index_matters_on_document_id"
+  add_index "matters", ["matter_status_id"], :name => "index_matters_on_matter_status_id"
+  add_index "matters", ["matter_type_id"], :name => "index_matters_on_matter_type_id"
+  add_index "matters", ["operating_party_id"], :name => "index_matters_on_operating_party_id"
   add_index "matters", ["orig_id", "version"], :name => "index_matters_on_orig_id_and_version"
+  add_index "matters", ["orig_id"], :name => "index_matters_on_orig_id"
 
   create_table "messages", :force => true do |t|
     t.integer  "user_id"
@@ -483,6 +609,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "messages", ["user_id"], :name => "index_messages_on_user_id"
 
   create_table "official_fee_types", :force => true do |t|
     t.string   "name"
@@ -494,12 +622,17 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.boolean  "apply_discount"
   end
 
+  add_index "official_fee_types", ["operating_party_id"], :name => "index_official_fee_types_on_operating_party_id"
+
   create_table "operating_parties", :force => true do |t|
     t.integer  "company_id"
     t.integer  "operating_party_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "operating_parties", ["company_id"], :name => "index_operating_parties_on_company_id"
+  add_index "operating_parties", ["operating_party_id"], :name => "index_operating_parties_on_operating_party_id"
 
   create_table "operating_party_matter_types", :force => true do |t|
     t.integer  "operating_party_id"
@@ -508,12 +641,18 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "updated_at"
   end
 
+  add_index "operating_party_matter_types", ["matter_type_id"], :name => "index_operating_party_matter_types_on_matter_type_id"
+  add_index "operating_party_matter_types", ["operating_party_id"], :name => "index_operating_party_matter_types_on_operating_party_id"
+
   create_table "operating_party_users", :force => true do |t|
     t.integer  "user_id"
     t.integer  "operating_party_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "operating_party_users", ["operating_party_id"], :name => "index_operating_party_users_on_operating_party_id"
+  add_index "operating_party_users", ["user_id"], :name => "index_operating_party_users_on_user_id"
 
   create_table "parties", :force => true do |t|
     t.string   "identifier"
@@ -526,6 +665,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "date_effective_end"
   end
 
+  add_index "parties", ["orig_id"], :name => "index_parties_on_orig_id"
+
   create_table "patent_searches", :force => true do |t|
     t.integer  "matter_id"
     t.string   "description"
@@ -535,6 +676,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "patent_searches", ["matter_id"], :name => "index_patent_searches_on_matter_id"
 
   create_table "patents", :force => true do |t|
     t.datetime "created_at"
@@ -549,12 +692,16 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.date     "registration_date"
   end
 
+  add_index "patents", ["matter_id"], :name => "index_patents_on_matter_id"
+
   create_table "relationship_types", :force => true do |t|
     t.string   "name"
     t.boolean  "built_in"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "relationship_types", ["name"], :name => "index_relationship_types_on_name"
 
   create_table "relationships", :force => true do |t|
     t.integer  "source_party_id"
@@ -564,6 +711,10 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "updated_at"
   end
 
+  add_index "relationships", ["relationship_type_id"], :name => "index_relationships_on_relationship_type_id"
+  add_index "relationships", ["source_party_id"], :name => "index_relationships_on_source_party_id"
+  add_index "relationships", ["target_party_id"], :name => "index_relationships_on_target_party_id"
+
   create_table "role_functions", :force => true do |t|
     t.integer  "role_id"
     t.integer  "function_id"
@@ -571,12 +722,17 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "updated_at"
   end
 
+  add_index "role_functions", ["function_id"], :name => "index_role_functions_on_function_id"
+  add_index "role_functions", ["role_id"], :name => "index_role_functions_on_role_id"
+
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "searches", :force => true do |t|
     t.integer  "matter_id"
@@ -588,11 +744,15 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "updated_at"
   end
 
+  add_index "searches", ["matter_id"], :name => "index_searches_on_matter_id"
+
   create_table "tags", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name"
 
   create_table "trademarks", :force => true do |t|
     t.date     "appl_date"
@@ -611,6 +771,8 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.date     "registration_date"
   end
 
+  add_index "trademarks", ["matter_id"], :name => "index_trademarks_on_matter_id"
+
   create_table "user_filter_columns", :force => true do |t|
     t.integer  "user_filter_id"
     t.string   "column_name"
@@ -623,12 +785,21 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.boolean  "translate",          :default => false
   end
 
+  add_index "user_filter_columns", ["column_name"], :name => "index_user_filter_columns_on_column_name"
+  add_index "user_filter_columns", ["column_position"], :name => "index_user_filter_columns_on_column_position"
+  add_index "user_filter_columns", ["column_query"], :name => "index_user_filter_columns_on_column_query"
+  add_index "user_filter_columns", ["column_type"], :name => "index_user_filter_columns_on_column_type"
+  add_index "user_filter_columns", ["user_filter_id"], :name => "index_user_filter_columns_on_user_filter_id"
+
   create_table "user_filters", :force => true do |t|
     t.integer  "user_id"
     t.string   "table_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "user_filters", ["table_name"], :name => "index_user_filters_on_table_name"
+  add_index "user_filters", ["user_id"], :name => "index_user_filters_on_user_id"
 
   create_table "user_preferences", :force => true do |t|
     t.integer  "rows_per_page"
@@ -637,12 +808,17 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "updated_at"
   end
 
+  add_index "user_preferences", ["user_id"], :name => "index_user_preferences_on_user_id"
+
   create_table "user_roles", :force => true do |t|
     t.integer  "user_id"
     t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "user_roles", ["role_id"], :name => "index_user_roles_on_role_id"
+  add_index "user_roles", ["user_id"], :name => "index_user_roles_on_user_id"
 
   create_table "users", :force => true do |t|
     t.integer  "individual_id"
@@ -660,5 +836,7 @@ ActiveRecord::Schema.define(:version => 20120506164852) do
     t.datetime "login_date"
     t.datetime "last_login_date"
   end
+
+  add_index "users", ["individual_id"], :name => "index_users_on_individual_id"
 
 end

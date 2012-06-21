@@ -1,0 +1,20 @@
+<dl class="panel-content">
+	<dt>
+		<label><%=t("vat_rate.vat_rate")%></label>
+	</dt>
+	<dd>
+		<%= vat_rate.vat_rate %>&nbsp;
+	</dd>
+	<dt>
+		<label><%=t("vat_rate.active_from")%></label>
+	</dt>
+	<dd>
+		<%= vat_rate.activated_when %>&nbsp;
+	</dd>
+  <dt>
+    <label><%=t("vat_rate.inactive_from")%></label>
+  </dt>
+  <dd>
+    <%= vat_rate.deactivated_when %>&nbsp;
+  </dd>
+</dl>

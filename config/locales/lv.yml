@@ -1,4 +1,9 @@
 lv:
+  vat_rate:
+    vat_rate: "Rate"
+    show: "Vat rate"
+    edit: "Edit vat rate"
+    create: "Create vat rate"
   date:
     th:
       created_at: "Created at"

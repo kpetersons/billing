@@ -29,7 +29,7 @@
                                 {"data-prefix" => "detail_search[details]", "data-name" => "[field]", "class" => "column-rows"} %>
                 </td>
                 <td style="width:1em">
-                  <%= fo.select :precision, ["Is", "Contains"].collect { |tt|
+                  <%= fo.select :precision, ["Contains", "Is"].collect { |tt|
                       attrs = {}
                       attrs[:selected] = true if tt.eql?(item.precision)
                       [tt, tt, attrs]

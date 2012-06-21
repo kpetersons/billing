@@ -1,4 +1,12 @@
 en:
+  vat_rate:
+    vat_rate: "Rate"
+    show: "Vat rate"
+    edit: "Edit vat rate"
+    create: "Create vat rate"
+    active_from: "Active from"
+    inactive_from: "Inactive from"
+    list: "Vat rates"
   date:
     th:
       created_at: "Created at"

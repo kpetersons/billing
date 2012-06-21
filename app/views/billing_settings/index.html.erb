@@ -1,0 +1,9 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong><%= t("vat_rate.list")%></strong>
+	</div>
+	<%= render :partial => "index", :locals => {:vat_rates => @vat_rates, :param_name => "vat_rates"} %>
+	<div class="panel-footer controls">
+		<%= link_to t("button.add"), new_billing_setting_path %>
+	</div>
+</div>

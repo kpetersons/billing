@@ -3,12 +3,11 @@
 # Table name: trademarks
 #
 #  id                 :integer         not null, primary key
+#  appl_date          :date
+#  appl_number        :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
 #  matter_id          :integer
-#  appl_date          :date
-#  appl_number        :string(255)
-#  notes              :string(255)
 #  mark_name          :string(255)
 #  cfe_index          :string(255)
 #  application_date   :date

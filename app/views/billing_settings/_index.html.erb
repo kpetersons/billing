@@ -1,0 +1,34 @@
+<table style="width:100%">
+	<thead>
+		<tr>
+			<th class="col-radio"></th>
+			<th class="col-text"><%=t("vat_rate.vat_rate")%></th>
+			<th class="col-text"><%=t("vat_rate.active_from")%></th>
+            <th class="col-text"><%=t("vat_rate.inactive_from")%></th>
+			<th class="col-number"></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th class="list-paginate" colspan="6"> <%= will_paginate vat_rates, :per_page => current_user.rows_per_page, :param_name => param_name, :params => {:anchor => param_name} %> </th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<% vat_rates.each do |vat_rate|%>
+		<tr>
+			<td class="col-radio"></td>
+			<td class="col-text"><%= vat_rate.vat_rate%></td>
+			<td class="col-text"><%= vat_rate.activated_when %></td>
+            <td class="col-text"><%= vat_rate.deactivated_when %></td>
+			<td class="col-number">
+				<%=link_to t("button.show"), vat_rate %>
+			</td>
+		</tr>
+		<%end%>
+		<% if vat_rates.empty? %>
+		<tr>
+			<td colspan="6">&nbsp;</td>
+		</tr>
+		<%end%>
+	</tbody>
+</table>

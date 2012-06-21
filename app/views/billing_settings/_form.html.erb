@@ -1,0 +1,4 @@
+<%=form_for @vat_rate do |vr_f| %>
+	<%= render :partial => "fields", 							:locals => {:fields 	=> vr_f} %>
+	<%= render :partial => "shared/ui/form-submit-controls", 	:locals => {:fields 	=> vr_f}%>
+<%end%>

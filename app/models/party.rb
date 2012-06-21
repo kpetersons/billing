@@ -9,7 +9,7 @@
 #  updated_at         :datetime
 #  version            :integer         default(1)
 #  orig_id            :integer
-#  date_effective     :date            default(Sat, 03 Dec 2011)
+#  date_effective     :date            default(Thu, 29 Dec 2011)
 #  date_effective_end :datetime
 #
 

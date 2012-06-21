@@ -2,7 +2,6 @@
 #
 # Table name: v_invoices
 #
-#  registration_number :text
 #  operating_party_id  :integer
 #  id                  :integer         primary key
 #  author_id           :integer
@@ -12,6 +11,7 @@
 #  currency            :string(255)
 #  author              :text
 #  status              :string(255)
+#  invoice_status_id   :integer
 #  our_ref             :string(255)
 #  your_ref            :string(255)
 #  your_date           :date
@@ -28,10 +28,11 @@
 #  date_paid           :date
 #  total_official_fee  :decimal(, )
 #  total_attorney_fee  :decimal(, )
-#  subtotal            :decimal(, )
-#  total_vat           :decimal(, )
-#  grand_total         :decimal(, )
+#  total_discount      :decimal(, )
+#  registration_number :string(255)
+#  invoice_type        :integer
 #  matter_type_id      :integer
+#  author_name         :string(255)
 #
 
 class VInvoices < ActiveRecord::Base

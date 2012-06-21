@@ -337,7 +337,7 @@ class InvoicePdfLocal < Prawn::Document
     ]
     totals_data <<[
         I18n.t('local.print.invoice.lines.sum_to_pay'),
-        I18n.t('local.print.invoice.lines.curr'),
+        invoice.currency.name,
         number_to_currency(invoice.local_sum_total, :unit => "", :delimiter => "")
     ]
     return totals_data

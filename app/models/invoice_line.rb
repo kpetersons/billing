@@ -5,20 +5,21 @@
 #  id                   :integer         not null, primary key
 #  invoice_id           :integer
 #  official_fee_type_id :integer
-#  details              :string(255)
+#  details              :text
 #  created_at           :datetime
 #  updated_at           :datetime
 #  attorney_fee_type_id :integer
 #  official_fee         :decimal(8, 2)
 #  attorney_fee         :decimal(8, 2)
 #  author_id            :integer
-#  offering             :string(255)
+#  offering             :text
 #  items                :decimal(10, 2)
 #  units                :string(255)
 #  total                :decimal(10, 2)
 #  total_attorney_fee   :decimal(10, 2)
 #  total_official_fee   :decimal(10, 2)
 #  total_discount       :decimal(10, 2)
+#  billing_settings_id  :integer
 #
 
 class InvoiceLine < ActiveRecord::Base
@@ -28,6 +29,7 @@ class InvoiceLine < ActiveRecord::Base
   belongs_to :official_fee_type
   belongs_to :attorney_fee_type
   belongs_to :author, :class_name => "User", :foreign_key => :author_id
+  belongs_to :billing_setting
 
   validates :attorney_fee_type_id, :presence => true, :if => Proc.new { |invoice_line| !invoice_line.attorney_fee.nil? }
   validates :official_fee_type_id, :presence => true, :if => Proc.new { |invoice_line| !invoice_line.official_fee.nil? }
@@ -37,8 +39,10 @@ class InvoiceLine < ActiveRecord::Base
   validates :items, :presence => true, :numericality => true
 
   before_save :calculate_totals
-
+  before_create :set_vat_rate
   validate :local_fees_exclusion
+
+
 
   def local_fees_exclusion
     if invoice.invoice_type == 0 &&
@@ -78,15 +82,20 @@ class InvoiceLine < ActiveRecord::Base
   private
 
   def calculate_totals
-    self.total_attorney_fee= (((attorney_fee.nil?) ? 0 : attorney_fee) * ((items.nil?) ? 0 : items))
-    self.total_official_fee= (((official_fee.nil?) ? 0 : official_fee) * ((items.nil?) ? 0 : items))
-    if !self.attorney_fee_type_id.nil? && AttorneyFeeType.find(self.attorney_fee_type_id).apply_discount?
-      self.total_discount= (total_attorney_fee * ((invoice.discount.nil?) ? 0 : invoice.discount) / 100)
-    else
-      self.total_discount= 0
+    if invoice
+      self.total_attorney_fee= (((attorney_fee.nil?) ? 0 : attorney_fee) * ((items.nil?) ? 0 : items))
+      self.total_official_fee= (((official_fee.nil?) ? 0 : official_fee) * ((items.nil?) ? 0 : items))
+      if !self.attorney_fee_type_id.nil? && AttorneyFeeType.find(self.attorney_fee_type_id).apply_discount?
+        self.total_discount= (total_attorney_fee * ((invoice.discount.nil?) ? 0 : invoice.discount) / 100)
+      else
+        self.total_discount= 0
+      end
+      self.total= (total_attorney_fee + total_official_fee - total_discount)
     end
-    self.total= (total_attorney_fee + total_official_fee - total_discount)
   end
 
+  def set_vat_rate
+    self.billing_settings_id = invoice.billing_settings_id
+  end
 
 end

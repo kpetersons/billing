@@ -1,0 +1,10 @@
+<div class="panel">
+	<div class="panel-header">
+		<strong><%=t("vat_rate.show")%></strong>
+	</div>
+	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
+	<%= render :partial => "show", :locals => {:vat_rate => @vat_rate} %>
+	<div class="show controls">
+		<%= link_to t(" button.edit"), {:action => 'edit'} %>
+	</div>	
+</div>
