@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'rack', '1.3.6'
 gem "rake"
 gem 'rails', '3.1'
 gem 'rspec', '2.7.0'

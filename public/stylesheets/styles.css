@@ -18,6 +18,9 @@
 .linked-matter:hover .unlink {
     display:inline-block;
     position:absolute;
+    z-index: 999;
+    background-color: #FFFFFF;
+    padding: 5px;
 }
 
 .column.fixed .panel-content form ul.dashboard-filter {

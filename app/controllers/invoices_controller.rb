@@ -198,9 +198,7 @@ class InvoicesController < ApplicationController
   def do_save_refs invoice, matters
     InvoiceMatter.delete(invoice.invoice_matters)
     if matters.respond_to?(:each)
-      matters.each do |matter|
-        invoice.matters<<matter
-      end
+      invoice.matters= matters
     else
       invoice.matters<<matters
     end

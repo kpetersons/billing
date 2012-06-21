@@ -375,8 +375,15 @@ class Invoice < ActiveRecord::Base
           errors.add(:our_ref, "references multiple matter types. Choose only one type!")
           error = true
         end
+      if @our_ref_matters.length > 600
+        errors.add(:our_ref, "range too large. Should be less than 600!")
+        error = true
+      end
       unless error
         @our_ref_matters<<Matter.find(doc.id)
+      end
+      if error
+        break
       end
     end
   end

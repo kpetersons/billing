@@ -56,12 +56,22 @@ class MattersController < ApplicationController
     end
     if @matter_type.name.eql?("matters.patent")
       @document.matter.patent = Patent.new
+      if params[:matter_id]
+        parent_matter = Matter.where(:document_id => params[:matter_id]).first
+        @document.matter.attributes = parent_matter.attributes.reject{|key, value| ['document_id', 'id', 'orig_id', 'matter_status_id', 'date_effective', 'author_id','created_at', 'updated_at'].include?(key)}
+        @document.matter.patent.attributes = parent_matter.patent.attributes.reject{|key, value| ['matter_id', 'id', 'created_at', 'updated_at'].include?(key)}
+      end
     end
     if @matter_type.name.eql?("matters.legal")
       @document.matter.legal = Legal.new
     end
     if @matter_type.name.eql?("matters.design")
       @document.matter.design = Design.new
+      if params[:matter_id]
+        parent_matter = Matter.where(:document_id => params[:matter_id]).first
+        @document.matter.attributes = parent_matter.attributes.reject{|key, value| ['document_id', 'id', 'orig_id', 'matter_status_id', 'date_effective', 'author_id','created_at', 'updated_at'].include?(key)}
+        @document.matter.design.attributes = parent_matter.design.attributes.reject{|key, value| ['matter_id', 'id', 'created_at', 'updated_at'].include?(key)}
+      end
     end
     if @matter_type.name.eql?("matters.custom")
       @document.matter.custom = Custom.new
@@ -290,6 +300,9 @@ class MattersController < ApplicationController
           errors<<"#{str_prefix}#{str_end}"
         end
       end
+    end
+    if result.length > 100
+      return
     end
     Matter.transaction do
       result.each do |item|
