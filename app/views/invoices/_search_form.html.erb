@@ -1,3 +1,13 @@
 <%= form_tag '/invoices/search', :method => :get, :style=>"display:inline-block" do %>
+    <ul style="list-style: none; margin: 5px; padding: 5px;box-sizing:border-box;">
+      <li style="box-sizing:border-box;" data-index="0">
+        <div class="search-field-container">
+          <%= fields_for "detail_search[totals]" do |fo| %>
+              <label>Calculate totals</label>
+              <%= fo.check_box :calculate_totals %>
+          <%end%>
+        </div>
+      </li>
+    </ul>
     <%= render :partial => "shared/search/search_fields"%>
 <% end %>

@@ -42,7 +42,9 @@ class DashboardController < ApplicationController
     @task_status = (params[:task_status].eql? "matters.task.status.all") ? MatterTaskStatus.all.collect { |x| x.name } : params[:task_status]
     @description = params[:description]
     @query = VMatterTasks.where(:task_type => @task_type, :matter_type => @matter_type, :status => @task_status).where("deadline between ? and ? and description ilike ?", @from.to_s(:db), @to.to_s(:db), "%#{@description}%")
-    @matter_tasks = @query.order(tasks_order_clause).paginate(:per_page => current_user.rows_per_page, :page => params[:param_name])
+    logger.info "current_user.rows_per_page: #{current_user.rows_per_page}"
+    logger.info "page => params[:matter_tasks] #{params[:matter_tasks]}"
+    @matter_tasks = @query.order(tasks_order_clause).paginate(:per_page => current_user.rows_per_page, :page => params[:matter_tasks])
     @message = get_message params[:id]
     if from_bkp
       @from = nil

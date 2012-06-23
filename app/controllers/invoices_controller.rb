@@ -30,8 +30,21 @@ class InvoicesController < ApplicationController
     begin
       @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).where(@detail_search.query).order("#{@order_by} #{@direction}").paginate(:per_page => current_user.rows_per_page, :page => params[:my_invoices_page])
       @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
+      @invoices_tot = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).where(@detail_search.query).order("#{@order_by} #{@direction}")
+
+      logger.info "params[:detail_search][:totals][:calculate_totals]: #{params[:detail_search][:totals][:calculate_totals]}"
+      if params[:detail_search][:totals][:calculate_totals] == 1.to_s
+        logger.info "params[:detail_search][:totals][:calculate_totals]: #{params[:detail_search][:totals][:calculate_totals]} is one"
+        @totals = {}
+        @totals[:total_official_fee] = @invoices_tot.sum('total_official_fee')
+        @totals[:total_attorneys_fee] = @invoices_tot.sum('total_attorney_fee')
+        @totals[:total_official_and_attorneys_fee] = @totals[:total_official_fee] + @totals[:total_attorneys_fee]
+        @totals[:total_vat] = @invoices_tot.sum('total_vat')
+        @totals[:grand_total] = @totals[:total_official_and_attorneys_fee] + @totals[:total_vat]
+      end
       render "index" and return
     rescue => ex
+      logger.debug ex
       flash.now[:error] = "Invalid search parameters. Check them again!"
       logger.error ex.message
     end

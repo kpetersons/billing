@@ -39,6 +39,48 @@
         <td class="col-number"><%= link_to "Show", invoice_path(invoice) %></td>
       </tr>
   <% end %>
+  <% if @totals %>
+      <tr>
+        <td colspan="<%=current_user.column_names('invoices').length %>" class="col-number">
+          Total official fee:
+        </td>
+        <td colspan="2">
+          <%= @totals[:total_official_fee]%>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="<%=current_user.column_names('invoices').length %>" class="col-number">
+          Total attorney's fees:
+        </td>
+        <td colspan="2">
+          <%= @totals[:total_attorneys_fee]%>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="<%=current_user.column_names('invoices').length %>" class="col-number">
+          Official fee + Attorney's fee:
+        </td>
+        <td colspan="2">
+          <%= @totals[:total_official_and_attorneys_fee]%>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="<%=current_user.column_names('invoices').length %>" class="col-number">
+          VAT
+        </td>
+        <td colspan="2">
+          <%= @totals[:total_vat]%>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="<%=current_user.column_names('invoices').length %>" class="col-number">
+          Grand total:
+        </td>
+        <td colspan="2">
+          <%= @totals[:grand_total]%>
+        </td>
+      </tr>
+  <% end %>
   <% if invoices.empty? %>
       <tr>
         <td colspan="<%= current_user.column_names('invoices').length + 2 %>">&nbsp;</td>

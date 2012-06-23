@@ -32,8 +32,8 @@
   </thead>
   <tfoot>
   <tr>
-    <th class="list-paginate" colspan="<%= current_user.column_names('invoices').length %>">
-      <%= will_paginate matter_tasks,:per_page => current_user.rows_per_page, :param_name => param_name, :params => {:anchor => "deadlines"} %>
+    <th class="list-paginate" colspan="<%= current_user.column_names('invoices').length+3 %>">
+      <%= will_paginate matter_tasks,:per_page => current_user.rows_per_page, :param_name => param_name, :params => {:anchor => anchor} %>
     </th>
   </tr>
   </tfoot>
