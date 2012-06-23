@@ -326,12 +326,12 @@ class InvoicePdfLocal < Prawn::Document
         number_to_currency(invoice.local_sum_exempt_vat, :unit => "", :delimiter => "")
     ] if invoice.has_official_fees?
     totals_data <<[
-        I18n.t('local.print.invoice.lines.sum_vat_taxable'),
+        I18n.t('local.print.invoice.lines.sum_vat_taxable', :vat => (invoice.billing_setting.vat_rate*100).to_s.gsub('.0', '')),
         "",
         number_to_currency(invoice.local_sum_taxable_vat, :unit => "", :delimiter => "")
     ]
     totals_data <<[
-        I18n.t('local.print.invoice.lines.vat_22'),
+        I18n.t('local.print.invoice.lines.vat_22', :vat => (invoice.billing_setting.vat_rate*100).to_s.gsub('.0', '')),
         "",
         number_to_currency(invoice.local_sum_vat, :unit => "", :delimiter => "")
     ]

@@ -1,4 +1,4 @@
-class CreateViews17 < ActiveRecord::Migration
+class CreateViews20 < ActiveRecord::Migration
   def up
     execute <<-SQL
       drop view if exists v_invoices;
@@ -231,7 +231,7 @@ from (
 	        iss.id = i.invoice_status_id and
 	        doc.id = i.document_id
 	      order by i.id) a
-     );
+      );
     SQL
   end
 

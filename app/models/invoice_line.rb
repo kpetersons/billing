@@ -29,7 +29,7 @@ class InvoiceLine < ActiveRecord::Base
   belongs_to :official_fee_type
   belongs_to :attorney_fee_type
   belongs_to :author, :class_name => "User", :foreign_key => :author_id
-  belongs_to :billing_setting
+  belongs_to :billing_setting, :class_name => 'BillingSetting', :foreign_key => 'billing_settings_id'
 
   validates :attorney_fee_type_id, :presence => true, :if => Proc.new { |invoice_line| !invoice_line.attorney_fee.nil? }
   validates :official_fee_type_id, :presence => true, :if => Proc.new { |invoice_line| !invoice_line.official_fee.nil? }

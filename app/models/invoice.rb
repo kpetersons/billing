@@ -43,7 +43,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :currency
   belongs_to :author, :class_name => "User", :foreign_key => :author_id
   belongs_to :invoice_status
-  belongs_to :billing_setting
+  belongs_to :billing_setting, :class_name => 'BillingSetting', :foreign_key => 'billing_settings_id'
 
   has_many :invoice_lines, :order => :id
   has_many :invoice_matters
@@ -63,7 +63,8 @@ class Invoice < ActiveRecord::Base
                   :finishing_details,
                   :invoice_date,
                   :invoice_lines_attributes,
-                  :invoice_matters_attributes
+                  :invoice_matters_attributes,
+                  :billing_settings_is
 
   accepts_nested_attributes_for :invoice_lines, :invoice_matters
   attr_protected :preset_id, :customer_name
@@ -275,7 +276,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def local_sum_vat
-    local_sum_taxable_vat * BillingSetting.find(billing_settings_id).vat_rate
+    local_sum_taxable_vat * billing_setting.vat_rate
   end
 
   def local_sum_total
