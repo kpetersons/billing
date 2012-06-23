@@ -36,11 +36,17 @@ class InvoicesController < ApplicationController
       if params[:detail_search][:totals][:calculate_totals] == 1.to_s
         logger.info "params[:detail_search][:totals][:calculate_totals]: #{params[:detail_search][:totals][:calculate_totals]} is one"
         @totals = {}
+        logger.info 1
         @totals[:total_official_fee] = @invoices_tot.sum('total_official_fee')
+        logger.info 2
         @totals[:total_attorneys_fee] = @invoices_tot.sum('total_attorney_fee')
-        @totals[:total_official_and_attorneys_fee] = @totals[:total_official_fee] + @totals[:total_attorneys_fee]
+        logger.info 3
+        @totals[:total_official_and_attorneys_fee] = @invoices_tot.sum('total_official_fee') + @invoices_tot.sum('total_attorney_fee')
+        logger.info 4
         @totals[:total_vat] = @invoices_tot.sum('total_vat')
-        @totals[:grand_total] = @totals[:total_official_and_attorneys_fee] + @totals[:total_vat]
+        logger.info 5
+        @totals[:grand_total] = @invoices_tot.sum('total_official_fee') + @invoices_tot.sum('total_attorney_fee') + @invoices_tot.sum('total_vat')
+        logger.info 6
       end
       render "index" and return
     rescue => ex
