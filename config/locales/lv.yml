@@ -474,8 +474,8 @@ lv:
           unit_count: "Skaits"
           cost_without_vat: "Summa bez PVN"
           sum_vat_exempt: "Valsts nodevas"
-          sum_vat_taxable: "Ar PVN 22% apliekamā summa"
-          vat_22: "PVN 22%"
+          sum_vat_taxable: "Ar PVN %{vat}% apliekamā summa"
+          vat_22: "PVN %{vat}%"
           sum_to_pay: "Kopā summa apmaksai"
           curr: "LVL"
         footer:
