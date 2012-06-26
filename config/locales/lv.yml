@@ -433,7 +433,7 @@ lv:
           attorneys_fee: "Attorney's fee %{curr}"
           discount: "Discount to our fees %{discount}%"
           subtotal: "Subtotal %{curr}"
-          vat: "VAT 22%"
+          vat: "VAT %{vat}%"
           total_due: "Total due %{curr}"
         footer:
           var_reverse_disclaimer: "<b>VAT reverse charge procedure is applicable according to Art 44 of the EU Council directive 2006/112/EC and Art 41(a) of the Latvian Law on VAT.</b>"

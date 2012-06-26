@@ -1,4 +1,4 @@
-class CreateViews21 < ActiveRecord::Migration
+class CreateViews22 < ActiveRecord::Migration
   def up
     execute <<-SQL
       drop view if exists v_invoices;

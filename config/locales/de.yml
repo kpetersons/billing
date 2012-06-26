@@ -437,7 +437,7 @@ de:
           attorneys_fee: "Unsere Gebühr %{curr}"
           discount: "Nachlass auf unsere Gebühr %{discount}%"
           subtotal: "Zwischensumme %{curr}"
-          vat: "USt. 22%"
+          vat: "USt. %{vat}%"
           total_due: "Gesamt zur Bezahlung %{curr}"
         footer:
           var_reverse_disclaimer: "<b>Die Steuerschuldumkehr ist  laut  Art. 44 der Richtlinie 2006/112/EG des EG Rates und Art. 4.1(4) des Lettlands Umsatzsteuergesetzes anwendbar.</b>"

@@ -33,7 +33,7 @@
               <% val = (column.column_type.eql?('col-date') && !val.nil?) ? val.to_datetime().to_s(:show) : ((column.column_type.eql?('col-number') && !val.nil?)? number_to_currency(val, :unit => "", :delimiter  => "") : val) %>
               <% val = (column.translate) ? t(val) : val %>
               <td class="<%= column.column_type %>" title="<%=val%>">
-                <%= ((val.length > 20)? "#{val.slice(0, 20)}..." : val) unless val.nil?%>
+                <%= ((val.length > 50)? "#{val.slice(0, 50)}..." : val) unless val.nil?%>
             </td>
         <% end %>
         <td class="col-number"><%= link_to "Show", invoice_path(invoice) %></td>

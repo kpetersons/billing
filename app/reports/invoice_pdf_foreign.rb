@@ -228,7 +228,7 @@ class InvoicePdfForeign < Prawn::Document
         (invoice.sum_attorney_fees - invoice.sum_discount == 0) ? '-' : (curr invoice.sum_attorney_fees - invoice.sum_discount)
     ]
     line_footer_data<<[
-        I18n.t('foreign.print.invoice.lines.vat'),
+        I18n.t('foreign.print.invoice.lines.vat', :vat => (invoice.billing_setting.vat_rate*100).to_s.gsub('.0', '')),
         "",
         "#{(invoice.sum_vat == 0) ? '-' : (curr invoice.sum_vat)}"
     ] unless !invoice.apply_vat
