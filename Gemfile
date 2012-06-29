@@ -9,7 +9,7 @@ gem 'gravatar_image_tag'
 gem 'will_paginate'
 gem 'uuidtools'
 gem 'paperclip', '~> 2.3'
-gem 'prawn', :submodules => true
+gem 'prawn', '0.11.1', :submodules => true
 gem "jquery-rails"
 gem 'pg', '0.12.0'
 gem 'heroku'
