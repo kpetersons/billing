@@ -1639,21 +1639,21 @@ end
 #    end
 #  end
 #end
-User.transaction do
-  @users = User.all
-  password_attributes = {
-      :password => 'password',
-      :password_confirmation => 'password',
-      :change_pwd => true,
-      :active => true,
-      :blocked => false
-  }
-  @users.each do |user|
-    @user = user
-    if @user.update_attributes(password_attributes)
-    end
-  end
-end
+#User.transaction do
+#  @users = User.all
+#  password_attributes = {
+#      :password => 'password',
+#      :password_confirmation => 'password',
+#      :change_pwd => true,
+#      :active => true,
+#      :blocked => false
+#  }
+#  @users.each do |user|
+#    @user = user
+#    if @user.update_attributes(password_attributes)
+#    end
+#  end
+#end
 
 BillingSetting.transaction do
   billing_setting = BillingSetting.new(:vat_rate => 0.22)
