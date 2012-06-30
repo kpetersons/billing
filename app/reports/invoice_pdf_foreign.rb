@@ -318,17 +318,18 @@ class InvoicePdfForeign < Prawn::Document
                                    ["#{counter}. #{line.offering_print}"],
                                    [line.line_details]
                                ],
-                               :cell_style => {:borders => [], :padding_right => 6, :padding_left => 0, :padding_top => 5, :padding_bottom => 0},
+                               :cell_style => {:borders => [], :padding_right => 6, :padding_left => 0, :padding_top => 0},
                                :column_widths => [409])
       else
         line_data = make_table([
                                    ["#{counter}. #{line.offering}"],
                                    ["#{line.details}"]
                                ],
-                               :cell_style => {:borders => [], :padding_right => 6, :padding_left => 0, :padding_top => 5, :padding_bottom => 0},
+                               :cell_style => {:borders => [], :padding_right => 6, :padding_left => 0, :padding_top => 0},
                                :column_widths => [409])
       end
-      line_data.rows(1).style :font_style => :italic
+      line_data.rows(0).style :padding => 0, :border_width => 0
+      line_data.rows(1).style  :padding_top => -4, :font_style => :italic
       lines_table = make_table(
           [[line_data,
            "#{(line.total_official_fee == 0) ? '-' : (curr line.total_official_fee)}",
