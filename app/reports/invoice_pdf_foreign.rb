@@ -318,25 +318,25 @@ class InvoicePdfForeign < Prawn::Document
                                    ["#{counter}. #{line.offering_print}"],
                                    [line.line_details]
                                ],
-                               :cell_style => {:borders => [], :padding_right => 6, :padding_left => 0, :padding_top => 0},
+                               :cell_style => {:borders => [], :padding_right => 6, :padding_left => 0, :padding_top => 0, :padding_bottom => 0},
                                :column_widths => [409])
       else
         line_data = make_table([
                                    ["#{counter}. #{line.offering}"],
                                    ["#{line.details}"]
                                ],
-                               :cell_style => {:borders => [], :padding_right => 6, :padding_left => 0, :padding_top => 0},
+                               :cell_style => {:borders => [], :padding_right => 6, :padding_left => 0, :padding_top => 1, :padding_bottom => 0},
                                :column_widths => [409])
       end
-      line_data.rows(0).style :padding => 0, :border_width => 0
-      line_data.rows(1).style  :padding_top => -4, :font_style => :italic
+      line_data.rows(0).style :padding => 0, :padding_bottom => 0, :border_width => 0
+      line_data.rows(1).style  :padding_top => -1, :padding_bottom => 0, :font_style => :italic
       lines_table = make_table(
           [[line_data,
            "#{(line.total_official_fee == 0) ? '-' : (curr line.total_official_fee)}",
            "#{(line.total_attorney_fee == 0) ? '-' : (curr line.total_attorney_fee)}"
           ]],
           :width => width,
-          :cell_style=> {:borders => [:top, :right, :bottom, :left], :padding_right => 5, :padding_left => 5, :padding_top => 5, :padding_bottom => 0},
+          :cell_style=> {:borders => [:top, :right, :bottom, :left], :padding => 3, :padding_bottom => 1},
           :column_widths => [409, 53, 56]
       )
       lines_table.columns(1).style :align => :right

@@ -1,8 +1,9 @@
+<%col_names = current_user.column_names('invoices')%>
 <table style="width: 100%;">
   <thead>
   <tr>
     <th class="col-radio"></th>
-    <% current_user.column_names('invoices').each do |column| %>
+    <% col_names.each do |column| %>
         <th class="<%= column.column_type %>">
           <%= t(column.column_name) %>
           <%= link_to "↑", current_url(@parameters, {:order_by => column.column_query, :direction => "ASC"}), :style => "text-decoration:none" %>
@@ -14,7 +15,7 @@
   </thead>
   <tfoot>
   <tr>
-    <th class="list-paginate" colspan="<%= current_user.column_names('invoices').length + 2 %>">
+    <th class="list-paginate" colspan="<%= col_names.length + 2 %>">
       <%= will_paginate invoices,:per_page => current_user.rows_per_page, :param_name => param_name, "" => @parameters %>
     </th>
   </tr>
@@ -27,7 +28,7 @@
               <%= fields.radio_button :id, invoice.document_id %>
           <% end %>
         </td>
-        <% current_user.column_names('invoices').each do |column| %>
+        <% col_names.each do |column| %>
 
               <% val = invoice.try(column.column_query) %>
               <% val = (column.column_type.eql?('col-date') && !val.nil?) ? val.to_datetime().to_s(:show) : ((column.column_type.eql?('col-number') && !val.nil?)? number_to_currency(val, :unit => "", :delimiter  => "") : val) %>
@@ -41,7 +42,7 @@
   <% end %>
   <% if @totals %>
       <tr>
-        <td colspan="<%=current_user.column_names('invoices').length %>" class="col-number">
+        <td colspan="<%=col_names.length %>" class="col-number">
           Total official fee:
         </td>
         <td colspan="2">
@@ -49,7 +50,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="<%=current_user.column_names('invoices').length %>" class="col-number">
+        <td colspan="<%=col_names.length %>" class="col-number">
           Total attorney's fees:
         </td>
         <td colspan="2">
@@ -57,7 +58,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="<%=current_user.column_names('invoices').length %>" class="col-number">
+        <td colspan="<%=col_names.length %>" class="col-number">
           Official fee + Attorney's fee:
         </td>
         <td colspan="2">
@@ -65,7 +66,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="<%=current_user.column_names('invoices').length %>" class="col-number">
+        <td colspan="<%=col_names.length %>" class="col-number">
           VAT
         </td>
         <td colspan="2">
@@ -73,7 +74,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="<%=current_user.column_names('invoices').length %>" class="col-number">
+        <td colspan="<%=col_names.length %>" class="col-number">
           Grand total:
         </td>
         <td colspan="2">
@@ -83,7 +84,7 @@
   <% end %>
   <% if invoices.empty? %>
       <tr>
-        <td colspan="<%= current_user.column_names('invoices').length + 2 %>">&nbsp;</td>
+        <td colspan="<%= col_names.length + 2 %>">&nbsp;</td>
       </tr>
   <% end %>
   </tbody>

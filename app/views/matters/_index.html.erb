@@ -1,8 +1,9 @@
+<%col_names = current_user.column_names(column_names)%>
 <table style="width: 100%;">
 	<thead>
 		<tr>
 			<th class="col-radio"></th>
-			<% current_user.column_names(column_names).each do |column|%>
+			<% col_names.each do |column|%>
 				<th class="<%=column.column_type%>">
                   <%=t(column.column_name)%>
                  <%=link_to "↑", current_url(@parameters, {:order_by => column.column_query, :direction => "ASC"}), :style => "text-decoration:none"%>
@@ -14,7 +15,7 @@
 	</thead>
 	<tfoot>
 		<tr>
-			<th class="list-paginate" colspan="<%=current_user.column_names(column_names).length + 2%>">
+			<th class="list-paginate" colspan="<%=col_names.length + 2%>">
 				<%= will_paginate matters,:per_page => current_user.rows_per_page, :param_name => param_name, :params=> {:anchor => anchor} %>
 			</th>
 		</tr>
@@ -27,7 +28,7 @@
 					<%= fields.radio_button :id, matter.id%>
 				<%end%>
 			</td>
-			<% current_user.column_names(column_names).each do |column|%>
+			<% col_names.each do |column|%>
 				<td class="<%=column.column_type%>">
                     <% val = matter.try(column.column_query) %>
                     <% val = (column.column_type.eql?('col-date') && !val.nil?)? val.to_datetime().to_s(:show) : val %>
@@ -40,7 +41,7 @@
 		<% end %>
 		<% if matters.empty? %>
 		<tr>
-			<td colspan="<%=current_user.column_names(column_names).length + 2%>">&nbsp;</td>
+			<td colspan="<%=col_names.length + 2%>">&nbsp;</td>
 		</tr>
 		<% end %>
 	</tbody>
