@@ -32,8 +32,14 @@
 				<td class="<%=column.column_type%>">
                     <% val = matter.try(column.column_query) %>
                     <% val = (column.column_type.eql?('col-date') && !val.nil?)? val.to_datetime().to_s(:show) : val %>
-                    <% val = (column.translate)? t(val) : val %>
-					<%= val %>
+                    <% if column.column_type.eql? 'col-image'%>
+                      <% unless matter.matter_images.empty? %>
+                          <%= image_tag(matter.matter_images.first.image.url(:thumb))%>
+                      <%end%>
+                    <%else%>
+                      <% val = (column.translate)? t(val) : val %>
+                      <%= val %>
+                    <%end%>
 				</td>
 			<%end%>
 			<td class="col-number"><%= link_to "Show", matter_path(matter, :anchor => :tasks)%></td>

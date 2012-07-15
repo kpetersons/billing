@@ -331,6 +331,7 @@ de:
   apply_vat: "Apply VAT"
   invoice_status: "Status"
   date_paid: "Date paid"
+  mi_image: "Image"
   mi_classes: "Classes"
   mi_court_ref: "Court ref."
   mi_vid_ref: "VID ref."

@@ -1327,9 +1327,10 @@ DefaultFilter.transaction do
   #UserFilter.delete_all
   #UserFilterColumn.delete_all
   #
-  #  matter_columns = [
+    matter_columns = [
   #      {:column_query => 'registration_number', :column_position => 1, :is_default => true, :column_name => 'mi_registration_number', :column_type => 'col-text', :translate => false},
-  #      {:column_query => 'description', :column_position => 2, :is_default => false, :column_name => 'mi_description', :column_type => 'col-text', :translate => false},
+        {:column_query => 'image', :column_position => 99, :is_default => false, :column_name => 'mi_image', :column_type => 'col-image', :translate => false}
+  ]
   #      {:column_query => 'created_at', :column_position => 3, :is_default => true, :column_name => 'mi_created_at', :column_type => 'col-date', :translate => false},
   #      {:column_query => 'updated_at', :column_position => 4, :is_default => true, :column_name => 'mi_updated_at', :column_type => 'col-date', :translate => false},
   #      {:column_query => 'notes', :column_position => 5, :is_default => false, :column_name => 'mi_notes', :column_type => 'col-text', :translate => false},
@@ -1409,34 +1410,34 @@ DefaultFilter.transaction do
   #      {:column_query => 'issued_by', :column_position => 23, :is_default => true, :column_name => 'ii_issued_by', :column_type => 'col-text', :translate => false}
   #  ]
   ##
-  #  tables = [
-  #      #"matters",
+    tables = [
+        "matters"
   #      #"dashboard",
   #      #"customers",
   #      "invoices"
-  #  ]
+    ]
   #
-  #  columns = {
-  #      #"matters" => matter_columns,
+    columns = {
+        "matters" => matter_columns
   #      #"dashboard" => dashboard_columns,
   #      #"customers" => [],
   #      "invoices" => invoice_columns
-  #  }
+    }
   #
-  #  tables.each do |table|
-  #    default_filter = DefaultFilter.new(:table_name => table)
-  #    unless default_filter.save()
-  #      default_filter = DefaultFilter.find_by_table_name(table)
-  #    end
-  #    DefaultFilterColumn.transaction do
-  #      columns[table].each do |column|
-  #        filter_column = DefaultFilterColumn.new(column.merge(:default_filter_id => default_filter.id))
-  #        unless filter_column.save
-  #          puts "filter_column.errors: #{filter_column.errors}"
-  #        end
-  #      end
-  #    end
-  #  end
+    tables.each do |table|
+      default_filter = DefaultFilter.new(:table_name => table)
+      unless default_filter.save()
+        default_filter = DefaultFilter.find_by_table_name(table)
+      end
+      DefaultFilterColumn.transaction do
+        columns[table].each do |column|
+          filter_column = DefaultFilterColumn.new(column.merge(:default_filter_id => default_filter.id))
+          unless filter_column.save
+            puts "filter_column.errors: #{filter_column.errors}"
+          end
+        end
+      end
+    end
   #end
   #
   #MatterTaskType.transaction do

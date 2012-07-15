@@ -63,6 +63,7 @@
 class VMatters < ActiveRecord::Base
 
   has_many :matter_tasks, :foreign_key => :matter_id
+  has_many :matter_images,:foreign_key => :matter_id
 
   def self.quick_search query, page, per_page
     paginate :per_page => per_page, :page => page, :conditions => ['registration_number ilike :q or description ilike :q or notes ilike :q or applicant ilike :q or agent ilike :q or author ilike :q or operating_party ilike :q or matter_type ilike :q or matter_status ilike :q or wipo_number ilike :q or mark_name ilike :q or ctm_number ilike :q or cfe_index ilike :q or application_number ilike :q or patent_number ilike :q or ep_appl_number ilike :q or design_number ilike :q or rdc_appl_number ilike :q or rdc_number ilike :q or opposed_marks ilike :q or instance ilike :q or opposite_party ilike :q or opposite_party_agent ilike :q or legal_type ilike :q or ca_application_number ilike :q or client_all_ip ilike :q or patent_eq_numbers ilike :q', {:q => "%#{query}%", :gi => query}]
