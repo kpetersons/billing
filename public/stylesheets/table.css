@@ -34,7 +34,7 @@ table tbody tr td>* {
     vertical-align: middle;
 }
 
-.col-radio, .col-checkbox, .col-check {
+.col-radio, .col-checkbox, .col-check, .col-image {
     width: 1em;
 }
 
@@ -55,7 +55,7 @@ table tbody tr td>* {
     border: 2px solid;
 }
 
-.col-number {
+.col-number, .col-image {
     text-align: right;
 }
 

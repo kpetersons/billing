@@ -1,6 +1,7 @@
 Billing::Application.routes.draw do
 
   resources :billing_settings
+  resources :matter_images, :only => [:show]
   resources :application, :only => [:check_date] do
     collection do
       get :check_date

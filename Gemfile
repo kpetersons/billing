@@ -12,7 +12,6 @@ gem 'paperclip', '~> 2.3'
 gem 'prawn', '0.11.1', :submodules => true
 gem "jquery-rails"
 gem 'pg', '0.12.0'
-gem 'heroku'
 
 group :development do
   gem 'annotate', '2.4.0'

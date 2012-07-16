@@ -33,8 +33,8 @@
                     <% val = matter.try(column.column_query) %>
                     <% val = (column.column_type.eql?('col-date') && !val.nil?)? val.to_datetime().to_s(:show) : val %>
                     <% if column.column_type.eql? 'col-image'%>
-                      <% unless matter.matter_images.empty? %>
-                          <%= image_tag(matter.matter_images.first.image.url(:thumb))%>
+                      <% if matter.image_exists %>
+                        <%= image_tag(matter_image_path(matter.id))%>
                       <%end%>
                     <%else%>
                       <% val = (column.translate)? t(val) : val %>
