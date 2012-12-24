@@ -21,7 +21,7 @@ test:
   password: root
   host: localhost
 
-production2:
+production:
   adapter: postgresql
   encoding: unicode
   username: pfdmpwligv
@@ -30,7 +30,7 @@ production2:
   database: pfdmpwligv
   password: zlljvM7WGGiP4NnZD_za
 
-production:
+production2:
   adapter: postgresql
   encoding: unicode
   username: pguser
