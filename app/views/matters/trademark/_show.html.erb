@@ -90,12 +90,30 @@
 					<dd>
 						<%= matter.trademark.reg_number %>&nbsp;
 					</dd>
+                    <dt>
+                        <label><%= t('matter.trademark.fields.non_lv_reg_nr')%></label>
+                    </dt>
+                    <dd>
+                        <%= matter.trademark.non_lv_reg_nr %>&nbsp;
+                    </dd>
+                    <dt>
+                        <label><%= t('matter.trademark.fields.publication_date')%></label>
+                    </dt>
+                    <dd>
+                        <%= matter.trademark.publication_date %>&nbsp;
+                    </dd>
 					<dt>
 						<label>Registration date</label>
 					</dt>
 					<dd>
 						<%= matter.trademark.registration_date.to_s(:show) unless matter.trademark.registration_date.nil?%>&nbsp;
 					</dd>
+                    <dt>
+                        <label>Renewal date</label>
+                    </dt>
+                    <dd>
+                        <%= matter.trademark.renewal_date.to_s(:show) unless matter.trademark.renewal_date.nil?%>&nbsp;
+                    </dd>
 				</dl>
 			</li>
 		</ul>

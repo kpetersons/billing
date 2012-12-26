@@ -1,7 +1,14 @@
+require 'spec_helper'
+
+describe VInvoices do
+  pending "add some examples to (or delete) #{__FILE__}"
+end
+
 # == Schema Information
 #
 # Table name: v_invoices
 #
+#  registration_number :text
 #  operating_party_id  :integer
 #  id                  :integer         primary key
 #  author_id           :integer
@@ -11,7 +18,6 @@
 #  currency            :string(255)
 #  author              :text
 #  status              :string(255)
-#  invoice_status_id   :integer
 #  our_ref             :string(255)
 #  your_ref            :string(255)
 #  your_date           :date
@@ -27,16 +33,11 @@
 #  apply_vat           :boolean
 #  date_paid           :date
 #  total_official_fee  :decimal(, )
+#  total_vat           :decimal(, )
+#  grand_total         :decimal(, )
 #  total_attorney_fee  :decimal(, )
 #  total_discount      :decimal(, )
-#  registration_number :string(255)
-#  invoice_type        :integer
 #  matter_type_id      :integer
-#  author_name         :string(255)
+#  issued_by           :string(255)
 #
 
-require 'spec_helper'
-
-describe VInvoices do
-  pending "add some examples to (or delete) #{__FILE__}"
-end

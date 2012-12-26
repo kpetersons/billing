@@ -1,7 +1,15 @@
+require 'spec_helper'
+
+describe VMatters do
+  pending "add some examples to (or delete) #{__FILE__}"
+end
+
+
 # == Schema Information
 #
 # Table name: v_matters
 #
+#  image_exists            :text
 #  matter_type_id          :integer
 #  operating_party_id      :integer
 #  agent_id                :integer
@@ -58,10 +66,8 @@
 #  opposite_party_id       :integer
 #  opposite_party_agent_id :integer
 #  tm_registration_number  :string(255)
+#  renewal_date            :date
+#  non_lv_reg_nr           :string(255)
+#  publication_date        :date
 #
 
-require 'spec_helper'
-
-describe VMatters do
-  pending "add some examples to (or delete) #{__FILE__}"
-end

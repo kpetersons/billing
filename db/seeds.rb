@@ -7,6 +7,26 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
+#User.transaction do
+#  @users = User.all
+#  password_attributes = {
+#      :password => 'password',
+#      :password_confirmation => 'password',
+#      :change_pwd => true,
+#      :active => true,
+#      :blocked => false
+#  }
+#  @users.each do |user|
+#    @user = user
+#    puts "user #{user}"
+#    unless @user.update_attributes(password_attributes)
+#      user.errors.full_messages.each do |msg|
+#        puts msg
+#      end
+#    end
+#  end
+#end
+
 #Gender.transaction do
 #  genders = ["gender.male", "gender.female", "gender.n_a"]
 #  genders.each do |gender|
@@ -76,7 +96,7 @@
 #    ["funct.customer.edit.save_as", true]
 #]
 #
-#@admin_functions = [
+@admin_functions = [
 #    ["funct.admin.link", true],
 #    ["funct.create.user", true],
 #    ["funct.activate.user", true],
@@ -86,7 +106,8 @@
 #    ["funct.add.function", true],
 #    ["funct.create.message", true],
 #    ["funct.view.all.fee.types", true]
-#]
+    ["funct.addresses.suspend", true]
+]
 #
 #@minimal_functions = [
 #    ["funct.login", true],
@@ -95,47 +116,55 @@
 #]
 #
 #@roles = ["role.minimal", "role.admin", "role.matters", "role.invoices", "role_customers"]
+@roles = [
+    #"role.minimal",
+    "role.admin",
+    #"role.matters",
+    #"role.invoices",
+    #"role_customers"
+]
 #
-#@role_functions = {
+@role_functions = {
 #"role.minimal" => @minimal_functions,
-#"role.admin" => @admin_functions,
+"role.admin" => @admin_functions,
 #"role.matters" => @matter_functions,
 #"role.invoices" => @invoice_functions,
 #"role_customers" => @customer_functions
-#}
+}
 #
 #@functions = Array.new.concat(@matter_functions)
 #@functions.concat(@admin_functions)
 #@functions.concat(@matter_functions)
 #@functions.concat(@invoice_functions)
 #@functions.concat(@customer_functions)
+@functions = Array.new.concat(@admin_functions)
 #
-#Function.transaction do
-#  @functions.each do |function_name|
-#    unless Function.find_by_name(function_name[0])
-#      Function.create(:name => function_name[0], :description => "#{function_name[0]}.descr")
-#    end
-#  end
-#end
+Function.transaction do
+  @functions.each do |function_name|
+    unless Function.find_by_name(function_name[0])
+      Function.create(:name => function_name[0], :description => "#{function_name[0]}.descr")
+    end
+  end
+end
 #
-#Role.transaction do
-#
-#  @roles.each do |role|
-#    @r = Role.find_by_name(role)
-#    if @r.nil?
-#      @r = Role.create(:name => role, :description => "#{role}.descr")
-#    end
-#    @role_functions[role].each do |functions|
-#      @functions.each do |function|
-#        if function[1]
-#          unless @r.functions.exists?(:name => function[0])
-#            @r.functions<<Function.find_by_name(function[0])
-#          end
-#        end
-#      end
-#    end
-#  end
-#end
+Role.transaction do
+
+  @roles.each do |role|
+    @r = Role.find_by_name(role)
+    if @r.nil?
+      @r = Role.create(:name => role, :description => "#{role}.descr")
+    end
+    @role_functions[role].each do |functions|
+      @functions.each do |function|
+        if function[1]
+          unless @r.functions.exists?(:name => function[0])
+            @r.functions<<Function.find_by_name(function[0])
+          end
+        end
+      end
+    end
+  end
+end
 #
 #
 #ContactType.transaction do
@@ -1329,7 +1358,12 @@ DefaultFilter.transaction do
   #
     matter_columns = [
   #      {:column_query => 'registration_number', :column_position => 1, :is_default => true, :column_name => 'mi_registration_number', :column_type => 'col-text', :translate => false},
-        {:column_query => 'image', :column_position => 99, :is_default => false, :column_name => 'mi_image', :column_type => 'col-image', :translate => false}
+        {:column_query => 'image', :column_position => 99, :is_default => false, :column_name => 'mi_image', :column_type => 'col-image', :translate => false},
+        {:column_query => 'renewal_date', :column_position => 100, :is_default => false, :column_name => 'mi_renewal_date', :column_type => 'col-date', :translate => false},
+        {:column_query => 'non_lv_reg_nr', :column_position => 101, :is_default => false, :column_name => 'mi_non_lv_reg_nr', :column_type => 'col-text', :translate => false},
+        {:column_query => 'publication_date',  :column_position => 102, :is_default => false, :column_name => 'mi_publication_date', :column_type => 'col-date', :translate => false},
+        {:column_query => 'country_agent',     :column_position => 103, :is_default => false, :column_name => 'mi_country_agent', :column_type => 'col-text', :translate => false},
+        {:column_query => 'country_applicant', :column_position => 104, :is_default => false, :column_name => 'mi_country_applicant', :column_type => 'col-text', :translate => false}
   ]
   #      {:column_query => 'created_at', :column_position => 3, :is_default => true, :column_name => 'mi_created_at', :column_type => 'col-date', :translate => false},
   #      {:column_query => 'updated_at', :column_position => 4, :is_default => true, :column_name => 'mi_updated_at', :column_type => 'col-date', :translate => false},
@@ -1432,8 +1466,12 @@ DefaultFilter.transaction do
       DefaultFilterColumn.transaction do
         columns[table].each do |column|
           filter_column = DefaultFilterColumn.new(column.merge(:default_filter_id => default_filter.id))
-          unless filter_column.save
-            puts "filter_column.errors: #{filter_column.errors}"
+          puts "column.merge #{column.merge(:default_filter_id => default_filter.id)}"
+          if filter_column.save
+          else
+            filter_column.errors.full_messages.each do |msg|
+              puts msg
+            end
           end
         end
       end
@@ -1640,33 +1678,23 @@ end
 #    end
 #  end
 #end
-#User.transaction do
-#  @users = User.all
-#  password_attributes = {
-#      :password => 'password',
-#      :password_confirmation => 'password',
-#      :change_pwd => true,
-#      :active => true,
-#      :blocked => false
-#  }
-#  @users.each do |user|
-#    @user = user
-#    if @user.update_attributes(password_attributes)
+#BillingSetting.transaction do
+#  billing_setting = BillingSetting.new(:vat_rate => 0.22)
+#  billing_setting.save
+#  Invoice.all.each do |item|
+#    unless item.billing_settings_id
+#      item.update_attribute(:billing_settings_id, billing_setting.id)
+#    end
+#  end
+#  InvoiceLine.all.each do |item|
+#    unless item.billing_settings_id
+#      item.update_attribute(:billing_settings_id, billing_setting.id)
 #    end
 #  end
 #end
 
-BillingSetting.transaction do
-  billing_setting = BillingSetting.new(:vat_rate => 0.22)
-  billing_setting.save
-  Invoice.all.each do |item|
-    unless item.billing_settings_id
-      item.update_attribute(:billing_settings_id, billing_setting.id)
-    end
-  end
-  InvoiceLine.all.each do |item|
-    unless item.billing_settings_id
-      item.update_attribute(:billing_settings_id, billing_setting.id)
-    end
+Address.transaction do
+  Address.all.each do |address|
+    address.update_attribute(:suspended, :false)
   end
 end

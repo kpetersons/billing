@@ -1,21 +1,3 @@
-# == Schema Information
-#
-# Table name: legals
-#
-#  id                      :integer         not null, primary key
-#  created_at              :datetime
-#  updated_at              :datetime
-#  matter_id               :integer
-#  opposed_marks           :string(255)
-#  instance                :string(255)
-#  date_of_closure         :date
-#  opposite_party_id       :integer
-#  opposite_party_agent_id :integer
-#  legal_type_id           :integer
-#  date_of_order           :date
-#  court_ref               :text
-#
-
 class Legal < ActiveRecord::Base
 
   belongs_to :matter
@@ -65,3 +47,24 @@ class Legal < ActiveRecord::Base
   end
 
 end
+
+
+# == Schema Information
+#
+# Table name: legals
+#
+#  id                      :integer         not null, primary key
+#  created_at              :datetime
+#  updated_at              :datetime
+#  matter_id               :integer
+#  opposed_marks           :string(255)
+#  instance                :string(255)
+#  date_of_closure         :date
+#  opposite_party_id       :integer
+#  opposite_party_agent_id :integer
+#  legal_type_id           :integer
+#  date_of_order           :date
+#  court_ref               :text
+#  mark_name               :string(255)
+#
+

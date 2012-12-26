@@ -1,3 +1,10 @@
+require 'spec_helper'
+
+describe Trademark do
+  pending "add some examples to (or delete) #{__FILE__}"
+end
+
+
 # == Schema Information
 #
 # Table name: trademarks
@@ -17,10 +24,8 @@
 #  wipo_number        :string(255)
 #  reg_number         :string(255)
 #  registration_date  :date
+#  renewal_date       :date
+#  non_lv_reg_nr      :string(255)
+#  publication_date   :date
 #
 
-require 'spec_helper'
-
-describe Trademark do
-  pending "add some examples to (or delete) #{__FILE__}"
-end

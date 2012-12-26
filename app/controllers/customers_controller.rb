@@ -72,7 +72,7 @@ class CustomersController < ApplicationController
   end
 
   def list_addresses
-    @result = Customer.find(params[:customer]).party.addresses.collect { |tt| [tt.id, tt.name] }
+    @result = Customer.find(params[:customer]).party.addresses.where(:suspended => false).collect { |tt| [tt.id, tt.name] }
     render :json => @result
   end
 

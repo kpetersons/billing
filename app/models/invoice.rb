@@ -340,7 +340,12 @@ class Invoice < ActiveRecord::Base
       else
         str_prefix = items[0].gsub(/[0-9]/, '')
         str_start = items[0].gsub(/[a-zA-Z]/, '')
+        str_end_prefix = items[1].gsub(/[0-9]/, '')
         str_end = items[1].gsub(/[a-zA-Z]/, '')
+        if str_prefix != str_end_prefix
+          @our_refs_invalid<<"#{str_prefix}#{str_start}"
+          @our_refs_invalid<<"#{str_end_prefix}#{str_end}"
+        end
         begin
           (Integer(str_start)..Integer(str_end)).each do |c_item|
             @our_refs<<"#{str_prefix}#{c_item}"

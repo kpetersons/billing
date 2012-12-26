@@ -5,7 +5,15 @@
 	<%= render :partial => "shared/flash", :locals => {:flash => flash}%>	
 	<%= render :partial => "show" %>
 	<div class="show controls">
-		<%= link_to t("button.edit"), {:action => 'edit'} %>
+		<%= link_to t("button.edit"),    {:action => 'edit'} %>
+      <% if has_function(:name => 'funct.addresses.suspend') %>
+        <% unless @address.suspended %>
+            <%= link_to t('button.suspend'), {:action => 'suspend'} %>
+        <%end%>
+        <% if @address.suspended %>
+          <%= link_to t('button.unsuspend'), {:action => 'suspend'} %>
+        <%end%>
+      <%end%>
 	</div>
 </div>
 <div class="nested-panel">

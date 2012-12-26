@@ -1,3 +1,10 @@
+require 'spec_helper'
+
+describe Legal do
+  pending "add some examples to (or delete) #{__FILE__}"
+end
+
+
 # == Schema Information
 #
 # Table name: legals
@@ -14,10 +21,6 @@
 #  legal_type_id           :integer
 #  date_of_order           :date
 #  court_ref               :text
+#  mark_name               :string(255)
 #
 
-require 'spec_helper'
-
-describe Legal do
-  pending "add some examples to (or delete) #{__FILE__}"
-end

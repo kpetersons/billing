@@ -26,8 +26,7 @@
 #
 #  id                 :integer(4)      not null, primary key
 #  individual_id      :integer(4)
-#  email              :string(255)
-#  encrypted_password :string(255)
+#  email              :string(255)#  encrypted_password :string(255)
 #  salt               :string(255)
 #  active             :boolean(1)
 #  blocked            :boolean(1)
@@ -54,7 +53,7 @@ class User < ActiveRecord::Base
   #
   attr_accessor :password
   attr_protected :password_current, :change_pwd
-  attr_accessible :email, :password, :password_confirmation, :active, :blocked, :individual_id, :registration_date, :activation_key, :operating_party_id, :initials
+  attr_accessible :email, :password, :password_confirmation, :active, :blocked, :individual_id, :registration_date, :activation_key, :operating_party_id, :initials, :change_pwd
   #
   validates :email, :presence => true,
             :format => {:with => email_regex},
@@ -70,6 +69,7 @@ class User < ActiveRecord::Base
   before_create :generate_activation_key
   #
   def has_password?(submitted_password)
+    puts "submitted_password #{submitted_password} encrypt(submitted_password) #{encrypt(submitted_password)} #{encrypted_password}"
     encrypted_password == encrypt(submitted_password)
   end
 

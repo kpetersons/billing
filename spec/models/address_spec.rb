@@ -1,3 +1,10 @@
+require 'spec_helper'
+
+describe Address do
+  pending "add some examples to (or delete) #{__FILE__}"
+end
+
+
 # == Schema Information
 #
 # Table name: addresses
@@ -16,12 +23,8 @@
 #  country_id         :integer
 #  version            :integer         default(1)
 #  orig_id            :integer
-#  date_effective     :date            default(Thu, 29 Dec 2011)
+#  date_effective     :date            default(Tue, 25 Dec 2012)
 #  date_effective_end :datetime
+#  suspended          :boolean
 #
 
-require 'spec_helper'
-
-describe Address do
-  pending "add some examples to (or delete) #{__FILE__}"
-end

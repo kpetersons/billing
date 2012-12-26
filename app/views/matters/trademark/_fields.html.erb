@@ -69,10 +69,22 @@
 						<%= t_f.label :reg_number %>
 						<%= t_f.text_field :reg_number %>
 					</li>
+                    <li>
+                        <%= t_f.label :non_lv_reg_nr %>
+                        <%= t_f.text_field :non_lv_reg_nr %>
+                    </li>
+                    <li>
+                        <%= t_f.label :publication_date %>
+                        <%= t_f.text_field :publication_date, :class => 'field-date date-field', :value => date_format_field(t_f.object.publication_date) %>
+                    </li>
 					<li>
 						<%= t_f.label :registration_date %>
 						<%= t_f.text_field :registration_date, :class => 'field-date date-field', :value => date_format_field(t_f.object.registration_date) %>
 					</li>
+                    <li>
+                        <%= t_f.label :renewal_date %>
+                        <%= t_f.text_field :renewal_date, :class => 'field-date date-field', :value => date_format_field(t_f.object.renewal_date) %>
+                    </li>
 				</ul>
 			</li>
 			<li>

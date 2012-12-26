@@ -10,8 +10,7 @@ class SessionsController < ApplicationController
 
   def signin
     @yield_title = 'Sign in'
-    user = User.authenticate(params[:session][:email],
-    params[:session][:password])
+    user = User.authenticate(params[:session][:email],params[:session][:password])
     if user.nil?
       flash.now[:error] = "Invalid email/password combination."
       render 'new' and return

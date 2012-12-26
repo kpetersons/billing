@@ -153,6 +153,38 @@ class AddressesController < ApplicationController
     render 'edit'
   end
 
+  def suspend
+    customer_id = params[:customer_id]
+    individual_id = params[:contact_person_id]
+    user_id = params[:user_id]
+    operating_party_id = params[:operating_party_id]
+
+    @customer = Customer.find(customer_id) unless customer_id.nil?
+    @individual = ContactPerson.find(individual_id) unless individual_id.nil?
+    @user = User.find(user_id) unless user_id.nil?
+    @operating_party = OperatingParty.find(operating_party_id) unless operating_party_id.nil?
+    @path_elements = [@customer, @individual, @user, @operating_party]
+
+    @party = @customer.party unless customer_id.nil?
+    @party = @individual.party unless individual_id.nil?
+    @party = @user.individual.party unless user_id.nil?
+    @party = @operating_party.company.party unless operating_party_id.nil?
+    @address = Address.find(params[:id])
+    #
+    @path_elements = [@customer, @individual, @user, @operating_party]
+
+    Address.transaction do
+      @address.update_attribute(:suspended, !@address.suspended)
+      if @address.suspended
+        flash.now[:warning] = "Address suspended"
+      else
+        flash.now[:warning] = "Address unsuspended"
+      end
+      redirect_to @path_elements and return
+    end
+    render 'show'
+  end
+
   def show
     @address = Address.find(params[:id])
 

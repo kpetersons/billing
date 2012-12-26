@@ -93,7 +93,11 @@ Billing::Application.routes.draw do
 
   resources :operating_parties, :except => [:destroy] do
     resources :accounts    
-    resources :addresses
+    resources :addresses do
+      member do
+        get :suspend
+      end
+    end
     resources :contacts
     member do
       get  :choose_matter_type      
@@ -105,15 +109,27 @@ Billing::Application.routes.draw do
   resources :customers, :except => [:destroy] do
     resources :accounts    
     resources :contact_persons do
-      resources :addresses
+      resources :addresses do
+        member do
+          get :suspend
+        end
+      end
       resources :contacts
     end
-    resources :addresses
+    resources :addresses do
+      member do
+        get :suspend
+      end
+    end
     resources :contacts
     collection do
       get :applicant_find_ajax
       get :agent_find_ajax
-      get :list_addresses
+      get :list_addresses do
+        member do
+          get :suspend
+        end
+      end
       get :list_contact_persons
       get :quick_search
       post :search
@@ -142,7 +158,11 @@ Billing::Application.routes.draw do
   end
 
   resources :users do
-    resources :addresses
+    resources :addresses do
+      member do
+        get :suspend
+      end
+    end
     resources :contacts
     member do
       get :activate

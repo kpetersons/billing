@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120715205545) do
+ActiveRecord::Schema.define(:version => 20121226085132) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -50,8 +50,9 @@ ActiveRecord::Schema.define(:version => 20120715205545) do
     t.integer  "country_id"
     t.integer  "version",            :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",     :default => '2011-12-29'
+    t.date     "date_effective",     :default => '2012-12-25'
     t.datetime "date_effective_end"
+    t.boolean  "suspended"
   end
 
   add_index "addresses", ["address_type_id"], :name => "index_addresses_on_address_type_id"
@@ -95,7 +96,7 @@ ActiveRecord::Schema.define(:version => 20120715205545) do
     t.string   "registration_number"
     t.integer  "version",             :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",      :default => '2011-12-29'
+    t.date     "date_effective",      :default => '2012-12-25'
     t.datetime "date_effective_end"
   end
 
@@ -141,7 +142,7 @@ ActiveRecord::Schema.define(:version => 20120715205545) do
     t.string   "vat_registration_number"
     t.integer  "version",                 :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",          :default => '2011-12-29'
+    t.date     "date_effective",          :default => '2012-12-25'
     t.datetime "date_effective_end"
     t.text     "shortnote"
   end
@@ -223,7 +224,7 @@ ActiveRecord::Schema.define(:version => 20120715205545) do
     t.string   "notes"
     t.integer  "version",             :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",      :default => '2011-12-29'
+    t.date     "date_effective",      :default => '2012-12-25'
     t.datetime "date_effective_end"
   end
 
@@ -310,10 +311,10 @@ ActiveRecord::Schema.define(:version => 20120715205545) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "attorney_fee_type_id"
+    t.text     "offering"
     t.decimal  "official_fee",         :precision => 8,  :scale => 2
     t.decimal  "attorney_fee",         :precision => 8,  :scale => 2
     t.integer  "author_id"
-    t.text     "offering"
     t.decimal  "items",                :precision => 10, :scale => 2
     t.string   "units"
     t.decimal  "total",                :precision => 10, :scale => 2
@@ -426,6 +427,7 @@ ActiveRecord::Schema.define(:version => 20120715205545) do
     t.integer  "legal_type_id"
     t.date     "date_of_order"
     t.text     "court_ref"
+    t.string   "mark_name"
   end
 
   add_index "legals", ["legal_type_id"], :name => "index_legals_on_legal_type_id"
@@ -588,7 +590,7 @@ ActiveRecord::Schema.define(:version => 20120715205545) do
     t.integer  "matter_status_id"
     t.integer  "version",            :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",     :default => '2011-12-29'
+    t.date     "date_effective",     :default => '2012-12-25'
     t.datetime "date_effective_end"
   end
 
@@ -661,7 +663,7 @@ ActiveRecord::Schema.define(:version => 20120715205545) do
     t.datetime "updated_at"
     t.integer  "version",            :default => 1
     t.integer  "orig_id"
-    t.date     "date_effective",     :default => '2011-12-29'
+    t.date     "date_effective",     :default => '2012-12-25'
     t.datetime "date_effective_end"
   end
 
@@ -769,6 +771,9 @@ ActiveRecord::Schema.define(:version => 20120715205545) do
     t.string   "wipo_number"
     t.string   "reg_number"
     t.date     "registration_date"
+    t.date     "renewal_date"
+    t.string   "non_lv_reg_nr"
+    t.date     "publication_date"
   end
 
   add_index "trademarks", ["matter_id"], :name => "index_trademarks_on_matter_id"

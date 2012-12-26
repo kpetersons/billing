@@ -1,13 +1,11 @@
-class AddImageToVMatter23 < ActiveRecord::Migration
+class CreateViews23 < ActiveRecord::Migration
   def up
     execute <<-SQL
       drop view if exists v_invoices;
-      drop view if exists v_matter_tasks;
-      drop view if exists v_matters;
     SQL
 
     execute <<-SQL
-     create or replace view v_matters as (
+    create or replace view v_matters as (
       select
         mim.image_exists,
         ma.matter_type_id,
@@ -31,7 +29,7 @@ class AddImageToVMatter23 < ActiveRecord::Migration
         cl.classes,
         t.wipo_number,
         t.priority_date,
-        t.mark_name,
+        COALESCE (t.mark_name, l.mark_name) as mark_name,
         t.ctm_number,
         t.cfe_index,
         COALESCE (t.appl_number,p.application_number,d.application_number) as application_number,
@@ -65,7 +63,10 @@ class AddImageToVMatter23 < ActiveRecord::Migration
         COALESCE(dm.registration_date, t.registration_date, p.registration_date, d.registration_date) as registration_date,
         l.opposite_party_id,
         l.opposite_party_agent_id,
-        t.reg_number as tm_registration_number
+        t.reg_number as tm_registration_number,
+        t.renewal_date,
+        t.non_lv_reg_nr,
+        t.publication_date
       from
         documents doc left outer join documents parent on doc.parent_id = parent.id,
         matters ma left outer join trademarks t on ma.id = t.matter_id
@@ -81,6 +82,7 @@ class AddImageToVMatter23 < ActiveRecord::Migration
                   l.opposite_party_agent_id,
                   l.date_of_order,
                   l.court_ref,
+                  l.mark_name,
                   lt.name as legal_type,
                   cop.name as opposite_party,
                   copa.name as opposite_party_agent,
@@ -128,7 +130,7 @@ class AddImageToVMatter23 < ActiveRecord::Migration
         author.individual_id = author_individual.id and
         op.company_id = op_company.id
       order by ma.id
-    );
+      );
     SQL
 
     execute <<-SQL
@@ -236,31 +238,6 @@ from (
 	        iss.id = i.invoice_status_id and
 	        doc.id = i.document_id
 	      order by i.id) a
-      );
-    SQL
-
-    execute <<-SQL
-      create or replace view v_matter_tasks as (
-        select
-          mt.id,
-          mt.matter_id,
-          m.registration_number,
-          m.matter_type,
-          mtt.name as task_type,
-          mts.name as status,
-          substring(mt.description from 1 for 150) as description,
-          mt.proposed_deadline as deadline,
-          mt.created_at,
-          mt.updated_at
-        from
-          matter_tasks mt,
-          v_matters m,
-          matter_task_statuses mts,
-          matter_task_types mtt
-        where
-          mt.matter_id = m.id
-          and mts.id = mt.matter_task_status_id
-          and mtt.id = mt.matter_task_type_id
       );
     SQL
   end

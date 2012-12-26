@@ -1,7 +1,15 @@
+class VInvoices < ActiveRecord::Base
+
+  def self.quick_search query, page, per_page
+    paginate :per_page => per_page, :page => page, :conditions => ['registration_number ilike :q or customer_name ilike :q or person ilike :q or address ilike :q or currency ilike :q or author ilike :q or status ilike :q or our_ref ilike :q or your_ref ilike :q or po_billing ilike :q or subject ilike :q or ending_details ilike :q', {:q => "%#{query}%", :gi => query}]
+  end
+end
+
 # == Schema Information
 #
 # Table name: v_invoices
 #
+#  registration_number :text
 #  operating_party_id  :integer
 #  id                  :integer         primary key
 #  author_id           :integer
@@ -11,7 +19,6 @@
 #  currency            :string(255)
 #  author              :text
 #  status              :string(255)
-#  invoice_status_id   :integer
 #  our_ref             :string(255)
 #  your_ref            :string(255)
 #  your_date           :date
@@ -27,17 +34,11 @@
 #  apply_vat           :boolean
 #  date_paid           :date
 #  total_official_fee  :decimal(, )
+#  total_vat           :decimal(, )
+#  grand_total         :decimal(, )
 #  total_attorney_fee  :decimal(, )
 #  total_discount      :decimal(, )
-#  registration_number :string(255)
-#  invoice_type        :integer
 #  matter_type_id      :integer
-#  author_name         :string(255)
+#  issued_by           :string(255)
 #
 
-class VInvoices < ActiveRecord::Base
-
-  def self.quick_search query, page, per_page
-    paginate :per_page => per_page, :page => page, :conditions => ['registration_number ilike :q or customer_name ilike :q or person ilike :q or address ilike :q or currency ilike :q or author ilike :q or status ilike :q or our_ref ilike :q or your_ref ilike :q or po_billing ilike :q or subject ilike :q or ending_details ilike :q', {:q => "%#{query}%", :gi => query}]
-  end
-end

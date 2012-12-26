@@ -1,18 +1,3 @@
-# == Schema Information
-#
-# Table name: parties
-#
-#  id                 :integer         not null, primary key
-#  identifier         :string(255)
-#  party_type         :string(255)
-#  created_at         :datetime
-#  updated_at         :datetime
-#  version            :integer         default(1)
-#  orig_id            :integer
-#  date_effective     :date            default(Thu, 29 Dec 2011)
-#  date_effective_end :datetime
-#
-
 class Party < ActiveRecord::Base
 
   has_one :company, :foreign_key => :party_id, :autosave => true, :dependent => :delete
@@ -137,3 +122,19 @@ class Party < ActiveRecord::Base
   end
 
 end
+
+# == Schema Information
+#
+# Table name: parties
+#
+#  id                 :integer         not null, primary key
+#  identifier         :string(255)
+#  party_type         :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  version            :integer         default(1)
+#  orig_id            :integer
+#  date_effective     :date            default(Tue, 25 Dec 2012)
+#  date_effective_end :datetime
+#
+

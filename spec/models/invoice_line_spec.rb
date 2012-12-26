@@ -1,3 +1,9 @@
+require 'spec_helper'
+
+describe InvoiceLine do
+  pending "add some examples to (or delete) #{__FILE__}"
+end
+
 # == Schema Information
 #
 # Table name: invoice_lines
@@ -9,10 +15,10 @@
 #  created_at           :datetime
 #  updated_at           :datetime
 #  attorney_fee_type_id :integer
+#  offering             :text
 #  official_fee         :decimal(8, 2)
 #  attorney_fee         :decimal(8, 2)
 #  author_id            :integer
-#  offering             :text
 #  items                :decimal(10, 2)
 #  units                :string(255)
 #  total                :decimal(10, 2)
@@ -22,8 +28,3 @@
 #  billing_settings_id  :integer
 #
 
-require 'spec_helper'
-
-describe InvoiceLine do
-  pending "add some examples to (or delete) #{__FILE__}"
-end
