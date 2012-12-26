@@ -59,8 +59,32 @@ class Matter < ActiveRecord::Base
     (agent.nil?) ? '' : agent.name
   end
 
+  def show_agent
+    Customer.where(:orig_id => agent.orig_id, :date_effective_end => nil).first
+  end
+
+  def show_agent_name
+    if agent.nil?
+      return ''
+    end
+    val = Customer.where(:orig_id => agent.orig_id, :date_effective_end => nil).first
+    (val.nil?) ? '' : val.name
+  end
+
   def applicant_name
     (applicant.nil?) ? '' : applicant.name
+  end
+
+  def show_applicant
+    Customer.where(:orig_id => applicant.orig_id, :date_effective_end => nil).first
+  end
+
+  def show_applicant_name
+    if applicant.nil?
+      return ''
+    end
+    val = Customer.where(:orig_id => applicant.orig_id, :date_effective_end => nil).first
+    (val.nil?) ? '' : val.name
   end
 
   def sub_matters

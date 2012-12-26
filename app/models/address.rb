@@ -12,6 +12,7 @@ class Address < ActiveRecord::Base
   attr_accessor :address_type_name
 
   before_validation :original_no_longer_used
+  after_initialize :default_values
 
   def history
     Address.where(:orig_id => orig_id).where("date_effective_end is not null and date_effective < :g", {:g => date_effective})
@@ -66,6 +67,10 @@ class Address < ActiveRecord::Base
     originals.each do |original|
       original.no_longer_used unless original.id == self.id
     end
+  end
+
+  def default_values
+    self.suspended ||= false
   end
 
 end

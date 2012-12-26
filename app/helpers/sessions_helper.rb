@@ -23,7 +23,7 @@ module SessionsHelper
   end
 
   def authenticate
-    @time_left = (session[:expires_at] - Time.now).to_i
+    @time_left = (session[:expires_at].to_f - Time.now.to_f)
     unless @time_left > 0
       reset_session
       flash[:error] = 'Session expired.'

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 
   def update_activity_time
-    session[:expires_at] = 8.hours.from_now
+    session[:expires_at] = 8.hours.from_now.to_f
   end
 
   protect_from_forgery
