@@ -30,7 +30,7 @@ production2:
   database: pfdmpwligv
   password: zlljvM7WGGiP4NnZD_za
 
-production1:
+production:
   adapter: postgresql
   encoding: unicode
   username: pguser
