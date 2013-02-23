@@ -441,7 +441,8 @@ de:
           vat: "USt. %{vat}%"
           total_due: "Gesamt zur Bezahlung %{curr}"
         footer:
-          var_reverse_disclaimer: "<b>Die Steuerschuldumkehr ist  laut  Art. 44 der Richtlinie 2006/112/EG des EG Rates und Art. 4.1(4) des Lettlands Umsatzsteuergesetzes anwendbar.</b>"
+#          var_reverse_disclaimer: "<b>Die Steuerschuldumkehr ist  laut  Art. 44 der Richtlinie 2006/112/EG des EG Rates und Art. 4.1(4) des Lettlands Umsatzsteuergesetzes anwendbar.</b>"
+          var_reverse_disclaimer: "<b>Reverse charge                                                                                                                                .</b>"
           remit_disclaimer: "Bitte in %{date} Tagen bezahlen."
           ask_for_reference: "Wir bitten Sie bei Ihrer Überweisung auf unserer Rechnungsnummer sich beziehen"
   local:

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121226085132) do
+ActiveRecord::Schema.define(:version => 20130223125554) do
 
   create_table "accounts", :force => true do |t|
     t.string   "bank"
@@ -230,6 +230,7 @@ ActiveRecord::Schema.define(:version => 20121226085132) do
 
   add_index "documents", ["parent_id"], :name => "index_documents_on_parent_id"
   add_index "documents", ["registration_number"], :name => "index_documents_on_registration_number"
+  add_index "documents", ["updated_at"], :name => "index_documents_on_updated_at"
   add_index "documents", ["user_id"], :name => "index_documents_on_user_id"
 
   create_table "domains", :force => true do |t|
