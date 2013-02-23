@@ -2,7 +2,10 @@
 	<label><%= t('matter.fields.applicant')%></label>
 </dt>
 <dd>
-	<%= link_to matter.show_applicant_name, customer_path(matter.show_applicant) %>&nbsp;
+    <% if matter.show_applicant  %>
+	    <%= link_to matter.show_applicant_name, customer_path(matter.show_applicant) %>
+    <% end %>
+    &nbsp;
     <%= link_to 'Change', new_matter_matter_customer_path(matter, :type => "Applicant")%>
     <%= link_to 'History', matter_matter_customers_path(matter, :type => "Applicant")%>
 </dd>

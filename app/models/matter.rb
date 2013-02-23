@@ -76,7 +76,9 @@ class Matter < ActiveRecord::Base
   end
 
   def show_applicant
-    Customer.where(:orig_id => applicant.orig_id, :date_effective_end => nil).first
+    if applicant
+      Customer.where(:orig_id => applicant.orig_id, :date_effective_end => nil).first
+    end
   end
 
   def show_applicant_name
