@@ -215,12 +215,21 @@ class InvoicesController < ApplicationController
   private
 
   def do_save_refs invoice, matters
-    InvoiceMatter.delete(invoice.invoice_matters)
-    if matters.respond_to?(:each)
-      invoice.matters= matters
-    else
-      invoice.matters<<matters
+    logger.debug "invoice #{invoice}"
+    logger.debug "matters #{matters}"
+    if matters.empty?
+      return
     end
+    InvoiceMatter.delete(invoice.invoice_matters)
+    matters.each do |matter|
+      logger.debug "matter #{matter} invoice #{invoice}"
+      invoice.invoice_matters.create :invoice_id => invoice.id, :matter_id => matter.id
+    end
+    #if matters.respond_to?(:each)
+    #  invoice.matters= matters
+    #else
+    #  invoice.matters<<matters
+    #end
   end
 
   def do_save_lines
