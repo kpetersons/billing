@@ -1,3 +1,8 @@
 .panel-header strong {
 	text-shadow: 0px -1px gray;
 }
+
+.list-save-results a {
+    color:black;
+    font-weight: normal;
+}

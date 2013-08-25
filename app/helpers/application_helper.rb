@@ -12,6 +12,10 @@ module ApplicationHelper
     return params.merge(data) unless params.nil?
   end
 
+  def save_url params = {}, data = {}
+    return params.merge(data) unless params.nil?
+  end
+
   def search_url_query
     if @detail_search.nil?
       return ""

@@ -37,6 +37,7 @@ Billing::Application.routes.draw do
       delete :clear
       get :quick_search
       get :search
+      get :save_results
     end
     resource :pdf, :controller => "InvoicePreviews", :only => [:show, :preview, :print] do
       collection do

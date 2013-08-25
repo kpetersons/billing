@@ -172,7 +172,7 @@ class InvoicePdfLocal < Prawn::Document
 
   def invoice_refs_table invoice
     return [
-        I18n.t('local.print.invoice.head.created_place', :place => invoice.invoice_date.to_s(:show)),
+        I18n.t('local.print.invoice.head.created_place', :place => invoice.invoice_date.to_s(:default)),
         ""
     ],
         [

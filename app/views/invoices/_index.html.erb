@@ -19,6 +19,11 @@
       <%= will_paginate invoices,:per_page => current_user.rows_per_page, :param_name => param_name, "" => @parameters %>
     </th>
   </tr>
+  <tr>
+    <th class="list-save-results" colspan="<%= col_names.length + 2 %>" style="border-top:none;">
+      <%= link_to "Save results", save_results_invoices_path(:query => @parameters), :target => '_blank' %>
+     </th>
+  </tr>
   </tfoot>
   <tbody>
   <% invoices.each do |invoice| %>

@@ -1,0 +1,26 @@
+<%col_names = current_user.column_names('invoices')%>
+<table style="width: 100%;">
+  <thead>
+  <tr>
+    <% col_names.each do |column| %>
+        <th>
+          <%= t(column.column_name) %>
+        </th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @invoices.each do |invoice| %>
+      <tr>
+        <% col_names.each do |column| %>
+              <% val = invoice.try(column.column_query) %>
+              <% val = (column.column_type.eql?('col-date') && !val.nil?) ? val.to_datetime().to_s(:show) : ((column.column_type.eql?('col-number') && !val.nil?)? number_to_currency(val, :unit => "", :delimiter  => "") : val) %>
+              <% val = (column.translate) ? t(val) : val %>
+              <td style="mso-number-format:\@;">
+                <%= ((val.length > 50)? "#{val.slice(0, 50)}..." : val) unless val.nil?%>
+            </td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

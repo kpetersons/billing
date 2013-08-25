@@ -212,6 +212,55 @@ class InvoicesController < ApplicationController
     redirect_to invoices_path
   end
 
+  def save_results
+    if params[:detail_search].nil? || params[:detail_search][:details].nil?
+      @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).order("#{@order_by} #{@direction}")
+      response.headers['Content-Type'] = 'text/csv'
+      response.headers['Content-Disposition'] = "attachment; filename=results_#{DateTime.now}.xls"
+      render :layout => false
+      return
+    end
+    @detail_search = DetailSearch.new({:columns => @columns, :details => params[:detail_search][:details]})
+    @order_by = params[:order_by]
+    @direction = params[:direction]
+    @precision = params[:precision]
+    begin
+      @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).where(@detail_search.query).order("#{@order_by} #{@direction}")
+      @direction = (@direction.eql?("ASC")) ? "DESC" : "ASC"
+      @invoices_tot = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).where(@detail_search.query).order("#{@order_by} #{@direction}")
+
+      logger.info "params[:detail_search][:totals][:calculate_totals]: #{params[:detail_search][:totals][:calculate_totals]}"
+      if params[:detail_search][:totals][:calculate_totals] == 1.to_s
+        logger.info "params[:detail_search][:totals][:calculate_totals]: #{params[:detail_search][:totals][:calculate_totals]} is one"
+        @totals = {}
+        logger.info 1
+        @totals[:total_official_fee] = @invoices_tot.sum('total_official_fee')
+        logger.info 2
+        @totals[:total_attorneys_fee] = @invoices_tot.sum('total_attorney_fee')
+        logger.info 3
+        @totals[:total_official_and_attorneys_fee] = @invoices_tot.sum('total_official_fee') + @invoices_tot.sum('total_attorney_fee')
+        logger.info 4
+        @totals[:total_vat] = @invoices_tot.sum('total_vat')
+        logger.info 5
+        @totals[:grand_total] = @invoices_tot.sum('total_official_fee') + @invoices_tot.sum('total_attorney_fee') + @invoices_tot.sum('total_vat')
+        logger.info 6
+      end
+      response.headers['Content-Type'] = 'text/csv'
+      response.headers['Content-Disposition'] = "attachment; filename=results_#{DateTime.now}.xls"
+      render :layout => false
+      return
+    rescue => ex
+      logger.debug ex
+      flash.now[:error] = "Invalid search parameters. Check them again!"
+      logger.error ex.message
+    end
+    @invoices = VInvoices.where("matter_type_id in (?) or matter_type_id is null", current_user.operating_party.matter_types).where(:author_id => current_user.id).order(params[:order], params[:direction])
+    response.headers['Content-Type'] = 'text/csv'
+    response.headers['Content-Disposition'] = "attachment; filename=results_#{DateTime.now}.xls"
+    render :layout => false
+    return
+  end
+
   private
 
   def do_save_refs invoice, matters
